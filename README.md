@@ -4,7 +4,7 @@ If the vulneraiblity detected by two tools refers to the same function or same l
 
 ## Detection relationship categorization
 
-<table border="1" style="border-collapse: collapse; width: 100%;">
+<table style="border-collapse: collapse; width: 100%;">
   <tr>
     <th rowspan="2"><b>N</b></th>
     <th rowspan="2"><b>Assigned general category</b></th>
@@ -19,8 +19,8 @@ If the vulneraiblity detected by two tools refers to the same function or same l
 
 <!-- row 1 -->
   <tr>
-    <td rowspan="7" style="text-align: center; border-bottom: 2px solid black;">1</td>
-    <td rowspan="7" style="text-align: center; border-bottom: 2px solid black;">Re-entrancy</td>
+    <td rowspan="8" style="text-align: center; border-bottom: 2px solid black;">1</td>
+    <td rowspan="8" style="text-align: center; border-bottom: 2px solid black;">Re-entrancy</td>
     <td style="text-align: center;">DeFi</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
@@ -62,6 +62,13 @@ If the vulneraiblity detected by two tools refers to the same function or same l
   <tr>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">Reentrancy-events</td>
+    <td style="text-align: center;">N/A</td>
+    <td style="text-align: center;">N/A</td>
+  </tr>
+
+  <tr>
+    <td style="text-align: center;">N/A</td>
+    <td style="text-align: center;">Reentrancy-no-eth</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
   </tr>
@@ -175,9 +182,42 @@ If the vulneraiblity detected by two tools refers to the same function or same l
 
 <tr>
     <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;">9</td>
-    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;"> - </td>
+    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;"> Compliance </td>
+    <td style="text-align: center;">Tokenization</td>
+    <td style="text-align: center;">Erc20-interface</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
+</tr>
+
+<!-- row 10 -->
+
+<tr>
+    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;">10</td>
+    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;"> Time </td>
+    <td style="text-align: center;">N/A</td>
+    <td style="text-align: center;">Timestamp</td>
+    <td style="text-align: center;">N/A</td>
+    <td style="text-align: center;">N/A</td>
+</tr>
+
+<!-- row 11 -->
+
+<tr>
+    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;">11</td>
+    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;"> Initialization </td>
+    <td style="text-align: center;">N/A</td>
+    <td style="text-align: center;">Uninitialized-local</td>
+    <td style="text-align: center;">N/A</td>
+    <td style="text-align: center;">N/A</td>
+</tr>
+
+<!-- row 12 -->
+
+<tr>
+    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;">12</td>
+    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;"> Logic Flaws </td>
+    <td style="text-align: center;">N/A</td>
+    <td style="text-align: center;">Incorrect-equality</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
 </tr>
