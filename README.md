@@ -20,7 +20,7 @@ If the vulneraiblity detected by two tools refers to the same bug localization p
 <!-- row 1 -->
   <tr>
     <td rowspan="10" style="text-align: center; border-bottom: 2px solid black;">1</td>
-    <td rowspan="10" style="text-align: center; border-bottom: 2px solid black;">Re-entrancy</td>
+    <td rowspan="10" style="text-align: center; border-bottom: 2px solid black;"><a href="#reentrancy">Re-entrancy</a></td>
     <td style="text-align: center;">DeFi</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
@@ -109,7 +109,7 @@ If the vulneraiblity detected by two tools refers to the same bug localization p
 
 <tr>
     <td rowspan="10" style="text-align: center; border-bottom: 2px solid black;">3</td>
-    <td rowspan="10" style="text-align: center; border-bottom: 2px solid black;">Access Control</td>
+    <td rowspan="10" style="text-align: center; border-bottom: 2px solid black;"><a href="access-control">Access Control</a></td>
     <td style="text-align: center;">DeFi</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
@@ -183,7 +183,7 @@ If the vulneraiblity detected by two tools refers to the same bug localization p
 
 <tr>
     <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;">4</td>
-    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;">Delegation</td>
+    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;"><a href="delegation">Delegation</a></td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">controlled-delegatecall</td>
     <td style="text-align: center;">N/A</td>
@@ -201,7 +201,7 @@ If the vulneraiblity detected by two tools refers to the same bug localization p
 
 <tr>
     <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;">5</td>
-    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;">Arithmetic</td>
+    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;"><a href="arithmetic">Arithmetic</a></td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
@@ -219,7 +219,7 @@ If the vulneraiblity detected by two tools refers to the same bug localization p
 
 <tr>
     <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;">6</td>
-    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;">Oracle Manipulation</td>
+    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;"><a href="oracle-manipulation">Oracle Manipulation</a></td>
     <td style="text-align: center;">DeFi</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
@@ -418,6 +418,42 @@ If the vulneraiblity detected by two tools refers to the same bug localization p
 
 ## General Category Descriptions
 
+<a id="reentrancy"></a>
+
+### Re-entrancy
+
+Any vulnerability directly related to reentrant feature of smart contract execution.
+
+<a id="low-level-calls"></a>
+
+### Low-level Calls
+
+This category is concerned with the way low-level calls are made. Especially, it concerns the way `data` field of the call is assigned (data source, being checked, etc.).
+
+<a id="access-control"></a>
+
+### Access Control
+
+Detectors that detect any authentication/authorization vulnerability fall into this category. This includes authorizing the function caller and checking their permissions in callee function or setting up an external call with the correct attributes in the caller function.
+
+<a id="delegation"></a>
+
+### Delegation
+
+Delegation is a tricky subject in smart contracts as delegated calls could be exploited by malicious callee to bypass access control mechanism of the contract, and in extreme cases take over the whole contract by setting the state variables pertaining to certain high-permissioned roles.
+
+<a id="arithmetic"></a>
+
+### Arithmetic
+
+Any vulnerability and accordingly detector pertaining to the way arithmetic operations are performed and ordered on blockchain.
+
+<a id="oracle-manipulation"></a>
+
+### Oracle Manipulation
+
+Exploitations regarding changing the integrity of data gathered with the help of oracles; both in the oracle service contract and the user contract.
+
 <a id="state-corruption"></a>
 
 ### State Corruption
@@ -436,12 +472,6 @@ This category would encompass concerns related to the behavior and flow of execu
 
 The core issue here is ensuring that transactions (especially token transfers) are executed as intended and their outcomes are validated.
 Proper handling of external calls (transfer, transferFrom, etc.) and checking their return values, which is a key aspect of transaction handling in smart contract development.
-
-<a id="low-level-calls"></a>
-
-### Low-level Calls
-
-This category is concerned with the way low-level calls are made. Especially, it concerns the way `data` field of the call is assigned (data source, being checked, etc.).
 
 ## Notes
 
