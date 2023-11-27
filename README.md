@@ -89,19 +89,27 @@ If the vulneraiblity detected by two tools refers to the same function or same l
 <!-- row 2 -->
 
   <tr>
-    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;">2</td>
-    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;"><a href="#low-level-calls">Low-level calls</a></td>
+    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;">2</td>
+    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;"><a href="#low-level-calls">Low-level calls</a></td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">Arbitrary-low-level-call</td>
   </tr>
 
+<tr>
+    <td style="text-align: center;">N/A</td>
+    <td style="text-align: center;">N/A</td>
+    <td style="text-align: center;">SOLIDITY_CALL_WITHOUT_DATA</td>
+    <td style="text-align: center;">N/A</td>
+
+  </tr>
+
   <!-- row 3 -->
 
 <tr>
-    <td rowspan="9" style="text-align: center; border-bottom: 2px solid black;">3</td>
-    <td rowspan="9" style="text-align: center; border-bottom: 2px solid black;">Access Control</td>
+    <td rowspan="10" style="text-align: center; border-bottom: 2px solid black;">3</td>
+    <td rowspan="10" style="text-align: center; border-bottom: 2px solid black;">Access Control</td>
     <td style="text-align: center;">DeFi</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
@@ -164,16 +172,30 @@ If the vulneraiblity detected by two tools refers to the same function or same l
     <td style="text-align: center;">N/A</td>
   </tr>
 
+  <tr>
+    <td style="text-align: center;">N/A</td>
+    <td style="text-align: center;">N/A</td>
+    <td style="text-align: center;">SOLIDITY_TX_ORIGIN</td>
+    <td style="text-align: center;">N/A</td>
+  </tr>
+
    <!-- row 4 -->
 
 <tr>
-    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;">4</td>
-    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;">Delegation</td>
+    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;">4</td>
+    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;">Delegation</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">controlled-delegatecall</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">Delegatecall-to-arbitrary-address</td>
 </tr>
+
+  <tr>
+    <td style="text-align: center;">N/A</td>
+    <td style="text-align: center;">delegatecall-loop</td>
+    <td style="text-align: center;">N/A</td>
+    <td style="text-align: center;">N/A</td>
+  </tr>
 
 <!-- row 5 -->
 
@@ -189,7 +211,7 @@ If the vulneraiblity detected by two tools refers to the same function or same l
 <tr>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">divide-before-multiply</td>
-    <td style="text-align: center;">N/A</td>
+    <td style="text-align: center;">SOLIDITY_DIV_MUL</td>
     <td style="text-align: center;">N/A</td>
   </tr>
 
@@ -243,11 +265,17 @@ If the vulneraiblity detected by two tools refers to the same function or same l
 <!-- row 9 -->
 
 <tr>
-    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;">9</td>
-    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;"> Compliance </td>
+    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;">9</td>
+    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;"> Compliance </td>
     <td style="text-align: center;">Tokenization</td>
     <td style="text-align: center;">Erc20-interface</td>
     <td style="text-align: center;">N/A</td>
+    <td style="text-align: center;">N/A</td>
+</tr>
+<tr>
+    <td style="text-align: center;">Tokenization</td>
+    <td style="text-align: center;">N/A</td>
+    <td style="text-align: center;">SOLIDITY_ERC20_TRANSFER_SHOULD_THROW</td>
     <td style="text-align: center;">N/A</td>
 </tr>
 
@@ -275,7 +303,7 @@ If the vulneraiblity detected by two tools refers to the same function or same l
     <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;">11</td>
     <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;"> Initialization </td>
     <td style="text-align: center;">N/A</td>
-    <td style="text-align: center;">Uninitialized-local</td>
+    <td style="text-align: center;">uninitialized-local</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
 </tr>
@@ -293,7 +321,7 @@ If the vulneraiblity detected by two tools refers to the same function or same l
     <td rowspan="3" style="text-align: center; border-bottom: 2px solid black;"> Poor Logic Flaws </td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">Incorrect-equality</td>
-    <td style="text-align: center;">N/A</td>
+    <td style="text-align: center;">SOLIDITY_EXACT_TIME, <br/>SOLIDITY_BALANCE_EQUALITY</td>
     <td style="text-align: center;">N/A</td>
 </tr>
 <tr>
@@ -313,17 +341,24 @@ If the vulneraiblity detected by two tools refers to the same function or same l
 <!-- row 13 -->
 
 <tr>
-    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;">13</td>
-    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;"> Denial of Service </td>
+    <td rowspan="3" style="text-align: center; border-bottom: 2px solid black;">13</td>
+    <td rowspan="3" style="text-align: center; border-bottom: 2px solid black;"> Denial of Service </td>
     <td style="text-align: center;">N/A</td>
-    <td style="text-align: center;">Locked-ether</td>
-    <td style="text-align: center;">N/A</td>
+    <td style="text-align: center;">locked-ether</td>
+    <td style="text-align: center;">SOLIDITY_LOCKED_MONEY</td>
     <td style="text-align: center;">N/A</td>
 </tr>
 
   <tr>
     <td style="text-align: center;">N/A</td>
-    <td style="text-align: center;">Calls-loop</td>
+    <td style="text-align: center;">calls-loop</td>
+    <td style="text-align: center;">SOLIDITY_TRANSFER_IN_LOOP</td>
+    <td style="text-align: center;">N/A</td>
+  </tr>
+
+<tr>
+    <td style="text-align: center;">N/A</td>
+    <td style="text-align: center;">msg-value-loop</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
   </tr>
@@ -335,7 +370,7 @@ If the vulneraiblity detected by two tools refers to the same function or same l
     <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;"> <a href="#state-corruption">State Corruption</a> </td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">controlled-array-length</td>
-    <td style="text-align: center;">N/A</td>
+    <td style="text-align: center;">SOLIDITY_ARRAY_LENGTH_MANIPULATION</td>
     <td style="text-align: center;">N/A</td>
 </tr>
 
@@ -365,6 +400,17 @@ If the vulneraiblity detected by two tools refers to the same function or same l
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">unchecked-lowlevel</td>
     <td style="text-align: center;">N/A</td>
+    <td style="text-align: center;">N/A</td>
+</tr>
+
+<!-- row 17 -->
+
+<tr>
+    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;">17</td>
+    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;"> Front-Running </td>
+    <td style="text-align: center;">Tokenization</td>
+    <td style="text-align: center;">N/A</td>
+    <td style="text-align: center;">SOLIDITY_ERC20_APPROVE</td>
     <td style="text-align: center;">N/A</td>
 </tr>
 
@@ -400,3 +446,7 @@ This category is concerned with the way low-level calls are made. Especially, it
 ## Notes
 
 - **N/A for target application**: This means the vulnerability does not pertain to a specific high-level application category.
+
+## References
+
+[The function SHOULD throw if the message caller’s account balance does not have enough tokens to spend.](https://eips.ethereum.org/EIPS/eip-20)
