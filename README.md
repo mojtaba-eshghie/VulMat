@@ -7,7 +7,7 @@ If the vulneraiblity detected by two tools refers to the same bug localization p
 <table style="border-collapse: collapse; width: 100%;">
   <tr>
     <th rowspan="2"><b>N</b></th>
-    <th rowspan="2"><b>Assigned general category</b></th>
+    <th rowspan="2"><b>General Category</b></th>
     <th colspan="4" style="text-align: center;"><b>Detectors and Applications</b></th>
   </tr>
   <tr>
