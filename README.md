@@ -1,6 +1,6 @@
 ## Vulnerability detection results that should be used in conjunction
 
-If the vulneraiblity detected by two tools refers to the same function or same line (depending on detection results) and same type of vulnerability, they should be considered together (for comparison/benchmarking).
+If the vulneraiblity detected by two tools refers to the same bug localization point (same function, same line, same code snippet depending on different detectors) and same type of vulnerability, they should be considered together (for comparison/benchmarking).
 
 ## Detection relationship categorization
 
