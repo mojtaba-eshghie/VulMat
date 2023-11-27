@@ -24,25 +24,25 @@ If the vulneraiblity detected by two tools refers to the same bug localization p
     <td style="text-align: center;">DeFi</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
-    <td style="text-align: center;">Compound-borrowfresh-reentrancy</td>
+    <td style="text-align: center;">compound-borrowfresh-reentrancy</td>
   </tr>
   <tr>
     <td style="text-align: center;">Tokenization</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
-    <td style="text-align: center;">Erc721-reentrancy</td>
+    <td style="text-align: center;">erc721-reentrancy</td>
   </tr>
   <tr>
     <td style="text-align: center;">DeFi</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
-    <td style="text-align: center;">Curve-readonly-reentrancy</td>
+    <td style="text-align: center;">curve-readonly-reentrancy</td>
   </tr>
   <tr>
     <td style="text-align: center;">Tokenization</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
-    <td style="text-align: center;">Erc777-reentrancy</td>
+    <td style="text-align: center;">erc777-reentrancy</td>
   </tr>
 
   <tr>
@@ -54,7 +54,7 @@ If the vulneraiblity detected by two tools refers to the same bug localization p
 
   <tr>
     <td style="text-align: center;">N/A</td>
-    <td style="text-align: center;">Reentrancy-benign</td>
+    <td style="text-align: center;">reentrancy-benign</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
   </tr>
@@ -68,7 +68,7 @@ If the vulneraiblity detected by two tools refers to the same bug localization p
 
   <tr>
     <td style="text-align: center;">N/A</td>
-    <td style="text-align: center;">Reentrancy-no-eth</td>
+    <td style="text-align: center;">reentrancy-no-eth</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
   </tr>
@@ -464,7 +464,7 @@ The contract state is corrupted or manipulated in unintended ways.
 
 ### Function Behavior
 
-This category would encompass concerns related to the behavior and flow of execution within smart contract functions, including the use of modifiers.
+This category encompasses vulnerabilties related to the behavior and flow of execution within functions, including the use of modifiers.
 
 <a id="transaction-validation"></a>
 
