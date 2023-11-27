@@ -1,8 +1,4 @@
-## Vulnerability detection results that should be used in conjunction
-
-If the vulneraiblity detected by two tools refers to the same bug localization point (same function, same line, same code snippet depending on different detectors) and same type of vulnerability, they should be considered together (for comparison/benchmarking).
-
-## Detection relationship categorization
+## Vulnerability <-> Detector Relationship Matrix
 
 <table style="border-collapse: collapse; width: 100%;">
   <tr>
@@ -476,6 +472,8 @@ Proper handling of external calls (transfer, transferFrom, etc.) and checking th
 ## Notes
 
 - **N/A for target application**: This means the vulnerability does not pertain to a specific high-level application category.
+- **Vulnerability detection results that should be used in conjunction**: If the vulneraiblity detected by two tools refers to the same bug localization point (same function, same line, same code snippet depending on different detectors) and same type of vulnerability, they should be considered together (for comparison/benchmarking).
+
 
 ## References
 
