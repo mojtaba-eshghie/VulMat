@@ -105,7 +105,7 @@
 
 <tr>
     <td rowspan="10" style="text-align: center; border-bottom: 2px solid black;">3</td>
-    <td rowspan="10" style="text-align: center; border-bottom: 2px solid black;"><a href="access-control">Access Control</a></td>
+    <td rowspan="10" style="text-align: center; border-bottom: 2px solid black;"><a href="#access-control">Access Control</a></td>
     <td style="text-align: center;">DeFi</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
@@ -314,7 +314,7 @@
 
 <tr>
     <td rowspan="3" style="text-align: center; border-bottom: 2px solid black;">12</td>
-    <td rowspan="3" style="text-align: center; border-bottom: 2px solid black;"> Poor Logic Flaws </td>
+    <td rowspan="3" style="text-align: center; border-bottom: 2px solid black;"> <a href="poor-logic-flaws">Poor Logic Flaws</a> </td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">Incorrect-equality</td>
     <td style="text-align: center;">SOLIDITY_EXACT_TIME, <br/>SOLIDITY_BALANCE_EQUALITY</td>
