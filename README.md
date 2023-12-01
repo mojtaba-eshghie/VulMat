@@ -262,7 +262,7 @@
 
 <tr>
     <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;">9</td>
-    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;"> <a href="compliance">Compliance</a></td>
+    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;"> <a href="#compliance">Compliance</a></td>
     <td style="text-align: center;">Tokenization</td>
     <td style="text-align: center;">erc20-interface</td>
     <td style="text-align: center;">N/A</td>
