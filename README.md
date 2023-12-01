@@ -338,7 +338,7 @@
 
 <tr>
     <td rowspan="3" style="text-align: center; border-bottom: 2px solid black;">13</td>
-    <td rowspan="3" style="text-align: center; border-bottom: 2px solid black;"> Denial of Service </td>
+    <td rowspan="3" style="text-align: center; border-bottom: 2px solid black;"> <a href="#denial-of-service">Denial of Service</a> </td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">locked-ether</td>
     <td style="text-align: center;">SOLIDITY_LOCKED_MONEY</td>
