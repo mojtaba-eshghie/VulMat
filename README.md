@@ -179,7 +179,7 @@
 
 <tr>
     <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;">4</td>
-    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;"><a href="delegation">Delegation</a></td>
+    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;"><a href="#delegation">Delegation</a></td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">controlled-delegatecall</td>
     <td style="text-align: center;">N/A</td>
@@ -197,7 +197,7 @@
 
 <tr>
     <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;">5</td>
-    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;"><a href="arithmetic">Arithmetic</a></td>
+    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;"><a href="#arithmetic">Arithmetic</a></td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
@@ -215,7 +215,7 @@
 
 <tr>
     <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;">6</td>
-    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;"><a href="oracle-manipulation">Oracle Manipulation</a></td>
+    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;"><a href="#oracle-manipulation">Oracle Manipulation</a></td>
     <td style="text-align: center;">DeFi</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
@@ -226,7 +226,7 @@
 
 <tr>
     <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;">7</td>
-    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;"> <a href="input-validation">Input Validation</a> </td>
+    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;"> <a href="#input-validation">Input Validation</a> </td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">Missing-zero-check</td>
     <td style="text-align: center;">N/A</td>
@@ -237,7 +237,7 @@
 
 <tr>
     <td rowspan="3" style="text-align: center; border-bottom: 2px solid black;">8</td>
-    <td rowspan="3" style="text-align: center; border-bottom: 2px solid black;"> <a href="shadowing">Shadowing</a> </td>
+    <td rowspan="3" style="text-align: center; border-bottom: 2px solid black;"> <a href="#shadowing">Shadowing</a> </td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">Shadowing-local</td>
     <td style="text-align: center;">N/A</td>
@@ -279,7 +279,7 @@
 
 <tr>
     <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;">10</td>
-    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;"> <a href="timestamp">Timestamp</a> </td>
+    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;"> <a href="#timestamp">Timestamp</a> </td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">timestamp</td>
     <td style="text-align: center;">N/A</td>
@@ -297,7 +297,7 @@
 
 <tr>
     <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;">11</td>
-    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;"> <a href="initialization">Initialization</a> </td>
+    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;"> <a href="#initialization">Initialization</a> </td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">uninitialized-local</td>
     <td style="text-align: center;">N/A</td>
@@ -314,7 +314,7 @@
 
 <tr>
     <td rowspan="3" style="text-align: center; border-bottom: 2px solid black;">12</td>
-    <td rowspan="3" style="text-align: center; border-bottom: 2px solid black;"> <a href="poor-logic-flaws">Poor Logic Flaws</a> </td>
+    <td rowspan="3" style="text-align: center; border-bottom: 2px solid black;"> <a href="#poor-logic-flaws">Poor Logic Flaws</a> </td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">Incorrect-equality</td>
     <td style="text-align: center;">SOLIDITY_EXACT_TIME, <br/>SOLIDITY_BALANCE_EQUALITY</td>
