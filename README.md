@@ -226,7 +226,7 @@
 
 <tr>
     <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;">7</td>
-    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;"> Input Validation </td>
+    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;"> <a href="input-validation">Input Validation</a> </td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">Missing-zero-check</td>
     <td style="text-align: center;">N/A</td>
@@ -237,7 +237,7 @@
 
 <tr>
     <td rowspan="3" style="text-align: center; border-bottom: 2px solid black;">8</td>
-    <td rowspan="3" style="text-align: center; border-bottom: 2px solid black;"> Shadowing </td>
+    <td rowspan="3" style="text-align: center; border-bottom: 2px solid black;"> <a href="shadowing">Shadowing</a> </td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">Shadowing-local</td>
     <td style="text-align: center;">N/A</td>
@@ -262,9 +262,9 @@
 
 <tr>
     <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;">9</td>
-    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;"> Compliance </td>
+    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;"> <a href="compliance">Compliance</a></td>
     <td style="text-align: center;">Tokenization</td>
-    <td style="text-align: center;">Erc20-interface</td>
+    <td style="text-align: center;">erc20-interface</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">N/A</td>
 </tr>
@@ -279,7 +279,7 @@
 
 <tr>
     <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;">10</td>
-    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;"> Timestamp </td>
+    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;"> <a href="timestamp">Timestamp</a> </td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">timestamp</td>
     <td style="text-align: center;">N/A</td>
@@ -297,7 +297,7 @@
 
 <tr>
     <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;">11</td>
-    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;"> Initialization </td>
+    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;"> <a href="initialization">Initialization</a> </td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">uninitialized-local</td>
     <td style="text-align: center;">N/A</td>
@@ -385,7 +385,7 @@
 
 <tr>
     <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;">16</td>
-    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;"> <a href="#transaction-validation">Transaction Validation</a> </td>
+    <td rowspan="2" style="text-align: center; border-bottom: 2px solid black;"> <a href="#external-call-validation">External Call Validation</a> </td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">unchecked-transfer</td>
     <td style="text-align: center;">N/A</td>
@@ -450,6 +450,48 @@ Any vulnerability and accordingly detector pertaining to the way arithmetic oper
 
 Exploitations regarding changing the integrity of data gathered with the help of oracles; both in the oracle service contract and the user contract.
 
+<a id="input-validation"></a>
+
+### Input Validation
+
+Instances of this vulnerability class are failing to perform checks on arbitrary user-supplied data not to be uninitialized or with malicious data in a general sense.
+
+<a id="shadowing"></a>
+
+### Shadowing
+
+Occurs when a variable from a scope has the same identifier from another scope resulting in the unintended value to be used during runtime.
+
+<a id="compliance"></a>
+
+### Compliance
+
+Failing to comply to the specification of the standard in the contract implementation. The least severe effect will be the interacting contracts/users (who expect the correct complying implementation) will fail to execute external calls/transactions to the function (reverted transactions if external call validation is implemented).
+
+<a id="timestamp"></a>
+
+### Timestamp
+
+Usage of unreliable/inaccurate blockchain timestamp primitive in critical scenarios such as random number generation or for checking conditions with high accuracy.
+
+<a id="initialization"></a>
+
+### Initialization
+
+Failing to initialize (function-local/state) variables.
+
+<a id="poor-logic-flaws"></a>
+
+### Poor Logic Flaws
+
+This class concerns using conditional statements that are poorly designed, and might not result in intended way. Additionally, relying on poorly designed boolean conditions that could be manipulated by an interacting user leads to an exploit.
+
+<a id="denial-of-service"></a>
+
+### Denial of Service
+
+Vulnerabilities related to a function in the contract not functioning as intended. Transactions to the vulnerable function might be reverted because of poorly designed usage of loops and msg.\* constructs.
+
 <a id="state-corruption"></a>
 
 ### State Corruption
@@ -462,18 +504,17 @@ The contract state is corrupted or manipulated in unintended ways.
 
 This category encompasses vulnerabilties related to the behavior and flow of execution within functions, including the use of modifiers.
 
-<a id="transaction-validation"></a>
+<a id="external-call-validation"></a>
 
-### Transaction Validation
+### External Call Validation
 
-The core issue here is ensuring that transactions (especially token transfers) are executed as intended and their outcomes are validated.
+The core issue here is ensuring that transactions or external function calls (especially token transfers) are executed as intended and their outcomes are validated.
 Proper handling of external calls (transfer, transferFrom, etc.) and checking their return values, which is a key aspect of transaction handling in smart contract development.
 
 ## Notes
 
 - **N/A for target application**: This means the vulnerability does not pertain to a specific high-level application category.
 - **Vulnerability detection results that should be used in conjunction**: If the vulneraiblity detected by two tools refers to the same bug localization point (same function, same line, same code snippet depending on different detectors) and same type of vulnerability, they should be considered together (for comparison/benchmarking).
-
 
 ## References
 
