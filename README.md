@@ -403,7 +403,7 @@
 
 <tr>
     <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;">17</td>
-    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;"> Front-Running </td>
+    <td rowspan="1" style="text-align: center; border-bottom: 2px solid black;"> <a href="#front-running">Front-Running</a> </td>
     <td style="text-align: center;">Tokenization</td>
     <td style="text-align: center;">N/A</td>
     <td style="text-align: center;">SOLIDITY_ERC20_APPROVE</td>
@@ -510,6 +510,12 @@ This category encompasses vulnerabilties related to the behavior and flow of exe
 
 The core issue here is ensuring that transactions or external function calls (especially token transfers) are executed as intended and their outcomes are validated.
 Proper handling of external calls (transfer, transferFrom, etc.) and checking their return values, which is a key aspect of transaction handling in smart contract development.
+
+<a id="front-running"></a>
+
+### Front-Running
+
+Vulnerability to manipulation of final transaction interleaving in blockchain.
 
 ## Notes
 
