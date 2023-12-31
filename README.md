@@ -1,3 +1,6 @@
+## What is this?
+Large-scale research and development in smart contracts security demand for robust benchmarks. These benchmarks themselves should be based on correct understanding of different vulnerabilities and their detectors. That is exactly what we offer in VulMat. The matrix could be used to design both research and development pipelines in smart contract security tools.  
+
 ## Vulnerability <-> Detector Relationship Matrix
 
 <table style="border-collapse: collapse; width: 100%;">
