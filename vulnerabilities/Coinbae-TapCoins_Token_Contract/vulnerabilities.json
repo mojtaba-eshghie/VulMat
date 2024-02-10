@@ -1,0 +1,1130 @@
+{
+    "Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 195,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract MintableToken is StandardToken, Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 249,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract ReleasableToken is ERC20, Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 199,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  bool public mintingFinished = false;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 254,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  bool public released = false;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 163,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if ((_value != 0) && (allowed[msg.sender][_spender] != 0)) throw;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_72"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "shadowing-builtin",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": 58,
+                    "vulnerability_code": "  function assert(bool assertion) internal {\n\n    if (!assertion) {\n\n      throw;\n\n    }\n",
+                    "message": "SafeMath.assert (function @ Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#54-58) shadows built-in symbol \"assert\"\n"
+                },
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 110,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint public decimals;\n",
+                    "message": "FractionalERC20.decimals should be constant (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#110)\nUpgradeAgent.originalSupply should be constant (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#510)\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 56,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      throw;\n",
+                    "message": "Deprecated standard detected @ Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#56:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 163,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if ((_value != 0) && (allowed[msg.sender][_spender] != 0)) throw;\n",
+                    "message": "Deprecated standard detected @ Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#163:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 215,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      throw;\n",
+                    "message": "Deprecated standard detected @ Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#215:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 234,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        throw;\n",
+                    "message": "Deprecated standard detected @ Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#234:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 241,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if(mintingFinished) throw;\n",
+                    "message": "Deprecated standard detected @ Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#241:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 267,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            throw;\n",
+                    "message": "Deprecated standard detected @ Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#267:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 291,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        throw;\n",
+                    "message": "Deprecated standard detected @ Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#291:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 299,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        throw;\n",
+                    "message": "Deprecated standard detected @ Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#299:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 354,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        throw;\n",
+                    "message": "Deprecated standard detected @ Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#354:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 358,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if (value == 0) throw;\n",
+                    "message": "Deprecated standard detected @ Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#358:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 379,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        throw;\n",
+                    "message": "Deprecated standard detected @ Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#379:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 382,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if (agent == 0x0) throw;\n",
+                    "message": "Deprecated standard detected @ Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#382:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 384,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if (msg.sender != upgradeMaster) throw;\n",
+                    "message": "Deprecated standard detected @ Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#384:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 386,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if (getUpgradeState() == UpgradeState.Upgrading) throw;\n",
+                    "message": "Deprecated standard detected @ Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#386:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 391,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if(!upgradeAgent.isUpgradeAgent()) throw;\n",
+                    "message": "Deprecated standard detected @ Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#391:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 393,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if (upgradeAgent.originalSupply() != totalSupply) throw;\n",
+                    "message": "Deprecated standard detected @ Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#393:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 414,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if (master == 0x0) throw;\n",
+                    "message": "Deprecated standard detected @ Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#414:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 415,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if (msg.sender != upgradeMaster) throw;\n",
+                    "message": "Deprecated standard detected @ Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#415:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 469,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        throw; // Cannot create a token without supply and no minting\n",
+                    "message": "Deprecated standard detected @ Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#469:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 81,
+                    "vulnerability_to_line": 85,
+                    "vulnerability_code": "  function transferOwnership(address newOwner) onlyOwner public {\n\n    require(newOwner != address(0));\n\n    OwnershipTransferred(owner, newOwner);\n\n    owner = newOwner;\n",
+                    "message": "Ownable.transferOwnership (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#81-85) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": 155,
+                    "vulnerability_code": "  function balanceOf(address _owner) constant returns (uint balance) {\n\n    return balances[_owner];\n",
+                    "message": "StandardToken.balanceOf (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#153-155) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 95,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address who) constant returns (uint);\n",
+                    "message": "ERC20.balanceOf (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#95) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 170,
+                    "vulnerability_to_line": 172,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) constant returns (uint remaining) {\n\n    return allowed[_owner][_spender];\n",
+                    "message": "StandardToken.allowance (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#170-172) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 96,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address owner, address spender) constant returns (uint);\n",
+                    "message": "ERC20.allowance (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#96) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 100,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address spender, uint value) returns (bool ok);\n",
+                    "message": "ERC20.approve (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#100) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 157,
+                    "vulnerability_to_line": 168,
+                    "vulnerability_code": "  function approve(address _spender, uint _value) returns (bool success) {\n\n\n\n    // To change the approve amount you first have to reduce the addresses`\n\n    //  allowance to zero by calling `approve(_spender, 0)` if it is not\n\n    //  already 0 to mitigate the race condition described here:\n\n    //  https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729\n\n    if ((_value != 0) && (allowed[msg.sender][_spender] != 0)) throw;\n\n\n\n    allowed[msg.sender][_spender] = _value;\n\n    Approval(msg.sender, _spender, _value);\n\n    return true;\n",
+                    "message": "StandardToken.approve (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#157-168) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 132,
+                    "vulnerability_to_line": 134,
+                    "vulnerability_code": "  function isToken() public constant returns (bool weAre) {\n\n    return true;\n",
+                    "message": "StandardToken.isToken (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#132-134) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 174,
+                    "vulnerability_to_line": 179,
+                    "vulnerability_code": "  function increaseApproval (address _spender, uint _addedValue)\n\n    returns (bool success) {\n\n    allowed[msg.sender][_spender] = allowed[msg.sender][_spender].add(_addedValue);\n\n    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n\n    return true;\n",
+                    "message": "StandardToken.increaseApproval (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#174-179) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 181,
+                    "vulnerability_to_line": 191,
+                    "vulnerability_code": "  function decreaseApproval (address _spender, uint _subtractedValue)\n\n    returns (bool success) {\n\n    uint oldValue = allowed[msg.sender][_spender];\n\n    if (_subtractedValue > oldValue) {\n\n      allowed[msg.sender][_spender] = 0;\n\n    } else {\n\n      allowed[msg.sender][_spender] = oldValue.sub(_subtractedValue);\n\n    }\n\n    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n\n    return true;\n",
+                    "message": "StandardToken.decreaseApproval (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#181-191) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 212,
+                    "vulnerability_to_line": 221,
+                    "vulnerability_code": "  function mint(address receiver, uint amount) onlyMintAgent canMint public {\n\n\n\n    if(amount == 0) {\n\n      throw;\n\n    }\n\n\n\n    totalSupply = totalSupply.add(amount);\n\n    balances[receiver] = balances[receiver].add(amount);\n\n    Transfer(0, receiver, amount);\n",
+                    "message": "MintableToken.mint (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#212-221) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 226,
+                    "vulnerability_to_line": 229,
+                    "vulnerability_code": "  function setMintAgent(address addr, bool state) onlyOwner canMint public {\n\n    mintAgents[addr] = state;\n\n    MintingAgentChanged(addr, state);\n",
+                    "message": "MintableToken.setMintAgent (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#226-229) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 274,
+                    "vulnerability_to_line": 278,
+                    "vulnerability_code": "  function setReleaseAgent(address addr) onlyOwner inReleaseState(false) public {\n\n\n\n    // We don't do interface check here as we might want to a normal wallet address to act as a release agent\n\n    releaseAgent = addr;\n",
+                    "message": "ReleasableToken.setReleaseAgent (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#274-278) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 280,
+                    "vulnerability_to_line": 282,
+                    "vulnerability_code": "  function setTransferAgent(address addr, bool state) onlyOwner inReleaseState(false) public {\n\n    transferAgents[addr] = state;\n",
+                    "message": "ReleasableToken.setTransferAgent (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#280-282) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 349,
+                    "vulnerability_to_line": 369,
+                    "vulnerability_code": "  function upgrade(uint256 value) public {\n\n\n\n      UpgradeState state = getUpgradeState();\n\n      if(!(state == UpgradeState.ReadyToUpgrade || state == UpgradeState.Upgrading)) {\n\n        // Called in a bad state\n\n        throw;\n\n      }\n\n\n\n      // Validate input value.\n\n      if (value == 0) throw;\n\n\n\n      balances[msg.sender] = balances[msg.sender].sub(value);\n\n\n\n      // Take tokens out from circulation\n\n      totalSupply = totalSupply.sub(value);\n\n      totalUpgraded = totalUpgraded.add(value);\n\n\n\n      // Upgrade agent reissues the tokens\n\n      upgradeAgent.upgradeFrom(msg.sender, value);\n\n      Upgrade(msg.sender, upgradeAgent, value);\n",
+                    "message": "UpgradeableToken.upgrade (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#349-369) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 413,
+                    "vulnerability_to_line": 417,
+                    "vulnerability_code": "  function setUpgradeMaster(address master) public {\n\n      if (master == 0x0) throw;\n\n      if (msg.sender != upgradeMaster) throw;\n\n      upgradeMaster = master;\n",
+                    "message": "UpgradeableToken.setUpgradeMaster (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#413-417) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 493,
+                    "vulnerability_to_line": 498,
+                    "vulnerability_code": "  function setTokenInformation(string _name, string _symbol) onlyOwner {\n\n    name = _name;\n\n    symbol = _symbol;\n\n\n\n    UpdatedTokenInformation(name, symbol);\n",
+                    "message": "CrowdsaleToken.setTokenInformation (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#493-498) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 513,
+                    "vulnerability_to_line": 515,
+                    "vulnerability_code": "  function isUpgradeAgent() public constant returns (bool) {\n\n    return true;\n",
+                    "message": "UpgradeAgent.isUpgradeAgent (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#513-515) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 517,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function upgradeFrom(address _from, uint256 _value) public;\n",
+                    "message": "UpgradeAgent.upgradeFrom (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#517) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.11;\n",
+                    "message": "Detected issues with version pragma in Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol:\n\t- pragma solidity^0.4.11 (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#7): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": 74,
+                    "vulnerability_code": "  function Ownable() {\n\n    owner = msg.sender;\n",
+                    "message": "Function 'Ownable.Ownable' (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#72-74) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address _owner) constant returns (uint balance) {\n",
+                    "message": "Parameter '_owner' of StandardToken.balanceOf (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#153) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 170,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) constant returns (uint remaining) {\n",
+                    "message": "Parameter '_owner' of StandardToken.allowance (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#170) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 170,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) constant returns (uint remaining) {\n",
+                    "message": "Parameter '_spender' of StandardToken.allowance (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#170) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 136,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint _value) returns (bool success) {\n",
+                    "message": "Parameter '_to' of StandardToken.transfer (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#136) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 136,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint _value) returns (bool success) {\n",
+                    "message": "Parameter '_value' of StandardToken.transfer (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#136) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 143,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint _value) returns (bool success) {\n",
+                    "message": "Parameter '_from' of StandardToken.transferFrom (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#143) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 143,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint _value) returns (bool success) {\n",
+                    "message": "Parameter '_to' of StandardToken.transferFrom (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#143) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 143,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint _value) returns (bool success) {\n",
+                    "message": "Parameter '_value' of StandardToken.transferFrom (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#143) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 157,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint _value) returns (bool success) {\n",
+                    "message": "Parameter '_spender' of StandardToken.approve (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#157) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 157,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint _value) returns (bool success) {\n",
+                    "message": "Parameter '_value' of StandardToken.approve (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#157) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 174,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function increaseApproval (address _spender, uint _addedValue)\n",
+                    "message": "Parameter '_spender' of StandardToken.increaseApproval (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#174) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 174,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function increaseApproval (address _spender, uint _addedValue)\n",
+                    "message": "Parameter '_addedValue' of StandardToken.increaseApproval (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#174) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 181,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function decreaseApproval (address _spender, uint _subtractedValue)\n",
+                    "message": "Parameter '_spender' of StandardToken.decreaseApproval (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#181) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 181,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function decreaseApproval (address _spender, uint _subtractedValue)\n",
+                    "message": "Parameter '_subtractedValue' of StandardToken.decreaseApproval (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#181) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 304,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint _value) canTransfer(msg.sender) returns (bool success) {\n",
+                    "message": "Parameter '_to' of ReleasableToken.transfer (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#304) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 304,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint _value) canTransfer(msg.sender) returns (bool success) {\n",
+                    "message": "Parameter '_value' of ReleasableToken.transfer (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#304) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 309,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint _value) canTransfer(_from) returns (bool success) {\n",
+                    "message": "Parameter '_from' of ReleasableToken.transferFrom (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#309) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 309,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint _value) canTransfer(_from) returns (bool success) {\n",
+                    "message": "Parameter '_to' of ReleasableToken.transferFrom (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#309) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 309,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint _value) canTransfer(_from) returns (bool success) {\n",
+                    "message": "Parameter '_value' of ReleasableToken.transferFrom (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#309) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 342,
+                    "vulnerability_to_line": 344,
+                    "vulnerability_code": "  function UpgradeableToken(address _upgradeMaster) {\n\n    upgradeMaster = _upgradeMaster;\n",
+                    "message": "Function 'UpgradeableToken.UpgradeableToken' (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#342-344) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 342,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function UpgradeableToken(address _upgradeMaster) {\n",
+                    "message": "Parameter '_upgradeMaster' of UpgradeableToken.UpgradeableToken (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#342) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 443,
+                    "vulnerability_to_line": 473,
+                    "vulnerability_code": "  function CrowdsaleToken(string _name, string _symbol, uint _initialSupply, uint _decimals, bool _mintable)\n\n    UpgradeableToken(msg.sender) {\n\n\n\n    // Create any address, can be transferred\n\n    // to team multisig via changeOwner(),\n\n    // also remember to call setUpgradeMaster()\n\n    owner = msg.sender;\n\n\n\n    name = _name;\n\n    symbol = _symbol;\n\n\n\n    totalSupply = _initialSupply;\n\n\n\n    decimals = _decimals;\n\n\n\n    // Create initially all balance on the team multisig\n\n    balances[owner] = totalSupply;\n\n\n\n    if(totalSupply > 0) {\n\n      Minted(owner, totalSupply);\n\n    }\n\n\n\n    // No more new supply allowed after the token creation. \n\n    if(!_mintable) {\n\n      mintingFinished = true;\n\n      if(totalSupply == 0) {\n\n        throw; // Cannot create a token without supply and no minting\n\n      }\n\n    }\n\n\n",
+                    "message": "Function 'CrowdsaleToken.CrowdsaleToken' (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#443-473) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 443,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function CrowdsaleToken(string _name, string _symbol, uint _initialSupply, uint _decimals, bool _mintable)\n",
+                    "message": "Parameter '_name' of CrowdsaleToken.CrowdsaleToken (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#443) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 443,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function CrowdsaleToken(string _name, string _symbol, uint _initialSupply, uint _decimals, bool _mintable)\n",
+                    "message": "Parameter '_symbol' of CrowdsaleToken.CrowdsaleToken (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#443) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 443,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function CrowdsaleToken(string _name, string _symbol, uint _initialSupply, uint _decimals, bool _mintable)\n",
+                    "message": "Parameter '_initialSupply' of CrowdsaleToken.CrowdsaleToken (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#443) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 443,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function CrowdsaleToken(string _name, string _symbol, uint _initialSupply, uint _decimals, bool _mintable)\n",
+                    "message": "Parameter '_decimals' of CrowdsaleToken.CrowdsaleToken (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#443) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 443,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function CrowdsaleToken(string _name, string _symbol, uint _initialSupply, uint _decimals, bool _mintable)\n",
+                    "message": "Parameter '_mintable' of CrowdsaleToken.CrowdsaleToken (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#443) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 493,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setTokenInformation(string _name, string _symbol) onlyOwner {\n",
+                    "message": "Parameter '_name' of CrowdsaleToken.setTokenInformation (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#493) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 493,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setTokenInformation(string _name, string _symbol) onlyOwner {\n",
+                    "message": "Parameter '_symbol' of CrowdsaleToken.setTokenInformation (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#493) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 503,
+                    "vulnerability_to_line": 505,
+                    "vulnerability_code": "  function TapcoinToken(string _name, string _symbol, uint _initialSupply, uint _decimals, bool _mintable)\n\n   CrowdsaleToken(_name, _symbol, _initialSupply, _decimals, _mintable) {\n",
+                    "message": "Function 'TapcoinToken.TapcoinToken' (Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol#503-505) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 403,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    else if(address(upgradeAgent) == 0x00) return UpgradeState.WaitingForAgent;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 56,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 163,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if ((_value != 0) && (allowed[msg.sender][_spender] != 0)) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 215,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 234,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 241,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if(mintingFinished) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 267,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 291,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 299,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 354,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 358,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if (value == 0) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 379,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 382,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if (agent == 0x0) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 384,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if (msg.sender != upgradeMaster) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 386,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if (getUpgradeState() == UpgradeState.Upgrading) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 391,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if(!upgradeAgent.isUpgradeAgent()) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 393,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if (upgradeAgent.originalSupply() != totalSupply) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 414,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if (master == 0x0) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 415,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if (msg.sender != upgradeMaster) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 469,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        throw; // Cannot create a token without supply and no minting\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function max64(uint64 a, uint64 b) internal constant returns (uint64) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function min64(uint64 a, uint64 b) internal constant returns (uint64) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function max256(uint256 a, uint256 b) internal constant returns (uint256) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function min256(uint256 a, uint256 b) internal constant returns (uint256) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 95,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address who) constant returns (uint);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 96,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address owner, address spender) constant returns (uint);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 132,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function isToken() public constant returns (bool weAre) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address _owner) constant returns (uint balance) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 170,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) constant returns (uint remaining) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 401,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function getUpgradeState() public constant returns(UpgradeState) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 422,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function canUpgrade() public constant returns(bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 486,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function canUpgrade() public constant returns(bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 513,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function isUpgradeAgent() public constant returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 157,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint _value) returns (bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 226,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setMintAgent(address addr, bool state) onlyOwner canMint public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 274,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setReleaseAgent(address addr) onlyOwner inReleaseState(false) public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 280,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setTransferAgent(address addr, bool state) onlyOwner inReleaseState(false) public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 493,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setTokenInformation(string _name, string _symbol) onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.11;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (!assertion) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 163,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if ((_value != 0) && (allowed[msg.sender][_spender] != 0)) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 214,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if(amount == 0) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 233,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if(!mintAgents[msg.sender]) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 241,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if(mintingFinished) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 266,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if(!transferAgents[_sender]) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 290,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if(releaseState != released) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 298,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if(msg.sender != releaseAgent) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 352,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if(!(state == UpgradeState.ReadyToUpgrade || state == UpgradeState.Upgrading)) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 358,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if (value == 0) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 377,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if(!canUpgrade()) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 382,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if (agent == 0x0) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 384,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if (msg.sender != upgradeMaster) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 386,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if (getUpgradeState() == UpgradeState.Upgrading) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 391,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if(!upgradeAgent.isUpgradeAgent()) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 393,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if (upgradeAgent.originalSupply() != totalSupply) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 414,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if (master == 0x0) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 415,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if (msg.sender != upgradeMaster) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 468,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if(totalSupply == 0) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 120,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 197,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function Ownable() {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 95,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address who) constant returns (uint);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 96,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address owner, address spender) constant returns (uint);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 98,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address to, uint value) returns (bool ok);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 99,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address from, address to, uint value) returns (bool ok);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 100,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address spender, uint value) returns (bool ok);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 136,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint _value) returns (bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 143,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint _value) returns (bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address _owner) constant returns (uint balance) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 157,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint _value) returns (bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 170,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) constant returns (uint remaining) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 174,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function increaseApproval (address _spender, uint _addedValue)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 181,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function decreaseApproval (address _spender, uint _subtractedValue)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 304,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint _value) canTransfer(msg.sender) returns (bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 309,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint _value) canTransfer(_from) returns (bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 342,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function UpgradeableToken(address _upgradeMaster) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 443,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function CrowdsaleToken(string _name, string _symbol, uint _initialSupply, uint _decimals, bool _mintable)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 493,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setTokenInformation(string _name, string _symbol) onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 503,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function TapcoinToken(string _name, string _symbol, uint _initialSupply, uint _decimals, bool _mintable)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 126,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping(address => uint) balances;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 129,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping (address => mapping (address => uint)) allowed;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

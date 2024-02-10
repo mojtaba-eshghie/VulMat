@@ -1,0 +1,964 @@
+{
+    "SwerveContracts-487b410528163c314d8851521c37e8f8360d638f/YPoolDelegator.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address[4] memory _coinsIn, address[4] memory _underlying_coinsIn, address _pool_token, uint256 _A, uint256 _fee) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < 4; i++) {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(_coinsIn[i] != address(0));\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(_underlying_coinsIn[i] != address(0));\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            _balances.push(0);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            _coins.push(_coinsIn[i]);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            _underlying_coins.push(_underlying_coinsIn[i]);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        A = _A;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        fee = _fee;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            _balances.push(0);\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            _coins.push(_coinsIn[i]);\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            _underlying_coins.push(_underlying_coinsIn[i]);\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < 4; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < 4; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_30"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "locked-ether",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": 77,
+                    "vulnerability_code": "    fallback() external payable {\n\n        address _target = 0xA5407eAE9Ba41422680e2e00537571bcC53efBfD;\n\n\n\n        assembly {\n\n            let _calldataMemOffset := mload(0x40)\n\n            let _callDataSZ := calldatasize()\n\n            let _size := and(add(_callDataSZ, 0x1f), not(0x1f))\n\n            mstore(0x40, add(_calldataMemOffset, _size))\n\n            calldatacopy(_calldataMemOffset, 0x0, _callDataSZ)\n\n            let _retval := delegatecall(gas(), _target, _calldataMemOffset, _callDataSZ, 0, 0)\n\n            switch _retval\n\n            case 0 {\n\n                revert(0,0)\n\n            } default {\n\n                let _returndataMemoryOff := mload(0x40)\n\n                mstore(0x40, add(_returndataMemoryOff, returndatasize()))\n\n                returndatacopy(_returndataMemoryOff, 0x0, returndatasize())\n\n                return(_returndataMemoryOff, returndatasize())\n\n            }\n\n        }\n",
+                    "message": "Contract locking ether found in YPoolDelegator.sol:\n\tContract YPoolDelegator has payable functions:\n\t - fallback (YPoolDelegator.sol#57-77)\n\tBut does not have a function to withdraw the ether\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": 77,
+                    "vulnerability_code": "    fallback() external payable {\n\n        address _target = 0xA5407eAE9Ba41422680e2e00537571bcC53efBfD;\n\n\n\n        assembly {\n\n            let _calldataMemOffset := mload(0x40)\n\n            let _callDataSZ := calldatasize()\n\n            let _size := and(add(_callDataSZ, 0x1f), not(0x1f))\n\n            mstore(0x40, add(_calldataMemOffset, _size))\n\n            calldatacopy(_calldataMemOffset, 0x0, _callDataSZ)\n\n            let _retval := delegatecall(gas(), _target, _calldataMemOffset, _callDataSZ, 0, 0)\n\n            switch _retval\n\n            case 0 {\n\n                revert(0,0)\n\n            } default {\n\n                let _returndataMemoryOff := mload(0x40)\n\n                mstore(0x40, add(_returndataMemoryOff, returndatasize()))\n\n                returndatacopy(_returndataMemoryOff, 0x0, returndatasize())\n\n                return(_returndataMemoryOff, returndatasize())\n\n            }\n\n        }\n",
+                    "message": "YPoolDelegator.fallback uses assembly (YPoolDelegator.sol#57-77)\n\t- YPoolDelegator.sol#60-76\n"
+                },
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public admin_actions_deadline;\n",
+                    "message": "YPoolDelegator.admin_actions_deadline should be constant (YPoolDelegator.sol#17)\nYPoolDelegator.future_A should be constant (YPoolDelegator.sol#19)\nYPoolDelegator.future_admin_fee should be constant (YPoolDelegator.sol#21)\nYPoolDelegator.future_fee should be constant (YPoolDelegator.sol#20)\nYPoolDelegator.future_owner should be constant (YPoolDelegator.sol#22)\nYPoolDelegator.transfer_ownership_deadline should be constant (YPoolDelegator.sol#18)\n"
+                },
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.10;\n",
+                    "message": "Different versions of Solidity is used in YPoolDelegator.sol:\n\t- Version used: ['0.6.10', 'ABIEncoderV2']\n\t- YPoolDelegator.sol#3 declares pragma solidity0.6.10\n\t- YPoolDelegator.sol#4 declares pragma experimentalABIEncoderV2\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": 47,
+                    "vulnerability_code": "    function balances(int128 i) public view returns (uint256) {\n\n        return _balances[uint256(i)];\n",
+                    "message": "YPoolDelegator.balances (YPoolDelegator.sol#45-47) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": 51,
+                    "vulnerability_code": "    function coins(int128 i) public view returns (address) {\n\n        return _coins[uint256(i)];\n",
+                    "message": "YPoolDelegator.coins (YPoolDelegator.sol#49-51) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": 55,
+                    "vulnerability_code": "    function underlying_coins(int128 i) public view returns (address) {\n\n        return _underlying_coins[uint256(i)];\n",
+                    "message": "YPoolDelegator.underlying_coins (YPoolDelegator.sol#53-55) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.10;\n",
+                    "message": "Detected issues with version pragma in YPoolDelegator.sol:\n\t- pragma solidity0.6.10 (YPoolDelegator.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address[4] memory _coinsIn, address[4] memory _underlying_coinsIn, address _pool_token, uint256 _A, uint256 _fee) public {\n",
+                    "message": "Parameter '_coinsIn' of YPoolDelegator. (YPoolDelegator.sol#28) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address[4] memory _coinsIn, address[4] memory _underlying_coinsIn, address _pool_token, uint256 _A, uint256 _fee) public {\n",
+                    "message": "Parameter '_underlying_coinsIn' of YPoolDelegator. (YPoolDelegator.sol#28) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address[4] memory _coinsIn, address[4] memory _underlying_coinsIn, address _pool_token, uint256 _A, uint256 _fee) public {\n",
+                    "message": "Parameter '_pool_token' of YPoolDelegator. (YPoolDelegator.sol#28) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address[4] memory _coinsIn, address[4] memory _underlying_coinsIn, address _pool_token, uint256 _A, uint256 _fee) public {\n",
+                    "message": "Parameter '_A' of YPoolDelegator. (YPoolDelegator.sol#28) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address[4] memory _coinsIn, address[4] memory _underlying_coinsIn, address _pool_token, uint256 _A, uint256 _fee) public {\n",
+                    "message": "Parameter '_fee' of YPoolDelegator. (YPoolDelegator.sol#28) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": 55,
+                    "vulnerability_code": "    function underlying_coins(int128 i) public view returns (address) {\n\n        return _underlying_coins[uint256(i)];\n",
+                    "message": "Function 'YPoolDelegator.underlying_coins' (YPoolDelegator.sol#53-55) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address[] public _coins;\n",
+                    "message": "Variable 'YPoolDelegator._coins' (YPoolDelegator.sol#8) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address[] public _underlying_coins;\n",
+                    "message": "Variable 'YPoolDelegator._underlying_coins' (YPoolDelegator.sol#9) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256[] public _balances;\n",
+                    "message": "Variable 'YPoolDelegator._balances' (YPoolDelegator.sol#10) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public A;\n",
+                    "message": "Variable 'YPoolDelegator.A' (YPoolDelegator.sol#11) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public admin_fee;\n",
+                    "message": "Variable 'YPoolDelegator.admin_fee' (YPoolDelegator.sol#13) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 constant max_admin_fee = 5 * 10 ** 9;\n",
+                    "message": "Constant 'YPoolDelegator.max_admin_fee' (YPoolDelegator.sol#14) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public admin_actions_deadline;\n",
+                    "message": "Variable 'YPoolDelegator.admin_actions_deadline' (YPoolDelegator.sol#17) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public transfer_ownership_deadline;\n",
+                    "message": "Variable 'YPoolDelegator.transfer_ownership_deadline' (YPoolDelegator.sol#18) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public future_A;\n",
+                    "message": "Variable 'YPoolDelegator.future_A' (YPoolDelegator.sol#19) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public future_fee;\n",
+                    "message": "Variable 'YPoolDelegator.future_fee' (YPoolDelegator.sol#20) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public future_admin_fee;\n",
+                    "message": "Variable 'YPoolDelegator.future_admin_fee' (YPoolDelegator.sol#21) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address public future_owner;\n",
+                    "message": "Variable 'YPoolDelegator.future_owner' (YPoolDelegator.sol#22) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 kill_deadline;\n",
+                    "message": "Variable 'YPoolDelegator.kill_deadline' (YPoolDelegator.sol#24) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 constant kill_deadline_dt = 2 * 30 * 86400;\n",
+                    "message": "Constant 'YPoolDelegator.kill_deadline_dt' (YPoolDelegator.sol#25) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bool is_killed;\n",
+                    "message": "Variable 'YPoolDelegator.is_killed' (YPoolDelegator.sol#26) is not in mixedCase\n"
+                },
+                {
+                    "name": "unused-state",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 constant max_admin_fee = 5 * 10 ** 9;\n",
+                    "message": "YPoolDelegator.max_admin_fee (YPoolDelegator.sol#14) is never used in YPoolDelegator\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _target = 0xA5407eAE9Ba41422680e2e00537571bcC53efBfD;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 constant max_admin_fee = 5 * 10 ** 9;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address token;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 kill_deadline;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 constant kill_deadline_dt = 2 * 30 * 86400;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bool is_killed;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    fallback() external payable {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _target = 0xA5407eAE9Ba41422680e2e00537571bcC53efBfD;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            let _calldataMemOffset := mload(0x40)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            let _calldataMemOffset := mload(0x40)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            let _callDataSZ := calldatasize()\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            let _callDataSZ := calldatasize()\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            let _size := and(add(_callDataSZ, 0x1f), not(0x1f))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            let _size := and(add(_callDataSZ, 0x1f), not(0x1f))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            let _size := and(add(_callDataSZ, 0x1f), not(0x1f))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            mstore(0x40, add(_calldataMemOffset, _size))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            mstore(0x40, add(_calldataMemOffset, _size))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            calldatacopy(_calldataMemOffset, 0x0, _callDataSZ)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            calldatacopy(_calldataMemOffset, 0x0, _callDataSZ)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 66,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            let _retval := delegatecall(gas(), _target, _calldataMemOffset, _callDataSZ, 0, 0)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 66,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            let _retval := delegatecall(gas(), _target, _calldataMemOffset, _callDataSZ, 0, 0)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 66,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            let _retval := delegatecall(gas(), _target, _calldataMemOffset, _callDataSZ, 0, 0)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 67,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            switch _retval\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 69,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                revert(0,0)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 69,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                revert(0,0)\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "SwerveContracts-487b410528163c314d8851521c37e8f8360d638f/ZapDelegator.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address[4] memory _coinsIn, address[4] memory _underlying_coinsIn, address _curve, address _pool_token) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < 4; i++) {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(_underlying_coinsIn[i] != address(0));\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(_coinsIn[i] != address(0));\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            _coins.push(_coinsIn[i]);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            _underlying_coins.push(_underlying_coinsIn[i]);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        curve = _curve;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        token = _pool_token;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            _coins.push(_coinsIn[i]);\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            _underlying_coins.push(_underlying_coinsIn[i]);\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < 4; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < 4; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_13"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "locked-ether",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": 56,
+                    "vulnerability_code": "    fallback() external payable {\n\n        address _target = 0xFCBa3E75865d2d561BE8D220616520c171F12851;\n\n\n\n        assembly {\n\n            let _calldataMemOffset := mload(0x40)\n\n            let _callDataSZ := calldatasize()\n\n            let _size := and(add(_callDataSZ, 0x1f), not(0x1f))\n\n            mstore(0x40, add(_calldataMemOffset, _size))\n\n            calldatacopy(_calldataMemOffset, 0x0, _callDataSZ)\n\n            let _retval := delegatecall(gas(), _target, _calldataMemOffset, _callDataSZ, 0, 0)\n\n            switch _retval\n\n            case 0 {\n\n                revert(0,0)\n\n            } default {\n\n                let _returndataMemoryOff := mload(0x40)\n\n                mstore(0x40, add(_returndataMemoryOff, returndatasize()))\n\n                returndatacopy(_returndataMemoryOff, 0x0, returndatasize())\n\n                return(_returndataMemoryOff, returndatasize())\n\n            }\n\n        }\n",
+                    "message": "Contract locking ether found in ZapDelegator.sol:\n\tContract ZapDelegator has payable functions:\n\t - fallback (ZapDelegator.sol#36-56)\n\tBut does not have a function to withdraw the ether\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": 56,
+                    "vulnerability_code": "    fallback() external payable {\n\n        address _target = 0xFCBa3E75865d2d561BE8D220616520c171F12851;\n\n\n\n        assembly {\n\n            let _calldataMemOffset := mload(0x40)\n\n            let _callDataSZ := calldatasize()\n\n            let _size := and(add(_callDataSZ, 0x1f), not(0x1f))\n\n            mstore(0x40, add(_calldataMemOffset, _size))\n\n            calldatacopy(_calldataMemOffset, 0x0, _callDataSZ)\n\n            let _retval := delegatecall(gas(), _target, _calldataMemOffset, _callDataSZ, 0, 0)\n\n            switch _retval\n\n            case 0 {\n\n                revert(0,0)\n\n            } default {\n\n                let _returndataMemoryOff := mload(0x40)\n\n                mstore(0x40, add(_returndataMemoryOff, returndatasize()))\n\n                returndatacopy(_returndataMemoryOff, 0x0, returndatasize())\n\n                return(_returndataMemoryOff, returndatasize())\n\n            }\n\n        }\n",
+                    "message": "ZapDelegator.fallback uses assembly (ZapDelegator.sol#36-56)\n\t- ZapDelegator.sol#39-55\n"
+                },
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.10;\n",
+                    "message": "Different versions of Solidity is used in ZapDelegator.sol:\n\t- Version used: ['0.6.10', 'ABIEncoderV2']\n\t- ZapDelegator.sol#3 declares pragma solidity0.6.10\n\t- ZapDelegator.sol#4 declares pragma experimentalABIEncoderV2\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": 30,
+                    "vulnerability_code": "    function coins(int128 i) public view returns (address) {\n\n        return _coins[uint256(i)];\n",
+                    "message": "ZapDelegator.coins (ZapDelegator.sol#28-30) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": 34,
+                    "vulnerability_code": "    function underlying_coins(int128 i) public view returns (address) {\n\n        return _underlying_coins[uint256(i)];\n",
+                    "message": "ZapDelegator.underlying_coins (ZapDelegator.sol#32-34) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.10;\n",
+                    "message": "Detected issues with version pragma in ZapDelegator.sol:\n\t- pragma solidity0.6.10 (ZapDelegator.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address[4] memory _coinsIn, address[4] memory _underlying_coinsIn, address _curve, address _pool_token) public {\n",
+                    "message": "Parameter '_coinsIn' of ZapDelegator. (ZapDelegator.sol#17) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address[4] memory _coinsIn, address[4] memory _underlying_coinsIn, address _curve, address _pool_token) public {\n",
+                    "message": "Parameter '_underlying_coinsIn' of ZapDelegator. (ZapDelegator.sol#17) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address[4] memory _coinsIn, address[4] memory _underlying_coinsIn, address _curve, address _pool_token) public {\n",
+                    "message": "Parameter '_curve' of ZapDelegator. (ZapDelegator.sol#17) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address[4] memory _coinsIn, address[4] memory _underlying_coinsIn, address _curve, address _pool_token) public {\n",
+                    "message": "Parameter '_pool_token' of ZapDelegator. (ZapDelegator.sol#17) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": 34,
+                    "vulnerability_code": "    function underlying_coins(int128 i) public view returns (address) {\n\n        return _underlying_coins[uint256(i)];\n",
+                    "message": "Function 'ZapDelegator.underlying_coins' (ZapDelegator.sol#32-34) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address[] public _coins;\n",
+                    "message": "Variable 'ZapDelegator._coins' (ZapDelegator.sol#12) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address[] public _underlying_coins;\n",
+                    "message": "Variable 'ZapDelegator._underlying_coins' (ZapDelegator.sol#13) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _target = 0xFCBa3E75865d2d561BE8D220616520c171F12851;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    fallback() external payable {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _target = 0xFCBa3E75865d2d561BE8D220616520c171F12851;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            let _calldataMemOffset := mload(0x40)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            let _calldataMemOffset := mload(0x40)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            let _callDataSZ := calldatasize()\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            let _callDataSZ := calldatasize()\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            let _size := and(add(_callDataSZ, 0x1f), not(0x1f))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            let _size := and(add(_callDataSZ, 0x1f), not(0x1f))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            let _size := and(add(_callDataSZ, 0x1f), not(0x1f))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            mstore(0x40, add(_calldataMemOffset, _size))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            mstore(0x40, add(_calldataMemOffset, _size))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            calldatacopy(_calldataMemOffset, 0x0, _callDataSZ)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            calldatacopy(_calldataMemOffset, 0x0, _callDataSZ)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            let _retval := delegatecall(gas(), _target, _calldataMemOffset, _callDataSZ, 0, 0)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            let _retval := delegatecall(gas(), _target, _calldataMemOffset, _callDataSZ, 0, 0)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            let _retval := delegatecall(gas(), _target, _calldataMemOffset, _callDataSZ, 0, 0)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            switch _retval\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 48,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                revert(0,0)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 48,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                revert(0,0)\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "SwerveContracts-487b410528163c314d8851521c37e8f8360d638f/APYOracle.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(YPool _pool, uint256 _poolDeployBlock) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        pool = _pool;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        poolDeployBlock = _poolDeployBlock;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "curve-readonly-reentrancy",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tuint256 price = pool.get_virtual_price() - 1e18;\n",
+                    "message": "pool.get_virtual_price() call on a Curve pool is not protected from the read-only reentrancy."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.10;\n",
+                    "message": "Detected issues with version pragma in APYOracle.sol:\n\t- pragma solidity0.6.10 (APYOracle.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function get_virtual_price() external view virtual returns (uint256);\n",
+                    "message": "Function 'YPool.get_virtual_price' (APYOracle.sol#6) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(YPool _pool, uint256 _poolDeployBlock) public {\n",
+                    "message": "Parameter '_pool' of APYOracle. (APYOracle.sol#14) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(YPool _pool, uint256 _poolDeployBlock) public {\n",
+                    "message": "Parameter '_poolDeployBlock' of APYOracle. (APYOracle.sol#14) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 constant blocksPerYear = 242584;\n",
+                    "message": "Constant 'APYOracle.blocksPerYear' (APYOracle.sol#12) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 constant blocksPerYear = 242584;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

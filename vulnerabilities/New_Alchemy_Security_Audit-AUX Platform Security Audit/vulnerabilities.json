@@ -1,0 +1,789 @@
+{
+    "auction-contracts-0da231969b7f791cb1c131956b3f8886f860617b/DescendingPriceERC721Auction.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Pausable is Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 197,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract FeeCollector is Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 313,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Whitelistable is Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  bool public paused = false;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 199,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 feeBalance = 0;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 299,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(startPrice > 0 && priceFloor < startPrice && priceFloor >= 0 && duration > 0);\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_23"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "erc20-interface",
+                    "vulnerability_from_line": 375,
+                    "vulnerability_to_line": 399,
+                    "vulnerability_code": "contract ERC721Basic {\n\n  event Transfer(address indexed _from, address indexed _to, uint256 _tokenId);\n\n  event Approval(address indexed _owner, address indexed _approved, uint256 _tokenId);\n\n  event ApprovalForAll(address indexed _owner, address indexed _operator, bool _approved);\n\n\n\n  function balanceOf(address _owner) public view returns (uint256 _balance);\n\n  function ownerOf(uint256 _tokenId) public view returns (address _owner);\n\n  function exists(uint256 _tokenId) public view returns (bool _exists);\n\n\n\n  function approve(address _to, uint256 _tokenId) public;\n\n  function getApproved(uint256 _tokenId) public view returns (address _operator);\n\n\n\n  function setApprovalForAll(address _operator, bool _approved) public;\n\n  function isApprovedForAll(address _owner, address _operator) public view returns (bool);\n\n\n\n  function transferFrom(address _from, address _to, uint256 _tokenId) public;\n\n  function safeTransferFrom(address _from, address _to, uint256 _tokenId) public;\n\n  function safeTransferFrom(\n\n    address _from,\n\n    address _to,\n\n    uint256 _tokenId,\n\n    bytes _data\n\n  )\n\n    public;\n",
+                    "message": "ERC721Basic (DescendingPriceERC721Auction.sol#375-399) has incorrect ERC20 function interface(s):\n\t-approve (DescendingPriceERC721Auction.sol#384)\n\t-transferFrom (DescendingPriceERC721Auction.sol#390)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": 43,
+                    "vulnerability_code": "  function transferOwnership(address newOwner) public onlyOwner {\n\n    require(newOwner != address(0));\n\n    emit OwnershipTransferred(owner, newOwner);\n\n    owner = newOwner;\n",
+                    "message": "Ownable.transferOwnership (DescendingPriceERC721Auction.sol#39-43) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": 82,
+                    "vulnerability_code": "  function pause() onlyOwner whenNotPaused public {\n\n    paused = true;\n\n    emit Pause();\n",
+                    "message": "Pausable.pause (DescendingPriceERC721Auction.sol#79-82) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 87,
+                    "vulnerability_to_line": 90,
+                    "vulnerability_code": "  function unpause() onlyOwner whenPaused public {\n\n    paused = false;\n\n    emit Unpause();\n",
+                    "message": "Pausable.unpause (DescendingPriceERC721Auction.sol#87-90) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 267,
+                    "vulnerability_to_line": 270,
+                    "vulnerability_code": "  function cancel(uint256 auctionId) whenNotPaused public onlySeller(auctionId) {\n\n    transferWinnings(auctionIdToSeller[auctionId], auctionId);\n\n    auctionIdToAcceptingBids[auctionId] = false;\n",
+                    "message": "DescendingPriceAuction.cancel (DescendingPriceERC721Auction.sol#267-270) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 340,
+                    "vulnerability_to_line": 349,
+                    "vulnerability_code": "  function addToWhitelist(address _address) public onlyOwner returns (bool) {\n\n    if (whitelist[_address]) {\n\n      // Already in the mapping\n\n      return false;\n\n    }\n\n\n\n    whitelist[_address] = true;\n\n    emit AddToWhitelist(_address);\n\n    return true;\n",
+                    "message": "Whitelistable.addToWhitelist (DescendingPriceERC721Auction.sol#340-349) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 357,
+                    "vulnerability_to_line": 366,
+                    "vulnerability_code": "  function removeFromWhitelist(address _address) public onlyOwner returns (bool) {\n\n    if (!whitelist[_address]) {\n\n      // Not currently in the mapping\n\n      return false;\n\n    }\n\n\n\n    whitelist[_address] = false;\n\n    emit RemoveFromWhitelist(_address);\n\n    return true;\n",
+                    "message": "Whitelistable.removeFromWhitelist (DescendingPriceERC721Auction.sol#357-366) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 380,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address _owner) public view returns (uint256 _balance);\n",
+                    "message": "ERC721Basic.balanceOf (DescendingPriceERC721Auction.sol#380) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 381,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function ownerOf(uint256 _tokenId) public view returns (address _owner);\n",
+                    "message": "ERC721Basic.ownerOf (DescendingPriceERC721Auction.sol#381) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 382,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function exists(uint256 _tokenId) public view returns (bool _exists);\n",
+                    "message": "ERC721Basic.exists (DescendingPriceERC721Auction.sol#382) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 384,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _to, uint256 _tokenId) public;\n",
+                    "message": "ERC721Basic.approve (DescendingPriceERC721Auction.sol#384) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 385,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function getApproved(uint256 _tokenId) public view returns (address _operator);\n",
+                    "message": "ERC721Basic.getApproved (DescendingPriceERC721Auction.sol#385) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 387,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setApprovalForAll(address _operator, bool _approved) public;\n",
+                    "message": "ERC721Basic.setApprovalForAll (DescendingPriceERC721Auction.sol#387) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 388,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function isApprovedForAll(address _owner, address _operator) public view returns (bool);\n",
+                    "message": "ERC721Basic.isApprovedForAll (DescendingPriceERC721Auction.sol#388) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 390,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _tokenId) public;\n",
+                    "message": "ERC721Basic.transferFrom (DescendingPriceERC721Auction.sol#390) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 391,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function safeTransferFrom(address _from, address _to, uint256 _tokenId) public;\n",
+                    "message": "ERC721Basic.safeTransferFrom (DescendingPriceERC721Auction.sol#391) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 392,
+                    "vulnerability_to_line": 398,
+                    "vulnerability_code": "  function safeTransferFrom(\n\n    address _from,\n\n    address _to,\n\n    uint256 _tokenId,\n\n    bytes _data\n\n  )\n",
+                    "message": "ERC721Basic.safeTransferFrom (DescendingPriceERC721Auction.sol#392-398) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 482,
+                    "vulnerability_to_line": 493,
+                    "vulnerability_code": "  function createAuction(\n\n    uint256 startPrice,\n\n    uint256 priceFloor,\n\n    uint256 duration,\n\n    address assetAddress,\n\n    uint256 assetId) whenNotPaused public payable returns (uint256)\n\n    {\n\n    uint256 auctionId = createEmptyAuction();\n\n    setAuctionPricing(startPrice, priceFloor, duration, auctionId);\n\n    setAuctionAsset(assetAddress, assetId, auctionId);\n\n    return auctionId;\n",
+                    "message": "DescendingPriceERC721Auction.createAuction (DescendingPriceERC721Auction.sol#482-493) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.23;\n",
+                    "message": "Detected issues with version pragma in DescendingPriceERC721Auction.sol:\n\t- pragma solidity^0.4.23 (DescendingPriceERC721Auction.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": 25,
+                    "vulnerability_code": "  function Ownable() public {\n\n    owner = msg.sender;\n",
+                    "message": "Function 'Ownable.Ownable' (DescendingPriceERC721Auction.sol#23-25) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 330,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function inWhitelist(address _address) public view returns (bool) {\n",
+                    "message": "Parameter '_address' of Whitelistable.inWhitelist (DescendingPriceERC721Auction.sol#330) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 340,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function addToWhitelist(address _address) public onlyOwner returns (bool) {\n",
+                    "message": "Parameter '_address' of Whitelistable.addToWhitelist (DescendingPriceERC721Auction.sol#340) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 357,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function removeFromWhitelist(address _address) public onlyOwner returns (bool) {\n",
+                    "message": "Parameter '_address' of Whitelistable.removeFromWhitelist (DescendingPriceERC721Auction.sol#357) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DIV_MUL",
+                    "vulnerability_from_line": 289,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 priceDecrease = numberOfBlocksElapsed.mul(priceDifference.div(blockDifference));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 476,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract DescendingPriceERC721Auction is DescendingPriceAuction, ERC721Auction {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.23;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 198,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 231,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 396,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes _data\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 199,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 feeBalance = 0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 413,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping(address => mapping(uint256 => uint256)) assetContractToAssetIdToAuctionId;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "auction-contracts-0da231969b7f791cb1c131956b3f8886f860617b/DescendingPriceCryptoKitty.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Pausable is Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 296,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract FeeCollector is Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  bool public paused = false;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 298,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 feeBalance = 0;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 238,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor(address _cryptoKittyAddress) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 239,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    cryptoKittyAddress = _cryptoKittyAddress;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 240,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 421,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor(address _cryptoKittyAddress) CryptoKittyAuction(_cryptoKittyAddress) public { }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 398,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(startPrice > 0 && priceFloor < startPrice && priceFloor >= 0 && duration > 0);\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_13"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "erc20-interface",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": 35,
+                    "vulnerability_code": "contract CKERC721 {\n\n    // Required methods\n\n    function totalSupply() public view returns (uint256 total);\n\n    function balanceOf(address _owner) public view returns (uint256 balance);\n\n    function ownerOf(uint256 _tokenId) external view returns (address owner);\n\n    function approve(address _to, uint256 _tokenId) external;\n\n    function transfer(address _to, uint256 _tokenId) external;\n\n    function transferFrom(address _from, address _to, uint256 _tokenId) external;\n\n\n\n    // Events\n\n    event Transfer(address from, address to, uint256 tokenId);\n\n    event Approval(address owner, address approved, uint256 tokenId);\n\n\n\n    // Optional\n\n    // function name() public view returns (string name);\n\n    // function symbol() public view returns (string symbol);\n\n    // function tokensOfOwner(address _owner) external view returns (uint256[] tokenIds);\n\n    // function tokenMetadata(uint256 _tokenId, string _preferredTransport) public view returns (string infoUrl);\n\n\n\n    // ERC-165 Compatibility (https://github.com/ethereum/EIPs/issues/165)\n\n    function supportsInterface(bytes4 _interfaceID) external view returns (bool);\n",
+                    "message": "CKERC721 (DescendingPriceCryptoKitty.sol#14-35) has incorrect ERC20 function interface(s):\n\t-approve (DescendingPriceCryptoKitty.sol#19)\n\t-transfer (DescendingPriceCryptoKitty.sol#20)\n\t-transferFrom (DescendingPriceCryptoKitty.sol#21)\n"
+                },
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.23;\n",
+                    "message": "Different versions of Solidity is used in DescendingPriceCryptoKitty.sol:\n\t- Version used: ['^0.4.11', '^0.4.23']\n\t- DescendingPriceCryptoKitty.sol#3 declares pragma solidity^0.4.23\n\t- DescendingPriceCryptoKitty.sol#10 declares pragma solidity^0.4.11\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function totalSupply() public view returns (uint256 total);\n",
+                    "message": "CKERC721.totalSupply (DescendingPriceCryptoKitty.sol#16) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOf(address _owner) public view returns (uint256 balance);\n",
+                    "message": "CKERC721.balanceOf (DescendingPriceCryptoKitty.sol#17) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": 75,
+                    "vulnerability_code": "  function transferOwnership(address newOwner) public onlyOwner {\n\n    require(newOwner != address(0));\n\n    emit OwnershipTransferred(owner, newOwner);\n\n    owner = newOwner;\n",
+                    "message": "Ownable.transferOwnership (DescendingPriceCryptoKitty.sol#71-75) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 111,
+                    "vulnerability_to_line": 114,
+                    "vulnerability_code": "  function pause() onlyOwner whenNotPaused public {\n\n    paused = true;\n\n    emit Pause();\n",
+                    "message": "Pausable.pause (DescendingPriceCryptoKitty.sol#111-114) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 119,
+                    "vulnerability_to_line": 122,
+                    "vulnerability_code": "  function unpause() onlyOwner whenPaused public {\n\n    paused = false;\n\n    emit Unpause();\n",
+                    "message": "Pausable.unpause (DescendingPriceCryptoKitty.sol#119-122) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 366,
+                    "vulnerability_to_line": 369,
+                    "vulnerability_code": "  function cancel(uint256 auctionId) whenNotPaused public onlySeller(auctionId) {\n\n    transferWinnings(auctionIdToSeller[auctionId], auctionId);\n\n    auctionIdToAcceptingBids[auctionId] = false;\n",
+                    "message": "DescendingPriceAuction.cancel (DescendingPriceCryptoKitty.sol#366-369) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 427,
+                    "vulnerability_to_line": 432,
+                    "vulnerability_code": "  function createAuction(uint256 startPrice, uint256 priceFloor, uint256 duration, uint256 kittyId) whenNotPaused public payable returns (uint256) {\n\n    uint256 auctionId = createEmptyAuction();\n\n    setAuctionPricing(startPrice, priceFloor, duration, auctionId);\n\n    setAuctionAsset(kittyId, auctionId);\n\n    return auctionId;\n",
+                    "message": "DescendingPriceCryptoKittyAuction.createAuction (DescendingPriceCryptoKitty.sol#427-432) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.23;\n",
+                    "message": "Detected issues with version pragma in DescendingPriceCryptoKitty.sol:\n\t- pragma solidity^0.4.23 (DescendingPriceCryptoKitty.sol#3): it allows old versions\n\t- pragma solidity^0.4.11 (DescendingPriceCryptoKitty.sol#10): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": 57,
+                    "vulnerability_code": "  function Ownable() public {\n\n    owner = msg.sender;\n",
+                    "message": "Function 'Ownable.Ownable' (DescendingPriceCryptoKitty.sol#55-57) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 238,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor(address _cryptoKittyAddress) public {\n",
+                    "message": "Parameter '_cryptoKittyAddress' of CryptoKittyAuction. (DescendingPriceCryptoKitty.sol#238) is not in mixedCase\n"
+                },
+                {
+                    "name": "erc20-indexed",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": 35,
+                    "vulnerability_code": "contract CKERC721 {\n\n    // Required methods\n\n    function totalSupply() public view returns (uint256 total);\n\n    function balanceOf(address _owner) public view returns (uint256 balance);\n\n    function ownerOf(uint256 _tokenId) external view returns (address owner);\n\n    function approve(address _to, uint256 _tokenId) external;\n\n    function transfer(address _to, uint256 _tokenId) external;\n\n    function transferFrom(address _from, address _to, uint256 _tokenId) external;\n\n\n\n    // Events\n\n    event Transfer(address from, address to, uint256 tokenId);\n\n    event Approval(address owner, address approved, uint256 tokenId);\n\n\n\n    // Optional\n\n    // function name() public view returns (string name);\n\n    // function symbol() public view returns (string symbol);\n\n    // function tokensOfOwner(address _owner) external view returns (uint256[] tokenIds);\n\n    // function tokenMetadata(uint256 _tokenId, string _preferredTransport) public view returns (string infoUrl);\n\n\n\n    // ERC-165 Compatibility (https://github.com/ethereum/EIPs/issues/165)\n\n    function supportsInterface(bytes4 _interfaceID) external view returns (bool);\n",
+                    "message": "CKERC721 (DescendingPriceCryptoKitty.sol#14-35) does not mark important ERC20 parameters as 'indexed':\n\t-Transfer (DescendingPriceCryptoKitty.sol#24) does not index parameter 'from'\n\t-Transfer (DescendingPriceCryptoKitty.sol#24) does not index parameter 'to'\n\t-Approval (DescendingPriceCryptoKitty.sol#25) does not index parameter 'owner'\n\t-Approval (DescendingPriceCryptoKitty.sol#25) does not index parameter 'approved'\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DIV_MUL",
+                    "vulnerability_from_line": 388,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 priceDecrease = numberOfBlocksElapsed.mul(priceDifference.div(blockDifference));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 420,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract DescendingPriceCryptoKittyAuction is DescendingPriceAuction, CryptoKittyAuction {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.23;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.11;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 185,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 229,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 297,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 330,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 298,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 feeBalance = 0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "auction-contracts-0da231969b7f791cb1c131956b3f8886f860617b/DescendingPriceERC20Auction.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Pausable is Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 197,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract FeeCollector is Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 313,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Whitelistable is Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  bool public paused = false;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 199,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 feeBalance = 0;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 299,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(startPrice > 0 && priceFloor < startPrice && priceFloor >= 0 && duration > 0);\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 415,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(tokenAmount > 0 && auctionId != 0);\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_20"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 421,
+                    "vulnerability_to_line": 430,
+                    "vulnerability_code": "  function transferWinnings(address recipient, uint256 auctionId) internal {\n\n    require(auctionId != 0);\n\n    require(auctionHasAssets(auctionId));\n\n    ERC20 erc20Contract = ERC20(auctionIdToERC20Address[auctionId]);\n\n    /*NOTE: Error should be thrown by transfer if unapproved, this require is unnecessary gas.\n\n    require(token.getApproved(kittyId) == address(this));*/\n\n    uint256 tokenAmount = auctionIdToAmount[auctionId];\n\n    auctionIdToAmount[auctionId] = 0;\n\n    erc20Contract.transfer(recipient, tokenAmount);\n",
+                    "message": "ERC20Auction.transferWinnings (DescendingPriceERC20Auction.sol#421-430) does not use the value returned by external calls:\n\t-erc20Contract.transfer(recipient,tokenAmount) (DescendingPriceERC20Auction.sol#429)\n"
+                },
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 435,
+                    "vulnerability_to_line": 440,
+                    "vulnerability_code": "  function escrowERC20Tokens(address auctionSeller, address tokenAddress, uint256 tokenAmount) private {\n\n    ERC20 erc20Contract = ERC20(tokenAddress);\n\n    /*NOTE: Error should be thrown by transferFrom if unapproved, this require is unnecessary gas.\n\n    require(token.getApproved(kittyId) == address(this));*/\n\n    erc20Contract.transferFrom(auctionSeller, this, tokenAmount);\n",
+                    "message": "ERC20Auction.escrowERC20Tokens (DescendingPriceERC20Auction.sol#435-440) does not use the value returned by external calls:\n\t-erc20Contract.transferFrom(auctionSeller,this,tokenAmount) (DescendingPriceERC20Auction.sol#439)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": 43,
+                    "vulnerability_code": "  function transferOwnership(address newOwner) public onlyOwner {\n\n    require(newOwner != address(0));\n\n    emit OwnershipTransferred(owner, newOwner);\n\n    owner = newOwner;\n",
+                    "message": "Ownable.transferOwnership (DescendingPriceERC20Auction.sol#39-43) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": 82,
+                    "vulnerability_code": "  function pause() onlyOwner whenNotPaused public {\n\n    paused = true;\n\n    emit Pause();\n",
+                    "message": "Pausable.pause (DescendingPriceERC20Auction.sol#79-82) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 87,
+                    "vulnerability_to_line": 90,
+                    "vulnerability_code": "  function unpause() onlyOwner whenPaused public {\n\n    paused = false;\n\n    emit Unpause();\n",
+                    "message": "Pausable.unpause (DescendingPriceERC20Auction.sol#87-90) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 267,
+                    "vulnerability_to_line": 270,
+                    "vulnerability_code": "  function cancel(uint256 auctionId) whenNotPaused public onlySeller(auctionId) {\n\n    transferWinnings(auctionIdToSeller[auctionId], auctionId);\n\n    auctionIdToAcceptingBids[auctionId] = false;\n",
+                    "message": "DescendingPriceAuction.cancel (DescendingPriceERC20Auction.sol#267-270) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 340,
+                    "vulnerability_to_line": 349,
+                    "vulnerability_code": "  function addToWhitelist(address _address) public onlyOwner returns (bool) {\n\n    if (whitelist[_address]) {\n\n      // Already in the mapping\n\n      return false;\n\n    }\n\n\n\n    whitelist[_address] = true;\n\n    emit AddToWhitelist(_address);\n\n    return true;\n",
+                    "message": "Whitelistable.addToWhitelist (DescendingPriceERC20Auction.sol#340-349) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 357,
+                    "vulnerability_to_line": 366,
+                    "vulnerability_code": "  function removeFromWhitelist(address _address) public onlyOwner returns (bool) {\n\n    if (!whitelist[_address]) {\n\n      // Not currently in the mapping\n\n      return false;\n\n    }\n\n\n\n    whitelist[_address] = false;\n\n    emit RemoveFromWhitelist(_address);\n\n    return true;\n",
+                    "message": "Whitelistable.removeFromWhitelist (DescendingPriceERC20Auction.sol#357-366) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 377,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function totalSupply() public view returns (uint256);\n",
+                    "message": "ERC20Basic.totalSupply (DescendingPriceERC20Auction.sol#377) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 378,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address who) public view returns (uint256);\n",
+                    "message": "ERC20Basic.balanceOf (DescendingPriceERC20Auction.sol#378) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 379,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address to, uint256 value) public returns (bool);\n",
+                    "message": "ERC20Basic.transfer (DescendingPriceERC20Auction.sol#379) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 390,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address owner, address spender) public view returns (uint256);\n",
+                    "message": "ERC20.allowance (DescendingPriceERC20Auction.sol#390) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 391,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address from, address to, uint256 value) public returns (bool);\n",
+                    "message": "ERC20.transferFrom (DescendingPriceERC20Auction.sol#391) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 392,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address spender, uint256 value) public returns (bool);\n",
+                    "message": "ERC20.approve (DescendingPriceERC20Auction.sol#392) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 472,
+                    "vulnerability_to_line": 483,
+                    "vulnerability_code": "  function createAuction(\n\n    uint256 startPrice,\n\n    uint256 priceFloor,\n\n    uint256 duration,\n\n    address tokenAddress,\n\n    uint256 tokenAmount) whenNotPaused public payable returns (uint256)\n\n  {\n\n    uint256 auctionId = createEmptyAuction();\n\n    setAuctionPricing(startPrice, priceFloor, duration, auctionId);\n\n    setAuctionAsset(tokenAddress, tokenAmount, auctionId);\n\n    return auctionId;\n",
+                    "message": "DescendingPriceERC20Auction.createAuction (DescendingPriceERC20Auction.sol#472-483) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.23;\n",
+                    "message": "Detected issues with version pragma in DescendingPriceERC20Auction.sol:\n\t- pragma solidity^0.4.23 (DescendingPriceERC20Auction.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": 25,
+                    "vulnerability_code": "  function Ownable() public {\n\n    owner = msg.sender;\n",
+                    "message": "Function 'Ownable.Ownable' (DescendingPriceERC20Auction.sol#23-25) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 330,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function inWhitelist(address _address) public view returns (bool) {\n",
+                    "message": "Parameter '_address' of Whitelistable.inWhitelist (DescendingPriceERC20Auction.sol#330) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 340,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function addToWhitelist(address _address) public onlyOwner returns (bool) {\n",
+                    "message": "Parameter '_address' of Whitelistable.addToWhitelist (DescendingPriceERC20Auction.sol#340) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 357,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function removeFromWhitelist(address _address) public onlyOwner returns (bool) {\n",
+                    "message": "Parameter '_address' of Whitelistable.removeFromWhitelist (DescendingPriceERC20Auction.sol#357) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DIV_MUL",
+                    "vulnerability_from_line": 289,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 priceDecrease = numberOfBlocksElapsed.mul(priceDifference.div(blockDifference));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 457,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract DescendingPriceERC20Auction is DescendingPriceAuction, ERC20Auction {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.23;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 198,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 231,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 199,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 feeBalance = 0;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

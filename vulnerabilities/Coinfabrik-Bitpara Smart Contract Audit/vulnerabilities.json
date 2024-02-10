@@ -1,0 +1,416 @@
+{
+    "bitpara-master/bitpara.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 102,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  bool public paused = false;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 173,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public tokensIssuedTotal = 0;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 174,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public fee = 0;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_47"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": 84,
+                    "vulnerability_code": "  function transferOwnership(address _newOwner) public onlyOwner {\n\n    require( _newOwner != owner );\n\n    require( _newOwner != address(0x0) );\n\n    OwnershipTransferProposed(owner, _newOwner);\n\n    newOwner = _newOwner;\n",
+                    "message": "Owned.transferOwnership (bitpara.sol#79-84) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": 90,
+                    "vulnerability_code": "  function acceptOwnership() public {\n\n    require(msg.sender == newOwner);\n\n    OwnershipTransferred(owner, newOwner);\n\n    owner = newOwner;\n",
+                    "message": "Owned.acceptOwnership (bitpara.sol#86-90) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 124,
+                    "vulnerability_to_line": 127,
+                    "vulnerability_code": "  function pause() onlyOwner whenNotPaused public {\n\n    paused = true;\n\n    Pause();\n",
+                    "message": "Pausable.pause (bitpara.sol#124-127) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 132,
+                    "vulnerability_to_line": 135,
+                    "vulnerability_code": "  function unpause() onlyOwner whenPaused public {\n\n    paused = false;\n\n    Unpause();\n",
+                    "message": "Pausable.unpause (bitpara.sol#132-135) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 206,
+                    "vulnerability_to_line": 208,
+                    "vulnerability_code": "  function totalSupply() public view returns (uint256) {\n\n    return tokensIssuedTotal;\n",
+                    "message": "BasicToken.totalSupply (bitpara.sol#206-208) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function totalSupply() public view returns (uint256);\n",
+                    "message": "ERC20Interface.totalSupply (bitpara.sol#151) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 285,
+                    "vulnerability_to_line": 287,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public view returns (uint256 remaining) {\n\n    return allowed[_owner][_spender];\n",
+                    "message": "StandardToken.allowance (bitpara.sol#285-287) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 154,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allowance(address _owner, address _spender) public view returns (uint256 remaining);\n",
+                    "message": "ERC20Interface.allowance (bitpara.sol#154) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 179,
+                    "vulnerability_to_line": 182,
+                    "vulnerability_code": "    function changeFee(uint256 _fee) onlyOwner public {\n\n    require(_fee <= 10000000);\n\n    fee = _fee;\n",
+                    "message": "BasicToken.changeFee (bitpara.sol#179-182) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 304,
+                    "vulnerability_to_line": 307,
+                    "vulnerability_code": "    function addBanList (address _banned) onlyOwner public {\n\n        checkBan[_banned] = true;\n\n        addedBanList(_banned);\n",
+                    "message": "BanList.addBanList (bitpara.sol#304-307) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 309,
+                    "vulnerability_to_line": 312,
+                    "vulnerability_code": "    function deletefromBanList (address _unban) onlyOwner public {\n\n        checkBan[_unban] = false;\n\n        deletedfromBanList(_unban);\n",
+                    "message": "BanList.deletefromBanList (bitpara.sol#309-312) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 314,
+                    "vulnerability_to_line": 320,
+                    "vulnerability_code": "    function burnBannedUserBalance (address _bannedUser) onlyOwner public {\n\n        require(checkBan[_bannedUser]);\n\n        uint BannedUserBalance = balanceOf(_bannedUser);\n\n        balances[_bannedUser] = 0;\n\n        tokensIssuedTotal = tokensIssuedTotal.sub(BannedUserBalance);\n\n        burnedBannedUserBalance(_bannedUser, BannedUserBalance);\n",
+                    "message": "BanList.burnBannedUserBalance (bitpara.sol#314-320) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 365,
+                    "vulnerability_to_line": 371,
+                    "vulnerability_code": "  function mint(uint256 _amount) onlyOwner public returns (bool) {\n\n    tokensIssuedTotal = tokensIssuedTotal.add(_amount);\n\n    balances[owner] = balances[owner].add(_amount);\n\n    Mint(owner, _amount);\n\n    Transfer(0, owner, _amount);\n\n    return true;\n",
+                    "message": "MintableToken.mint (bitpara.sol#365-371) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 390,
+                    "vulnerability_to_line": 396,
+                    "vulnerability_code": "    function burn(uint256 _value) onlyOwner public returns (bool) {\n\n        require(_value > 0);\n\n        balances[owner] = balances[owner].sub(_value);\n\n        tokensIssuedTotal = tokensIssuedTotal.sub(_value);\n\n        Burn(owner, _value);\n\n        return true;\n",
+                    "message": "BurnableToken.burn (bitpara.sol#390-396) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 406,
+                    "vulnerability_to_line": 411,
+                    "vulnerability_code": "  function transferToOwner(address _from, uint256 _value) onlyOwner public returns (bool) {\n\n    balances[_from] = balances[_from].sub(_value);\n\n    balances[owner] = balances[owner].add(_value);\n\n    Transfer(_from, owner, _value);\n\n    return true;\n",
+                    "message": "Bitpara.transferToOwner (bitpara.sol#406-411) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in bitpara.sol:\n\t- pragma solidity^0.4.18 (bitpara.sol#5): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 75,
+                    "vulnerability_to_line": 77,
+                    "vulnerability_code": "  function Owned() public {\n\n    owner = msg.sender;\n",
+                    "message": "Function 'Owned.Owned' (bitpara.sol#75-77) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferOwnership(address _newOwner) public onlyOwner {\n",
+                    "message": "Parameter '_newOwner' of Owned.transferOwnership (bitpara.sol#79) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 217,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address _owner) public view returns (uint256 balance) {\n",
+                    "message": "Parameter '_owner' of BasicToken.balanceOf (bitpara.sol#217) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 191,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_to' of BasicToken.transfer (bitpara.sol#191) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 191,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of BasicToken.transfer (bitpara.sol#191) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 179,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function changeFee(uint256 _fee) onlyOwner public {\n",
+                    "message": "Parameter '_fee' of BasicToken.changeFee (bitpara.sol#179) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 285,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public view returns (uint256 remaining) {\n",
+                    "message": "Parameter '_owner' of StandardToken.allowance (bitpara.sol#285) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 285,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public view returns (uint256 remaining) {\n",
+                    "message": "Parameter '_spender' of StandardToken.allowance (bitpara.sol#285) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 246,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_from' of StandardToken.transferFrom (bitpara.sol#246) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 246,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_to' of StandardToken.transferFrom (bitpara.sol#246) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 246,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of StandardToken.transferFrom (bitpara.sol#246) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 272,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of StandardToken.approve (bitpara.sol#272) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 272,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of StandardToken.approve (bitpara.sol#272) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 322,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    event burnedBannedUserBalance(address _bannedUser, uint _balance);\n",
+                    "message": "Event 'BanList.burnedBannedUserBalance' (bitpara.sol#322) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 324,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    event addedBanList(address _user);\n",
+                    "message": "Event 'BanList.addedBanList' (bitpara.sol#324) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 326,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    event deletedfromBanList(address _user);\n",
+                    "message": "Event 'BanList.deletedfromBanList' (bitpara.sol#326) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 294,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getBanStatus(address _unclear) external view returns (bool) {\n",
+                    "message": "Parameter '_unclear' of BanList.getBanStatus (bitpara.sol#294) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 304,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addBanList (address _banned) onlyOwner public {\n",
+                    "message": "Parameter '_banned' of BanList.addBanList (bitpara.sol#304) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 309,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function deletefromBanList (address _unban) onlyOwner public {\n",
+                    "message": "Parameter '_unban' of BanList.deletefromBanList (bitpara.sol#309) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 314,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function burnBannedUserBalance (address _bannedUser) onlyOwner public {\n",
+                    "message": "Parameter '_bannedUser' of BanList.burnBannedUserBalance (bitpara.sol#314) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 333,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public whenNotPaused returns (bool) {\n",
+                    "message": "Parameter '_to' of PausableToken.transfer (bitpara.sol#333) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 333,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public whenNotPaused returns (bool) {\n",
+                    "message": "Parameter '_value' of PausableToken.transfer (bitpara.sol#333) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 338,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public whenNotPaused returns (bool) {\n",
+                    "message": "Parameter '_from' of PausableToken.transferFrom (bitpara.sol#338) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 338,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public whenNotPaused returns (bool) {\n",
+                    "message": "Parameter '_to' of PausableToken.transferFrom (bitpara.sol#338) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 338,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public whenNotPaused returns (bool) {\n",
+                    "message": "Parameter '_value' of PausableToken.transferFrom (bitpara.sol#338) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 343,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public whenNotPaused returns (bool) {\n",
+                    "message": "Parameter '_spender' of PausableToken.approve (bitpara.sol#343) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 343,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public whenNotPaused returns (bool) {\n",
+                    "message": "Parameter '_value' of PausableToken.approve (bitpara.sol#343) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 365,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function mint(uint256 _amount) onlyOwner public returns (bool) {\n",
+                    "message": "Parameter '_amount' of MintableToken.mint (bitpara.sol#365) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 390,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function burn(uint256 _value) onlyOwner public returns (bool) {\n",
+                    "message": "Parameter '_value' of BurnableToken.burn (bitpara.sol#390) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 406,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferToOwner(address _from, uint256 _value) onlyOwner public returns (bool) {\n",
+                    "message": "Parameter '_from' of Bitpara.transferToOwner (bitpara.sol#406) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 406,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferToOwner(address _from, uint256 _value) onlyOwner public returns (bool) {\n",
+                    "message": "Parameter '_value' of Bitpara.transferToOwner (bitpara.sol#406) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 81,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require( _newOwner != address(0x0) );\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 272,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 343,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public whenNotPaused returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 168,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 176,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping(address => uint256) balances;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

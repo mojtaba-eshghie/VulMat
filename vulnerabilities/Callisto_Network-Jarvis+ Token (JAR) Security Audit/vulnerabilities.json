@@ -1,0 +1,388 @@
+{
+    "JarvisPlusToken_flat.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 336,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract JarvisPlusToken is StandardToken, Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 283,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 284,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 285,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 345,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 346,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 347,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        // totalSupply_ = initialAmount;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 348,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        // balances[owner].add(initialAmount);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 349,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        // emit Transfer(address(0), owner, initialAmount);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 350,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 351,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if(totalSupply() ==  0) {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 352,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            totalSupply_ = initialAmount;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 353,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 354,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            balances[msg.sender] = initialAmount;\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_32"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address who) public view returns (uint256);\n",
+                    "message": "ERC20Basic.balanceOf (JarvisPlusToken_flat.sol#14) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 112,
+                    "vulnerability_to_line": 114,
+                    "vulnerability_code": "  function balanceOf(address _owner) public view returns (uint256) {\n\n    return balances[_owner];\n",
+                    "message": "BasicToken.balanceOf (JarvisPlusToken_flat.sol#112-114) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 96,
+                    "vulnerability_to_line": 105,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n\n    require(_to != address(0));\n\n    // SWC-Code With No Effects: L97\n\n    require(_value <= balances[msg.sender]);\n\n\n\n    balances[msg.sender] = balances[msg.sender].sub(_value);\n\n    balances[_to] = balances[_to].add(_value);\n\n    emit Transfer(msg.sender, _to, _value);\n\n    return true;\n",
+                    "message": "BasicToken.transfer (JarvisPlusToken_flat.sol#96-105) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address to, uint256 value) public returns (bool);\n",
+                    "message": "ERC20Basic.transfer (JarvisPlusToken_flat.sol#15) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 125,
+                    "vulnerability_to_line": 126,
+                    "vulnerability_code": "  function allowance(address owner, address spender)\n",
+                    "message": "ERC20.allowance (JarvisPlusToken_flat.sol#125-126) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 200,
+                    "vulnerability_to_line": 209,
+                    "vulnerability_code": "  function allowance(\n\n    address _owner,\n\n    address _spender\n\n   )\n\n    public\n\n    view\n\n    returns (uint256)\n\n  {\n\n    return allowed[_owner][_spender];\n",
+                    "message": "StandardToken.allowance (JarvisPlusToken_flat.sol#200-209) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 159,
+                    "vulnerability_to_line": 177,
+                    "vulnerability_code": "  function transferFrom(\n\n    address _from,\n\n    address _to,\n\n    uint256 _value\n\n  )\n\n    public\n\n    returns (bool)\n\n  {\n\n    require(_to != address(0));\n\n    // SWC-Code With No Effects: L167 - L168\n\n    require(_value <= balances[_from]);\n\n    require(_value <= allowed[_from][msg.sender]);\n\n\n\n    balances[_from] = balances[_from].sub(_value);\n\n    balances[_to] = balances[_to].add(_value);\n\n    allowed[_from][msg.sender] = allowed[_from][msg.sender].sub(_value);\n\n    emit Transfer(_from, _to, _value);\n\n    return true;\n",
+                    "message": "StandardToken.transferFrom (JarvisPlusToken_flat.sol#159-177) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 128,
+                    "vulnerability_to_line": 129,
+                    "vulnerability_code": "  function transferFrom(address from, address to, uint256 value)\n",
+                    "message": "ERC20.transferFrom (JarvisPlusToken_flat.sol#128-129) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address spender, uint256 value) public returns (bool);\n",
+                    "message": "ERC20.approve (JarvisPlusToken_flat.sol#131) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 188,
+                    "vulnerability_to_line": 192,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n\n    allowed[msg.sender][_spender] = _value;\n\n    emit Approval(msg.sender, _spender, _value);\n\n    return true;\n",
+                    "message": "StandardToken.approve (JarvisPlusToken_flat.sol#188-192) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 220,
+                    "vulnerability_to_line": 231,
+                    "vulnerability_code": "  function increaseApproval(\n\n    address _spender,\n\n    uint256 _addedValue\n\n  )\n\n    public\n\n    returns (bool)\n\n  {\n\n    allowed[msg.sender][_spender] = (\n\n      allowed[msg.sender][_spender].add(_addedValue));\n\n    emit Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n\n    return true;\n",
+                    "message": "StandardToken.increaseApproval (JarvisPlusToken_flat.sol#220-231) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 242,
+                    "vulnerability_to_line": 257,
+                    "vulnerability_code": "  function decreaseApproval(\n\n    address _spender,\n\n    uint256 _subtractedValue\n\n  )\n\n    public\n\n    returns (bool)\n\n  {\n\n    uint256 oldValue = allowed[msg.sender][_spender];\n\n    if (_subtractedValue > oldValue) {\n\n      allowed[msg.sender][_spender] = 0;\n\n    } else {\n\n      allowed[msg.sender][_spender] = oldValue.sub(_subtractedValue);\n\n    }\n\n    emit Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n\n    return true;\n",
+                    "message": "StandardToken.decreaseApproval (JarvisPlusToken_flat.sol#242-257) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 301,
+                    "vulnerability_to_line": 304,
+                    "vulnerability_code": "  function renounceOwnership() public onlyOwner {\n\n    emit OwnershipRenounced(owner);\n\n    owner = address(0);\n",
+                    "message": "Ownable.renounceOwnership (JarvisPlusToken_flat.sol#301-304) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 310,
+                    "vulnerability_to_line": 312,
+                    "vulnerability_code": "  function transferOwnership(address _newOwner) public onlyOwner {\n\n    _transferOwnership(_newOwner);\n",
+                    "message": "Ownable.transferOwnership (JarvisPlusToken_flat.sol#310-312) should be declared external\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 112,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address _owner) public view returns (uint256) {\n",
+                    "message": "Parameter '_owner' of BasicToken.balanceOf (JarvisPlusToken_flat.sol#112) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 96,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_to' of BasicToken.transfer (JarvisPlusToken_flat.sol#96) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 96,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of BasicToken.transfer (JarvisPlusToken_flat.sol#96) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 201,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address _owner,\n",
+                    "message": "Parameter '_owner' of StandardToken.allowance (JarvisPlusToken_flat.sol#201) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 202,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address _spender\n",
+                    "message": "Parameter '_spender' of StandardToken.allowance (JarvisPlusToken_flat.sol#202) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 160,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address _from,\n",
+                    "message": "Parameter '_from' of StandardToken.transferFrom (JarvisPlusToken_flat.sol#160) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 161,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address _to,\n",
+                    "message": "Parameter '_to' of StandardToken.transferFrom (JarvisPlusToken_flat.sol#161) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 162,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 _value\n",
+                    "message": "Parameter '_value' of StandardToken.transferFrom (JarvisPlusToken_flat.sol#162) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 188,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of StandardToken.approve (JarvisPlusToken_flat.sol#188) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 188,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of StandardToken.approve (JarvisPlusToken_flat.sol#188) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 221,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address _spender,\n",
+                    "message": "Parameter '_spender' of StandardToken.increaseApproval (JarvisPlusToken_flat.sol#221) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 222,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 _addedValue\n",
+                    "message": "Parameter '_addedValue' of StandardToken.increaseApproval (JarvisPlusToken_flat.sol#222) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 243,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address _spender,\n",
+                    "message": "Parameter '_spender' of StandardToken.decreaseApproval (JarvisPlusToken_flat.sol#243) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 244,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 _subtractedValue\n",
+                    "message": "Parameter '_subtractedValue' of StandardToken.decreaseApproval (JarvisPlusToken_flat.sol#244) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 310,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferOwnership(address _newOwner) public onlyOwner {\n",
+                    "message": "Parameter '_newOwner' of Ownable.transferOwnership (JarvisPlusToken_flat.sol#310) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 318,
+                    "vulnerability_to_line": 322,
+                    "vulnerability_code": "  function _transferOwnership(address _newOwner) internal {\n\n    require(_newOwner != address(0));\n\n    emit OwnershipTransferred(owner, _newOwner);\n\n    owner = _newOwner;\n",
+                    "message": "Function 'Ownable._transferOwnership' (JarvisPlusToken_flat.sol#318-322) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 318,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function _transferOwnership(address _newOwner) internal {\n",
+                    "message": "Parameter '_newOwner' of Ownable._transferOwnership (JarvisPlusToken_flat.sol#318) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 343,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 private constant initialAmount = 600000000000000000000000000;\n",
+                    "message": "Constant 'JarvisPlusToken.initialAmount' (JarvisPlusToken_flat.sol#343) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 303,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    owner = address(0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 188,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 343,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 private constant initialAmount = 600000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 78,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping(address => uint256) balances;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 82,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 totalSupply_;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

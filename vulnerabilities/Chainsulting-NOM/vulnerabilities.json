@@ -1,0 +1,345 @@
+{
+    "FinToken/FinToken.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_35"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction totalSupply() public view returns (uint256);\n",
+                    "message": "ERC20Basic.totalSupply (FinToken.sol#64) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": 86,
+                    "vulnerability_code": "\tfunction totalSupply() public view returns (uint256) {\n\n\t\treturn totalSupply_;\n",
+                    "message": "BasicToken.totalSupply (FinToken.sol#84-86) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction balanceOf(address who) public view returns (uint256);\n",
+                    "message": "ERC20Basic.balanceOf (FinToken.sol#65) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 108,
+                    "vulnerability_to_line": 110,
+                    "vulnerability_code": "\tfunction balanceOf(address _owner) public view returns (uint256) {\n\n\t\treturn balances[_owner];\n",
+                    "message": "BasicToken.balanceOf (FinToken.sol#108-110) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 119,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction allowance(address owner, address spender) public view returns (uint256);\n",
+                    "message": "ERC20.allowance (FinToken.sol#119) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 177,
+                    "vulnerability_to_line": 179,
+                    "vulnerability_code": "\tfunction allowance(address _owner, address _spender) public view returns (uint256) {\n\n\t\treturn allowed[_owner][_spender];\n",
+                    "message": "StandardToken.allowance (FinToken.sol#177-179) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 165,
+                    "vulnerability_to_line": 169,
+                    "vulnerability_code": "\tfunction approve(address _spender, uint256 _value) public returns (bool) {\n\n\t\tallowed[msg.sender][_spender] = _value;\n\n\t\temit Approval(msg.sender, _spender, _value);\n\n\t\treturn true;\n",
+                    "message": "StandardToken.approve (FinToken.sol#165-169) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 121,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction approve(address spender, uint256 value) public returns (bool);\n",
+                    "message": "ERC20.approve (FinToken.sol#121) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 191,
+                    "vulnerability_to_line": 195,
+                    "vulnerability_code": "\tfunction increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n\n\t\tallowed[msg.sender][_spender] = allowed[msg.sender][_spender].add(_addedValue);\n\n\t\temit Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n\n\t\treturn true;\n",
+                    "message": "StandardToken.increaseApproval (FinToken.sol#191-195) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 207,
+                    "vulnerability_to_line": 216,
+                    "vulnerability_code": "\tfunction decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n\n\t\tuint oldValue = allowed[msg.sender][_spender];\n\n\t\tif (_subtractedValue > oldValue) {\n\n\t\t\tallowed[msg.sender][_spender] = 0;\n\n\t\t} else {\n\n\t\t\tallowed[msg.sender][_spender] = oldValue.sub(_subtractedValue);\n\n\t\t}\n\n\t\temit Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n\n\t\treturn true;\n",
+                    "message": "StandardToken.decreaseApproval (FinToken.sol#207-216) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 264,
+                    "vulnerability_to_line": 267,
+                    "vulnerability_code": "\tfunction addVerificatorAddress(address addr) public onlyOwner {\n\n\t\tverificatorAddresses[addr] = true;\n\n\t\temit AddVerificator(addr);\n",
+                    "message": "FinToken.addVerificatorAddress (FinToken.sol#264-267) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 269,
+                    "vulnerability_to_line": 272,
+                    "vulnerability_code": "\tfunction removeVerificatorAddress(address addr) public onlyOwner {\n\n\t\tdelete verificatorAddresses[addr];\n\n\t\temit RemoveVerificator(addr);\n",
+                    "message": "FinToken.removeVerificatorAddress (FinToken.sol#269-272) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 278,
+                    "vulnerability_to_line": 281,
+                    "vulnerability_code": "\tfunction addVerifiedAddress(address addr) public onlyVerificator {\n\n\t\tverifiedAddresses[addr] = true;\n\n\t\temit AddVerified(msg.sender, addr);\n",
+                    "message": "FinToken.addVerifiedAddress (FinToken.sol#278-281) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 283,
+                    "vulnerability_to_line": 286,
+                    "vulnerability_code": "\tfunction removeVerifiedAddress(address addr) public onlyVerificator {\n\n\t\tdelete verifiedAddresses[addr];\n\n\t\temit RemoveVerified(msg.sender, addr);\n",
+                    "message": "FinToken.removeVerifiedAddress (FinToken.sol#283-286) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.21;\n",
+                    "message": "Detected issues with version pragma in FinToken.sol:\n\t- pragma solidity^0.4.21 (FinToken.sol#9): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 108,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction balanceOf(address _owner) public view returns (uint256) {\n",
+                    "message": "Parameter '_owner' of BasicToken.balanceOf (FinToken.sol#108) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 93,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_to' of BasicToken.transfer (FinToken.sol#93) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 93,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of BasicToken.transfer (FinToken.sol#93) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 177,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction allowance(address _owner, address _spender) public view returns (uint256) {\n",
+                    "message": "Parameter '_owner' of StandardToken.allowance (FinToken.sol#177) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 177,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction allowance(address _owner, address _spender) public view returns (uint256) {\n",
+                    "message": "Parameter '_spender' of StandardToken.allowance (FinToken.sol#177) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 143,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_from' of StandardToken.transferFrom (FinToken.sol#143) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 143,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_to' of StandardToken.transferFrom (FinToken.sol#143) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 143,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of StandardToken.transferFrom (FinToken.sol#143) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 165,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of StandardToken.approve (FinToken.sol#165) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 165,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of StandardToken.approve (FinToken.sol#165) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 191,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of StandardToken.increaseApproval (FinToken.sol#191) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 191,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n",
+                    "message": "Parameter '_addedValue' of StandardToken.increaseApproval (FinToken.sol#191) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 207,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of StandardToken.decreaseApproval (FinToken.sol#207) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 207,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n",
+                    "message": "Parameter '_subtractedValue' of StandardToken.decreaseApproval (FinToken.sol#207) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 292,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transfer(address _to, uint256 _value) public onlyVerified(msg.sender, _to) returns (bool) {\n",
+                    "message": "Parameter '_to' of FinToken.transfer (FinToken.sol#292) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 292,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transfer(address _to, uint256 _value) public onlyVerified(msg.sender, _to) returns (bool) {\n",
+                    "message": "Parameter '_value' of FinToken.transfer (FinToken.sol#292) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 296,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transferFrom(address _from, address _to, uint256 _value) public onlyVerified(_from, _to) returns (bool) {\n",
+                    "message": "Parameter '_from' of FinToken.transferFrom (FinToken.sol#296) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 296,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transferFrom(address _from, address _to, uint256 _value) public onlyVerified(_from, _to) returns (bool) {\n",
+                    "message": "Parameter '_to' of FinToken.transferFrom (FinToken.sol#296) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 296,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transferFrom(address _from, address _to, uint256 _value) public onlyVerified(_from, _to) returns (bool) {\n",
+                    "message": "Parameter '_value' of FinToken.transferFrom (FinToken.sol#296) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 257,
+                    "vulnerability_to_line": 262,
+                    "vulnerability_code": "\tfunction FinToken() public {\n\n\t\towner = msg.sender;\n\n\t\ttotalSupply_ = INITIAL_SUPPLY;\n\n\t\tbalances[msg.sender] = INITIAL_SUPPLY;\n\n\t\temit Transfer(0x0, msg.sender, INITIAL_SUPPLY);\n",
+                    "message": "Function 'FinToken.FinToken' (FinToken.sol#257-262) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 274,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction isVerificator(address addr) public constant returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 288,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction isVerified(address addr) public constant returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 165,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_FUNCTIONS_ALWAYS_RETURN_FALSE",
+                    "vulnerability_from_line": 292,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transfer(address _to, uint256 _value) public onlyVerified(msg.sender, _to) returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_FUNCTIONS_ALWAYS_RETURN_FALSE",
+                    "vulnerability_from_line": 296,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transferFrom(address _from, address _to, uint256 _value) public onlyVerified(_from, _to) returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 292,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transfer(address _to, uint256 _value) public onlyVerified(msg.sender, _to) returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 296,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transferFrom(address _from, address _to, uint256 _value) public onlyVerified(_from, _to) returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.21;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 75,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tusing SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 77,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tmapping(address => uint256) balances;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tuint256 totalSupply_;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

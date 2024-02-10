@@ -1,0 +1,3191 @@
+{
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/mocks/MockUniswapPair.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 125,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bool public hasSynced = false;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 127,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 128,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _token0,\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 129,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _token1,\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 130,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint112 _reserve0,\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint112 _reserve1\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 132,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        tok0 = _token0;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        tok1 = _token1;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 135,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        reserve0 = _reserve0;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 136,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        reserve1 = _reserve1;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(denominator > 0, \"FixedPoint: DIV_BY_ZERO\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 185,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(hasSynced, \"Not synced\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_10"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Different versions of Solidity is used in MockUniswapPair.sol:\n\t- Version used: ['0.5.11', '^0.5.11']\n\t- MockUniswapPair.sol#3 declares pragma solidity0.5.11\n\t- MockUniswapPair.sol#30 declares pragma solidity^0.5.11\n\t- MockUniswapPair.sol#115 declares pragma solidity0.5.11\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 160,
+                    "vulnerability_to_line": 164,
+                    "vulnerability_code": "    function setReserves(uint112 _reserve0, uint112 _reserve1) public {\n\n        reserve0 = _reserve0;\n\n        reserve1 = _reserve1;\n\n        blockTimestampLast = block.timestamp;\n",
+                    "message": "MockUniswapPair.setReserves (MockUniswapPair.sol#160-164) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in MockUniswapPair.sol:\n\t- pragma solidity0.5.11 (MockUniswapPair.sol#3): it allows old versions\n\t- pragma solidity^0.5.11 (MockUniswapPair.sol#30): it allows old versions\n\t- pragma solidity0.5.11 (MockUniswapPair.sol#115): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": 40,
+                    "vulnerability_code": "    struct uq112x112 {\n\n        uint224 _x;\n",
+                    "message": "Struct 'FixedPoint.uq112x112' (MockUniswapPair.sol#38-40) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 128,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _token0,\n",
+                    "message": "Parameter '_token0' of MockUniswapPair. (MockUniswapPair.sol#128) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 129,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _token1,\n",
+                    "message": "Parameter '_token1' of MockUniswapPair. (MockUniswapPair.sol#129) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 130,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint112 _reserve0,\n",
+                    "message": "Parameter '_reserve0' of MockUniswapPair. (MockUniswapPair.sol#130) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint112 _reserve1\n",
+                    "message": "Parameter '_reserve1' of MockUniswapPair. (MockUniswapPair.sol#131) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 160,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setReserves(uint112 _reserve0, uint112 _reserve1) public {\n",
+                    "message": "Parameter '_reserve0' of MockUniswapPair.setReserves (MockUniswapPair.sol#160) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 160,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setReserves(uint112 _reserve0, uint112 _reserve1) public {\n",
+                    "message": "Parameter '_reserve1' of MockUniswapPair.setReserves (MockUniswapPair.sol#160) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.11;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 81,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 119,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address tok0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 120,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address tok1;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 121,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint112 reserve0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 122,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint112 reserve1;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 123,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 blockTimestampLast;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/mocks/MockChainlinkOracleFeed.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(int256 _price, uint8 _decimals) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        price = _price;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 48,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        numDecimals = _decimals;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.11;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 77,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 95,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    int256 price;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint8 numDecimals;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/mocks/MockOracle.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in MockOracle.sol:\n\t- pragma solidity0.5.11 (MockOracle.sol#3): it allows old versions\n\t- pragma solidity0.5.11 (MockOracle.sol#15): it allows old versions\n\t- pragma solidity0.5.11 (MockOracle.sol#32): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 56,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setPrice(string calldata symbol, uint256 _price) external {\n",
+                    "message": "Parameter '_price' of MockOracle.setPrice (MockOracle.sol#56) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setEthPriceMinMax(uint256 _min, uint256 _max) external {\n",
+                    "message": "Parameter '_min' of MockOracle.setEthPriceMinMax (MockOracle.sol#64) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setEthPriceMinMax(uint256 _min, uint256 _max) external {\n",
+                    "message": "Parameter '_max' of MockOracle.setEthPriceMinMax (MockOracle.sol#64) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 75,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _min,\n",
+                    "message": "Parameter '_min' of MockOracle.setTokPriceMinMax (MockOracle.sol#75) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 76,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _max\n",
+                    "message": "Parameter '_max' of MockOracle.setTokPriceMinMax (MockOracle.sol#76) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(bytes32 => uint256) prices;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(bytes32 => uint256[]) pricesMinMax;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 ethMin;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 ethMax;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/strategies/ICompound.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in ICompound.sol:\n\t- pragma solidity0.5.11 (ICompound.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/strategies/IAave.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in IAave.sol:\n\t- pragma solidity0.5.11 (IAave.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/strategies/ICRVMinter.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in ICRVMinter.sol:\n\t- pragma solidity0.5.11 (ICRVMinter.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/strategies/ICurvePool.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in ICurvePool.sol:\n\t- pragma solidity0.5.11 (ICurvePool.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function get_virtual_price() external returns (uint256);\n",
+                    "message": "Function 'ICurvePool.get_virtual_price' (ICurvePool.sol#6) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function add_liquidity(uint256[3] calldata _amounts, uint256 _min) external;\n",
+                    "message": "Function 'ICurvePool.add_liquidity' (ICurvePool.sol#8) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": 12,
+                    "vulnerability_code": "    function calc_token_amount(uint256[3] calldata _amounts, bool _deposit)\n\n        external\n",
+                    "message": "Function 'ICurvePool.calc_token_amount' (ICurvePool.sol#10-12) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": 18,
+                    "vulnerability_code": "    function remove_liquidity_one_coin(\n\n        uint256 _amount,\n\n        int128 _index,\n\n        uint256 _minAmount\n",
+                    "message": "Function 'ICurvePool.remove_liquidity_one_coin' (ICurvePool.sol#14-18) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": 23,
+                    "vulnerability_code": "    function calc_withdraw_one_coin(uint256 _amount, int128 _index)\n\n        external\n\n        view\n",
+                    "message": "Function 'ICurvePool.calc_withdraw_one_coin' (ICurvePool.sol#20-23) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/strategies/ICurveGauge.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in ICurveGauge.sol:\n\t- pragma solidity0.5.11 (ICurveGauge.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/oracle/UniswapLib.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(denominator > 0, \"FixedPoint: DIV_BY_ZERO\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Different versions of Solidity is used in UniswapLib.sol:\n\t- Version used: ['0.5.11', '^0.5.11']\n\t- UniswapLib.sol#3 declares pragma solidity0.5.11\n\t- UniswapLib.sol#30 declares pragma solidity^0.5.11\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in UniswapLib.sol:\n\t- pragma solidity0.5.11 (UniswapLib.sol#3): it allows old versions\n\t- pragma solidity^0.5.11 (UniswapLib.sol#30): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": 40,
+                    "vulnerability_code": "    struct uq112x112 {\n\n        uint224 _x;\n",
+                    "message": "Struct 'FixedPoint.uq112x112' (UniswapLib.sol#38-40) is not in CapWords\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.11;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 81,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/oracle/AggregatorV3Interface.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.11;\n",
+                    "message": "Detected issues with version pragma in AggregatorV3Interface.sol:\n\t- pragma solidity^0.5.11 (AggregatorV3Interface.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.11;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/utils/RebaseHooks.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 171,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            for (uint256 i = 0; i < uniswapPairs.length; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 60,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() internal {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        _setGovernor(msg.sender);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        emit GovernorshipTransferred(address(0), _governor());\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 171,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            for (uint256 i = 0; i < uniswapPairs.length; i++) {\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 172,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                IUniswapV2Pair(uniswapPairs[i]).sync();\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 171,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            for (uint256 i = 0; i < uniswapPairs.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 94,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(isGovernor(), \"Caller is not the Governor\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 135,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            msg.sender == _pendingGovernor(),\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 136,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Only the pending Governor can complete the claim\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 137,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 146,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_newGovernor != address(0), \"New Governor is address(0)\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 171,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            for (uint256 i = 0; i < uniswapPairs.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 135,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            msg.sender == _pendingGovernor(),\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 136,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Only the pending Governor can complete the claim\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 137,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_19"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": 77,
+                    "vulnerability_code": "    function _governor() internal view returns (address governorOut) {\n\n        bytes32 position = governorPosition;\n\n        assembly {\n\n            governorOut := sload(position)\n\n        }\n",
+                    "message": "Governable._governor (RebaseHooks.sol#72-77) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": 88,
+                    "vulnerability_code": "    function _pendingGovernor()\n\n        internal\n\n        view\n\n        returns (address pendingGovernor)\n\n    {\n\n        bytes32 position = pendingGovernorPosition;\n\n        assembly {\n\n            pendingGovernor := sload(position)\n\n        }\n",
+                    "message": "Governable._pendingGovernor (RebaseHooks.sol#79-88) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "calls-loop",
+                    "vulnerability_from_line": 172,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                IUniswapV2Pair(uniswapPairs[i]).sync();\n",
+                    "message": "RebaseHooks.postRebase has external calls inside a loop:\n\t- IUniswapV2Pair(uniswapPairs[i]).sync() (RebaseHooks.sol#172)\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": 77,
+                    "vulnerability_code": "    function _governor() internal view returns (address governorOut) {\n\n        bytes32 position = governorPosition;\n\n        assembly {\n\n            governorOut := sload(position)\n\n        }\n",
+                    "message": "Governable._governor uses assembly (RebaseHooks.sol#72-77)\n\t- RebaseHooks.sol#74-76\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": 88,
+                    "vulnerability_code": "    function _pendingGovernor()\n\n        internal\n\n        view\n\n        returns (address pendingGovernor)\n\n    {\n\n        bytes32 position = pendingGovernorPosition;\n\n        assembly {\n\n            pendingGovernor := sload(position)\n\n        }\n",
+                    "message": "Governable._pendingGovernor uses assembly (RebaseHooks.sol#79-88)\n\t- RebaseHooks.sol#85-87\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 105,
+                    "vulnerability_to_line": 110,
+                    "vulnerability_code": "    function _setGovernor(address newGovernor) internal {\n\n        bytes32 position = governorPosition;\n\n        assembly {\n\n            sstore(position, newGovernor)\n\n        }\n",
+                    "message": "Governable._setGovernor uses assembly (RebaseHooks.sol#105-110)\n\t- RebaseHooks.sol#107-109\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 112,
+                    "vulnerability_to_line": 117,
+                    "vulnerability_code": "    function _setPendingGovernor(address newGovernor) internal {\n\n        bytes32 position = pendingGovernorPosition;\n\n        assembly {\n\n            sstore(position, newGovernor)\n\n        }\n",
+                    "message": "Governable._setPendingGovernor uses assembly (RebaseHooks.sol#112-117)\n\t- RebaseHooks.sol#114-116\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": 70,
+                    "vulnerability_code": "    function governor() public view returns (address) {\n\n        return _governor();\n",
+                    "message": "Governable.governor (RebaseHooks.sol#68-70) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in RebaseHooks.sol:\n\t- pragma solidity0.5.11 (RebaseHooks.sol#3): it allows old versions\n\t- pragma solidity0.5.11 (RebaseHooks.sol#28): it allows old versions\n\t- pragma solidity0.5.11 (RebaseHooks.sol#154): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": 77,
+                    "vulnerability_code": "    function _governor() internal view returns (address governorOut) {\n\n        bytes32 position = governorPosition;\n\n        assembly {\n\n            governorOut := sload(position)\n\n        }\n",
+                    "message": "Function 'Governable._governor' (RebaseHooks.sol#72-77) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": 88,
+                    "vulnerability_code": "    function _pendingGovernor()\n\n        internal\n\n        view\n\n        returns (address pendingGovernor)\n\n    {\n\n        bytes32 position = pendingGovernorPosition;\n\n        assembly {\n\n            pendingGovernor := sload(position)\n\n        }\n",
+                    "message": "Function 'Governable._pendingGovernor' (RebaseHooks.sol#79-88) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 105,
+                    "vulnerability_to_line": 110,
+                    "vulnerability_code": "    function _setGovernor(address newGovernor) internal {\n\n        bytes32 position = governorPosition;\n\n        assembly {\n\n            sstore(position, newGovernor)\n\n        }\n",
+                    "message": "Function 'Governable._setGovernor' (RebaseHooks.sol#105-110) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 112,
+                    "vulnerability_to_line": 117,
+                    "vulnerability_code": "    function _setPendingGovernor(address newGovernor) internal {\n\n        bytes32 position = pendingGovernorPosition;\n\n        assembly {\n\n            sstore(position, newGovernor)\n\n        }\n",
+                    "message": "Function 'Governable._setPendingGovernor' (RebaseHooks.sol#112-117) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 124,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferGovernance(address _newGovernor) external onlyGovernor {\n",
+                    "message": "Parameter '_newGovernor' of Governable.transferGovernance (RebaseHooks.sol#124) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": 149,
+                    "vulnerability_code": "    function _changeGovernor(address _newGovernor) internal {\n\n        require(_newGovernor != address(0), \"New Governor is address(0)\");\n\n        emit GovernorshipTransferred(_governor(), _newGovernor);\n\n        _setGovernor(_newGovernor);\n",
+                    "message": "Function 'Governable._changeGovernor' (RebaseHooks.sol#145-149) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _changeGovernor(address _newGovernor) internal {\n",
+                    "message": "Parameter '_newGovernor' of Governable._changeGovernor (RebaseHooks.sol#145) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": 40,
+                    "vulnerability_code": "    bytes32\n",
+                    "message": "Constant 'Governable.governorPosition' (RebaseHooks.sol#39-40) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": 44,
+                    "vulnerability_code": "    bytes32\n",
+                    "message": "Constant 'Governable.pendingGovernorPosition' (RebaseHooks.sol#43-44) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 161,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setUniswapPairs(address[] calldata _uniswapPairs)\n",
+                    "message": "Parameter '_uniswapPairs' of RebaseHooks.setUniswapPairs (RebaseHooks.sol#161) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 171,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            for (uint256 i = 0; i < uniswapPairs.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _governor() internal view returns (address governorOut) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _pendingGovernor()\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 171,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            for (uint256 i = 0; i < uniswapPairs.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        private constant governorPosition = 0x7bea13895fa79d2831e0a9e28edede30099005a50d652d8957cf8a607ee6ca4a;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        private constant pendingGovernorPosition = 0x44c4d30b2eaad5130ad70c3ba6972730566f3e6359ab83e800d905c61b1c51db;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _governor() internal view returns (address governorOut) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _pendingGovernor()\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 107,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 114,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/utils/Helpers.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            decimals >= 4 && decimals <= 18,\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Token must have sufficient decimal places\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            decimals >= 4 && decimals <= 18,\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Token must have sufficient decimal places\"\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            decimals >= 4 && decimals <= 18,\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Token must have sufficient decimal places\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in Helpers.sol:\n\t- pragma solidity0.5.11 (Helpers.sol#3): it allows old versions\n\t- pragma solidity0.5.11 (Helpers.sol#13): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getSymbol(address _token) internal view returns (string memory) {\n",
+                    "message": "Parameter '_token' of Helpers.getSymbol (Helpers.sol#22) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getDecimals(address _token) internal view returns (uint256) {\n",
+                    "message": "Parameter '_token' of Helpers.getDecimals (Helpers.sol#34) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/governance/Governor.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 163,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < proposal.targets.length; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 220,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < proposal.targets.length; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 100,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address timelock_, address guardian_) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 101,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        timelock = ITimelock(timelock_);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 102,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        guardian = guardian_;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 103,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 221,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            timelock.executeTransaction.value(proposal.values[i])(\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 163,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < proposal.targets.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 220,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < proposal.targets.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 113,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 114,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            targets.length == values.length &&\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 115,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                targets.length == signatures.length &&\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                targets.length == calldatas.length,\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 117,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Governor::propose: proposal function information arity mismatch\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 119,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(targets.length != 0, \"Governor::propose: must provide actions\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 120,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 121,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            targets.length <= MAX_OPERATIONS,\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 122,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Governor::propose: too many actions\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 123,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 152,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            msg.sender == guardian,\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 154,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Governor::queue: sender must be gov guardian\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 155,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 156,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 157,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            state(proposalId) == ProposalState.Pending,\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 158,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Governor::queue: proposal can only be queued if it is pending\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 159,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 177,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 178,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            proposalCount >= proposalId && proposalId > 0,\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 179,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Governor::state: invalid proposal id\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 180,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 203,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 204,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            !timelock.queuedTransactions(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 205,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                keccak256(abi.encode(target, value, signature, data, eta))\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 206,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            ),\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 207,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Governor::_queueOrRevert: proposal action already queued at eta\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 208,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 214,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 215,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            state(proposalId) == ProposalState.Queued,\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 216,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Governor::execute: proposal can only be executed if it is queued\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 217,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 247,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 248,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            msg.sender == guardian,\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 249,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Governor::__acceptAdmin: sender must be gov guardian\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 250,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 259,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 260,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            msg.sender == guardian,\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 261,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Governor::__queueSetTimelockPendingAdmin: sender must be gov guardian\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 262,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 277,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 278,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            msg.sender == guardian,\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 279,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Governor::__executeSetTimelockPendingAdmin: sender must be gov guardian\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 280,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 292,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(c >= a, \"addition overflow\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 297,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(b <= a, \"subtraction underflow\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 113,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 114,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            targets.length == values.length &&\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 115,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                targets.length == signatures.length &&\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                targets.length == calldatas.length,\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 117,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Governor::propose: proposal function information arity mismatch\"\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 177,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 178,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            proposalCount >= proposalId && proposalId > 0,\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 179,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Governor::state: invalid proposal id\"\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 180,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 125,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        proposalCount++;\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 163,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < proposal.targets.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 220,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < proposal.targets.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 113,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 114,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            targets.length == values.length &&\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 115,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                targets.length == signatures.length &&\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                targets.length == calldatas.length,\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 117,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Governor::propose: proposal function information arity mismatch\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 119,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(targets.length != 0, \"Governor::propose: must provide actions\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 120,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 121,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            targets.length <= MAX_OPERATIONS,\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 122,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Governor::propose: too many actions\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 123,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 152,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            msg.sender == guardian,\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 154,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Governor::queue: sender must be gov guardian\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 155,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 156,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 157,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            state(proposalId) == ProposalState.Pending,\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 158,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Governor::queue: proposal can only be queued if it is pending\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 159,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 177,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 178,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            proposalCount >= proposalId && proposalId > 0,\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 179,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Governor::state: invalid proposal id\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 180,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 203,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 204,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            !timelock.queuedTransactions(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 205,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                keccak256(abi.encode(target, value, signature, data, eta))\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 206,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            ),\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 207,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Governor::_queueOrRevert: proposal action already queued at eta\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 208,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 214,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 215,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            state(proposalId) == ProposalState.Queued,\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 216,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Governor::execute: proposal can only be executed if it is queued\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 217,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 247,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 248,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            msg.sender == guardian,\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 249,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Governor::__acceptAdmin: sender must be gov guardian\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 250,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 259,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 260,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            msg.sender == guardian,\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 261,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Governor::__queueSetTimelockPendingAdmin: sender must be gov guardian\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 262,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 277,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 278,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            msg.sender == guardian,\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 279,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Governor::__executeSetTimelockPendingAdmin: sender must be gov guardian\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 280,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_26"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "arbitrary-send",
+                    "vulnerability_from_line": 213,
+                    "vulnerability_to_line": 230,
+                    "vulnerability_code": "    function execute(uint256 proposalId) public payable {\n\n        require(\n\n            state(proposalId) == ProposalState.Queued,\n\n            \"Governor::execute: proposal can only be executed if it is queued\"\n\n        );\n\n        Proposal storage proposal = proposals[proposalId];\n\n        proposal.executed = true;\n\n        for (uint256 i = 0; i < proposal.targets.length; i++) {\n\n            timelock.executeTransaction.value(proposal.values[i])(\n\n                proposal.targets[i],\n\n                proposal.values[i],\n\n                proposal.signatures[i],\n\n                proposal.calldatas[i],\n\n                proposal.eta\n\n            );\n\n        }\n\n        emit ProposalExecuted(proposalId);\n",
+                    "message": "Governor.execute (Governor.sol#213-230) sends eth to arbitrary user\n\tDangerous calls:\n\t- timelock.executeTransaction.value(proposal.values[i])(proposal.targets[i],proposal.values[i],proposal.signatures[i],proposal.calldatas[i],proposal.eta) (Governor.sol#221-227)\n"
+                },
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 213,
+                    "vulnerability_to_line": 230,
+                    "vulnerability_code": "    function execute(uint256 proposalId) public payable {\n\n        require(\n\n            state(proposalId) == ProposalState.Queued,\n\n            \"Governor::execute: proposal can only be executed if it is queued\"\n\n        );\n\n        Proposal storage proposal = proposals[proposalId];\n\n        proposal.executed = true;\n\n        for (uint256 i = 0; i < proposal.targets.length; i++) {\n\n            timelock.executeTransaction.value(proposal.values[i])(\n\n                proposal.targets[i],\n\n                proposal.values[i],\n\n                proposal.signatures[i],\n\n                proposal.calldatas[i],\n\n                proposal.eta\n\n            );\n\n        }\n\n        emit ProposalExecuted(proposalId);\n",
+                    "message": "Reentrancy in Governor.execute (Governor.sol#213-230):\n\tExternal calls:\n\t- require(bool,string)(state(proposalId) == ProposalState.Queued,Governor::execute: proposal can only be executed if it is queued) (Governor.sol#214-217)\n\tState variables written after the call(s):\n\t- proposals (Governor.sol#219)\n"
+                },
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": 174,
+                    "vulnerability_code": "    function queue(uint256 proposalId) public {\n\n        require(\n\n            msg.sender == guardian,\n\n            \"Governor::queue: sender must be gov guardian\"\n\n        );\n\n        require(\n\n            state(proposalId) == ProposalState.Pending,\n\n            \"Governor::queue: proposal can only be queued if it is pending\"\n\n        );\n\n        Proposal storage proposal = proposals[proposalId];\n\n        proposal.eta = add256(block.timestamp, timelock.delay());\n\n\n\n        for (uint256 i = 0; i < proposal.targets.length; i++) {\n\n            _queueOrRevert(\n\n                proposal.targets[i],\n\n                proposal.values[i],\n\n                proposal.signatures[i],\n\n                proposal.calldatas[i],\n\n                proposal.eta\n\n            );\n\n        }\n\n\n\n        emit ProposalQueued(proposal.id, proposal.eta);\n",
+                    "message": "Reentrancy in Governor.queue (Governor.sol#151-174):\n\tExternal calls:\n\t- require(bool,string)(state(proposalId) == ProposalState.Pending,Governor::queue: proposal can only be queued if it is pending) (Governor.sol#156-159)\n\t- proposal.eta = add256(block.timestamp,timelock.delay()) (Governor.sol#161)\n\tState variables written after the call(s):\n\t- proposals (Governor.sol#161)\n"
+                },
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 196,
+                    "vulnerability_to_line": 210,
+                    "vulnerability_code": "    function _queueOrRevert(\n\n        address target,\n\n        uint256 value,\n\n        string memory signature,\n\n        bytes memory data,\n\n        uint256 eta\n\n    ) internal {\n\n        require(\n\n            !timelock.queuedTransactions(\n\n                keccak256(abi.encode(target, value, signature, data, eta))\n\n            ),\n\n            \"Governor::_queueOrRevert: proposal action already queued at eta\"\n\n        );\n\n        timelock.queueTransaction(target, value, signature, data, eta);\n",
+                    "message": "Governor._queueOrRevert (Governor.sol#196-210) does not use the value returned by external calls:\n\t-timelock.queueTransaction(target,value,signature,data,eta) (Governor.sol#209)\n"
+                },
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 213,
+                    "vulnerability_to_line": 230,
+                    "vulnerability_code": "    function execute(uint256 proposalId) public payable {\n\n        require(\n\n            state(proposalId) == ProposalState.Queued,\n\n            \"Governor::execute: proposal can only be executed if it is queued\"\n\n        );\n\n        Proposal storage proposal = proposals[proposalId];\n\n        proposal.executed = true;\n\n        for (uint256 i = 0; i < proposal.targets.length; i++) {\n\n            timelock.executeTransaction.value(proposal.values[i])(\n\n                proposal.targets[i],\n\n                proposal.values[i],\n\n                proposal.signatures[i],\n\n                proposal.calldatas[i],\n\n                proposal.eta\n\n            );\n\n        }\n\n        emit ProposalExecuted(proposalId);\n",
+                    "message": "Governor.execute (Governor.sol#213-230) does not use the value returned by external calls:\n\t-timelock.executeTransaction.value(proposal.values[i])(proposal.targets[i],proposal.values[i],proposal.signatures[i],proposal.calldatas[i],proposal.eta) (Governor.sol#221-227)\n"
+                },
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 255,
+                    "vulnerability_to_line": 270,
+                    "vulnerability_code": "    function __queueSetTimelockPendingAdmin(\n\n        address newPendingAdmin,\n\n        uint256 eta\n\n    ) public {\n\n        require(\n\n            msg.sender == guardian,\n\n            \"Governor::__queueSetTimelockPendingAdmin: sender must be gov guardian\"\n\n        );\n\n        timelock.queueTransaction(\n\n            address(timelock),\n\n            0,\n\n            \"setPendingAdmin(address)\",\n\n            abi.encode(newPendingAdmin),\n\n            eta\n\n        );\n",
+                    "message": "Governor.__queueSetTimelockPendingAdmin (Governor.sol#255-270) does not use the value returned by external calls:\n\t-timelock.queueTransaction(address(timelock),0,setPendingAdmin(address),abi.encode(newPendingAdmin),eta) (Governor.sol#263-269)\n"
+                },
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 273,
+                    "vulnerability_to_line": 288,
+                    "vulnerability_code": "    function __executeSetTimelockPendingAdmin(\n\n        address newPendingAdmin,\n\n        uint256 eta\n\n    ) public {\n\n        require(\n\n            msg.sender == guardian,\n\n            \"Governor::__executeSetTimelockPendingAdmin: sender must be gov guardian\"\n\n        );\n\n        timelock.executeTransaction(\n\n            address(timelock),\n\n            0,\n\n            \"setPendingAdmin(address)\",\n\n            abi.encode(newPendingAdmin),\n\n            eta\n\n        );\n",
+                    "message": "Governor.__executeSetTimelockPendingAdmin (Governor.sol#273-288) does not use the value returned by external calls:\n\t-timelock.executeTransaction(address(timelock),0,setPendingAdmin(address),abi.encode(newPendingAdmin),eta) (Governor.sol#281-287)\n"
+                },
+                {
+                    "name": "calls-loop",
+                    "vulnerability_from_line": 221,
+                    "vulnerability_to_line": 227,
+                    "vulnerability_code": "            timelock.executeTransaction.value(proposal.values[i])(\n\n                proposal.targets[i],\n\n                proposal.values[i],\n\n                proposal.signatures[i],\n\n                proposal.calldatas[i],\n\n                proposal.eta\n",
+                    "message": "Governor.execute has external calls inside a loop:\n\t- timelock.executeTransaction.value(proposal.values[i])(proposal.targets[i],proposal.values[i],proposal.signatures[i],proposal.calldatas[i],proposal.eta) (Governor.sol#221-227)\n"
+                },
+                {
+                    "name": "timestamp",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": 174,
+                    "vulnerability_code": "    function queue(uint256 proposalId) public {\n\n        require(\n\n            msg.sender == guardian,\n\n            \"Governor::queue: sender must be gov guardian\"\n\n        );\n\n        require(\n\n            state(proposalId) == ProposalState.Pending,\n\n            \"Governor::queue: proposal can only be queued if it is pending\"\n\n        );\n\n        Proposal storage proposal = proposals[proposalId];\n\n        proposal.eta = add256(block.timestamp, timelock.delay());\n\n\n\n        for (uint256 i = 0; i < proposal.targets.length; i++) {\n\n            _queueOrRevert(\n\n                proposal.targets[i],\n\n                proposal.values[i],\n\n                proposal.signatures[i],\n\n                proposal.calldatas[i],\n\n                proposal.eta\n\n            );\n\n        }\n\n\n\n        emit ProposalQueued(proposal.id, proposal.eta);\n",
+                    "message": "Governor.queue (Governor.sol#151-174) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- i < proposal.targets.length (Governor.sol#163-171)\n"
+                },
+                {
+                    "name": "timestamp",
+                    "vulnerability_from_line": 176,
+                    "vulnerability_to_line": 193,
+                    "vulnerability_code": "    function state(uint256 proposalId) public view returns (ProposalState) {\n\n        require(\n\n            proposalCount >= proposalId && proposalId > 0,\n\n            \"Governor::state: invalid proposal id\"\n\n        );\n\n        Proposal storage proposal = proposals[proposalId];\n\n        if (proposal.executed) {\n\n            return ProposalState.Executed;\n\n        } else if (proposal.eta == 0) {\n\n            return ProposalState.Pending;\n\n        } else if (\n\n            block.timestamp >= add256(proposal.eta, timelock.GRACE_PERIOD())\n\n        ) {\n\n            return ProposalState.Expired;\n\n        } else {\n\n            return ProposalState.Queued;\n\n        }\n",
+                    "message": "Governor.state (Governor.sol#176-193) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- block.timestamp >= add256(proposal.eta,timelock.GRACE_PERIOD()) (Governor.sol#186-192)\n"
+                },
+                {
+                    "name": "timestamp",
+                    "vulnerability_from_line": 196,
+                    "vulnerability_to_line": 210,
+                    "vulnerability_code": "    function _queueOrRevert(\n\n        address target,\n\n        uint256 value,\n\n        string memory signature,\n\n        bytes memory data,\n\n        uint256 eta\n\n    ) internal {\n\n        require(\n\n            !timelock.queuedTransactions(\n\n                keccak256(abi.encode(target, value, signature, data, eta))\n\n            ),\n\n            \"Governor::_queueOrRevert: proposal action already queued at eta\"\n\n        );\n\n        timelock.queueTransaction(target, value, signature, data, eta);\n",
+                    "message": "Governor._queueOrRevert (Governor.sol#196-210) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- require(bool,string)(! timelock.queuedTransactions(keccak256(bytes)(abi.encode(target,value,signature,data,eta))),Governor::_queueOrRevert: proposal action already queued at eta) (Governor.sol#203-208)\n"
+                },
+                {
+                    "name": "timestamp",
+                    "vulnerability_from_line": 290,
+                    "vulnerability_to_line": 294,
+                    "vulnerability_code": "    function add256(uint256 a, uint256 b) internal pure returns (uint256) {\n\n        uint256 c = a + b;\n\n        require(c >= a, \"addition overflow\");\n\n        return c;\n",
+                    "message": "Governor.add256 (Governor.sol#290-294) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- require(bool,string)(c >= a,addition overflow) (Governor.sol#292)\n"
+                },
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Different versions of Solidity is used in Governor.sol:\n\t- Version used: ['0.5.11', 'ABIEncoderV2', '^0.5.11']\n\t- Governor.sol#3 declares pragma solidity0.5.11\n\t- Governor.sol#41 declares pragma solidity^0.5.11\n\t- Governor.sol#42 declares pragma experimentalABIEncoderV2\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 105,
+                    "vulnerability_to_line": 149,
+                    "vulnerability_code": "    function propose(\n\n        address[] memory targets,\n\n        uint256[] memory values,\n\n        string[] memory signatures,\n\n        bytes[] memory calldatas,\n\n        string memory description\n\n    ) public returns (uint256) {\n\n        // allow anyone to propose for now, since only guardian can queue the transaction it should be harmless, you just need to pay the gas\n\n        require(\n\n            targets.length == values.length &&\n\n                targets.length == signatures.length &&\n\n                targets.length == calldatas.length,\n\n            \"Governor::propose: proposal function information arity mismatch\"\n\n        );\n\n        require(targets.length != 0, \"Governor::propose: must provide actions\");\n\n        require(\n\n            targets.length <= MAX_OPERATIONS,\n\n            \"Governor::propose: too many actions\"\n\n        );\n\n\n\n        proposalCount++;\n\n        Proposal memory newProposal = Proposal({\n\n            id: proposalCount,\n\n            proposer: msg.sender,\n\n            eta: 0,\n\n            targets: targets,\n\n            values: values,\n\n            signatures: signatures,\n\n            calldatas: calldatas,\n\n            executed: false\n\n        });\n\n\n\n        proposals[newProposal.id] = newProposal;\n\n\n\n        emit ProposalCreated(\n\n            newProposal.id,\n\n            msg.sender,\n\n            targets,\n\n            values,\n\n            signatures,\n\n            calldatas,\n\n            description\n\n        );\n\n        return newProposal.id;\n",
+                    "message": "Governor.propose (Governor.sol#105-149) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": 174,
+                    "vulnerability_code": "    function queue(uint256 proposalId) public {\n\n        require(\n\n            msg.sender == guardian,\n\n            \"Governor::queue: sender must be gov guardian\"\n\n        );\n\n        require(\n\n            state(proposalId) == ProposalState.Pending,\n\n            \"Governor::queue: proposal can only be queued if it is pending\"\n\n        );\n\n        Proposal storage proposal = proposals[proposalId];\n\n        proposal.eta = add256(block.timestamp, timelock.delay());\n\n\n\n        for (uint256 i = 0; i < proposal.targets.length; i++) {\n\n            _queueOrRevert(\n\n                proposal.targets[i],\n\n                proposal.values[i],\n\n                proposal.signatures[i],\n\n                proposal.calldatas[i],\n\n                proposal.eta\n\n            );\n\n        }\n\n\n\n        emit ProposalQueued(proposal.id, proposal.eta);\n",
+                    "message": "Governor.queue (Governor.sol#151-174) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 213,
+                    "vulnerability_to_line": 230,
+                    "vulnerability_code": "    function execute(uint256 proposalId) public payable {\n\n        require(\n\n            state(proposalId) == ProposalState.Queued,\n\n            \"Governor::execute: proposal can only be executed if it is queued\"\n\n        );\n\n        Proposal storage proposal = proposals[proposalId];\n\n        proposal.executed = true;\n\n        for (uint256 i = 0; i < proposal.targets.length; i++) {\n\n            timelock.executeTransaction.value(proposal.values[i])(\n\n                proposal.targets[i],\n\n                proposal.values[i],\n\n                proposal.signatures[i],\n\n                proposal.calldatas[i],\n\n                proposal.eta\n\n            );\n\n        }\n\n        emit ProposalExecuted(proposalId);\n",
+                    "message": "Governor.execute (Governor.sol#213-230) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 232,
+                    "vulnerability_to_line": 244,
+                    "vulnerability_code": "    function getActions(uint256 proposalId)\n\n        public\n\n        view\n\n        returns (\n\n            address[] memory targets,\n\n            uint256[] memory values,\n\n            string[] memory signatures,\n\n            bytes[] memory calldatas\n\n        )\n\n    {\n\n        Proposal storage p = proposals[proposalId];\n\n        return (p.targets, p.values, p.signatures, p.calldatas);\n",
+                    "message": "Governor.getActions (Governor.sol#232-244) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 246,
+                    "vulnerability_to_line": 252,
+                    "vulnerability_code": "    function __acceptAdmin() public {\n\n        require(\n\n            msg.sender == guardian,\n\n            \"Governor::__acceptAdmin: sender must be gov guardian\"\n\n        );\n\n        timelock.acceptAdmin();\n",
+                    "message": "Governor.__acceptAdmin (Governor.sol#246-252) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 255,
+                    "vulnerability_to_line": 270,
+                    "vulnerability_code": "    function __queueSetTimelockPendingAdmin(\n\n        address newPendingAdmin,\n\n        uint256 eta\n\n    ) public {\n\n        require(\n\n            msg.sender == guardian,\n\n            \"Governor::__queueSetTimelockPendingAdmin: sender must be gov guardian\"\n\n        );\n\n        timelock.queueTransaction(\n\n            address(timelock),\n\n            0,\n\n            \"setPendingAdmin(address)\",\n\n            abi.encode(newPendingAdmin),\n\n            eta\n\n        );\n",
+                    "message": "Governor.__queueSetTimelockPendingAdmin (Governor.sol#255-270) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 273,
+                    "vulnerability_to_line": 288,
+                    "vulnerability_code": "    function __executeSetTimelockPendingAdmin(\n\n        address newPendingAdmin,\n\n        uint256 eta\n\n    ) public {\n\n        require(\n\n            msg.sender == guardian,\n\n            \"Governor::__executeSetTimelockPendingAdmin: sender must be gov guardian\"\n\n        );\n\n        timelock.executeTransaction(\n\n            address(timelock),\n\n            0,\n\n            \"setPendingAdmin(address)\",\n\n            abi.encode(newPendingAdmin),\n\n            eta\n\n        );\n",
+                    "message": "Governor.__executeSetTimelockPendingAdmin (Governor.sol#273-288) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in Governor.sol:\n\t- pragma solidity0.5.11 (Governor.sol#3): it allows old versions\n\t- pragma solidity^0.5.11 (Governor.sol#41): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function GRACE_PERIOD() external view returns (uint256);\n",
+                    "message": "Function 'ITimelock.GRACE_PERIOD' (Governor.sol#8) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 196,
+                    "vulnerability_to_line": 210,
+                    "vulnerability_code": "    function _queueOrRevert(\n\n        address target,\n\n        uint256 value,\n\n        string memory signature,\n\n        bytes memory data,\n\n        uint256 eta\n\n    ) internal {\n\n        require(\n\n            !timelock.queuedTransactions(\n\n                keccak256(abi.encode(target, value, signature, data, eta))\n\n            ),\n\n            \"Governor::_queueOrRevert: proposal action already queued at eta\"\n\n        );\n\n        timelock.queueTransaction(target, value, signature, data, eta);\n",
+                    "message": "Function 'Governor._queueOrRevert' (Governor.sol#196-210) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 246,
+                    "vulnerability_to_line": 252,
+                    "vulnerability_code": "    function __acceptAdmin() public {\n\n        require(\n\n            msg.sender == guardian,\n\n            \"Governor::__acceptAdmin: sender must be gov guardian\"\n\n        );\n\n        timelock.acceptAdmin();\n",
+                    "message": "Function 'Governor.__acceptAdmin' (Governor.sol#246-252) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 255,
+                    "vulnerability_to_line": 270,
+                    "vulnerability_code": "    function __queueSetTimelockPendingAdmin(\n\n        address newPendingAdmin,\n\n        uint256 eta\n\n    ) public {\n\n        require(\n\n            msg.sender == guardian,\n\n            \"Governor::__queueSetTimelockPendingAdmin: sender must be gov guardian\"\n\n        );\n\n        timelock.queueTransaction(\n\n            address(timelock),\n\n            0,\n\n            \"setPendingAdmin(address)\",\n\n            abi.encode(newPendingAdmin),\n\n            eta\n\n        );\n",
+                    "message": "Function 'Governor.__queueSetTimelockPendingAdmin' (Governor.sol#255-270) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 273,
+                    "vulnerability_to_line": 288,
+                    "vulnerability_code": "    function __executeSetTimelockPendingAdmin(\n\n        address newPendingAdmin,\n\n        uint256 eta\n\n    ) public {\n\n        require(\n\n            msg.sender == guardian,\n\n            \"Governor::__executeSetTimelockPendingAdmin: sender must be gov guardian\"\n\n        );\n\n        timelock.executeTransaction(\n\n            address(timelock),\n\n            0,\n\n            \"setPendingAdmin(address)\",\n\n            abi.encode(newPendingAdmin),\n\n            eta\n\n        );\n",
+                    "message": "Function 'Governor.__executeSetTimelockPendingAdmin' (Governor.sol#273-288) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 163,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < proposal.targets.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 220,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < proposal.targets.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 163,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < proposal.targets.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 220,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < proposal.targets.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.11;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 235,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function queueTransaction(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function cancelTransaction(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function executeTransaction(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string calldata signature,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata data,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata data,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 eta\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external returns (bytes32);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string calldata signature,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata data,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata data,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 27,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 eta\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string calldata signature,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata data,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata data,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 eta\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external payable returns (bytes memory);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/governance/Governable.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() internal {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        _setGovernor(msg.sender);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        emit GovernorshipTransferred(address(0), _governor());\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 69,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(isGovernor(), \"Caller is not the Governor\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 109,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 110,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            msg.sender == _pendingGovernor(),\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 111,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Only the pending Governor can complete the claim\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 112,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 121,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_newGovernor != address(0), \"New Governor is address(0)\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 109,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 110,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            msg.sender == _pendingGovernor(),\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 111,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Only the pending Governor can complete the claim\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 112,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_17"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": 52,
+                    "vulnerability_code": "    function _governor() internal view returns (address governorOut) {\n\n        bytes32 position = governorPosition;\n\n        assembly {\n\n            governorOut := sload(position)\n\n        }\n",
+                    "message": "Governable._governor (Governable.sol#47-52) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": 63,
+                    "vulnerability_code": "    function _pendingGovernor()\n\n        internal\n\n        view\n\n        returns (address pendingGovernor)\n\n    {\n\n        bytes32 position = pendingGovernorPosition;\n\n        assembly {\n\n            pendingGovernor := sload(position)\n\n        }\n",
+                    "message": "Governable._pendingGovernor (Governable.sol#54-63) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": 52,
+                    "vulnerability_code": "    function _governor() internal view returns (address governorOut) {\n\n        bytes32 position = governorPosition;\n\n        assembly {\n\n            governorOut := sload(position)\n\n        }\n",
+                    "message": "Governable._governor uses assembly (Governable.sol#47-52)\n\t- Governable.sol#49-51\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": 63,
+                    "vulnerability_code": "    function _pendingGovernor()\n\n        internal\n\n        view\n\n        returns (address pendingGovernor)\n\n    {\n\n        bytes32 position = pendingGovernorPosition;\n\n        assembly {\n\n            pendingGovernor := sload(position)\n\n        }\n",
+                    "message": "Governable._pendingGovernor uses assembly (Governable.sol#54-63)\n\t- Governable.sol#60-62\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": 85,
+                    "vulnerability_code": "    function _setGovernor(address newGovernor) internal {\n\n        bytes32 position = governorPosition;\n\n        assembly {\n\n            sstore(position, newGovernor)\n\n        }\n",
+                    "message": "Governable._setGovernor uses assembly (Governable.sol#80-85)\n\t- Governable.sol#82-84\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 87,
+                    "vulnerability_to_line": 92,
+                    "vulnerability_code": "    function _setPendingGovernor(address newGovernor) internal {\n\n        bytes32 position = pendingGovernorPosition;\n\n        assembly {\n\n            sstore(position, newGovernor)\n\n        }\n",
+                    "message": "Governable._setPendingGovernor uses assembly (Governable.sol#87-92)\n\t- Governable.sol#89-91\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": 45,
+                    "vulnerability_code": "    function governor() public view returns (address) {\n\n        return _governor();\n",
+                    "message": "Governable.governor (Governable.sol#43-45) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in Governable.sol:\n\t- pragma solidity0.5.11 (Governable.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": 52,
+                    "vulnerability_code": "    function _governor() internal view returns (address governorOut) {\n\n        bytes32 position = governorPosition;\n\n        assembly {\n\n            governorOut := sload(position)\n\n        }\n",
+                    "message": "Function 'Governable._governor' (Governable.sol#47-52) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": 63,
+                    "vulnerability_code": "    function _pendingGovernor()\n\n        internal\n\n        view\n\n        returns (address pendingGovernor)\n\n    {\n\n        bytes32 position = pendingGovernorPosition;\n\n        assembly {\n\n            pendingGovernor := sload(position)\n\n        }\n",
+                    "message": "Function 'Governable._pendingGovernor' (Governable.sol#54-63) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": 85,
+                    "vulnerability_code": "    function _setGovernor(address newGovernor) internal {\n\n        bytes32 position = governorPosition;\n\n        assembly {\n\n            sstore(position, newGovernor)\n\n        }\n",
+                    "message": "Function 'Governable._setGovernor' (Governable.sol#80-85) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 87,
+                    "vulnerability_to_line": 92,
+                    "vulnerability_code": "    function _setPendingGovernor(address newGovernor) internal {\n\n        bytes32 position = pendingGovernorPosition;\n\n        assembly {\n\n            sstore(position, newGovernor)\n\n        }\n",
+                    "message": "Function 'Governable._setPendingGovernor' (Governable.sol#87-92) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 99,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferGovernance(address _newGovernor) external onlyGovernor {\n",
+                    "message": "Parameter '_newGovernor' of Governable.transferGovernance (Governable.sol#99) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 120,
+                    "vulnerability_to_line": 124,
+                    "vulnerability_code": "    function _changeGovernor(address _newGovernor) internal {\n\n        require(_newGovernor != address(0), \"New Governor is address(0)\");\n\n        emit GovernorshipTransferred(_governor(), _newGovernor);\n\n        _setGovernor(_newGovernor);\n",
+                    "message": "Function 'Governable._changeGovernor' (Governable.sol#120-124) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 120,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _changeGovernor(address _newGovernor) internal {\n",
+                    "message": "Parameter '_newGovernor' of Governable._changeGovernor (Governable.sol#120) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": 15,
+                    "vulnerability_code": "    bytes32\n",
+                    "message": "Constant 'Governable.governorPosition' (Governable.sol#14-15) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": 19,
+                    "vulnerability_code": "    bytes32\n",
+                    "message": "Constant 'Governable.pendingGovernorPosition' (Governable.sol#18-19) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _governor() internal view returns (address governorOut) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _pendingGovernor()\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        private constant governorPosition = 0x7bea13895fa79d2831e0a9e28edede30099005a50d652d8957cf8a607ee6ca4a;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        private constant pendingGovernorPosition = 0x44c4d30b2eaad5130ad70c3ba6972730566f3e6359ab83e800d905c61b1c51db;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _governor() internal view returns (address governorOut) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _pendingGovernor()\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 60,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 82,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/interfaces/IEthUsdOracle.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in IEthUsdOracle.sol:\n\t- pragma solidity0.5.11 (IEthUsdOracle.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/interfaces/IPriceOracle.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in IPriceOracle.sol:\n\t- pragma solidity0.5.11 (IPriceOracle.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/interfaces/IRebaseHooks.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in IRebaseHooks.sol:\n\t- pragma solidity0.5.11 (IRebaseHooks.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/interfaces/IVault.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in IVault.sol:\n\t- pragma solidity0.5.11 (IVault.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/interfaces/IBasicToken.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in IBasicToken.sol:\n\t- pragma solidity0.5.11 (IBasicToken.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/interfaces/IMinMaxOracle.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in IMinMaxOracle.sol:\n\t- pragma solidity0.5.11 (IMinMaxOracle.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/interfaces/ITimelock.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in ITimelock.sol:\n\t- pragma solidity0.5.11 (ITimelock.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function GRACE_PERIOD() external view returns (uint256);\n",
+                    "message": "Function 'ITimelock.GRACE_PERIOD' (ITimelock.sol#8) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function queueTransaction(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function cancelTransaction(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function executeTransaction(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string calldata signature,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata data,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata data,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 eta\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external returns (bytes32);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string calldata signature,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata data,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata data,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 27,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 eta\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string calldata signature,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata data,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata data,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 eta\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external payable returns (bytes memory);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/interfaces/IStrategy.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in IStrategy.sol:\n\t- pragma solidity0.5.11 (IStrategy.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/interfaces/IViewVault.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getAllAssets() public view returns (address[] memory);\n",
+                    "message": "IViewVault.getAllAssets (IViewVault.sol#6) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function totalValue() public view returns (uint256 value);\n",
+                    "message": "IViewVault.totalValue (IViewVault.sol#8) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in IViewVault.sol:\n\t- pragma solidity0.5.11 (IViewVault.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/interfaces/uniswap/IUniswapV2Router02.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in IUniswapV2Router02.sol:\n\t- pragma solidity0.5.11 (IUniswapV2Router02.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function WETH() external pure returns (address);\n",
+                    "message": "Function 'IUniswapV2Router.WETH' (IUniswapV2Router02.sol#6) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactTokensForTokens(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address[] calldata path,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address to,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 deadline\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external returns (uint256[] memory amounts);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/interfaces/uniswap/IUniswapV2Pair.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in IUniswapV2Pair.sol:\n\t- pragma solidity0.5.11 (IUniswapV2Pair.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

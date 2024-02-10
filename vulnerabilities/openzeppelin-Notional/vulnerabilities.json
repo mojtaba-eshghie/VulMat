@@ -1,0 +1,108 @@
+{
+    "contracts-b6fc6be4622422d0e34c90e77f2ec9da18596b8c/Ownable.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor () internal {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        _owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        emit OwnershipTransferred(address(0), _owner);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 27,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": 34,
+                    "vulnerability_code": "    function owner() public view returns (address) {\n\n        return _owner;\n",
+                    "message": "OpenZeppelinUpgradesOwnable.owner (Ownable.sol#32-34) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": 60,
+                    "vulnerability_code": "    function renounceOwnership() public onlyOwner {\n\n        emit OwnershipTransferred(_owner, address(0));\n\n        _owner = address(0);\n",
+                    "message": "OpenZeppelinUpgradesOwnable.renounceOwnership (Ownable.sol#57-60) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 66,
+                    "vulnerability_to_line": 68,
+                    "vulnerability_code": "    function transferOwnership(address newOwner) public onlyOwner {\n\n        _transferOwnership(newOwner);\n",
+                    "message": "OpenZeppelinUpgradesOwnable.transferOwnership (Ownable.sol#66-68) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": "Detected issues with version pragma in Ownable.sol:\n\t- pragma solidity^0.6.0 (Ownable.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": 78,
+                    "vulnerability_code": "    function _transferOwnership(address newOwner) internal {\n\n        require(newOwner != address(0));\n\n        emit OwnershipTransferred(_owner, newOwner);\n\n        _owner = newOwner;\n",
+                    "message": "Function 'OpenZeppelinUpgradesOwnable._transferOwnership' (Ownable.sol#74-78) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address internal _owner;\n",
+                    "message": "Variable 'OpenZeppelinUpgradesOwnable._owner' (Ownable.sol#16) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 59,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        _owner = address(0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

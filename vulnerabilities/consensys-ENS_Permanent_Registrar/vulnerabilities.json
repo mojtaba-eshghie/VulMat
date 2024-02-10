@@ -1,0 +1,431 @@
+{
+    "ethregistrar-e52abfc2799ac361364aca6135fc20f9175a29fd/contracts/DummyOracle.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(uint _value) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        set(_value);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(uint _value) public {\n",
+                    "message": "Parameter '_value' of DummyOracle. (DummyOracle.sol#8) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function set(uint _value) public {\n",
+                    "message": "Parameter '_value' of DummyOracle.set (DummyOracle.sol#12) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.24;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint value;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "ethregistrar-e52abfc2799ac361364aca6135fc20f9175a29fd/contracts/SafeMath.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.24;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "ethregistrar-e52abfc2799ac361364aca6135fc20f9175a29fd/contracts/Migrations.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": 19,
+                    "vulnerability_code": "  function setCompleted(uint completed) public restricted {\n\n    last_completed_migration = completed;\n",
+                    "message": "Migrations.setCompleted (Migrations.sol#17-19) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": 24,
+                    "vulnerability_code": "  function upgrade(address new_address) public restricted {\n\n    Migrations upgraded = Migrations(new_address);\n\n    upgraded.setCompleted(last_completed_migration);\n",
+                    "message": "Migrations.upgrade (Migrations.sol#21-24) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in Migrations.sol:\n\t- pragma solidity^0.5.0 (Migrations.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function upgrade(address new_address) public restricted {\n",
+                    "message": "Parameter 'new_address' of Migrations.upgrade (Migrations.sol#21) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint public last_completed_migration;\n",
+                    "message": "Variable 'Migrations.last_completed_migration' (Migrations.sol#7) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "ethregistrar-e52abfc2799ac361364aca6135fc20f9175a29fd/contracts/StringUtils.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (len = 0; ptr < end; len++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": 40,
+                    "vulnerability_code": "    function strlen(string memory s) internal pure returns (uint) {\n\n        s; // Don't warn about unused variables\n\n        // Starting here means the LSB will be the byte we care about\n\n        uint ptr;\n\n        uint end;\n\n        assembly {\n\n            ptr := add(s, 1)\n\n            end := add(mload(s), ptr)\n\n        }\n\n        uint len;\n\n        for (len = 0; ptr < end; len++) {\n\n            uint8 b;\n\n            assembly { b := and(mload(ptr), 0xFF) }\n\n            if (b < 0x80) {\n\n                ptr += 1;\n\n            } else if (b < 0xE0) {\n\n                ptr += 2;\n\n            } else if (b < 0xF0) {\n\n                ptr += 3;\n\n            } else if (b < 0xF8) {\n\n                ptr += 4;\n\n            } else if (b < 0xFC) {\n\n                ptr += 5;\n\n            } else {\n\n                ptr += 6;\n\n            }\n\n        }\n\n        return len;\n",
+                    "message": "StringUtils.strlen (StringUtils.sol#12-40) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": 40,
+                    "vulnerability_code": "    function strlen(string memory s) internal pure returns (uint) {\n\n        s; // Don't warn about unused variables\n\n        // Starting here means the LSB will be the byte we care about\n\n        uint ptr;\n\n        uint end;\n\n        assembly {\n\n            ptr := add(s, 1)\n\n            end := add(mload(s), ptr)\n\n        }\n\n        uint len;\n\n        for (len = 0; ptr < end; len++) {\n\n            uint8 b;\n\n            assembly { b := and(mload(ptr), 0xFF) }\n\n            if (b < 0x80) {\n\n                ptr += 1;\n\n            } else if (b < 0xE0) {\n\n                ptr += 2;\n\n            } else if (b < 0xF0) {\n\n                ptr += 3;\n\n            } else if (b < 0xF8) {\n\n                ptr += 4;\n\n            } else if (b < 0xFC) {\n\n                ptr += 5;\n\n            } else {\n\n                ptr += 6;\n\n            }\n\n        }\n\n        return len;\n",
+                    "message": "StringUtils.strlen uses assembly (StringUtils.sol#12-40)\n\t- StringUtils.sol#17-21\n\t- StringUtils.sol#24-25\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            if (b < 0x80) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 27,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            } else if (b < 0xE0) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            } else if (b < 0xF0) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            } else if (b < 0xF8) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            } else if (b < 0xFC) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.24;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_PURE",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function strlen(string memory s) internal pure returns (uint) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            assembly { b := and(mload(ptr), 0xFF) }\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "root-c82010e34828d72319efb66aae921609d3c7a704/contracts/Ownable.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": 20,
+                    "vulnerability_code": "    function transferOwnership(address newOwner) public onlyOwner {\n\n        owner = newOwner;\n",
+                    "message": "Ownable.transferOwnership (Ownable.sol#18-20) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in Ownable.sol:\n\t- pragma solidity^0.5.0 (Ownable.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "root-c82010e34828d72319efb66aae921609d3c7a704/contracts/Migrations.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_4"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": 21,
+                    "vulnerability_code": "    function setCompleted(uint completed) public restricted {\n\n        last_completed_migration = completed;\n",
+                    "message": "Migrations.setCompleted (Migrations.sol#19-21) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": 26,
+                    "vulnerability_code": "    function upgrade(address newAddress) public restricted {\n\n        Migrations upgraded = Migrations(newAddress);\n\n        upgraded.setCompleted(last_completed_migration);\n",
+                    "message": "Migrations.upgrade (Migrations.sol#23-26) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in Migrations.sol:\n\t- pragma solidity^0.5.0 (Migrations.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint public last_completed_migration;\n",
+                    "message": "Variable 'Migrations.last_completed_migration' (Migrations.sol#8) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

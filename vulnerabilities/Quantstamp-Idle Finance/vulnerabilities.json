@@ -1,0 +1,434 @@
+{
+    "idle-contracts-937f989c46beaf9405fab0bc4530a3a8b14c1fb7/contracts/Migrations.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": 19,
+                    "vulnerability_code": "  function setCompleted(uint completed) public restricted {\n\n    last_completed_migration = completed;\n",
+                    "message": "Migrations.setCompleted (Migrations.sol#17-19) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": 24,
+                    "vulnerability_code": "  function upgrade(address new_address) public restricted {\n\n    Migrations upgraded = Migrations(new_address);\n\n    upgraded.setCompleted(last_completed_migration);\n",
+                    "message": "Migrations.upgrade (Migrations.sol#21-24) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in Migrations.sol:\n\t- pragma solidity^0.5.0 (Migrations.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function upgrade(address new_address) public restricted {\n",
+                    "message": "Parameter 'new_address' of Migrations.upgrade (Migrations.sol#21) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint public last_completed_migration;\n",
+                    "message": "Variable 'Migrations.last_completed_migration' (Migrations.sol#7) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "idle-contracts-937f989c46beaf9405fab0bc4530a3a8b14c1fb7/contracts/mocks/ForceSend.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in ForceSend.sol:\n\t- pragma solidity0.5.11 (ForceSend.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract ForceSend {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function go(address payable victim) external payable {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    selfdestruct(victim);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "idle-contracts-937f989c46beaf9405fab0bc4530a3a8b14c1fb7/contracts/mocks/WhitePaperMock.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    baseRate = 50000000000000000;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    multiplier = 120000000000000000;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    blocksPerYear = 2102400;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public borrowRate;\n",
+                    "message": "WhitePaperMock.borrowRate should be constant (WhitePaperMock.sol#17)\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in WhitePaperMock.sol:\n\t- pragma solidity0.5.11 (WhitePaperMock.sol#3): it allows old versions\n\t- pragma solidity0.5.11 (WhitePaperMock.sol#14): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function getBorrowRate(uint256 cash, uint256 borrows, uint256 _reserves) external view returns (uint256, uint256) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function getBorrowRate(uint256 cash, uint256 borrows, uint256 _reserves) external view returns (uint256, uint256);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function getBorrowRate(uint256 cash, uint256 borrows, uint256 _reserves) external view returns (uint256, uint256) {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "idle-contracts-937f989c46beaf9405fab0bc4530a3a8b14c1fb7/contracts/interfaces/CERC20.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in CERC20.sol:\n\t- pragma solidity0.5.11 (CERC20.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "idle-contracts-937f989c46beaf9405fab0bc4530a3a8b14c1fb7/contracts/interfaces/ILendingProtocol.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in ILendingProtocol.sol:\n\t- pragma solidity0.5.11 (ILendingProtocol.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "idle-contracts-937f989c46beaf9405fab0bc4530a3a8b14c1fb7/contracts/interfaces/iERC20Fulcrum.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in iERC20Fulcrum.sol:\n\t- pragma solidity0.5.11 (iERC20Fulcrum.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": 101,
+                    "vulnerability_code": "interface iERC20Fulcrum {\n\n  function mint(\n\n    address receiver,\n\n    uint256 depositAmount)\n\n    external\n\n    returns (uint256 mintAmount);\n\n\n\n  function burn(\n\n    address receiver,\n\n    uint256 burnAmount)\n\n    external\n\n    returns (uint256 loanAmountPaid);\n\n\n\n  function tokenPrice()\n\n    external\n\n    view\n\n    returns (uint256 price);\n\n\n\n  function supplyInterestRate()\n\n    external\n\n    view\n\n    returns (uint256);\n\n\n\n  function rateMultiplier()\n\n    external\n\n    view\n\n    returns (uint256);\n\n  function baseRate()\n\n    external\n\n    view\n\n    returns (uint256);\n\n\n\n  function borrowInterestRate()\n\n    external\n\n    view\n\n    returns (uint256);\n\n\n\n  function avgBorrowInterestRate()\n\n    external\n\n    view\n\n    returns (uint256);\n\n\n\n  function spreadMultiplier()\n\n    external\n\n    view\n\n    returns (uint256);\n\n\n\n  function totalAssetBorrow()\n\n    external\n\n    view\n\n    returns (uint256);\n\n\n\n  function totalAssetSupply()\n\n    external\n\n    view\n\n    returns (uint256);\n\n\n\n  function nextSupplyInterestRate(uint256)\n\n    external\n\n    view\n\n    returns (uint256);\n\n\n\n  function nextBorrowInterestRate(uint256)\n\n    external\n\n    view\n\n    returns (uint256);\n\n  function nextLoanInterestRate(uint256)\n\n    external\n\n    view\n\n    returns (uint256);\n\n\n\n  function claimLoanToken()\n\n    external\n\n    returns (uint256 claimedAmount);\n\n\n\n  /* function burnToEther(\n\n    address receiver,\n\n    uint256 burnAmount)\n\n    external\n\n    returns (uint256 loanAmountPaid);\n\n\n\n\n\n  function supplyInterestRate()\n\n    external\n\n    view\n\n    returns (uint256);\n\n\n\n  function assetBalanceOf(\n\n    address _owner)\n\n    external\n\n    view\n\n    returns (uint256);\n\n\n\n  function claimLoanToken()\n\n    external\n\n    returns (uint256 claimedAmount); */\n",
+                    "message": "Contract 'iERC20Fulcrum' (iERC20Fulcrum.sol#5-101) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function nextSupplyInterestRate(uint256)\n",
+                    "message": "Parameter '' of iERC20Fulcrum.nextSupplyInterestRate (iERC20Fulcrum.sol#62) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 67,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function nextBorrowInterestRate(uint256)\n",
+                    "message": "Parameter '' of iERC20Fulcrum.nextBorrowInterestRate (iERC20Fulcrum.sol#67) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function nextLoanInterestRate(uint256)\n",
+                    "message": "Parameter '' of iERC20Fulcrum.nextLoanInterestRate (iERC20Fulcrum.sol#71) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "idle-contracts-937f989c46beaf9405fab0bc4530a3a8b14c1fb7/contracts/interfaces/IIdleToken.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in IIdleToken.sol:\n\t- pragma solidity0.5.11 (IIdleToken.sol#7): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function getAPRs() external view returns (address[] memory addresses, uint256[] memory aprs);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "idle-contracts-937f989c46beaf9405fab0bc4530a3a8b14c1fb7/contracts/interfaces/IERC20Mintable.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in IERC20Mintable.sol:\n\t- pragma solidity0.5.11 (IERC20Mintable.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "idle-contracts-937f989c46beaf9405fab0bc4530a3a8b14c1fb7/contracts/interfaces/WhitePaperInterestRateModel.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.11;\n",
+                    "message": "Detected issues with version pragma in WhitePaperInterestRateModel.sol:\n\t- pragma solidity0.5.11 (WhitePaperInterestRateModel.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function getBorrowRate(uint256 cash, uint256 borrows, uint256 _reserves) external view returns (uint256, uint256);\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

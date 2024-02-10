@@ -1,0 +1,388 @@
+{
+    "cff-contract-v2-c86bef3f13c7585f547f9cd0ca900f94664e96b7/contracts/Migrations.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": 19,
+                    "vulnerability_code": "  function setCompleted(uint completed) public restricted {\n\n    last_completed_migration = completed;\n",
+                    "message": "Migrations.setCompleted (Migrations.sol#17-19) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": 24,
+                    "vulnerability_code": "  function upgrade(address new_address) public restricted {\n\n    Migrations upgraded = Migrations(new_address);\n\n    upgraded.setCompleted(last_completed_migration);\n",
+                    "message": "Migrations.upgrade (Migrations.sol#21-24) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.23 <0.6.0;\n",
+                    "message": "Detected issues with version pragma in Migrations.sol:\n\t- pragma solidity>=0.4.23<0.6.0 (Migrations.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function upgrade(address new_address) public restricted {\n",
+                    "message": "Parameter 'new_address' of Migrations.upgrade (Migrations.sol#21) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint public last_completed_migration;\n",
+                    "message": "Variable 'Migrations.last_completed_migration' (Migrations.sol#7) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.23 <0.6.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.23 <0.6.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "cff-contract-v2-c86bef3f13c7585f547f9cd0ca900f94664e96b7/contracts/core/ConvexInterface.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_7"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function withdraw(uint256 _pid, uint256 _amount) public returns(bool);\n",
+                    "message": "ConvexBoosterInterface.withdraw (ConvexInterface.sol#14) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.21 <0.6.0;\n",
+                    "message": "Detected issues with version pragma in ConvexInterface.sol:\n\t- pragma solidity>=0.4.21<0.6.0 (ConvexInterface.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "function getReward(address, bool) external returns(bool);\n",
+                    "message": "Parameter '' of ConvexRewardInterface.getReward (ConvexInterface.sol#6) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "function getReward(address, bool) external returns(bool);\n",
+                    "message": "Parameter '_scope_0' of ConvexRewardInterface.getReward (ConvexInterface.sol#6) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "function withdraw(uint256, bool) external returns(bool);\n",
+                    "message": "Parameter '' of ConvexRewardInterface.withdraw (ConvexInterface.sol#7) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "function withdraw(uint256, bool) external returns(bool);\n",
+                    "message": "Parameter '_scope_0' of ConvexRewardInterface.withdraw (ConvexInterface.sol#7) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function poolInfo(uint256) external view returns(address,address,address,address,address,bool);\n",
+                    "message": "Parameter '' of ConvexBoosterInterface.poolInfo (ConvexInterface.sol#11) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.21 <0.6.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.21 <0.6.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function poolInfo(uint256) external view returns(address,address,address,address,address,bool);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "cff-contract-v2-c86bef3f13c7585f547f9cd0ca900f94664e96b7/contracts/core/IPool.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_10"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  string public name;\n",
+                    "message": "ICurvePool.name should be constant (IPool.sol#15)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function deposit(uint256 _amount) public;\n",
+                    "message": "ICurvePool.deposit (IPool.sol#6) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function withdraw(uint256 _amount) public;\n",
+                    "message": "ICurvePool.withdraw (IPool.sol#7) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function get_virtual_price() public view returns(uint256);\n",
+                    "message": "ICurvePool.get_virtual_price (IPool.sol#9) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function get_lp_token_balance() public view returns(uint256);\n",
+                    "message": "ICurvePool.get_lp_token_balance (IPool.sol#11) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function get_lp_token_addr() public view returns(address);\n",
+                    "message": "ICurvePool.get_lp_token_addr (IPool.sol#13) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.21 <0.6.0;\n",
+                    "message": "Detected issues with version pragma in IPool.sol:\n\t- pragma solidity>=0.4.21<0.6.0 (IPool.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function get_virtual_price() public view returns(uint256);\n",
+                    "message": "Function 'ICurvePool.get_virtual_price' (IPool.sol#9) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function get_lp_token_balance() public view returns(uint256);\n",
+                    "message": "Function 'ICurvePool.get_lp_token_balance' (IPool.sol#11) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function get_lp_token_addr() public view returns(address);\n",
+                    "message": "Function 'ICurvePool.get_lp_token_addr' (IPool.sol#13) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.21 <0.6.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.21 <0.6.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "cff-contract-v2-c86bef3f13c7585f547f9cd0ca900f94664e96b7/contracts/erc20/IERC20.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.21 <0.6.0;\n",
+                    "message": "Detected issues with version pragma in IERC20.sol:\n\t- pragma solidity>=0.4.21<0.6.0 (IERC20.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.21 <0.6.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.21 <0.6.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "cff-contract-v2-c86bef3f13c7585f547f9cd0ca900f94664e96b7/contracts/erc20/TokenInterface.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function destroyTokens(address _owner, uint _amount) public returns(bool);\n",
+                    "message": "TokenInterface.destroyTokens (TokenInterface.sol#5) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function generateTokens(address _owner, uint _amount) public returns(bool);\n",
+                    "message": "TokenInterface.generateTokens (TokenInterface.sol#6) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.21 <0.6.0;\n",
+                    "message": "Detected issues with version pragma in TokenInterface.sol:\n\t- pragma solidity>=0.4.21<0.6.0 (TokenInterface.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.21 <0.6.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.21 <0.6.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

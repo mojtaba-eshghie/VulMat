@@ -1,0 +1,591 @@
+{
+    "moni-smart-contracts-3303268d5456d51a5f7412be8cfca7e3caf73ed5/contracts/utils/Pausable.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Pausable is Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 69,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  bool public paused = false;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 27,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": 46,
+                    "vulnerability_code": "  function transferOwnership(address payable newOwner) public onlyOwner {\n\n    require(newOwner != address(0));\n\n    emit OwnershipTransferred(owner, newOwner);\n\n    owner = newOwner;\n",
+                    "message": "Ownable.transferOwnership (Pausable.sol#42-46) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 51,
+                    "vulnerability_to_line": 54,
+                    "vulnerability_code": "  function renounceOwnership() public onlyOwner {\n\n    emit OwnershipRenounced(owner);\n\n    owner = address(0);\n",
+                    "message": "Ownable.renounceOwnership (Pausable.sol#51-54) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 91,
+                    "vulnerability_to_line": 94,
+                    "vulnerability_code": "  function pause() onlyOwner whenNotPaused public {\n\n    paused = true;\n\n    emit Pause();\n",
+                    "message": "Pausable.pause (Pausable.sol#91-94) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 99,
+                    "vulnerability_to_line": 102,
+                    "vulnerability_code": "  function unpause() onlyOwner whenPaused public {\n\n    paused = false;\n\n    emit Unpause();\n",
+                    "message": "Pausable.unpause (Pausable.sol#99-102) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": "Detected issues with version pragma in Pausable.sol:\n\t- pragma solidity^0.6.0 (Pausable.sol#3): it allows old versions\n\t- pragma solidity^0.6.0 (Pausable.sol#59): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Ownable {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 59,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferOwnership(address payable newOwner) public onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(newOwner != address(0));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(newOwner != address(0));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(newOwner != address(0));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    emit OwnershipTransferred(owner, newOwner);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    emit OwnershipTransferred(owner, newOwner);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    owner = newOwner;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "moni-smart-contracts-3303268d5456d51a5f7412be8cfca7e3caf73ed5/contracts/utils/Ownable.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 27,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": 46,
+                    "vulnerability_code": "  function transferOwnership(address payable newOwner) public onlyOwner {\n\n    require(newOwner != address(0));\n\n    emit OwnershipTransferred(owner, newOwner);\n\n    owner = newOwner;\n",
+                    "message": "Ownable.transferOwnership (Ownable.sol#42-46) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 51,
+                    "vulnerability_to_line": 54,
+                    "vulnerability_code": "  function renounceOwnership() public onlyOwner {\n\n    emit OwnershipRenounced(owner);\n\n    owner = address(0);\n",
+                    "message": "Ownable.renounceOwnership (Ownable.sol#51-54) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": "Detected issues with version pragma in Ownable.sol:\n\t- pragma solidity^0.6.0 (Ownable.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Ownable {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferOwnership(address payable newOwner) public onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(newOwner != address(0));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(newOwner != address(0));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(newOwner != address(0));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    emit OwnershipTransferred(owner, newOwner);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    emit OwnershipTransferred(owner, newOwner);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    owner = newOwner;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "moni-smart-contracts-3303268d5456d51a5f7412be8cfca7e3caf73ed5/contracts/utils/SafeMath.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require((z = x + y) >= x, 'ds-math-add-overflow');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require((z = x - y) <= x, 'ds-math-sub-underflow');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(y == 0 || (z = x * y) / y == x, 'ds-math-mul-overflow');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": "Detected issues with version pragma in SafeMath.sol:\n\t- pragma solidity^0.6.0 (SafeMath.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "moni-smart-contracts-3303268d5456d51a5f7412be8cfca7e3caf73ed5/contracts/presale/MonstaPresale.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Pausable is Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  bool public paused = false;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 48,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 155,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 156,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    _currentPrice = INITIAL_PRICE;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 157,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 205,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if(!_adopters[_addresses[i]]){\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 207,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        _adopters[_addresses[i]] = true;\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 204,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint i = 0; i < _addresses.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require((z = x + y) >= x, 'ds-math-add-overflow');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require((z = x - y) <= x, 'ds-math-sub-underflow');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(y == 0 || (z = x * y) / y == x, 'ds-math-mul-overflow');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 164,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(!_adopters[msg.sender], \"Only can adopt once\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 204,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint i = 0; i < _addresses.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 206,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        given++;\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 204,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint i = 0; i < _addresses.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 204,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint i = 0; i < _addresses.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Ownable {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 182,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setRedemptionAddress(address redemptionAddress) external onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferOwnership(address payable newOwner) public onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(newOwner != address(0));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(newOwner != address(0));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(newOwner != address(0));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    emit OwnershipTransferred(owner, newOwner);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    emit OwnershipTransferred(owner, newOwner);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    owner = newOwner;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

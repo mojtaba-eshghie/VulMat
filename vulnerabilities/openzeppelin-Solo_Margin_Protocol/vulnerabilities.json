@@ -1,0 +1,548 @@
+{
+    "solo-17df84db351d5438e1b7437572722b4f52c8b2b4/contracts/Migrations.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_4"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": 40,
+                    "vulnerability_code": "    function setCompleted(uint256 completed) public restricted {\n\n        last_completed_migration = completed;\n",
+                    "message": "Migrations.setCompleted (Migrations.sol#38-40) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": 45,
+                    "vulnerability_code": "    function upgrade(address newAddress) public restricted {\n\n        Migrations upgraded = Migrations(newAddress);\n\n        upgraded.setCompleted(last_completed_migration);\n",
+                    "message": "Migrations.upgrade (Migrations.sol#42-45) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.4;\n",
+                    "message": "Detected issues with version pragma in Migrations.sol:\n\t- pragma solidity0.5.4 (Migrations.sol#21): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public last_completed_migration;\n",
+                    "message": "Variable 'Migrations.last_completed_migration' (Migrations.sol#26) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "solo-17df84db351d5438e1b7437572722b4f52c8b2b4/contracts/protocol/lib/Token.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < 32; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 209,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < 20; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < 32; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 180,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            length++;\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 209,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < 20; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": 163,
+                    "vulnerability_code": "    function stringify(\n\n        bytes32 b\n\n    )\n\n        private\n\n        pure\n\n        returns (bytes memory)\n\n    {\n\n        bytes memory r = abi.encodePacked(b);\n\n        for (uint256 i = 0; i < 32; i++) {\n\n            if (r[i] == 0) {\n\n                /* solium-disable-next-line security/no-inline-assembly */\n\n                assembly {\n\n                    mstore(r, i) // r.length = i;\n\n                }\n\n                return r;\n\n            }\n\n        }\n\n        return r;\n",
+                    "message": "Require.stringify (Token.sol#145-163) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 472,
+                    "vulnerability_to_line": 504,
+                    "vulnerability_code": "    function checkSuccess(\n\n    )\n\n        private\n\n        pure\n\n        returns (bool)\n\n    {\n\n        uint256 returnValue = 0;\n\n\n\n        /* solium-disable-next-line security/no-inline-assembly */\n\n        assembly {\n\n            // check number of bytes returned from last function call\n\n            switch returndatasize\n\n\n\n            // no bytes returned: assume success\n\n            case 0x0 {\n\n                returnValue := 1\n\n            }\n\n\n\n            // 32 bytes returned: check if non-zero\n\n            case 0x20 {\n\n                // copy 32 bytes into scratch space\n\n                returndatacopy(0x0, 0x0, 0x20)\n\n\n\n                // load those bytes into returnValue\n\n                returnValue := mload(0x0)\n\n            }\n\n\n\n            // not sure what was returned: dont mark as success\n\n            default { }\n\n        }\n\n\n\n        return returnValue != 0;\n",
+                    "message": "Token.checkSuccess (Token.sol#472-504) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "erc20-interface",
+                    "vulnerability_from_line": 264,
+                    "vulnerability_to_line": 332,
+                    "vulnerability_code": "interface IErc20 {\n\n    event Transfer(\n\n        address indexed from,\n\n        address indexed to,\n\n        uint256 value\n\n    );\n\n\n\n    event Approval(\n\n        address indexed owner,\n\n        address indexed spender,\n\n        uint256 value\n\n    );\n\n\n\n    function totalSupply(\n\n    )\n\n        external\n\n        view\n\n        returns (uint256);\n\n\n\n    function balanceOf(\n\n        address who\n\n    )\n\n        external\n\n        view\n\n        returns (uint256);\n\n\n\n    function allowance(\n\n        address owner,\n\n        address spender\n\n    )\n\n        external\n\n        view\n\n        returns (uint256);\n\n\n\n    function transfer(\n\n        address to,\n\n        uint256 value\n\n    )\n\n        external;\n\n\n\n\n\n    function transferFrom(\n\n        address from,\n\n        address to,\n\n        uint256 value\n\n    )\n\n        external;\n\n\n\n    function approve(\n\n        address spender,\n\n        uint256 value\n\n    )\n\n        external;\n\n\n\n    function name()\n\n        external\n\n        view\n\n        returns (string memory);\n\n\n\n    function symbol()\n\n        external\n\n        view\n\n        returns (string memory);\n\n\n\n    function decimals()\n\n        external\n\n        view\n\n        returns (uint8);\n",
+                    "message": "IErc20 (Token.sol#264-332) has incorrect ERC20 function interface(s):\n\t-transfer (Token.sol#298-302)\n\t-transferFrom (Token.sol#305-310)\n\t-approve (Token.sol#312-316)\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": 163,
+                    "vulnerability_code": "    function stringify(\n\n        bytes32 b\n\n    )\n\n        private\n\n        pure\n\n        returns (bytes memory)\n\n    {\n\n        bytes memory r = abi.encodePacked(b);\n\n        for (uint256 i = 0; i < 32; i++) {\n\n            if (r[i] == 0) {\n\n                /* solium-disable-next-line security/no-inline-assembly */\n\n                assembly {\n\n                    mstore(r, i) // r.length = i;\n\n                }\n\n                return r;\n\n            }\n\n        }\n\n        return r;\n",
+                    "message": "Require.stringify uses assembly (Token.sol#145-163)\n\t- Token.sol#156-159\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 472,
+                    "vulnerability_to_line": 504,
+                    "vulnerability_code": "    function checkSuccess(\n\n    )\n\n        private\n\n        pure\n\n        returns (bool)\n\n    {\n\n        uint256 returnValue = 0;\n\n\n\n        /* solium-disable-next-line security/no-inline-assembly */\n\n        assembly {\n\n            // check number of bytes returned from last function call\n\n            switch returndatasize\n\n\n\n            // no bytes returned: assume success\n\n            case 0x0 {\n\n                returnValue := 1\n\n            }\n\n\n\n            // 32 bytes returned: check if non-zero\n\n            case 0x20 {\n\n                // copy 32 bytes into scratch space\n\n                returndatacopy(0x0, 0x0, 0x20)\n\n\n\n                // load those bytes into returnValue\n\n                returnValue := mload(0x0)\n\n            }\n\n\n\n            // not sure what was returned: dont mark as success\n\n            default { }\n\n        }\n\n\n\n        return returnValue != 0;\n",
+                    "message": "Token.checkSuccess uses assembly (Token.sol#472-504)\n\t- Token.sol#481-503\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.4;\n",
+                    "message": "Detected issues with version pragma in Token.sol:\n\t- pragma solidity0.5.4 (Token.sol#21): it allows old versions\n\t- pragma solidity0.5.4 (Token.sol#254): it allows old versions\n\t- pragma solidity0.5.4 (Token.sol#354): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes2 constant COLON = 0x3a20; // ': '\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes2 constant COMMA = 0x2c20; // ', '\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes2 constant LPAREN = 0x203c; // ' <'\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    byte constant RPAREN = 0x3e; // '>'\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 211,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            result[41 - shift] = char(z & 0xf);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 213,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            result[40 - shift] = char(z & 0xf);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_PURE",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function stringify(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_PURE",
+                    "vulnerability_from_line": 472,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function checkSuccess(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 156,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 481,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 constant ASCII_ZERO = 48; // '0'\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 constant ASCII_RELATIVE_ZERO = 87; // 'a' - 10\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 constant ASCII_LOWER_EX = 120; // 'x'\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes2 constant COLON = 0x3a20; // ': '\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes2 constant COMMA = 0x2c20; // ', '\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes2 constant LPAREN = 0x203c; // ' <'\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    byte constant RPAREN = 0x3e; // '>'\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 369,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes32 constant FILE = \"Token\";\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "solo-17df84db351d5438e1b7437572722b4f52c8b2b4/contracts/protocol/lib/Require.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < 32; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 209,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < 20; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < 32; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 180,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            length++;\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 209,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < 20; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": 163,
+                    "vulnerability_code": "    function stringify(\n\n        bytes32 b\n\n    )\n\n        private\n\n        pure\n\n        returns (bytes memory)\n\n    {\n\n        bytes memory r = abi.encodePacked(b);\n\n        for (uint256 i = 0; i < 32; i++) {\n\n            if (r[i] == 0) {\n\n                /* solium-disable-next-line security/no-inline-assembly */\n\n                assembly {\n\n                    mstore(r, i) // r.length = i;\n\n                }\n\n                return r;\n\n            }\n\n        }\n\n        return r;\n",
+                    "message": "Require.stringify (Require.sol#145-163) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": 163,
+                    "vulnerability_code": "    function stringify(\n\n        bytes32 b\n\n    )\n\n        private\n\n        pure\n\n        returns (bytes memory)\n\n    {\n\n        bytes memory r = abi.encodePacked(b);\n\n        for (uint256 i = 0; i < 32; i++) {\n\n            if (r[i] == 0) {\n\n                /* solium-disable-next-line security/no-inline-assembly */\n\n                assembly {\n\n                    mstore(r, i) // r.length = i;\n\n                }\n\n                return r;\n\n            }\n\n        }\n\n        return r;\n",
+                    "message": "Require.stringify uses assembly (Require.sol#145-163)\n\t- Require.sol#156-159\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.4;\n",
+                    "message": "Detected issues with version pragma in Require.sol:\n\t- pragma solidity0.5.4 (Require.sol#21): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes2 constant COLON = 0x3a20; // ': '\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes2 constant COMMA = 0x2c20; // ', '\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes2 constant LPAREN = 0x203c; // ' <'\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    byte constant RPAREN = 0x3e; // '>'\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 211,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            result[41 - shift] = char(z & 0xf);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 213,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            result[40 - shift] = char(z & 0xf);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_PURE",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function stringify(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 156,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 constant ASCII_ZERO = 48; // '0'\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 constant ASCII_RELATIVE_ZERO = 87; // 'a' - 10\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 constant ASCII_LOWER_EX = 120; // 'x'\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes2 constant COLON = 0x3a20; // ': '\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes2 constant COMMA = 0x2c20; // ', '\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes2 constant LPAREN = 0x203c; // ' <'\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    byte constant RPAREN = 0x3e; // '>'\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "solo-17df84db351d5438e1b7437572722b4f52c8b2b4/contracts/protocol/interfaces/IErc20.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "erc20-interface",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": 99,
+                    "vulnerability_code": "interface IErc20 {\n\n    event Transfer(\n\n        address indexed from,\n\n        address indexed to,\n\n        uint256 value\n\n    );\n\n\n\n    event Approval(\n\n        address indexed owner,\n\n        address indexed spender,\n\n        uint256 value\n\n    );\n\n\n\n    function totalSupply(\n\n    )\n\n        external\n\n        view\n\n        returns (uint256);\n\n\n\n    function balanceOf(\n\n        address who\n\n    )\n\n        external\n\n        view\n\n        returns (uint256);\n\n\n\n    function allowance(\n\n        address owner,\n\n        address spender\n\n    )\n\n        external\n\n        view\n\n        returns (uint256);\n\n\n\n    function transfer(\n\n        address to,\n\n        uint256 value\n\n    )\n\n        external;\n\n\n\n\n\n    function transferFrom(\n\n        address from,\n\n        address to,\n\n        uint256 value\n\n    )\n\n        external;\n\n\n\n    function approve(\n\n        address spender,\n\n        uint256 value\n\n    )\n\n        external;\n\n\n\n    function name()\n\n        external\n\n        view\n\n        returns (string memory);\n\n\n\n    function symbol()\n\n        external\n\n        view\n\n        returns (string memory);\n\n\n\n    function decimals()\n\n        external\n\n        view\n\n        returns (uint8);\n",
+                    "message": "IErc20 (IErc20.sol#31-99) has incorrect ERC20 function interface(s):\n\t-transfer (IErc20.sol#65-69)\n\t-transferFrom (IErc20.sol#72-77)\n\t-approve (IErc20.sol#79-83)\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.4;\n",
+                    "message": "Detected issues with version pragma in IErc20.sol:\n\t- pragma solidity0.5.4 (IErc20.sol#21): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "solo-17df84db351d5438e1b7437572722b4f52c8b2b4/contracts/protocol/interfaces/IExchangeWrapper.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.4;\n",
+                    "message": "Different versions of Solidity is used in IExchangeWrapper.sol:\n\t- Version used: ['0.5.4', 'ABIEncoderV2']\n\t- IExchangeWrapper.sol#21 declares pragma solidity0.5.4\n\t- IExchangeWrapper.sol#22 declares pragma experimentalABIEncoderV2\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.4;\n",
+                    "message": "Detected issues with version pragma in IExchangeWrapper.sol:\n\t- pragma solidity0.5.4 (IExchangeWrapper.sol#21): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    }
+}

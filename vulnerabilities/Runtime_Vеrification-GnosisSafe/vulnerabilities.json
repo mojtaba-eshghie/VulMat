@@ -1,0 +1,2187 @@
+{
+    "safe-contracts-427d6f7e779431333c54bcb4d4cde31e4d57ce96/contracts/Migrations.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor()\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        public\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": 25,
+                    "vulnerability_code": "    function setCompleted(uint completed)\n\n        public\n\n        restricted\n\n    {\n\n        last_completed_migration = completed;\n\n    }\n",
+                    "message": "Migrations.setCompleted (Migrations.sol#19-25) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": 33,
+                    "vulnerability_code": "    function upgrade(address new_address)\n\n        public\n\n        restricted\n\n    {\n\n        Migrations upgraded = Migrations(new_address);\n\n        upgraded.setCompleted(last_completed_migration);\n\n    }\n",
+                    "message": "Migrations.upgrade (Migrations.sol#26-33) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": 4,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in Migrations.sol:\n\t- pragma solidity^0.5.0 (Migrations.sol#3-4): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgrade(address new_address)\n",
+                    "message": "Parameter 'new_address' of Migrations.upgrade (Migrations.sol#26) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint public last_completed_migration;\n",
+                    "message": "Variable 'Migrations.last_completed_migration' (Migrations.sol#7) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "safe-contracts-427d6f7e779431333c54bcb4d4cde31e4d57ce96/contracts/libraries/MultiSend.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": 39,
+                    "vulnerability_code": "    function multiSend(bytes memory transactions)\n\n        public\n\n    {\n\n        // solium-disable-next-line security/no-inline-assembly\n\n        assembly {\n\n            let length := mload(transactions)\n\n            let i := 0x20\n\n            for { } lt(i, length) { } {\n\n                let operation := mload(add(transactions, i))\n\n                let to := mload(add(transactions, add(i, 0x20)))\n\n                let value := mload(add(transactions, add(i, 0x40)))\n\n                let dataLength := mload(add(transactions, add(i, 0x80)))\n\n                let data := add(transactions, add(i, 0xa0))\n\n                let success := 0\n\n                switch operation \n\n                case 0 { success := call(gas, to, value, data, dataLength, 0, 0) }\n\n                case 1 { success := delegatecall(gas, to, data, dataLength, 0, 0) }\n\n                if eq(success, 0) { revert(0, 0) }\n\n                i := add(i, add(0xa0, mul(div(add(dataLength, 0x1f), 0x20), 0x20)))\n\n            }\n\n        }\n\n    }\n",
+                    "message": "MultiSend.multiSend uses assembly (MultiSend.sol#17-39)\n\t- MultiSend.sol#21-38\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": 39,
+                    "vulnerability_code": "    function multiSend(bytes memory transactions)\n\n        public\n\n    {\n\n        // solium-disable-next-line security/no-inline-assembly\n\n        assembly {\n\n            let length := mload(transactions)\n\n            let i := 0x20\n\n            for { } lt(i, length) { } {\n\n                let operation := mload(add(transactions, i))\n\n                let to := mload(add(transactions, add(i, 0x20)))\n\n                let value := mload(add(transactions, add(i, 0x40)))\n\n                let dataLength := mload(add(transactions, add(i, 0x80)))\n\n                let data := add(transactions, add(i, 0xa0))\n\n                let success := 0\n\n                switch operation \n\n                case 0 { success := call(gas, to, value, data, dataLength, 0, 0) }\n\n                case 1 { success := delegatecall(gas, to, data, dataLength, 0, 0) }\n\n                if eq(success, 0) { revert(0, 0) }\n\n                i := add(i, add(0xa0, mul(div(add(dataLength, 0x1f), 0x20), 0x20)))\n\n            }\n\n        }\n\n    }\n",
+                    "message": "MultiSend.multiSend (MultiSend.sol#17-39) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": 4,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in MultiSend.sol:\n\t- pragma solidity^0.5.0 (MultiSend.sol#3-4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "safe-contracts-427d6f7e779431333c54bcb4d4cde31e4d57ce96/contracts/common/MasterCopy.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.sender == address(this), \"Method can only be called from this contract\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_masterCopy != address(0), \"Invalid master copy address provided\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.sender == address(this), \"Method can only be called from this contract\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_masterCopy != address(0), \"Invalid master copy address provided\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": 36,
+                    "vulnerability_code": "    function changeMasterCopy(address _masterCopy)\n\n        public\n\n        authorized\n\n    {\n\n        // Master copy address cannot be null.\n\n        require(_masterCopy != address(0), \"Invalid master copy address provided\");\n\n        masterCopy = _masterCopy;\n\n    }\n",
+                    "message": "MasterCopy.changeMasterCopy (MasterCopy.sol#28-36) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": 4,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in MasterCopy.sol:\n\t- pragma solidity^0.5.0 (MasterCopy.sol#3-4): it allows old versions\n\t- pragma solidity^0.5.0 (MasterCopy.sol#17-19): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": 29,
+                    "vulnerability_code": "    function changeMasterCopy(address _masterCopy)\n",
+                    "message": "Parameter '_masterCopy' of MasterCopy.changeMasterCopy (MasterCopy.sol#28-29) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address masterCopy;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "safe-contracts-427d6f7e779431333c54bcb4d4cde31e4d57ce96/contracts/common/SecuredTokenTransfer.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": 34,
+                    "vulnerability_code": "    function transferToken (\n\n        address token, \n\n        address receiver,\n\n        uint256 amount\n\n    )\n\n        internal\n\n        returns (bool transferred)\n\n    {\n\n        bytes memory data = abi.encodeWithSignature(\"transfer(address,uint256)\", receiver, amount);\n\n        // solium-disable-next-line security/no-inline-assembly\n\n        assembly {\n\n            let success := call(sub(gas, 10000), token, 0, add(data, 0x20), mload(data), 0, 0)\n\n            let ptr := mload(0x40)\n\n            returndatacopy(ptr, 0, returndatasize)\n\n            switch returndatasize \n\n            case 0 { transferred := success }\n\n            case 0x20 { transferred := iszero(or(iszero(success), iszero(mload(ptr)))) }\n\n            default { transferred := 0 }\n\n        }\n\n    }\n",
+                    "message": "SecuredTokenTransfer.transferToken uses assembly (SecuredTokenTransfer.sol#14-34)\n\t- SecuredTokenTransfer.sol#24-33\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": 4,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in SecuredTokenTransfer.sol:\n\t- pragma solidity^0.5.0 (SecuredTokenTransfer.sol#3-4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ERC20_FUNCTIONS_ALWAYS_RETURN_FALSE",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferToken (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferToken (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "safe-contracts-427d6f7e779431333c54bcb4d4cde31e4d57ce96/contracts/common/Enum.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": 4,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in Enum.sol:\n\t- pragma solidity^0.5.0 (Enum.sol#3-4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "safe-contracts-427d6f7e779431333c54bcb4d4cde31e4d57ce96/contracts/common/SignatureDecoder.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": 55,
+                    "vulnerability_code": "    function signatureSplit(bytes memory signatures, uint256 pos)\n\n        internal\n\n        pure\n\n        returns (uint8 v, bytes32 r, bytes32 s)\n\n    {\n\n        // The signature format is a compact form of:\n\n        //   {bytes32 r}{bytes32 s}{uint8 v}\n\n        // Compact means, uint8 is not padded to 32 bytes.\n\n        // solium-disable-next-line security/no-inline-assembly\n\n        assembly {\n\n            let signaturePos := mul(0x41, pos)\n\n            r := mload(add(signatures, add(signaturePos, 0x20)))\n\n            s := mload(add(signatures, add(signaturePos, 0x40)))\n\n            // Here we are loading the last 32 bytes, including 31 bytes\n\n            // of 's'. There is no 'mload8' to do this.\n\n            //\n\n            // 'byte' is not working due to the Solidity parser, so lets\n\n            // use the second best option, 'and'\n\n            v := and(mload(add(signatures, add(signaturePos, 0x41))), 0xff)\n\n        }\n\n    }\n",
+                    "message": "SignatureDecoder.signatureSplit (SignatureDecoder.sol#34-55) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": 55,
+                    "vulnerability_code": "    function signatureSplit(bytes memory signatures, uint256 pos)\n\n        internal\n\n        pure\n\n        returns (uint8 v, bytes32 r, bytes32 s)\n\n    {\n\n        // The signature format is a compact form of:\n\n        //   {bytes32 r}{bytes32 s}{uint8 v}\n\n        // Compact means, uint8 is not padded to 32 bytes.\n\n        // solium-disable-next-line security/no-inline-assembly\n\n        assembly {\n\n            let signaturePos := mul(0x41, pos)\n\n            r := mload(add(signatures, add(signaturePos, 0x20)))\n\n            s := mload(add(signatures, add(signaturePos, 0x40)))\n\n            // Here we are loading the last 32 bytes, including 31 bytes\n\n            // of 's'. There is no 'mload8' to do this.\n\n            //\n\n            // 'byte' is not working due to the Solidity parser, so lets\n\n            // use the second best option, 'and'\n\n            v := and(mload(add(signatures, add(signaturePos, 0x41))), 0xff)\n\n        }\n\n    }\n",
+                    "message": "SignatureDecoder.signatureSplit uses assembly (SignatureDecoder.sol#34-55)\n\t- SignatureDecoder.sol#43-54\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": 4,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in SignatureDecoder.sol:\n\t- pragma solidity^0.5.0 (SignatureDecoder.sol#3-4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function signatureSplit(bytes memory signatures, uint256 pos)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_PURE",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function signatureSplit(bytes memory signatures, uint256 pos)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (uint8 v, bytes32 r, bytes32 s)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "safe-contracts-427d6f7e779431333c54bcb4d4cde31e4d57ce96/contracts/common/EtherPaymentFallback.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "locked-ether",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": 17,
+                    "vulnerability_code": "    function ()\n\n        external\n\n        payable\n\n    {\n\n\n\n    }\n",
+                    "message": "Contract locking ether found in EtherPaymentFallback.sol:\n\tContract EtherPaymentFallback has payable functions:\n\t - fallback (EtherPaymentFallback.sol#11-17)\n\tBut does not have a function to withdraw the ether\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": 4,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in EtherPaymentFallback.sol:\n\t- pragma solidity^0.5.0 (EtherPaymentFallback.sol#3-4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract EtherPaymentFallback {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "safe-contracts-427d6f7e779431333c54bcb4d4cde31e4d57ce96/contracts/common/SelfAuthorized.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.sender == address(this), \"Method can only be called from this contract\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.sender == address(this), \"Method can only be called from this contract\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": 4,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in SelfAuthorized.sol:\n\t- pragma solidity^0.5.0 (SelfAuthorized.sol#3-4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "safe-contracts-427d6f7e779431333c54bcb4d4cde31e4d57ce96/contracts/external/SafeMath.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": 4,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in SafeMath.sol:\n\t- pragma solidity^0.5.0 (SafeMath.sol#3-4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "safe-contracts-427d6f7e779431333c54bcb4d4cde31e4d57ce96/contracts/proxies/DelegateConstructorProxy.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address _masterCopy)\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        public\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_masterCopy != address(0), \"Invalid master copy address provided\");\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        masterCopy = _masterCopy;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 67,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address _masterCopy, bytes memory initializer) Proxy(_masterCopy)\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        public\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 69,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 70,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (initializer.length > 0) {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            // solium-disable-next-line security/no-inline-assembly\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            assembly {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 73,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                let masterCopy := and(sload(0), 0xffffffffffffffffffffffffffffffffffffffff)\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                let success := delegatecall(sub(gas, 10000), masterCopy, add(initializer, 0x20), mload(initializer), 0, 0)\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 75,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                let ptr := mload(0x40)\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 76,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                returndatacopy(ptr, 0, returndatasize)\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_masterCopy != address(0), \"Invalid master copy address provided\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_masterCopy != address(0), \"Invalid master copy address provided\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_7"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "locked-ether",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": 37,
+                    "vulnerability_code": "    function ()\n\n        external\n\n        payable\n\n    {\n\n        // solium-disable-next-line security/no-inline-assembly\n\n        assembly {\n\n            let masterCopy := and(sload(0), 0xffffffffffffffffffffffffffffffffffffffff)\n\n            calldatacopy(0, 0, calldatasize())\n\n            let success := delegatecall(gas, masterCopy, 0, calldatasize(), 0, 0)\n\n            returndatacopy(0, 0, returndatasize())\n\n            if eq(success, 0) { revert(0, returndatasize()) }\n\n            return(0, returndatasize())\n\n        }\n\n    }\n",
+                    "message": "Contract locking ether found in DelegateConstructorProxy.sol:\n\tContract DelegateConstructorProxy has payable functions:\n\t - fallback (DelegateConstructorProxy.sol#23-37)\n\tBut does not have a function to withdraw the ether\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": 37,
+                    "vulnerability_code": "    function ()\n\n        external\n\n        payable\n\n    {\n\n        // solium-disable-next-line security/no-inline-assembly\n\n        assembly {\n\n            let masterCopy := and(sload(0), 0xffffffffffffffffffffffffffffffffffffffff)\n\n            calldatacopy(0, 0, calldatasize())\n\n            let success := delegatecall(gas, masterCopy, 0, calldatasize(), 0, 0)\n\n            returndatacopy(0, 0, returndatasize())\n\n            if eq(success, 0) { revert(0, returndatasize()) }\n\n            return(0, returndatasize())\n\n        }\n\n    }\n",
+                    "message": "Proxy.fallback uses assembly (DelegateConstructorProxy.sol#23-37)\n\t- DelegateConstructorProxy.sol#28-36\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 67,
+                    "vulnerability_to_line": 81,
+                    "vulnerability_code": "    constructor(address _masterCopy, bytes memory initializer) Proxy(_masterCopy)\n\n        public\n\n    {\n\n        if (initializer.length > 0) {\n\n            // solium-disable-next-line security/no-inline-assembly\n\n            assembly {\n\n                let masterCopy := and(sload(0), 0xffffffffffffffffffffffffffffffffffffffff)\n\n                let success := delegatecall(sub(gas, 10000), masterCopy, add(initializer, 0x20), mload(initializer), 0, 0)\n\n                let ptr := mload(0x40)\n\n                returndatacopy(ptr, 0, returndatasize)\n\n                if eq(success, 0) { revert(ptr, returndatasize) }\n\n            }\n\n        }\n\n    }\n",
+                    "message": "DelegateConstructorProxy.constructor uses assembly (DelegateConstructorProxy.sol#67-81)\n\t- DelegateConstructorProxy.sol#72-79\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": 45,
+                    "vulnerability_code": "    function implementation()\n\n        public\n\n        view\n\n        returns (address)\n\n    {\n\n        return masterCopy;\n\n    }\n",
+                    "message": "Proxy.implementation (DelegateConstructorProxy.sol#38-45) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": 53,
+                    "vulnerability_code": "    function proxyType()\n\n        public\n\n        pure\n\n        returns (uint256)\n\n    {\n\n        return 2;\n\n    }\n",
+                    "message": "Proxy.proxyType (DelegateConstructorProxy.sol#46-53) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": 4,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in DelegateConstructorProxy.sol:\n\t- pragma solidity^0.5.0 (DelegateConstructorProxy.sol#3-4): it allows old versions\n\t- pragma solidity^0.5.0 (DelegateConstructorProxy.sol#57-59): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address _masterCopy)\n",
+                    "message": "Parameter '_masterCopy' of Proxy. (DelegateConstructorProxy.sol#15) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Proxy {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address masterCopy;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "safe-contracts-427d6f7e779431333c54bcb4d4cde31e4d57ce96/contracts/proxies/PayingProxy.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 50,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address _masterCopy)\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 51,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        public\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_masterCopy != address(0), \"Invalid master copy address provided\");\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        masterCopy = _masterCopy;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 102,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address _masterCopy, bytes memory initializer) Proxy(_masterCopy)\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 103,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        public\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 104,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 105,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (initializer.length > 0) {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 106,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            // solium-disable-next-line security/no-inline-assembly\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 107,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            assembly {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 108,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                let masterCopy := and(sload(0), 0xffffffffffffffffffffffffffffffffffffffff)\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 109,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                let success := delegatecall(sub(gas, 10000), masterCopy, add(initializer, 0x20), mload(initializer), 0, 0)\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 110,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                let ptr := mload(0x40)\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 111,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                returndatacopy(ptr, 0, returndatasize)\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address _masterCopy, bytes memory initializer, address payable funder, address paymentToken, uint256 payment) \n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 135,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        DelegateConstructorProxy(_masterCopy, initializer)\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 136,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        public\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 137,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 138,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (payment > 0) {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            if (paymentToken == address(0)) {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 140,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                 // solium-disable-next-line security/no-send\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                require(funder.send(payment), \"Could not pay safe creation with ether\");\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 142,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            } else {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 143,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                require(transferToken(paymentToken, funder, payment), \"Could not pay safe creation with token\");\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_masterCopy != address(0), \"Invalid master copy address provided\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                require(funder.send(payment), \"Could not pay safe creation with ether\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 143,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                require(transferToken(paymentToken, funder, payment), \"Could not pay safe creation with token\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_masterCopy != address(0), \"Invalid master copy address provided\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                require(funder.send(payment), \"Could not pay safe creation with ether\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 143,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                require(transferToken(paymentToken, funder, payment), \"Could not pay safe creation with token\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_7"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": 34,
+                    "vulnerability_code": "    function transferToken (\n\n        address token, \n\n        address receiver,\n\n        uint256 amount\n\n    )\n\n        internal\n\n        returns (bool transferred)\n\n    {\n\n        bytes memory data = abi.encodeWithSignature(\"transfer(address,uint256)\", receiver, amount);\n\n        // solium-disable-next-line security/no-inline-assembly\n\n        assembly {\n\n            let success := call(sub(gas, 10000), token, 0, add(data, 0x20), mload(data), 0, 0)\n\n            let ptr := mload(0x40)\n\n            returndatacopy(ptr, 0, returndatasize)\n\n            switch returndatasize \n\n            case 0 { transferred := success }\n\n            case 0x20 { transferred := iszero(or(iszero(success), iszero(mload(ptr)))) }\n\n            default { transferred := 0 }\n\n        }\n\n    }\n",
+                    "message": "SecuredTokenTransfer.transferToken uses assembly (PayingProxy.sol#14-34)\n\t- PayingProxy.sol#24-33\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": 73,
+                    "vulnerability_code": "    function ()\n\n        external\n\n        payable\n\n    {\n\n        // solium-disable-next-line security/no-inline-assembly\n\n        assembly {\n\n            let masterCopy := and(sload(0), 0xffffffffffffffffffffffffffffffffffffffff)\n\n            calldatacopy(0, 0, calldatasize())\n\n            let success := delegatecall(gas, masterCopy, 0, calldatasize(), 0, 0)\n\n            returndatacopy(0, 0, returndatasize())\n\n            if eq(success, 0) { revert(0, returndatasize()) }\n\n            return(0, returndatasize())\n\n        }\n\n    }\n\n\n",
+                    "message": "Proxy.fallback uses assembly (PayingProxy.sol#58-73)\n\t- PayingProxy.sol#63-71\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 102,
+                    "vulnerability_to_line": 117,
+                    "vulnerability_code": "    constructor(address _masterCopy, bytes memory initializer) Proxy(_masterCopy)\n\n        public\n\n    {\n\n        if (initializer.length > 0) {\n\n            // solium-disable-next-line security/no-inline-assembly\n\n            assembly {\n\n                let masterCopy := and(sload(0), 0xffffffffffffffffffffffffffffffffffffffff)\n\n                let success := delegatecall(sub(gas, 10000), masterCopy, add(initializer, 0x20), mload(initializer), 0, 0)\n\n                let ptr := mload(0x40)\n\n                returndatacopy(ptr, 0, returndatasize)\n\n                if eq(success, 0) { revert(ptr, returndatasize) }\n\n            }\n\n        }\n\n    }\n\n}\n",
+                    "message": "DelegateConstructorProxy.constructor uses assembly (PayingProxy.sol#102-117)\n\t- PayingProxy.sol#107-114\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 73,
+                    "vulnerability_to_line": 81,
+                    "vulnerability_code": "    function implementation()\n\n        public\n\n        view\n\n        returns (address)\n\n    {\n\n        return masterCopy;\n\n    }\n\n\n",
+                    "message": "Proxy.implementation (PayingProxy.sol#73-81) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 81,
+                    "vulnerability_to_line": 88,
+                    "vulnerability_code": "    function proxyType()\n\n        public\n\n        pure\n\n        returns (uint256)\n\n    {\n\n        return 2;\n\n    }\n",
+                    "message": "Proxy.proxyType (PayingProxy.sol#81-88) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": 4,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in PayingProxy.sol:\n\t- pragma solidity^0.5.0 (PayingProxy.sol#3-4): it allows old versions\n\t- pragma solidity^0.5.0 (PayingProxy.sol#38-40): it allows old versions\n\t- pragma solidity^0.5.0 (PayingProxy.sol#92-94): it allows old versions\n\t- pragma solidity^0.5.0 (PayingProxy.sol#120-123): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 50,
+                    "vulnerability_to_line": 51,
+                    "vulnerability_code": "    constructor(address _masterCopy)\n",
+                    "message": "Parameter '_masterCopy' of Proxy. (PayingProxy.sol#50-51) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ERC20_FUNCTIONS_ALWAYS_RETURN_FALSE",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferToken (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferToken (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Proxy {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 126,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract PayingProxy is DelegateConstructorProxy, SecuredTokenTransfer {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 120,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 107,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address _masterCopy, bytes memory initializer, address payable funder, address paymentToken, uint256 payment) \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address masterCopy;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address _masterCopy, bytes memory initializer, address payable funder, address paymentToken, uint256 payment) \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address _masterCopy, bytes memory initializer, address payable funder, address paymentToken, uint256 payment) \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address _masterCopy, bytes memory initializer, address payable funder, address paymentToken, uint256 payment) \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 135,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        DelegateConstructorProxy(_masterCopy, initializer)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 138,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (payment > 0) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            if (paymentToken == address(0)) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            if (paymentToken == address(0)) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            if (paymentToken == address(0)) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                require(funder.send(payment), \"Could not pay safe creation with ether\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                require(funder.send(payment), \"Could not pay safe creation with ether\");\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "safe-contracts-427d6f7e779431333c54bcb4d4cde31e4d57ce96/contracts/proxies/Proxy.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address _masterCopy)\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        public\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_masterCopy != address(0), \"Invalid master copy address provided\");\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        masterCopy = _masterCopy;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_masterCopy != address(0), \"Invalid master copy address provided\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_masterCopy != address(0), \"Invalid master copy address provided\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "locked-ether",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": 37,
+                    "vulnerability_code": "    function ()\n\n        external\n\n        payable\n\n    {\n\n        // solium-disable-next-line security/no-inline-assembly\n\n        assembly {\n\n            let masterCopy := and(sload(0), 0xffffffffffffffffffffffffffffffffffffffff)\n\n            calldatacopy(0, 0, calldatasize())\n\n            let success := delegatecall(gas, masterCopy, 0, calldatasize(), 0, 0)\n\n            returndatacopy(0, 0, returndatasize())\n\n            if eq(success, 0) { revert(0, returndatasize()) }\n\n            return(0, returndatasize())\n\n        }\n\n    }\n",
+                    "message": "Contract locking ether found in Proxy.sol:\n\tContract Proxy has payable functions:\n\t - fallback (Proxy.sol#23-37)\n\tBut does not have a function to withdraw the ether\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": 37,
+                    "vulnerability_code": "    function ()\n\n        external\n\n        payable\n\n    {\n\n        // solium-disable-next-line security/no-inline-assembly\n\n        assembly {\n\n            let masterCopy := and(sload(0), 0xffffffffffffffffffffffffffffffffffffffff)\n\n            calldatacopy(0, 0, calldatasize())\n\n            let success := delegatecall(gas, masterCopy, 0, calldatasize(), 0, 0)\n\n            returndatacopy(0, 0, returndatasize())\n\n            if eq(success, 0) { revert(0, returndatasize()) }\n\n            return(0, returndatasize())\n\n        }\n\n    }\n",
+                    "message": "Proxy.fallback uses assembly (Proxy.sol#23-37)\n\t- Proxy.sol#28-36\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": 45,
+                    "vulnerability_code": "    function implementation()\n\n        public\n\n        view\n\n        returns (address)\n\n    {\n\n        return masterCopy;\n\n    }\n",
+                    "message": "Proxy.implementation (Proxy.sol#38-45) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": 53,
+                    "vulnerability_code": "    function proxyType()\n\n        public\n\n        pure\n\n        returns (uint256)\n\n    {\n\n        return 2;\n\n    }\n",
+                    "message": "Proxy.proxyType (Proxy.sol#46-53) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": 4,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in Proxy.sol:\n\t- pragma solidity^0.5.0 (Proxy.sol#3-4): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address _masterCopy)\n",
+                    "message": "Parameter '_masterCopy' of Proxy. (Proxy.sol#15) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Proxy {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address masterCopy;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "safe-contracts-427d6f7e779431333c54bcb4d4cde31e4d57ce96/contracts/proxies/ProxyFactory.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address _masterCopy)\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        public\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_masterCopy != address(0), \"Invalid master copy address provided\");\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        masterCopy = _masterCopy;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_masterCopy != address(0), \"Invalid master copy address provided\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_masterCopy != address(0), \"Invalid master copy address provided\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_8"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "locked-ether",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": 37,
+                    "vulnerability_code": "    function ()\n\n        external\n\n        payable\n\n    {\n\n        // solium-disable-next-line security/no-inline-assembly\n\n        assembly {\n\n            let masterCopy := and(sload(0), 0xffffffffffffffffffffffffffffffffffffffff)\n\n            calldatacopy(0, 0, calldatasize())\n\n            let success := delegatecall(gas, masterCopy, 0, calldatasize(), 0, 0)\n\n            returndatacopy(0, 0, returndatasize())\n\n            if eq(success, 0) { revert(0, returndatasize()) }\n\n            return(0, returndatasize())\n\n        }\n\n    }\n",
+                    "message": "Contract locking ether found in ProxyFactory.sol:\n\tContract Proxy has payable functions:\n\t - fallback (ProxyFactory.sol#23-37)\n\tBut does not have a function to withdraw the ether\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": 37,
+                    "vulnerability_code": "    function ()\n\n        external\n\n        payable\n\n    {\n\n        // solium-disable-next-line security/no-inline-assembly\n\n        assembly {\n\n            let masterCopy := and(sload(0), 0xffffffffffffffffffffffffffffffffffffffff)\n\n            calldatacopy(0, 0, calldatasize())\n\n            let success := delegatecall(gas, masterCopy, 0, calldatasize(), 0, 0)\n\n            returndatacopy(0, 0, returndatasize())\n\n            if eq(success, 0) { revert(0, returndatasize()) }\n\n            return(0, returndatasize())\n\n        }\n\n    }\n",
+                    "message": "Proxy.fallback uses assembly (ProxyFactory.sol#23-37)\n\t- ProxyFactory.sol#28-36\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": 80,
+                    "vulnerability_code": "    function createProxy(address masterCopy, bytes memory data)\n\n        public\n\n        returns (Proxy proxy)\n\n    {\n\n        proxy = new Proxy(masterCopy);\n\n        if (data.length > 0)\n\n            // solium-disable-next-line security/no-inline-assembly\n\n            assembly {\n\n                if eq(call(gas, proxy, 0, add(data, 0x20), mload(data), 0, 0), 0) { revert(0, 0) }\n\n            }\n\n        emit ProxyCreation(proxy);\n\n    }\n",
+                    "message": "ProxyFactory.createProxy uses assembly (ProxyFactory.sol#68-80)\n\t- ProxyFactory.sol#75-78\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": 45,
+                    "vulnerability_code": "    function implementation()\n\n        public\n\n        view\n\n        returns (address)\n\n    {\n\n        return masterCopy;\n\n    }\n",
+                    "message": "Proxy.implementation (ProxyFactory.sol#38-45) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": 53,
+                    "vulnerability_code": "    function proxyType()\n\n        public\n\n        pure\n\n        returns (uint256)\n\n    {\n\n        return 2;\n\n    }\n",
+                    "message": "Proxy.proxyType (ProxyFactory.sol#46-53) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": 80,
+                    "vulnerability_code": "    function createProxy(address masterCopy, bytes memory data)\n\n        public\n\n        returns (Proxy proxy)\n\n    {\n\n        proxy = new Proxy(masterCopy);\n\n        if (data.length > 0)\n\n            // solium-disable-next-line security/no-inline-assembly\n\n            assembly {\n\n                if eq(call(gas, proxy, 0, add(data, 0x20), mload(data), 0, 0), 0) { revert(0, 0) }\n\n            }\n\n        emit ProxyCreation(proxy);\n\n    }\n",
+                    "message": "ProxyFactory.createProxy (ProxyFactory.sol#68-80) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": 4,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in ProxyFactory.sol:\n\t- pragma solidity^0.5.0 (ProxyFactory.sol#3-4): it allows old versions\n\t- pragma solidity^0.5.0 (ProxyFactory.sol#57-59): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address _masterCopy)\n",
+                    "message": "Parameter '_masterCopy' of Proxy. (ProxyFactory.sol#15) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Proxy {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 75,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address masterCopy;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "safe-contracts-427d6f7e779431333c54bcb4d4cde31e4d57ce96/contracts/base/OwnerManager.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < _owners.length; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(owners[owner] == address(0), \"Duplicate owner address provided\");\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            owners[currentOwner] = owner;\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 179,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            currentOwner = owners[currentOwner];\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < _owners.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.sender == address(this), \"Method can only be called from this contract\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(threshold == 0, \"Owners have already been setup\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_threshold <= _owners.length, \"Threshold cannot exceed owner count\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_threshold >= 1, \"Threshold needs to be greater than 0\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(owner != address(0) && owner != SENTINEL_OWNERS, \"Invalid owner address provided\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(owners[owner] == address(0), \"Duplicate owner address provided\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 73,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(owner != address(0) && owner != SENTINEL_OWNERS, \"Invalid owner address provided\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 75,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(owners[owner] == address(0), \"Address is already an owner\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 97,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(ownerCount - 1 >= _threshold, \"New owner count needs to be larger than new threshold\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 99,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(owner != address(0) && owner != SENTINEL_OWNERS, \"Invalid owner address provided\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 100,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(owners[prevOwner] == owner, \"Invalid prevOwner, owner pair provided\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 121,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(newOwner != address(0) && newOwner != SENTINEL_OWNERS, \"Invalid owner address provided\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 123,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(owners[newOwner] == address(0), \"Address is already an owner\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 125,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(oldOwner != address(0) && oldOwner != SENTINEL_OWNERS, \"Invalid owner address provided\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 126,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(owners[prevOwner] == oldOwner, \"Invalid prevOwner, owner pair provided\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 142,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_threshold <= ownerCount, \"Threshold cannot exceed owner count\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 144,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_threshold >= 1, \"Threshold needs to be greater than 0\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(owner != address(0) && owner != SENTINEL_OWNERS, \"Invalid owner address provided\");\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 73,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(owner != address(0) && owner != SENTINEL_OWNERS, \"Invalid owner address provided\");\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 99,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(owner != address(0) && owner != SENTINEL_OWNERS, \"Invalid owner address provided\");\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 121,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(newOwner != address(0) && newOwner != SENTINEL_OWNERS, \"Invalid owner address provided\");\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 125,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(oldOwner != address(0) && oldOwner != SENTINEL_OWNERS, \"Invalid owner address provided\");\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-prefix-decrement-not-postfix",
+                    "vulnerability_from_line": 104,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        ownerCount--;\n",
+                    "message": "Consider using the prefix decrement expression whenever the return value is not needed. The prefix decrement expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < _owners.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        ownerCount++;\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 180,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            index ++;\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.sender == address(this), \"Method can only be called from this contract\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_threshold <= _owners.length, \"Threshold cannot exceed owner count\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_threshold >= 1, \"Threshold needs to be greater than 0\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 97,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(ownerCount - 1 >= _threshold, \"New owner count needs to be larger than new threshold\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 100,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(owners[prevOwner] == owner, \"Invalid prevOwner, owner pair provided\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 126,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(owners[prevOwner] == oldOwner, \"Invalid prevOwner, owner pair provided\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 142,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_threshold <= ownerCount, \"Threshold cannot exceed owner count\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 144,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_threshold >= 1, \"Threshold needs to be greater than 0\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_12"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": 86,
+                    "vulnerability_code": "    function addOwnerWithThreshold(address owner, uint256 _threshold)\n\n        public\n\n        authorized\n\n    {\n\n        // Owner address cannot be null.\n\n        require(owner != address(0) && owner != SENTINEL_OWNERS, \"Invalid owner address provided\");\n\n        // No duplicate owners allowed.\n\n        require(owners[owner] == address(0), \"Address is already an owner\");\n\n        owners[owner] = owners[SENTINEL_OWNERS];\n\n        owners[SENTINEL_OWNERS] = owner;\n\n        // SWC-Integer Overflow and Underflow: L64\n\n        ownerCount++;\n\n        emit AddedOwner(owner);\n\n        // Change threshold if threshold was changed.\n\n        if (threshold != _threshold)\n\n            changeThreshold(_threshold);\n\n    }\n\n\n",
+                    "message": "OwnerManager.addOwnerWithThreshold (OwnerManager.sol#68-86) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 91,
+                    "vulnerability_to_line": 111,
+                    "vulnerability_code": "    function removeOwner(address prevOwner, address owner, uint256 _threshold)\n\n        public\n\n        authorized\n\n    {\n\n        // Only allow to remove an owner, if threshold can still be reached.\n\n        // SWC-Integer Overflow and Underflow: L82\n\n        require(ownerCount - 1 >= _threshold, \"New owner count needs to be larger than new threshold\");\n\n        // Validate owner address and check that it corresponds to owner index.\n\n        require(owner != address(0) && owner != SENTINEL_OWNERS, \"Invalid owner address provided\");\n\n        require(owners[prevOwner] == owner, \"Invalid prevOwner, owner pair provided\");\n\n        owners[prevOwner] = owners[owner];\n\n        owners[owner] = address(0);\n\n        // SWC-Integer Overflow and Underflow: L89\n\n        ownerCount--;\n\n        emit RemovedOwner(owner);\n\n        // Change threshold if threshold was changed.\n\n        if (threshold != _threshold)\n\n            changeThreshold(_threshold);\n\n    }\n\n\n",
+                    "message": "OwnerManager.removeOwner (OwnerManager.sol#91-111) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": 134,
+                    "vulnerability_code": "    function swapOwner(address prevOwner, address oldOwner, address newOwner)\n\n        public\n\n        authorized\n\n    {\n\n        // Owner address cannot be null.\n\n        require(newOwner != address(0) && newOwner != SENTINEL_OWNERS, \"Invalid owner address provided\");\n\n        // No duplicate owners allowed.\n\n        require(owners[newOwner] == address(0), \"Address is already an owner\");\n\n        // Validate oldOwner address and check that it corresponds to owner index.\n\n        require(oldOwner != address(0) && oldOwner != SENTINEL_OWNERS, \"Invalid owner address provided\");\n\n        require(owners[prevOwner] == oldOwner, \"Invalid prevOwner, owner pair provided\");\n\n        owners[newOwner] = owners[oldOwner];\n\n        owners[prevOwner] = newOwner;\n\n        owners[oldOwner] = address(0);\n\n        emit RemovedOwner(oldOwner);\n\n        emit AddedOwner(newOwner);\n\n    }\n\n\n",
+                    "message": "OwnerManager.swapOwner (OwnerManager.sol#116-134) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 149,
+                    "vulnerability_to_line": 157,
+                    "vulnerability_code": "    function getThreshold()\n\n        public\n\n        view\n\n        returns (uint256)\n\n    {\n\n        return threshold;\n\n    }\n\n\n",
+                    "message": "OwnerManager.getThreshold (OwnerManager.sol#149-157) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 157,
+                    "vulnerability_to_line": 165,
+                    "vulnerability_code": "    function isOwner(address owner)\n\n        public\n\n        view\n\n        returns (bool)\n\n    {\n\n        return owners[owner] != address(0);\n\n    }\n\n\n",
+                    "message": "OwnerManager.isOwner (OwnerManager.sol#157-165) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 167,
+                    "vulnerability_to_line": 184,
+                    "vulnerability_code": "    function getOwners()\n\n        public\n\n        view\n\n        returns (address[] memory)\n\n    {\n\n        address[] memory array = new address[](ownerCount);\n\n\n\n        // populate return array\n\n        uint256 index = 0;\n\n        address currentOwner = owners[SENTINEL_OWNERS];\n\n        while(currentOwner != SENTINEL_OWNERS) {\n\n            array[index] = currentOwner;\n\n            currentOwner = owners[currentOwner];\n\n            index ++;\n\n        }\n\n        return array;\n\n    }\n",
+                    "message": "OwnerManager.getOwners (OwnerManager.sol#167-184) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": 4,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in OwnerManager.sol:\n\t- pragma solidity^0.5.0 (OwnerManager.sol#3-4): it allows old versions\n\t- pragma solidity^0.5.0 (OwnerManager.sol#17-19): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setupOwners(address[] memory _owners, uint256 _threshold)\n",
+                    "message": "Parameter '_owners' of OwnerManager.setupOwners (OwnerManager.sol#37) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": 38,
+                    "vulnerability_code": "    function setupOwners(address[] memory _owners, uint256 _threshold)\n",
+                    "message": "Parameter '_threshold' of OwnerManager.setupOwners (OwnerManager.sol#37-38) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": 69,
+                    "vulnerability_code": "    function addOwnerWithThreshold(address owner, uint256 _threshold)\n",
+                    "message": "Parameter '_threshold' of OwnerManager.addOwnerWithThreshold (OwnerManager.sol#68-69) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 91,
+                    "vulnerability_to_line": 92,
+                    "vulnerability_code": "    function removeOwner(address prevOwner, address owner, uint256 _threshold)\n",
+                    "message": "Parameter '_threshold' of OwnerManager.removeOwner (OwnerManager.sol#91-92) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 137,
+                    "vulnerability_to_line": 138,
+                    "vulnerability_code": "    function changeThreshold(uint256 _threshold)\n",
+                    "message": "Parameter '_threshold' of OwnerManager.changeThreshold (OwnerManager.sol#137-138) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address public constant SENTINEL_OWNERS = address(0x1);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 102,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owners[owner] = address(0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 129,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owners[oldOwner] = address(0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < _owners.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 177,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        while(currentOwner != SENTINEL_OWNERS) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < _owners.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 177,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        while(currentOwner != SENTINEL_OWNERS) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 ownerCount;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "safe-contracts-427d6f7e779431333c54bcb4d4cde31e4d57ce96/contracts/base/Executor.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "locked-ether",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": 32,
+                    "vulnerability_code": "    function ()\n\n        external\n\n        payable\n\n    {\n\n\n\n    }\n",
+                    "message": "Contract locking ether found in Executor.sol:\n\tContract Executor has payable functions:\n\t - fallback (Executor.sol#26-32)\n\tBut does not have a function to withdraw the ether\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 60,
+                    "vulnerability_to_line": 70,
+                    "vulnerability_code": "    function executeCall(address to, uint256 value, bytes memory data, uint256 txGas)\n\n        internal\n\n        returns (bool success)\n\n    {\n\n        // solium-disable-next-line security/no-inline-assembly\n\n        assembly {\n\n            success := call(txGas, to, value, add(data, 0x20), mload(data), 0, 0)\n\n        }\n\n    }\n\n\n",
+                    "message": "Executor.executeCall uses assembly (Executor.sol#60-70)\n\t- Executor.sol#65-68\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 70,
+                    "vulnerability_to_line": 80,
+                    "vulnerability_code": "    function executeDelegateCall(address to, bytes memory data, uint256 txGas)\n\n        internal\n\n        returns (bool success)\n\n    {\n\n        // solium-disable-next-line security/no-inline-assembly\n\n        assembly {\n\n            success := delegatecall(txGas, to, add(data, 0x20), mload(data), 0, 0)\n\n        }\n\n    }\n\n\n",
+                    "message": "Executor.executeDelegateCall uses assembly (Executor.sol#70-80)\n\t- Executor.sol#75-78\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": 89,
+                    "vulnerability_code": "    function executeCreate(bytes memory data)\n\n        internal\n\n        returns (address newContract)\n\n    {\n\n        // solium-disable-next-line security/no-inline-assembly\n\n        assembly {\n\n            newContract := create(0, add(data, 0x20), mload(data))\n\n        }\n\n    }\n",
+                    "message": "Executor.executeCreate uses assembly (Executor.sol#80-89)\n\t- Executor.sol#85-88\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": 4,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in Executor.sol:\n\t- pragma solidity^0.5.0 (Executor.sol#3-4): it allows old versions\n\t- pragma solidity^0.5.0 (Executor.sol#18-20): it allows old versions\n\t- pragma solidity^0.5.0 (Executor.sol#36-39): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 60,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function executeCall(address to, uint256 value, bytes memory data, uint256 txGas)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 70,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function executeDelegateCall(address to, bytes memory data, uint256 txGas)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function executeCreate(bytes memory data)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract EtherPaymentFallback {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 75,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "safe-contracts-427d6f7e779431333c54bcb4d4cde31e4d57ce96/contracts/interfaces/ISignatureValidator.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": 4,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in ISignatureValidator.sol:\n\t- pragma solidity^0.5.0 (ISignatureValidator.sol#3-4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,206 @@
+{
+    "InitializableERC20.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(c / a == b, \"MUL_ERROR\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(b > 0, \"DIVIDING_ERROR\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(b <= a, \"SUB_ERROR\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 59,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(c >= a, \"ADD_ERROR\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 100,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(!initialized, \"TOKEN_INITIALIZED\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 112,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(to != address(0), \"TO_ADDRESS_IS_EMPTY\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 113,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(amount <= balances[msg.sender], \"BALANCE_NOT_ENOUGH\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 132,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(to != address(0), \"TO_ADDRESS_IS_EMPTY\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(amount <= balances[from], \"BALANCE_NOT_ENOUGH\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(amount <= allowed[from][msg.sender], \"ALLOWANCE_NOT_ENOUGH\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_12"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 93,
+                    "vulnerability_to_line": 108,
+                    "vulnerability_code": "    function init(\n\n        address _creator,\n\n        uint256 _totalSupply,\n\n        string memory _name,\n\n        string memory _symbol,\n\n        uint256 _decimals\n\n    ) public {\n\n        require(!initialized, \"TOKEN_INITIALIZED\");\n\n        initialized = true;\n\n        totalSupply = _totalSupply;\n\n        balances[_creator] = _totalSupply;\n\n        name = _name;\n\n        symbol = _symbol;\n\n        decimals = _decimals;\n\n        emit Transfer(address(0), _creator, _totalSupply);\n",
+                    "message": "InitializableERC20.init (InitializableERC20.sol#93-108) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 111,
+                    "vulnerability_to_line": 119,
+                    "vulnerability_code": "    function transfer(address to, uint256 amount) public returns (bool) {\n\n        require(to != address(0), \"TO_ADDRESS_IS_EMPTY\");\n\n        require(amount <= balances[msg.sender], \"BALANCE_NOT_ENOUGH\");\n\n\n\n        balances[msg.sender] = balances[msg.sender].sub(amount);\n\n        balances[to] = balances[to].add(amount);\n\n        emit Transfer(msg.sender, to, amount);\n\n        return true;\n",
+                    "message": "InitializableERC20.transfer (InitializableERC20.sol#111-119) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 122,
+                    "vulnerability_to_line": 124,
+                    "vulnerability_code": "    function balanceOf(address owner) public view returns (uint256 balance) {\n\n        return balances[owner];\n",
+                    "message": "InitializableERC20.balanceOf (InitializableERC20.sol#122-124) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 127,
+                    "vulnerability_to_line": 141,
+                    "vulnerability_code": "    function transferFrom(\n\n        address from,\n\n        address to,\n\n        uint256 amount\n\n    ) public returns (bool) {\n\n        require(to != address(0), \"TO_ADDRESS_IS_EMPTY\");\n\n        require(amount <= balances[from], \"BALANCE_NOT_ENOUGH\");\n\n        require(amount <= allowed[from][msg.sender], \"ALLOWANCE_NOT_ENOUGH\");\n\n\n\n        balances[from] = balances[from].sub(amount);\n\n        balances[to] = balances[to].add(amount);\n\n        allowed[from][msg.sender] = allowed[from][msg.sender].sub(amount);\n\n        emit Transfer(from, to, amount);\n\n        return true;\n",
+                    "message": "InitializableERC20.transferFrom (InitializableERC20.sol#127-141) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 144,
+                    "vulnerability_to_line": 148,
+                    "vulnerability_code": "    function approve(address spender, uint256 amount) public returns (bool) {\n\n        allowed[msg.sender][spender] = amount;\n\n        emit Approval(msg.sender, spender, amount);\n\n        return true;\n",
+                    "message": "InitializableERC20.approve (InitializableERC20.sol#144-148) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": 153,
+                    "vulnerability_code": "    function allowance(address owner, address spender) public view returns (uint256) {\n\n        return allowed[owner][spender];\n",
+                    "message": "InitializableERC20.allowance (InitializableERC20.sol#151-153) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.9;\n",
+                    "message": "Detected issues with version pragma in InitializableERC20.sol:\n\t- pragma solidity0.6.9 (InitializableERC20.sol#16): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 94,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _creator,\n",
+                    "message": "Parameter '_creator' of InitializableERC20.init (InitializableERC20.sol#94) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 95,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _totalSupply,\n",
+                    "message": "Parameter '_totalSupply' of InitializableERC20.init (InitializableERC20.sol#95) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 96,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string memory _name,\n",
+                    "message": "Parameter '_name' of InitializableERC20.init (InitializableERC20.sol#96) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 97,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string memory _symbol,\n",
+                    "message": "Parameter '_symbol' of InitializableERC20.init (InitializableERC20.sol#97) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 98,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _decimals\n",
+                    "message": "Parameter '_decimals' of InitializableERC20.init (InitializableERC20.sol#98) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 144,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address spender, uint256 amount) public returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 66,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        while (z < y) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 77,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(address => uint256) balances;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

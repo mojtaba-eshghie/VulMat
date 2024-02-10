@@ -1,0 +1,1561 @@
+{
+    "tokenbridge-contracts-2bf70c7e9fd42968aec2dc352017618907834401/test/testContracts/ERC677ReceiverTest.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint public someVar = 0;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_8"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.4.24;\n",
+                    "message": "Different versions of Solidity is used in ERC677ReceiverTest.sol:\n\t- Version used: ['0.4.24', '^0.4.19']\n\t- ERC677ReceiverTest.sol#3 declares pragma solidity0.4.24\n\t- ERC677ReceiverTest.sol#12 declares pragma solidity^0.4.19\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": 30,
+                    "vulnerability_code": "    function doSomething(uint _value) public {\n\n        someVar = _value;\n",
+                    "message": "ERC677ReceiverTest.doSomething (ERC677ReceiverTest.sol#28-30) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.19;\n",
+                    "message": "Detected issues with version pragma in ERC677ReceiverTest.sol:\n\t- pragma solidity^0.4.19 (ERC677ReceiverTest.sol#12): it allows old versions\n"
+                },
+                {
+                    "name": "low-level-calls",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": 26,
+                    "vulnerability_code": "    function onTokenTransfer(address _from, uint _value, bytes _data) external returns(bool) {\n\n        from = _from;\n\n        value = _value;\n\n        data = _data;\n\n        require(address(this).call(_data));\n\n        return true;\n",
+                    "message": "Low level call in ERC677ReceiverTest.onTokenTransfer (ERC677ReceiverTest.sol#20-26):\n\t-require(bool)(address(this).call(_data)) ERC677ReceiverTest.sol#24\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function onTokenTransfer(address _from, uint _value, bytes _data) external returns(bool) {\n",
+                    "message": "Parameter '_from' of ERC677ReceiverTest.onTokenTransfer (ERC677ReceiverTest.sol#20) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function onTokenTransfer(address _from, uint _value, bytes _data) external returns(bool) {\n",
+                    "message": "Parameter '_value' of ERC677ReceiverTest.onTokenTransfer (ERC677ReceiverTest.sol#20) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function onTokenTransfer(address _from, uint _value, bytes _data) external returns(bool) {\n",
+                    "message": "Parameter '_data' of ERC677ReceiverTest.onTokenTransfer (ERC677ReceiverTest.sol#20) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function doSomething(uint _value) public {\n",
+                    "message": "Parameter '_value' of ERC677ReceiverTest.doSomething (ERC677ReceiverTest.sol#28) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.19;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "tokenbridge-contracts-2bf70c7e9fd42968aec2dc352017618907834401/contracts/ERC677Receiver.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "tokenbridge-contracts-2bf70c7e9fd42968aec2dc352017618907834401/contracts/Migrations.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_4"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": 19,
+                    "vulnerability_code": "  function setCompleted(uint completed) public restricted {\n\n    last_completed_migration = completed;\n",
+                    "message": "Migrations.setCompleted (Migrations.sol#17-19) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": 24,
+                    "vulnerability_code": "  function upgrade(address new_address) public restricted {\n\n    Migrations upgraded = Migrations(new_address);\n\n    upgraded.setCompleted(last_completed_migration);\n",
+                    "message": "Migrations.upgrade (Migrations.sol#21-24) should be declared external\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function upgrade(address new_address) public restricted {\n",
+                    "message": "Parameter 'new_address' of Migrations.upgrade (Migrations.sol#21) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint public last_completed_migration;\n",
+                    "message": "Variable 'Migrations.last_completed_migration' (Migrations.sol#7) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "tokenbridge-contracts-2bf70c7e9fd42968aec2dc352017618907834401/contracts/IBridgeValidators.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isValidator(address _validator) public view returns(bool);\n",
+                    "message": "IBridgeValidators.isValidator (IBridgeValidators.sol#7) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function requiredSignatures() public view returns(uint256);\n",
+                    "message": "IBridgeValidators.requiredSignatures (IBridgeValidators.sol#8) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function owner() public view returns(address);\n",
+                    "message": "IBridgeValidators.owner (IBridgeValidators.sol#9) should be declared external\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isValidator(address _validator) public view returns(bool);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function requiredSignatures() public view returns(uint256);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function owner() public view returns(address);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "tokenbridge-contracts-2bf70c7e9fd42968aec2dc352017618907834401/contracts/upgradeable_contracts/Ownable.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": 60,
+                    "vulnerability_code": "    function transferOwnership(address newOwner) public onlyOwner {\n\n        require(newOwner != address(0));\n\n        setOwner(newOwner);\n",
+                    "message": "Ownable.transferOwnership (Ownable.sol#57-60) should be declared external\n"
+                },
+                {
+                    "name": "unused-state",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(bytes32 => uint256) internal uintStorage;\n",
+                    "message": "EternalStorage.uintStorage (Ownable.sol#12) is never used in Ownable\nEternalStorage.stringStorage (Ownable.sol#13) is never used in Ownable\nEternalStorage.bytesStorage (Ownable.sol#15) is never used in Ownable\nEternalStorage.boolStorage (Ownable.sol#16) is never used in Ownable\nEternalStorage.intStorage (Ownable.sol#17) is never used in Ownable\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "tokenbridge-contracts-2bf70c7e9fd42968aec2dc352017618907834401/contracts/upgradeable_contracts/BridgeValidators.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 140,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract BridgeValidators is IBridgeValidators, EternalStorage, Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 154,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < _initialValidators.length; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 154,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < _initialValidators.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 154,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < _initialValidators.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_15"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": 60,
+                    "vulnerability_code": "    function transferOwnership(address newOwner) public onlyOwner {\n\n        require(newOwner != address(0));\n\n        setOwner(newOwner);\n",
+                    "message": "Ownable.transferOwnership (BridgeValidators.sol#57-60) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 146,
+                    "vulnerability_to_line": 166,
+                    "vulnerability_code": "    function initialize(uint256 _requiredSignatures, address[] _initialValidators, address _owner)\n\n      public returns(bool)\n\n    {\n\n        require(!isInitialized());\n\n        require(_owner != address(0));\n\n        setOwner(_owner);\n\n        require(_requiredSignatures != 0);\n\n        require(_initialValidators.length >= _requiredSignatures);\n\n        for (uint256 i = 0; i < _initialValidators.length; i++) {\n\n            require(_initialValidators[i] != address(0));\n\n            assert(validators(_initialValidators[i]) != true);\n\n            setValidatorCount(validatorCount().add(1));\n\n            setValidator(_initialValidators[i], true);\n\n            emit ValidatorAdded(_initialValidators[i]);\n\n        }\n\n        //SWC-Code With No Effects: L31\n\n        require(validatorCount() >= _requiredSignatures);\n\n        uintStorage[keccak256(abi.encodePacked(\"requiredSignatures\"))] = _requiredSignatures;\n\n        setInitialize(true);\n\n        return isInitialized();\n",
+                    "message": "BridgeValidators.initialize (BridgeValidators.sol#146-166) should be declared external\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 203,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isValidator(address _validator) public view returns(bool) {\n",
+                    "message": "Parameter '_validator' of BridgeValidators.isValidator (BridgeValidators.sol#203) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 146,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function initialize(uint256 _requiredSignatures, address[] _initialValidators, address _owner)\n",
+                    "message": "Parameter '_requiredSignatures' of BridgeValidators.initialize (BridgeValidators.sol#146) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 146,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function initialize(uint256 _requiredSignatures, address[] _initialValidators, address _owner)\n",
+                    "message": "Parameter '_initialValidators' of BridgeValidators.initialize (BridgeValidators.sol#146) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 146,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function initialize(uint256 _requiredSignatures, address[] _initialValidators, address _owner)\n",
+                    "message": "Parameter '_owner' of BridgeValidators.initialize (BridgeValidators.sol#146) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 168,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addValidator(address _validator) external onlyOwner {\n",
+                    "message": "Parameter '_validator' of BridgeValidators.addValidator (BridgeValidators.sol#168) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 176,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function removeValidator(address _validator) external onlyOwner {\n",
+                    "message": "Parameter '_validator' of BridgeValidators.removeValidator (BridgeValidators.sol#176) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 184,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setRequiredSignatures(uint256 _requiredSignatures) external onlyOwner {\n",
+                    "message": "Parameter '_requiredSignatures' of BridgeValidators.setRequiredSignatures (BridgeValidators.sol#184) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 199,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function validators(address _validator) public view returns(bool) {\n",
+                    "message": "Parameter '_validator' of BridgeValidators.validators (BridgeValidators.sol#199) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 211,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setValidatorCount(uint256 _validatorCount) private {\n",
+                    "message": "Parameter '_validatorCount' of BridgeValidators.setValidatorCount (BridgeValidators.sol#211) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 215,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setValidator(address _validator, bool _status) private {\n",
+                    "message": "Parameter '_validator' of BridgeValidators.setValidator (BridgeValidators.sol#215) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 215,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setValidator(address _validator, bool _status) private {\n",
+                    "message": "Parameter '_status' of BridgeValidators.setValidator (BridgeValidators.sol#215) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 219,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setInitialize(bool _status) private {\n",
+                    "message": "Parameter '_status' of BridgeValidators.setInitialize (BridgeValidators.sol#219) is not in mixedCase\n"
+                },
+                {
+                    "name": "unused-state",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(bytes32 => string) internal stringStorage;\n",
+                    "message": "EternalStorage.stringStorage (BridgeValidators.sol#13) is never used in BridgeValidators\nEternalStorage.bytesStorage (BridgeValidators.sol#15) is never used in BridgeValidators\nEternalStorage.intStorage (BridgeValidators.sol#17) is never used in BridgeValidators\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 154,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < _initialValidators.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 154,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < _initialValidators.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 184,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setRequiredSignatures(uint256 _requiredSignatures) external onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 146,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function initialize(uint256 _requiredSignatures, address[] _initialValidators, address _owner)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 77,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isValidator(address _validator) public view returns(bool);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 78,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function requiredSignatures() public view returns(uint256);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function owner() public view returns(address);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "tokenbridge-contracts-2bf70c7e9fd42968aec2dc352017618907834401/contracts/upgradeable_contracts/Validatable.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "uninitialized-state",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(bytes32 => address) internal addressStorage;\n",
+                    "message": "EternalStorage.addressStorage (Validatable.sol#25) is never initialized. It is used in:\n\t- validatorContract (Validatable.sol#38-40)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isValidator(address _validator) public view returns(bool);\n",
+                    "message": "IBridgeValidators.isValidator (Validatable.sol#7) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function requiredSignatures() public view returns(uint256);\n",
+                    "message": "IBridgeValidators.requiredSignatures (Validatable.sol#8) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function owner() public view returns(address);\n",
+                    "message": "IBridgeValidators.owner (Validatable.sol#9) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": 54,
+                    "vulnerability_code": "    function requiredSignatures() public view returns(uint256) {\n\n        return validatorContract().requiredSignatures();\n",
+                    "message": "Validatable.requiredSignatures (Validatable.sol#52-54) should be declared external\n"
+                },
+                {
+                    "name": "unused-state",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(bytes32 => uint256) internal uintStorage;\n",
+                    "message": "EternalStorage.uintStorage (Validatable.sol#23) is never used in Validatable\nEternalStorage.stringStorage (Validatable.sol#24) is never used in Validatable\nEternalStorage.bytesStorage (Validatable.sol#26) is never used in Validatable\nEternalStorage.boolStorage (Validatable.sol#27) is never used in Validatable\nEternalStorage.intStorage (Validatable.sol#28) is never used in Validatable\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isValidator(address _validator) public view returns(bool);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function requiredSignatures() public view returns(uint256);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function owner() public view returns(address);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "tokenbridge-contracts-2bf70c7e9fd42968aec2dc352017618907834401/contracts/libraries/SafeMath.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "tokenbridge-contracts-2bf70c7e9fd42968aec2dc352017618907834401/contracts/libraries/Message.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < array.length; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < array.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 115,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < requiredSignatures; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < array.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 115,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < requiredSignatures; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_14"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": 72,
+                    "vulnerability_code": "    function parseMessage(bytes message)\n\n        internal\n\n        pure\n\n        returns(address recipient, uint256 amount, bytes32 txHash)\n\n    {\n\n        require(isMessageValid(message));\n\n        assembly {\n\n            recipient := and(mload(add(message, 20)), 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF)\n\n            amount := mload(add(message, 52))\n\n            txHash := mload(add(message, 84))\n\n        }\n",
+                    "message": "Message.parseMessage (Message.sol#61-72) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 82,
+                    "vulnerability_to_line": 94,
+                    "vulnerability_code": "    function recoverAddressFromSignedMessage(bytes signature, bytes message) internal pure returns (address) {\n\n        require(signature.length == 65);\n\n        bytes32 r;\n\n        bytes32 s;\n\n        bytes1 v;\n\n        // solium-disable-next-line security/no-inline-assembly\n\n        assembly {\n\n            r := mload(add(signature, 0x20))\n\n            s := mload(add(signature, 0x40))\n\n            v := mload(add(signature, 0x60))\n\n        }\n\n        return ecrecover(hashMessage(message), uint8(v), r, s);\n",
+                    "message": "Message.recoverAddressFromSignedMessage (Message.sol#82-94) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "calls-loop",
+                    "vulnerability_from_line": 117,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(_validatorContract.isValidator(recoveredAddress));\n",
+                    "message": "Message.hasEnoughValidSignatures has external calls inside a loop:\n\t- require(bool)(_validatorContract.isValidator(recoveredAddress)) (Message.sol#117)\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": 72,
+                    "vulnerability_code": "    function parseMessage(bytes message)\n\n        internal\n\n        pure\n\n        returns(address recipient, uint256 amount, bytes32 txHash)\n\n    {\n\n        require(isMessageValid(message));\n\n        assembly {\n\n            recipient := and(mload(add(message, 20)), 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF)\n\n            amount := mload(add(message, 52))\n\n            txHash := mload(add(message, 84))\n\n        }\n",
+                    "message": "Message.parseMessage uses assembly (Message.sol#61-72)\n\t- Message.sol#67-72\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 82,
+                    "vulnerability_to_line": 94,
+                    "vulnerability_code": "    function recoverAddressFromSignedMessage(bytes signature, bytes message) internal pure returns (address) {\n\n        require(signature.length == 65);\n\n        bytes32 r;\n\n        bytes32 s;\n\n        bytes1 v;\n\n        // solium-disable-next-line security/no-inline-assembly\n\n        assembly {\n\n            r := mload(add(signature, 0x20))\n\n            s := mload(add(signature, 0x40))\n\n            v := mload(add(signature, 0x60))\n\n        }\n\n        return ecrecover(hashMessage(message), uint8(v), r, s);\n",
+                    "message": "Message.recoverAddressFromSignedMessage uses assembly (Message.sol#82-94)\n\t- Message.sol#88-93\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isValidator(address _validator) public view returns(bool);\n",
+                    "message": "IBridgeValidators.isValidator (Message.sol#7) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function requiredSignatures() public view returns(uint256);\n",
+                    "message": "IBridgeValidators.requiredSignatures (Message.sol#8) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function owner() public view returns(address);\n",
+                    "message": "IBridgeValidators.owner (Message.sol#9) should be declared external\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isMessageValid(bytes _msg) internal pure returns(bool) {\n",
+                    "message": "Parameter '_msg' of Message.isMessageValid (Message.sol#74) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 104,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes _message,\n",
+                    "message": "Parameter '_message' of Message.hasEnoughValidSignatures (Message.sol#104) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 105,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint8[] _vs,\n",
+                    "message": "Parameter '_vs' of Message.hasEnoughValidSignatures (Message.sol#105) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 106,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes32[] _rs,\n",
+                    "message": "Parameter '_rs' of Message.hasEnoughValidSignatures (Message.sol#106) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 107,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes32[] _ss,\n",
+                    "message": "Parameter '_ss' of Message.hasEnoughValidSignatures (Message.sol#107) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 108,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        IBridgeValidators _validatorContract) internal view {\n",
+                    "message": "Parameter '_validatorContract' of Message.hasEnoughValidSignatures (Message.sol#108) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < array.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function parseMessage(bytes message)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < array.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            if (addressArrayContains(encounteredAddresses, recoveredAddress)) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_PURE",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function parseMessage(bytes message)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_PURE",
+                    "vulnerability_from_line": 82,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function recoverAddressFromSignedMessage(bytes signature, bytes message) internal pure returns (address) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns(address recipient, uint256 amount, bytes32 txHash)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addressArrayContains(address[] array, address value) internal pure returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function parseMessage(bytes message)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isMessageValid(bytes _msg) internal pure returns(bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 82,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function recoverAddressFromSignedMessage(bytes signature, bytes message) internal pure returns (address) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 82,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function recoverAddressFromSignedMessage(bytes signature, bytes message) internal pure returns (address) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 96,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function hashMessage(bytes message) internal pure returns (bytes32) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 104,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes _message,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 105,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint8[] _vs,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 106,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes32[] _rs,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 107,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes32[] _ss,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 67,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 88,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isValidator(address _validator) public view returns(bool);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function requiredSignatures() public view returns(uint256);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function owner() public view returns(address);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "tokenbridge-contracts-2bf70c7e9fd42968aec2dc352017618907834401/contracts/upgradeability/OwnedUpgradeabilityProxy.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 209,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 210,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        setUpgradeabilityOwner(msg.sender);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 211,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_15"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _upgradeTo(uint256 version, address implementation) internal {\n",
+                    "message": "UpgradeabilityProxy._upgradeTo.version (local variable @ OwnedUpgradeabilityProxy.sol#151) shadows:\n\t- UpgradeabilityStorage.version (function @ OwnedUpgradeabilityProxy.sol#116-118)\n"
+                },
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _upgradeTo(uint256 version, address implementation) internal {\n",
+                    "message": "UpgradeabilityProxy._upgradeTo.implementation (local variable @ OwnedUpgradeabilityProxy.sol#151) shadows:\n\t- UpgradeabilityStorage.implementation (function @ OwnedUpgradeabilityProxy.sol#124-126)\n\t- Proxy.implementation (function @ OwnedUpgradeabilityProxy.sol#16)\n"
+                },
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 244,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgradeTo(uint256 version, address implementation) public onlyProxyOwner {\n",
+                    "message": "OwnedUpgradeabilityProxy.upgradeTo.version (local variable @ OwnedUpgradeabilityProxy.sol#244) shadows:\n\t- UpgradeabilityStorage.version (function @ OwnedUpgradeabilityProxy.sol#116-118)\n"
+                },
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 244,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgradeTo(uint256 version, address implementation) public onlyProxyOwner {\n",
+                    "message": "OwnedUpgradeabilityProxy.upgradeTo.implementation (local variable @ OwnedUpgradeabilityProxy.sol#244) shadows:\n\t- UpgradeabilityStorage.implementation (function @ OwnedUpgradeabilityProxy.sol#124-126)\n\t- Proxy.implementation (function @ OwnedUpgradeabilityProxy.sol#16)\n"
+                },
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 256,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgradeToAndCall(uint256 version, address implementation, bytes data) payable public onlyProxyOwner {\n",
+                    "message": "OwnedUpgradeabilityProxy.upgradeToAndCall.version (local variable @ OwnedUpgradeabilityProxy.sol#256) shadows:\n\t- UpgradeabilityStorage.version (function @ OwnedUpgradeabilityProxy.sol#116-118)\n"
+                },
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 256,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgradeToAndCall(uint256 version, address implementation, bytes data) payable public onlyProxyOwner {\n",
+                    "message": "OwnedUpgradeabilityProxy.upgradeToAndCall.implementation (local variable @ OwnedUpgradeabilityProxy.sol#256) shadows:\n\t- UpgradeabilityStorage.implementation (function @ OwnedUpgradeabilityProxy.sol#124-126)\n\t- Proxy.implementation (function @ OwnedUpgradeabilityProxy.sol#16)\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": 93,
+                    "vulnerability_code": "    function () payable public {\n\n        address _impl = implementation();\n\n        require(_impl != address(0));\n\n        assembly {\n\n            /*\n\n                0x40 is the \"free memory slot\", meaning a pointer to next slot of empty memory. mload(0x40)\n\n                loads the data in the free memory slot, so `ptr` is a pointer to the next slot of empty\n\n                memory. It's needed because we're going to write the return data of delegatecall to the\n\n                free memory slot.\n\n            */\n\n            let ptr := mload(0x40)\n\n            /*\n\n                `calldatacopy` is copy calldatasize bytes from calldata\n\n                First argument is the destination to which data is copied(ptr)\n\n                Second argument specifies the start position of the copied data.\n\n                    Since calldata is sort of its own unique location in memory,\n\n                    0 doesn't refer to 0 in memory or 0 in storage - it just refers to the zeroth byte of calldata.\n\n                    That's always going to be the zeroth byte of the function selector.\n\n                Third argument, calldatasize, specifies how much data will be copied.\n\n                    calldata is naturally calldatasize bytes long (same thing as msg.data.length)\n\n            */\n\n            calldatacopy(ptr, 0, calldatasize)\n\n            /*\n\n                delegatecall params explained:\n\n                gas: the amount of gas to provide for the call. `gas` is an Opcode that gives\n\n                    us the amount of gas still available to execution\n\n\n\n                _impl: address of the contract to delegate to\n\n\n\n                ptr: to pass copied data\n\n\n\n                calldatasize: loads the size of `bytes memory data`, same as msg.data.length\n\n\n\n                0, 0: These are for the `out` and `outsize` params. Because the output could be dynamic,\n\n                        these are set to 0, 0 so the output data will not be written to memory. The output\n\n                        data will be read using `returndatasize` and `returdatacopy` instead.\n\n\n\n                result: This will be 0 if the call fails and 1 if it succeeds\n\n            */\n\n            let result := delegatecall(gas, _impl, ptr, calldatasize, 0, 0)\n\n            /*\n\n\n\n            */\n\n            /*\n\n                ptr current points to the value stored at 0x40,\n\n                because we assigned it like ptr := mload(0x40).\n\n                Because we use 0x40 as a free memory pointer,\n\n                we want to make sure that the next time we want to allocate memory,\n\n                we aren't overwriting anything important.\n\n                So, by adding ptr and returndatasize,\n\n                we get a memory location beyond the end of the data we will be copying to ptr.\n\n                We place this in at 0x40, and any reads from 0x40 will now read from free memory\n\n            */\n\n            mstore(0x40, add(ptr, returndatasize))\n\n            /*\n\n                `returndatacopy` is an Opcode that copies the last return data to a slot. `ptr` is the\n\n                    slot it will copy to, 0 means copy from the beginning of the return data, and size is\n\n                    the amount of data to copy.\n\n                `returndatasize` is an Opcode that gives us the size of the last return data. In this case, that is the size of the data returned from delegatecall\n\n            */\n\n            returndatacopy(ptr, 0, returndatasize)\n\n\n\n            /*\n\n                if `result` is 0, revert.\n\n                if `result` is 1, return `size` amount of data from `ptr`. This is the data that was\n\n                copied to `ptr` from the delegatecall return data\n\n            */\n\n            switch result\n\n            case 0 { revert(ptr, returndatasize) }\n\n            default { return(ptr, returndatasize) }\n\n        }\n",
+                    "message": "Proxy.fallback uses assembly (OwnedUpgradeabilityProxy.sol#22-93)\n\t- OwnedUpgradeabilityProxy.sol#25-93\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": 93,
+                    "vulnerability_code": "    function () payable public {\n\n        address _impl = implementation();\n\n        require(_impl != address(0));\n\n        assembly {\n\n            /*\n\n                0x40 is the \"free memory slot\", meaning a pointer to next slot of empty memory. mload(0x40)\n\n                loads the data in the free memory slot, so `ptr` is a pointer to the next slot of empty\n\n                memory. It's needed because we're going to write the return data of delegatecall to the\n\n                free memory slot.\n\n            */\n\n            let ptr := mload(0x40)\n\n            /*\n\n                `calldatacopy` is copy calldatasize bytes from calldata\n\n                First argument is the destination to which data is copied(ptr)\n\n                Second argument specifies the start position of the copied data.\n\n                    Since calldata is sort of its own unique location in memory,\n\n                    0 doesn't refer to 0 in memory or 0 in storage - it just refers to the zeroth byte of calldata.\n\n                    That's always going to be the zeroth byte of the function selector.\n\n                Third argument, calldatasize, specifies how much data will be copied.\n\n                    calldata is naturally calldatasize bytes long (same thing as msg.data.length)\n\n            */\n\n            calldatacopy(ptr, 0, calldatasize)\n\n            /*\n\n                delegatecall params explained:\n\n                gas: the amount of gas to provide for the call. `gas` is an Opcode that gives\n\n                    us the amount of gas still available to execution\n\n\n\n                _impl: address of the contract to delegate to\n\n\n\n                ptr: to pass copied data\n\n\n\n                calldatasize: loads the size of `bytes memory data`, same as msg.data.length\n\n\n\n                0, 0: These are for the `out` and `outsize` params. Because the output could be dynamic,\n\n                        these are set to 0, 0 so the output data will not be written to memory. The output\n\n                        data will be read using `returndatasize` and `returdatacopy` instead.\n\n\n\n                result: This will be 0 if the call fails and 1 if it succeeds\n\n            */\n\n            let result := delegatecall(gas, _impl, ptr, calldatasize, 0, 0)\n\n            /*\n\n\n\n            */\n\n            /*\n\n                ptr current points to the value stored at 0x40,\n\n                because we assigned it like ptr := mload(0x40).\n\n                Because we use 0x40 as a free memory pointer,\n\n                we want to make sure that the next time we want to allocate memory,\n\n                we aren't overwriting anything important.\n\n                So, by adding ptr and returndatasize,\n\n                we get a memory location beyond the end of the data we will be copying to ptr.\n\n                We place this in at 0x40, and any reads from 0x40 will now read from free memory\n\n            */\n\n            mstore(0x40, add(ptr, returndatasize))\n\n            /*\n\n                `returndatacopy` is an Opcode that copies the last return data to a slot. `ptr` is the\n\n                    slot it will copy to, 0 means copy from the beginning of the return data, and size is\n\n                    the amount of data to copy.\n\n                `returndatasize` is an Opcode that gives us the size of the last return data. In this case, that is the size of the data returned from delegatecall\n\n            */\n\n            returndatacopy(ptr, 0, returndatasize)\n\n\n\n            /*\n\n                if `result` is 0, revert.\n\n                if `result` is 1, return `size` amount of data from `ptr`. This is the data that was\n\n                copied to `ptr` from the delegatecall return data\n\n            */\n\n            switch result\n\n            case 0 { revert(ptr, returndatasize) }\n\n            default { return(ptr, returndatasize) }\n\n        }\n",
+                    "message": "Proxy.fallback (OwnedUpgradeabilityProxy.sol#22-93) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": 118,
+                    "vulnerability_code": "    function version() public view returns (uint256) {\n\n        return _version;\n",
+                    "message": "UpgradeabilityStorage.version (OwnedUpgradeabilityProxy.sol#116-118) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 233,
+                    "vulnerability_to_line": 237,
+                    "vulnerability_code": "    function transferProxyOwnership(address newOwner) public onlyProxyOwner {\n\n        require(newOwner != address(0));\n\n        emit ProxyOwnershipTransferred(proxyOwner(), newOwner);\n\n        setUpgradeabilityOwner(newOwner);\n",
+                    "message": "OwnedUpgradeabilityProxy.transferProxyOwnership (OwnedUpgradeabilityProxy.sol#233-237) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 256,
+                    "vulnerability_to_line": 259,
+                    "vulnerability_code": "    function upgradeToAndCall(uint256 version, address implementation, bytes data) payable public onlyProxyOwner {\n\n        upgradeTo(version, implementation);\n\n        require(address(this).call.value(msg.value)(data));\n",
+                    "message": "OwnedUpgradeabilityProxy.upgradeToAndCall (OwnedUpgradeabilityProxy.sol#256-259) should be declared external\n"
+                },
+                {
+                    "name": "low-level-calls",
+                    "vulnerability_from_line": 256,
+                    "vulnerability_to_line": 259,
+                    "vulnerability_code": "    function upgradeToAndCall(uint256 version, address implementation, bytes data) payable public onlyProxyOwner {\n\n        upgradeTo(version, implementation);\n\n        require(address(this).call.value(msg.value)(data));\n",
+                    "message": "Low level call in OwnedUpgradeabilityProxy.upgradeToAndCall (OwnedUpgradeabilityProxy.sol#256-259):\n\t-require(bool)(address(this).call.value(msg.value)(data)) OwnedUpgradeabilityProxy.sol#258\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 107,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 internal _version;\n",
+                    "message": "Variable 'UpgradeabilityStorage._version' (OwnedUpgradeabilityProxy.sol#107) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 110,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address internal _implementation;\n",
+                    "message": "Variable 'UpgradeabilityStorage._implementation' (OwnedUpgradeabilityProxy.sol#110) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": 157,
+                    "vulnerability_code": "    function _upgradeTo(uint256 version, address implementation) internal {\n\n        require(_implementation != implementation);\n\n        require(version > _version);\n\n        _version = version;\n\n        _implementation = implementation;\n\n        emit Upgraded(version, implementation);\n",
+                    "message": "Function 'UpgradeabilityProxy._upgradeTo' (OwnedUpgradeabilityProxy.sol#151-157) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Proxy {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 171,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address private _upgradeabilityOwner;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function () payable public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 256,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgradeToAndCall(uint256 version, address implementation, bytes data) payable public onlyProxyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "tokenbridge-contracts-2bf70c7e9fd42968aec2dc352017618907834401/contracts/upgradeability/EternalStorageProxy.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 229,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 230,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        setUpgradeabilityOwner(msg.sender);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 231,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_16"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 171,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _upgradeTo(uint256 version, address implementation) internal {\n",
+                    "message": "UpgradeabilityProxy._upgradeTo.version (local variable @ EternalStorageProxy.sol#171) shadows:\n\t- UpgradeabilityStorage.version (function @ EternalStorageProxy.sol#136-138)\n"
+                },
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 171,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _upgradeTo(uint256 version, address implementation) internal {\n",
+                    "message": "UpgradeabilityProxy._upgradeTo.implementation (local variable @ EternalStorageProxy.sol#171) shadows:\n\t- UpgradeabilityStorage.implementation (function @ EternalStorageProxy.sol#144-146)\n\t- Proxy.implementation (function @ EternalStorageProxy.sol#36)\n"
+                },
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 264,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgradeTo(uint256 version, address implementation) public onlyProxyOwner {\n",
+                    "message": "OwnedUpgradeabilityProxy.upgradeTo.version (local variable @ EternalStorageProxy.sol#264) shadows:\n\t- UpgradeabilityStorage.version (function @ EternalStorageProxy.sol#136-138)\n"
+                },
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 264,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgradeTo(uint256 version, address implementation) public onlyProxyOwner {\n",
+                    "message": "OwnedUpgradeabilityProxy.upgradeTo.implementation (local variable @ EternalStorageProxy.sol#264) shadows:\n\t- UpgradeabilityStorage.implementation (function @ EternalStorageProxy.sol#144-146)\n\t- Proxy.implementation (function @ EternalStorageProxy.sol#36)\n"
+                },
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 276,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgradeToAndCall(uint256 version, address implementation, bytes data) payable public onlyProxyOwner {\n",
+                    "message": "OwnedUpgradeabilityProxy.upgradeToAndCall.version (local variable @ EternalStorageProxy.sol#276) shadows:\n\t- UpgradeabilityStorage.version (function @ EternalStorageProxy.sol#136-138)\n"
+                },
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 276,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgradeToAndCall(uint256 version, address implementation, bytes data) payable public onlyProxyOwner {\n",
+                    "message": "OwnedUpgradeabilityProxy.upgradeToAndCall.implementation (local variable @ EternalStorageProxy.sol#276) shadows:\n\t- UpgradeabilityStorage.implementation (function @ EternalStorageProxy.sol#144-146)\n\t- Proxy.implementation (function @ EternalStorageProxy.sol#36)\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": 113,
+                    "vulnerability_code": "    function () payable public {\n\n        address _impl = implementation();\n\n        require(_impl != address(0));\n\n        assembly {\n\n            /*\n\n                0x40 is the \"free memory slot\", meaning a pointer to next slot of empty memory. mload(0x40)\n\n                loads the data in the free memory slot, so `ptr` is a pointer to the next slot of empty\n\n                memory. It's needed because we're going to write the return data of delegatecall to the\n\n                free memory slot.\n\n            */\n\n            let ptr := mload(0x40)\n\n            /*\n\n                `calldatacopy` is copy calldatasize bytes from calldata\n\n                First argument is the destination to which data is copied(ptr)\n\n                Second argument specifies the start position of the copied data.\n\n                    Since calldata is sort of its own unique location in memory,\n\n                    0 doesn't refer to 0 in memory or 0 in storage - it just refers to the zeroth byte of calldata.\n\n                    That's always going to be the zeroth byte of the function selector.\n\n                Third argument, calldatasize, specifies how much data will be copied.\n\n                    calldata is naturally calldatasize bytes long (same thing as msg.data.length)\n\n            */\n\n            calldatacopy(ptr, 0, calldatasize)\n\n            /*\n\n                delegatecall params explained:\n\n                gas: the amount of gas to provide for the call. `gas` is an Opcode that gives\n\n                    us the amount of gas still available to execution\n\n\n\n                _impl: address of the contract to delegate to\n\n\n\n                ptr: to pass copied data\n\n\n\n                calldatasize: loads the size of `bytes memory data`, same as msg.data.length\n\n\n\n                0, 0: These are for the `out` and `outsize` params. Because the output could be dynamic,\n\n                        these are set to 0, 0 so the output data will not be written to memory. The output\n\n                        data will be read using `returndatasize` and `returdatacopy` instead.\n\n\n\n                result: This will be 0 if the call fails and 1 if it succeeds\n\n            */\n\n            let result := delegatecall(gas, _impl, ptr, calldatasize, 0, 0)\n\n            /*\n\n\n\n            */\n\n            /*\n\n                ptr current points to the value stored at 0x40,\n\n                because we assigned it like ptr := mload(0x40).\n\n                Because we use 0x40 as a free memory pointer,\n\n                we want to make sure that the next time we want to allocate memory,\n\n                we aren't overwriting anything important.\n\n                So, by adding ptr and returndatasize,\n\n                we get a memory location beyond the end of the data we will be copying to ptr.\n\n                We place this in at 0x40, and any reads from 0x40 will now read from free memory\n\n            */\n\n            mstore(0x40, add(ptr, returndatasize))\n\n            /*\n\n                `returndatacopy` is an Opcode that copies the last return data to a slot. `ptr` is the\n\n                    slot it will copy to, 0 means copy from the beginning of the return data, and size is\n\n                    the amount of data to copy.\n\n                `returndatasize` is an Opcode that gives us the size of the last return data. In this case, that is the size of the data returned from delegatecall\n\n            */\n\n            returndatacopy(ptr, 0, returndatasize)\n\n\n\n            /*\n\n                if `result` is 0, revert.\n\n                if `result` is 1, return `size` amount of data from `ptr`. This is the data that was\n\n                copied to `ptr` from the delegatecall return data\n\n            */\n\n            switch result\n\n            case 0 { revert(ptr, returndatasize) }\n\n            default { return(ptr, returndatasize) }\n\n        }\n",
+                    "message": "Proxy.fallback uses assembly (EternalStorageProxy.sol#42-113)\n\t- EternalStorageProxy.sol#45-113\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": 113,
+                    "vulnerability_code": "    function () payable public {\n\n        address _impl = implementation();\n\n        require(_impl != address(0));\n\n        assembly {\n\n            /*\n\n                0x40 is the \"free memory slot\", meaning a pointer to next slot of empty memory. mload(0x40)\n\n                loads the data in the free memory slot, so `ptr` is a pointer to the next slot of empty\n\n                memory. It's needed because we're going to write the return data of delegatecall to the\n\n                free memory slot.\n\n            */\n\n            let ptr := mload(0x40)\n\n            /*\n\n                `calldatacopy` is copy calldatasize bytes from calldata\n\n                First argument is the destination to which data is copied(ptr)\n\n                Second argument specifies the start position of the copied data.\n\n                    Since calldata is sort of its own unique location in memory,\n\n                    0 doesn't refer to 0 in memory or 0 in storage - it just refers to the zeroth byte of calldata.\n\n                    That's always going to be the zeroth byte of the function selector.\n\n                Third argument, calldatasize, specifies how much data will be copied.\n\n                    calldata is naturally calldatasize bytes long (same thing as msg.data.length)\n\n            */\n\n            calldatacopy(ptr, 0, calldatasize)\n\n            /*\n\n                delegatecall params explained:\n\n                gas: the amount of gas to provide for the call. `gas` is an Opcode that gives\n\n                    us the amount of gas still available to execution\n\n\n\n                _impl: address of the contract to delegate to\n\n\n\n                ptr: to pass copied data\n\n\n\n                calldatasize: loads the size of `bytes memory data`, same as msg.data.length\n\n\n\n                0, 0: These are for the `out` and `outsize` params. Because the output could be dynamic,\n\n                        these are set to 0, 0 so the output data will not be written to memory. The output\n\n                        data will be read using `returndatasize` and `returdatacopy` instead.\n\n\n\n                result: This will be 0 if the call fails and 1 if it succeeds\n\n            */\n\n            let result := delegatecall(gas, _impl, ptr, calldatasize, 0, 0)\n\n            /*\n\n\n\n            */\n\n            /*\n\n                ptr current points to the value stored at 0x40,\n\n                because we assigned it like ptr := mload(0x40).\n\n                Because we use 0x40 as a free memory pointer,\n\n                we want to make sure that the next time we want to allocate memory,\n\n                we aren't overwriting anything important.\n\n                So, by adding ptr and returndatasize,\n\n                we get a memory location beyond the end of the data we will be copying to ptr.\n\n                We place this in at 0x40, and any reads from 0x40 will now read from free memory\n\n            */\n\n            mstore(0x40, add(ptr, returndatasize))\n\n            /*\n\n                `returndatacopy` is an Opcode that copies the last return data to a slot. `ptr` is the\n\n                    slot it will copy to, 0 means copy from the beginning of the return data, and size is\n\n                    the amount of data to copy.\n\n                `returndatasize` is an Opcode that gives us the size of the last return data. In this case, that is the size of the data returned from delegatecall\n\n            */\n\n            returndatacopy(ptr, 0, returndatasize)\n\n\n\n            /*\n\n                if `result` is 0, revert.\n\n                if `result` is 1, return `size` amount of data from `ptr`. This is the data that was\n\n                copied to `ptr` from the delegatecall return data\n\n            */\n\n            switch result\n\n            case 0 { revert(ptr, returndatasize) }\n\n            default { return(ptr, returndatasize) }\n\n        }\n",
+                    "message": "Proxy.fallback (EternalStorageProxy.sol#42-113) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 136,
+                    "vulnerability_to_line": 138,
+                    "vulnerability_code": "    function version() public view returns (uint256) {\n\n        return _version;\n",
+                    "message": "UpgradeabilityStorage.version (EternalStorageProxy.sol#136-138) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 253,
+                    "vulnerability_to_line": 257,
+                    "vulnerability_code": "    function transferProxyOwnership(address newOwner) public onlyProxyOwner {\n\n        require(newOwner != address(0));\n\n        emit ProxyOwnershipTransferred(proxyOwner(), newOwner);\n\n        setUpgradeabilityOwner(newOwner);\n",
+                    "message": "OwnedUpgradeabilityProxy.transferProxyOwnership (EternalStorageProxy.sol#253-257) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 276,
+                    "vulnerability_to_line": 279,
+                    "vulnerability_code": "    function upgradeToAndCall(uint256 version, address implementation, bytes data) payable public onlyProxyOwner {\n\n        upgradeTo(version, implementation);\n\n        require(address(this).call.value(msg.value)(data));\n",
+                    "message": "OwnedUpgradeabilityProxy.upgradeToAndCall (EternalStorageProxy.sol#276-279) should be declared external\n"
+                },
+                {
+                    "name": "low-level-calls",
+                    "vulnerability_from_line": 276,
+                    "vulnerability_to_line": 279,
+                    "vulnerability_code": "    function upgradeToAndCall(uint256 version, address implementation, bytes data) payable public onlyProxyOwner {\n\n        upgradeTo(version, implementation);\n\n        require(address(this).call.value(msg.value)(data));\n",
+                    "message": "Low level call in OwnedUpgradeabilityProxy.upgradeToAndCall (EternalStorageProxy.sol#276-279):\n\t-require(bool)(address(this).call.value(msg.value)(data)) EternalStorageProxy.sol#278\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 127,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 internal _version;\n",
+                    "message": "Variable 'UpgradeabilityStorage._version' (EternalStorageProxy.sol#127) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 130,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address internal _implementation;\n",
+                    "message": "Variable 'UpgradeabilityStorage._implementation' (EternalStorageProxy.sol#130) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 171,
+                    "vulnerability_to_line": 177,
+                    "vulnerability_code": "    function _upgradeTo(uint256 version, address implementation) internal {\n\n        require(_implementation != implementation);\n\n        require(version > _version);\n\n        _version = version;\n\n        _implementation = implementation;\n\n        emit Upgraded(version, implementation);\n",
+                    "message": "Function 'UpgradeabilityProxy._upgradeTo' (EternalStorageProxy.sol#171-177) is not in mixedCase\n"
+                },
+                {
+                    "name": "unused-state",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(bytes32 => uint256) internal uintStorage;\n",
+                    "message": "EternalStorage.uintStorage (EternalStorageProxy.sol#12) is never used in EternalStorageProxy\nEternalStorage.stringStorage (EternalStorageProxy.sol#13) is never used in EternalStorageProxy\nEternalStorage.addressStorage (EternalStorageProxy.sol#14) is never used in EternalStorageProxy\nEternalStorage.bytesStorage (EternalStorageProxy.sol#15) is never used in EternalStorageProxy\nEternalStorage.boolStorage (EternalStorageProxy.sol#16) is never used in EternalStorageProxy\nEternalStorage.intStorage (EternalStorageProxy.sol#17) is never used in EternalStorageProxy\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Proxy {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 191,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address private _upgradeabilityOwner;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function () payable public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 276,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgradeToAndCall(uint256 version, address implementation, bytes data) payable public onlyProxyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "tokenbridge-contracts-2bf70c7e9fd42968aec2dc352017618907834401/contracts/upgradeability/Proxy.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "locked-ether",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": 93,
+                    "vulnerability_code": "    function () payable public {\n\n        address _impl = implementation();\n\n        require(_impl != address(0));\n\n        assembly {\n\n            /*\n\n                0x40 is the \"free memory slot\", meaning a pointer to next slot of empty memory. mload(0x40)\n\n                loads the data in the free memory slot, so `ptr` is a pointer to the next slot of empty\n\n                memory. It's needed because we're going to write the return data of delegatecall to the\n\n                free memory slot.\n\n            */\n\n            let ptr := mload(0x40)\n\n            /*\n\n                `calldatacopy` is copy calldatasize bytes from calldata\n\n                First argument is the destination to which data is copied(ptr)\n\n                Second argument specifies the start position of the copied data.\n\n                    Since calldata is sort of its own unique location in memory,\n\n                    0 doesn't refer to 0 in memory or 0 in storage - it just refers to the zeroth byte of calldata.\n\n                    That's always going to be the zeroth byte of the function selector.\n\n                Third argument, calldatasize, specifies how much data will be copied.\n\n                    calldata is naturally calldatasize bytes long (same thing as msg.data.length)\n\n            */\n\n            calldatacopy(ptr, 0, calldatasize)\n\n            /*\n\n                delegatecall params explained:\n\n                gas: the amount of gas to provide for the call. `gas` is an Opcode that gives\n\n                    us the amount of gas still available to execution\n\n\n\n                _impl: address of the contract to delegate to\n\n\n\n                ptr: to pass copied data\n\n\n\n                calldatasize: loads the size of `bytes memory data`, same as msg.data.length\n\n\n\n                0, 0: These are for the `out` and `outsize` params. Because the output could be dynamic,\n\n                        these are set to 0, 0 so the output data will not be written to memory. The output\n\n                        data will be read using `returndatasize` and `returdatacopy` instead.\n\n\n\n                result: This will be 0 if the call fails and 1 if it succeeds\n\n            */\n\n            let result := delegatecall(gas, _impl, ptr, calldatasize, 0, 0)\n\n            /*\n\n\n\n            */\n\n            /*\n\n                ptr current points to the value stored at 0x40,\n\n                because we assigned it like ptr := mload(0x40).\n\n                Because we use 0x40 as a free memory pointer,\n\n                we want to make sure that the next time we want to allocate memory,\n\n                we aren't overwriting anything important.\n\n                So, by adding ptr and returndatasize,\n\n                we get a memory location beyond the end of the data we will be copying to ptr.\n\n                We place this in at 0x40, and any reads from 0x40 will now read from free memory\n\n            */\n\n            mstore(0x40, add(ptr, returndatasize))\n\n            /*\n\n                `returndatacopy` is an Opcode that copies the last return data to a slot. `ptr` is the\n\n                    slot it will copy to, 0 means copy from the beginning of the return data, and size is\n\n                    the amount of data to copy.\n\n                `returndatasize` is an Opcode that gives us the size of the last return data. In this case, that is the size of the data returned from delegatecall\n\n            */\n\n            returndatacopy(ptr, 0, returndatasize)\n\n\n\n            /*\n\n                if `result` is 0, revert.\n\n                if `result` is 1, return `size` amount of data from `ptr`. This is the data that was\n\n                copied to `ptr` from the delegatecall return data\n\n            */\n\n            switch result\n\n            case 0 { revert(ptr, returndatasize) }\n\n            default { return(ptr, returndatasize) }\n\n        }\n",
+                    "message": "Contract locking ether found in Proxy.sol:\n\tContract Proxy has payable functions:\n\t - fallback (Proxy.sol#22-93)\n\tBut does not have a function to withdraw the ether\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": 93,
+                    "vulnerability_code": "    function () payable public {\n\n        address _impl = implementation();\n\n        require(_impl != address(0));\n\n        assembly {\n\n            /*\n\n                0x40 is the \"free memory slot\", meaning a pointer to next slot of empty memory. mload(0x40)\n\n                loads the data in the free memory slot, so `ptr` is a pointer to the next slot of empty\n\n                memory. It's needed because we're going to write the return data of delegatecall to the\n\n                free memory slot.\n\n            */\n\n            let ptr := mload(0x40)\n\n            /*\n\n                `calldatacopy` is copy calldatasize bytes from calldata\n\n                First argument is the destination to which data is copied(ptr)\n\n                Second argument specifies the start position of the copied data.\n\n                    Since calldata is sort of its own unique location in memory,\n\n                    0 doesn't refer to 0 in memory or 0 in storage - it just refers to the zeroth byte of calldata.\n\n                    That's always going to be the zeroth byte of the function selector.\n\n                Third argument, calldatasize, specifies how much data will be copied.\n\n                    calldata is naturally calldatasize bytes long (same thing as msg.data.length)\n\n            */\n\n            calldatacopy(ptr, 0, calldatasize)\n\n            /*\n\n                delegatecall params explained:\n\n                gas: the amount of gas to provide for the call. `gas` is an Opcode that gives\n\n                    us the amount of gas still available to execution\n\n\n\n                _impl: address of the contract to delegate to\n\n\n\n                ptr: to pass copied data\n\n\n\n                calldatasize: loads the size of `bytes memory data`, same as msg.data.length\n\n\n\n                0, 0: These are for the `out` and `outsize` params. Because the output could be dynamic,\n\n                        these are set to 0, 0 so the output data will not be written to memory. The output\n\n                        data will be read using `returndatasize` and `returdatacopy` instead.\n\n\n\n                result: This will be 0 if the call fails and 1 if it succeeds\n\n            */\n\n            let result := delegatecall(gas, _impl, ptr, calldatasize, 0, 0)\n\n            /*\n\n\n\n            */\n\n            /*\n\n                ptr current points to the value stored at 0x40,\n\n                because we assigned it like ptr := mload(0x40).\n\n                Because we use 0x40 as a free memory pointer,\n\n                we want to make sure that the next time we want to allocate memory,\n\n                we aren't overwriting anything important.\n\n                So, by adding ptr and returndatasize,\n\n                we get a memory location beyond the end of the data we will be copying to ptr.\n\n                We place this in at 0x40, and any reads from 0x40 will now read from free memory\n\n            */\n\n            mstore(0x40, add(ptr, returndatasize))\n\n            /*\n\n                `returndatacopy` is an Opcode that copies the last return data to a slot. `ptr` is the\n\n                    slot it will copy to, 0 means copy from the beginning of the return data, and size is\n\n                    the amount of data to copy.\n\n                `returndatasize` is an Opcode that gives us the size of the last return data. In this case, that is the size of the data returned from delegatecall\n\n            */\n\n            returndatacopy(ptr, 0, returndatasize)\n\n\n\n            /*\n\n                if `result` is 0, revert.\n\n                if `result` is 1, return `size` amount of data from `ptr`. This is the data that was\n\n                copied to `ptr` from the delegatecall return data\n\n            */\n\n            switch result\n\n            case 0 { revert(ptr, returndatasize) }\n\n            default { return(ptr, returndatasize) }\n\n        }\n",
+                    "message": "Proxy.fallback uses assembly (Proxy.sol#22-93)\n\t- Proxy.sol#25-93\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": 93,
+                    "vulnerability_code": "    function () payable public {\n\n        address _impl = implementation();\n\n        require(_impl != address(0));\n\n        assembly {\n\n            /*\n\n                0x40 is the \"free memory slot\", meaning a pointer to next slot of empty memory. mload(0x40)\n\n                loads the data in the free memory slot, so `ptr` is a pointer to the next slot of empty\n\n                memory. It's needed because we're going to write the return data of delegatecall to the\n\n                free memory slot.\n\n            */\n\n            let ptr := mload(0x40)\n\n            /*\n\n                `calldatacopy` is copy calldatasize bytes from calldata\n\n                First argument is the destination to which data is copied(ptr)\n\n                Second argument specifies the start position of the copied data.\n\n                    Since calldata is sort of its own unique location in memory,\n\n                    0 doesn't refer to 0 in memory or 0 in storage - it just refers to the zeroth byte of calldata.\n\n                    That's always going to be the zeroth byte of the function selector.\n\n                Third argument, calldatasize, specifies how much data will be copied.\n\n                    calldata is naturally calldatasize bytes long (same thing as msg.data.length)\n\n            */\n\n            calldatacopy(ptr, 0, calldatasize)\n\n            /*\n\n                delegatecall params explained:\n\n                gas: the amount of gas to provide for the call. `gas` is an Opcode that gives\n\n                    us the amount of gas still available to execution\n\n\n\n                _impl: address of the contract to delegate to\n\n\n\n                ptr: to pass copied data\n\n\n\n                calldatasize: loads the size of `bytes memory data`, same as msg.data.length\n\n\n\n                0, 0: These are for the `out` and `outsize` params. Because the output could be dynamic,\n\n                        these are set to 0, 0 so the output data will not be written to memory. The output\n\n                        data will be read using `returndatasize` and `returdatacopy` instead.\n\n\n\n                result: This will be 0 if the call fails and 1 if it succeeds\n\n            */\n\n            let result := delegatecall(gas, _impl, ptr, calldatasize, 0, 0)\n\n            /*\n\n\n\n            */\n\n            /*\n\n                ptr current points to the value stored at 0x40,\n\n                because we assigned it like ptr := mload(0x40).\n\n                Because we use 0x40 as a free memory pointer,\n\n                we want to make sure that the next time we want to allocate memory,\n\n                we aren't overwriting anything important.\n\n                So, by adding ptr and returndatasize,\n\n                we get a memory location beyond the end of the data we will be copying to ptr.\n\n                We place this in at 0x40, and any reads from 0x40 will now read from free memory\n\n            */\n\n            mstore(0x40, add(ptr, returndatasize))\n\n            /*\n\n                `returndatacopy` is an Opcode that copies the last return data to a slot. `ptr` is the\n\n                    slot it will copy to, 0 means copy from the beginning of the return data, and size is\n\n                    the amount of data to copy.\n\n                `returndatasize` is an Opcode that gives us the size of the last return data. In this case, that is the size of the data returned from delegatecall\n\n            */\n\n            returndatacopy(ptr, 0, returndatasize)\n\n\n\n            /*\n\n                if `result` is 0, revert.\n\n                if `result` is 1, return `size` amount of data from `ptr`. This is the data that was\n\n                copied to `ptr` from the delegatecall return data\n\n            */\n\n            switch result\n\n            case 0 { revert(ptr, returndatasize) }\n\n            default { return(ptr, returndatasize) }\n\n        }\n",
+                    "message": "Proxy.fallback (Proxy.sol#22-93) should be declared external\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Proxy {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function () payable public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "tokenbridge-contracts-2bf70c7e9fd42968aec2dc352017618907834401/contracts/upgradeability/UpgradeabilityOwnerStorage.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": 20,
+                    "vulnerability_code": "    function upgradeabilityOwner() public view returns (address) {\n\n        return _upgradeabilityOwner;\n",
+                    "message": "UpgradeabilityOwnerStorage.upgradeabilityOwner (UpgradeabilityOwnerStorage.sol#18-20) should be declared external\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address private _upgradeabilityOwner;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "tokenbridge-contracts-2bf70c7e9fd42968aec2dc352017618907834401/contracts/upgradeability/EternalStorage.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "tokenbridge-contracts-2bf70c7e9fd42968aec2dc352017618907834401/contracts/upgradeability/UpgradeabilityProxy.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_9"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "locked-ether",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": 93,
+                    "vulnerability_code": "    function () payable public {\n\n        address _impl = implementation();\n\n        require(_impl != address(0));\n\n        assembly {\n\n            /*\n\n                0x40 is the \"free memory slot\", meaning a pointer to next slot of empty memory. mload(0x40)\n\n                loads the data in the free memory slot, so `ptr` is a pointer to the next slot of empty\n\n                memory. It's needed because we're going to write the return data of delegatecall to the\n\n                free memory slot.\n\n            */\n\n            let ptr := mload(0x40)\n\n            /*\n\n                `calldatacopy` is copy calldatasize bytes from calldata\n\n                First argument is the destination to which data is copied(ptr)\n\n                Second argument specifies the start position of the copied data.\n\n                    Since calldata is sort of its own unique location in memory,\n\n                    0 doesn't refer to 0 in memory or 0 in storage - it just refers to the zeroth byte of calldata.\n\n                    That's always going to be the zeroth byte of the function selector.\n\n                Third argument, calldatasize, specifies how much data will be copied.\n\n                    calldata is naturally calldatasize bytes long (same thing as msg.data.length)\n\n            */\n\n            calldatacopy(ptr, 0, calldatasize)\n\n            /*\n\n                delegatecall params explained:\n\n                gas: the amount of gas to provide for the call. `gas` is an Opcode that gives\n\n                    us the amount of gas still available to execution\n\n\n\n                _impl: address of the contract to delegate to\n\n\n\n                ptr: to pass copied data\n\n\n\n                calldatasize: loads the size of `bytes memory data`, same as msg.data.length\n\n\n\n                0, 0: These are for the `out` and `outsize` params. Because the output could be dynamic,\n\n                        these are set to 0, 0 so the output data will not be written to memory. The output\n\n                        data will be read using `returndatasize` and `returdatacopy` instead.\n\n\n\n                result: This will be 0 if the call fails and 1 if it succeeds\n\n            */\n\n            let result := delegatecall(gas, _impl, ptr, calldatasize, 0, 0)\n\n            /*\n\n\n\n            */\n\n            /*\n\n                ptr current points to the value stored at 0x40,\n\n                because we assigned it like ptr := mload(0x40).\n\n                Because we use 0x40 as a free memory pointer,\n\n                we want to make sure that the next time we want to allocate memory,\n\n                we aren't overwriting anything important.\n\n                So, by adding ptr and returndatasize,\n\n                we get a memory location beyond the end of the data we will be copying to ptr.\n\n                We place this in at 0x40, and any reads from 0x40 will now read from free memory\n\n            */\n\n            mstore(0x40, add(ptr, returndatasize))\n\n            /*\n\n                `returndatacopy` is an Opcode that copies the last return data to a slot. `ptr` is the\n\n                    slot it will copy to, 0 means copy from the beginning of the return data, and size is\n\n                    the amount of data to copy.\n\n                `returndatasize` is an Opcode that gives us the size of the last return data. In this case, that is the size of the data returned from delegatecall\n\n            */\n\n            returndatacopy(ptr, 0, returndatasize)\n\n\n\n            /*\n\n                if `result` is 0, revert.\n\n                if `result` is 1, return `size` amount of data from `ptr`. This is the data that was\n\n                copied to `ptr` from the delegatecall return data\n\n            */\n\n            switch result\n\n            case 0 { revert(ptr, returndatasize) }\n\n            default { return(ptr, returndatasize) }\n\n        }\n",
+                    "message": "Contract locking ether found in UpgradeabilityProxy.sol:\n\tContract UpgradeabilityProxy has payable functions:\n\t - fallback (UpgradeabilityProxy.sol#22-93)\n\tBut does not have a function to withdraw the ether\n"
+                },
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _upgradeTo(uint256 version, address implementation) internal {\n",
+                    "message": "UpgradeabilityProxy._upgradeTo.version (local variable @ UpgradeabilityProxy.sol#151) shadows:\n\t- UpgradeabilityStorage.version (function @ UpgradeabilityProxy.sol#116-118)\n"
+                },
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _upgradeTo(uint256 version, address implementation) internal {\n",
+                    "message": "UpgradeabilityProxy._upgradeTo.implementation (local variable @ UpgradeabilityProxy.sol#151) shadows:\n\t- UpgradeabilityStorage.implementation (function @ UpgradeabilityProxy.sol#124-126)\n\t- Proxy.implementation (function @ UpgradeabilityProxy.sol#16)\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": 93,
+                    "vulnerability_code": "    function () payable public {\n\n        address _impl = implementation();\n\n        require(_impl != address(0));\n\n        assembly {\n\n            /*\n\n                0x40 is the \"free memory slot\", meaning a pointer to next slot of empty memory. mload(0x40)\n\n                loads the data in the free memory slot, so `ptr` is a pointer to the next slot of empty\n\n                memory. It's needed because we're going to write the return data of delegatecall to the\n\n                free memory slot.\n\n            */\n\n            let ptr := mload(0x40)\n\n            /*\n\n                `calldatacopy` is copy calldatasize bytes from calldata\n\n                First argument is the destination to which data is copied(ptr)\n\n                Second argument specifies the start position of the copied data.\n\n                    Since calldata is sort of its own unique location in memory,\n\n                    0 doesn't refer to 0 in memory or 0 in storage - it just refers to the zeroth byte of calldata.\n\n                    That's always going to be the zeroth byte of the function selector.\n\n                Third argument, calldatasize, specifies how much data will be copied.\n\n                    calldata is naturally calldatasize bytes long (same thing as msg.data.length)\n\n            */\n\n            calldatacopy(ptr, 0, calldatasize)\n\n            /*\n\n                delegatecall params explained:\n\n                gas: the amount of gas to provide for the call. `gas` is an Opcode that gives\n\n                    us the amount of gas still available to execution\n\n\n\n                _impl: address of the contract to delegate to\n\n\n\n                ptr: to pass copied data\n\n\n\n                calldatasize: loads the size of `bytes memory data`, same as msg.data.length\n\n\n\n                0, 0: These are for the `out` and `outsize` params. Because the output could be dynamic,\n\n                        these are set to 0, 0 so the output data will not be written to memory. The output\n\n                        data will be read using `returndatasize` and `returdatacopy` instead.\n\n\n\n                result: This will be 0 if the call fails and 1 if it succeeds\n\n            */\n\n            let result := delegatecall(gas, _impl, ptr, calldatasize, 0, 0)\n\n            /*\n\n\n\n            */\n\n            /*\n\n                ptr current points to the value stored at 0x40,\n\n                because we assigned it like ptr := mload(0x40).\n\n                Because we use 0x40 as a free memory pointer,\n\n                we want to make sure that the next time we want to allocate memory,\n\n                we aren't overwriting anything important.\n\n                So, by adding ptr and returndatasize,\n\n                we get a memory location beyond the end of the data we will be copying to ptr.\n\n                We place this in at 0x40, and any reads from 0x40 will now read from free memory\n\n            */\n\n            mstore(0x40, add(ptr, returndatasize))\n\n            /*\n\n                `returndatacopy` is an Opcode that copies the last return data to a slot. `ptr` is the\n\n                    slot it will copy to, 0 means copy from the beginning of the return data, and size is\n\n                    the amount of data to copy.\n\n                `returndatasize` is an Opcode that gives us the size of the last return data. In this case, that is the size of the data returned from delegatecall\n\n            */\n\n            returndatacopy(ptr, 0, returndatasize)\n\n\n\n            /*\n\n                if `result` is 0, revert.\n\n                if `result` is 1, return `size` amount of data from `ptr`. This is the data that was\n\n                copied to `ptr` from the delegatecall return data\n\n            */\n\n            switch result\n\n            case 0 { revert(ptr, returndatasize) }\n\n            default { return(ptr, returndatasize) }\n\n        }\n",
+                    "message": "Proxy.fallback uses assembly (UpgradeabilityProxy.sol#22-93)\n\t- UpgradeabilityProxy.sol#25-93\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": 93,
+                    "vulnerability_code": "    function () payable public {\n\n        address _impl = implementation();\n\n        require(_impl != address(0));\n\n        assembly {\n\n            /*\n\n                0x40 is the \"free memory slot\", meaning a pointer to next slot of empty memory. mload(0x40)\n\n                loads the data in the free memory slot, so `ptr` is a pointer to the next slot of empty\n\n                memory. It's needed because we're going to write the return data of delegatecall to the\n\n                free memory slot.\n\n            */\n\n            let ptr := mload(0x40)\n\n            /*\n\n                `calldatacopy` is copy calldatasize bytes from calldata\n\n                First argument is the destination to which data is copied(ptr)\n\n                Second argument specifies the start position of the copied data.\n\n                    Since calldata is sort of its own unique location in memory,\n\n                    0 doesn't refer to 0 in memory or 0 in storage - it just refers to the zeroth byte of calldata.\n\n                    That's always going to be the zeroth byte of the function selector.\n\n                Third argument, calldatasize, specifies how much data will be copied.\n\n                    calldata is naturally calldatasize bytes long (same thing as msg.data.length)\n\n            */\n\n            calldatacopy(ptr, 0, calldatasize)\n\n            /*\n\n                delegatecall params explained:\n\n                gas: the amount of gas to provide for the call. `gas` is an Opcode that gives\n\n                    us the amount of gas still available to execution\n\n\n\n                _impl: address of the contract to delegate to\n\n\n\n                ptr: to pass copied data\n\n\n\n                calldatasize: loads the size of `bytes memory data`, same as msg.data.length\n\n\n\n                0, 0: These are for the `out` and `outsize` params. Because the output could be dynamic,\n\n                        these are set to 0, 0 so the output data will not be written to memory. The output\n\n                        data will be read using `returndatasize` and `returdatacopy` instead.\n\n\n\n                result: This will be 0 if the call fails and 1 if it succeeds\n\n            */\n\n            let result := delegatecall(gas, _impl, ptr, calldatasize, 0, 0)\n\n            /*\n\n\n\n            */\n\n            /*\n\n                ptr current points to the value stored at 0x40,\n\n                because we assigned it like ptr := mload(0x40).\n\n                Because we use 0x40 as a free memory pointer,\n\n                we want to make sure that the next time we want to allocate memory,\n\n                we aren't overwriting anything important.\n\n                So, by adding ptr and returndatasize,\n\n                we get a memory location beyond the end of the data we will be copying to ptr.\n\n                We place this in at 0x40, and any reads from 0x40 will now read from free memory\n\n            */\n\n            mstore(0x40, add(ptr, returndatasize))\n\n            /*\n\n                `returndatacopy` is an Opcode that copies the last return data to a slot. `ptr` is the\n\n                    slot it will copy to, 0 means copy from the beginning of the return data, and size is\n\n                    the amount of data to copy.\n\n                `returndatasize` is an Opcode that gives us the size of the last return data. In this case, that is the size of the data returned from delegatecall\n\n            */\n\n            returndatacopy(ptr, 0, returndatasize)\n\n\n\n            /*\n\n                if `result` is 0, revert.\n\n                if `result` is 1, return `size` amount of data from `ptr`. This is the data that was\n\n                copied to `ptr` from the delegatecall return data\n\n            */\n\n            switch result\n\n            case 0 { revert(ptr, returndatasize) }\n\n            default { return(ptr, returndatasize) }\n\n        }\n",
+                    "message": "Proxy.fallback (UpgradeabilityProxy.sol#22-93) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": 118,
+                    "vulnerability_code": "    function version() public view returns (uint256) {\n\n        return _version;\n",
+                    "message": "UpgradeabilityStorage.version (UpgradeabilityProxy.sol#116-118) should be declared external\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 107,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 internal _version;\n",
+                    "message": "Variable 'UpgradeabilityStorage._version' (UpgradeabilityProxy.sol#107) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 110,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address internal _implementation;\n",
+                    "message": "Variable 'UpgradeabilityStorage._implementation' (UpgradeabilityProxy.sol#110) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": 157,
+                    "vulnerability_code": "    function _upgradeTo(uint256 version, address implementation) internal {\n\n        require(_implementation != implementation);\n\n        require(version > _version);\n\n        _version = version;\n\n        _implementation = implementation;\n\n        emit Upgraded(version, implementation);\n",
+                    "message": "Function 'UpgradeabilityProxy._upgradeTo' (UpgradeabilityProxy.sol#151-157) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Proxy {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function () payable public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "tokenbridge-contracts-2bf70c7e9fd42968aec2dc352017618907834401/contracts/upgradeability/UpgradeabilityStorage.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_7"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "uninitialized-state",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 internal _version;\n",
+                    "message": "UpgradeabilityStorage._version (UpgradeabilityStorage.sol#12) is never initialized. It is used in:\n\t- version (UpgradeabilityStorage.sol#21-23)\n"
+                },
+                {
+                    "name": "uninitialized-state",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address internal _implementation;\n",
+                    "message": "UpgradeabilityStorage._implementation (UpgradeabilityStorage.sol#15) is never initialized. It is used in:\n\t- implementation (UpgradeabilityStorage.sol#29-31)\n"
+                },
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address internal _implementation;\n",
+                    "message": "UpgradeabilityStorage._implementation should be constant (UpgradeabilityStorage.sol#15)\nUpgradeabilityStorage._version should be constant (UpgradeabilityStorage.sol#12)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": 23,
+                    "vulnerability_code": "    function version() public view returns (uint256) {\n\n        return _version;\n",
+                    "message": "UpgradeabilityStorage.version (UpgradeabilityStorage.sol#21-23) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": 31,
+                    "vulnerability_code": "    function implementation() public view returns (address) {\n\n        return _implementation;\n",
+                    "message": "UpgradeabilityStorage.implementation (UpgradeabilityStorage.sol#29-31) should be declared external\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 internal _version;\n",
+                    "message": "Variable 'UpgradeabilityStorage._version' (UpgradeabilityStorage.sol#12) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address internal _implementation;\n",
+                    "message": "Variable 'UpgradeabilityStorage._implementation' (UpgradeabilityStorage.sol#15) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    }
+}

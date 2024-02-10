@@ -1,0 +1,1524 @@
+{
+    "degens-contract-a777d578f9354de257a26e9cb0b3c6d92ea7f8e7/contracts/Degens.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 463,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < targets.length;) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 467,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            for (i++; i < targets.length && (targets[i] & (1<<255)) == 0; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 498,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            int feePerGrader = totalFee / int(m.graders.length);\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 500,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            for (uint j = 0; j < m.graders.length - 1; j++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 505,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            adjustBalance(token, m.graders[m.graders.length - 1], totalFee);\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 240,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < packedOrders.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 262,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < packedRightOrders.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 351,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            for (uint i = 0; i < graders.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 467,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            for (i++; i < targets.length && (targets[i] & (1<<255)) == 0; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 467,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            for (i++; i < targets.length && (targets[i] & (1<<255)) == 0; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 500,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            for (uint j = 0; j < m.graders.length - 1; j++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 172,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(ecrecoverPacked(signatureHash, packed[2], packed[3]) == o.maker, \"DERR_INVALID_ORDER_SIGNATURE\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 173,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(o.taker == address(0) || o.taker == msg.sender, \"DERR_INVALID_TAKER\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 174,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(o.price > 0 && o.price < MAX_PRICE, \"DERR_INVALID_PRICE\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 175,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(o.direction < 2, \"DERR_INVALID_DIRECTION\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 226,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        revert(\"DERR_UNKNOWN_METHOD\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 236,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(packedOrders.length > 0, \"DERR_EMPTY_PACKEDORDERS\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 258,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(packedRightOrders.length > 0, \"DERR_EMPTY_PACKEDRIGHTORDERS\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 265,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(leftOrder.maker != rightOrder.maker, \"DERR_SAME_MAKER\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 266,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(rightOrder.direction == 1 - leftOrder.direction, \"DERR_SAME_DIRECTION\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 290,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(leftTrade.status == TradeStatus.OK, \"DERR_LEFT_TRADE_FAIL\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 321,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(orderGroup <= 0xFFFFFFFFFFFFFFFFFFFFFFFF, \"DERR_BAD_ORDERGROUP\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 333,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(finalPrice <= MAX_PRICE, \"DERR_BAD_FINALPRICE\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 340,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(graderQuorum > 0, \"DERR_ZERO_GRADER_QUORUM\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 341,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(sigs.length == graders.length, \"DERR_INVALID_NUM_SIGS\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 342,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(graderFee <= MAX_PRICE, \"DERR_INVALID_GRADERFEE\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 354,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                    require(signer == graders[i], \"DERR_BAD_GRADER_SIG\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 360,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(validated >= graderQuorum, \"DERR_INSUFFICIENT_GRADERS\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 375,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(m.finalized, \"DERR_MATCH_NOT_FINALIZED\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 386,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(!m.finalized, \"DERR_MATCH_IS_FINALIZED\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 387,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(recoveryTime < block.timestamp, \"DERR_TOO_SOON_TO_RECOVER\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 388,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(cancelPrice <= MAX_PRICE, \"DERR_INVALID_CANCELPRICE\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 427,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(IERC20Token(token).transfer(addr, uint(delta)), \"DERR_TOKEN_TRANSFER_FAIL\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 429,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(IERC20Token(token).transferFrom(addr, address(this), uint(-1 * delta)), \"DERR_TOKEN_TRANSFERFROM_FAIL\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 514,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(balance <= MAX_SANE_AMOUNT, \"DERR_BALANCE_INSANE\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 174,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(o.price > 0 && o.price < MAX_PRICE, \"DERR_INVALID_PRICE\");\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 231,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (expiry != 0 && block.timestamp >= expiry) {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 232,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            emit LogTradeError(msg.sender, address(0), matchId, token, 0, uint16(TradeStatus.TRADE_EXPIRED));\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 233,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            return;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 234,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        }\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-prefix-decrement-not-postfix",
+                    "vulnerability_from_line": 619,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                newLongPosition--;\n",
+                    "message": "Consider using the prefix decrement expression whenever the return value is not needed. The prefix decrement expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 240,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < packedOrders.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 262,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < packedRightOrders.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 351,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            for (uint i = 0; i < graders.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 356,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                    validated++;\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 467,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            for (i++; i < targets.length && (targets[i] & (1<<255)) == 0; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 467,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            for (i++; i < targets.length && (targets[i] & (1<<255)) == 0; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 500,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            for (uint j = 0; j < m.graders.length - 1; j++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 620,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                newShortPosition++;\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 622,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                t.longBalanceDelta++; // one left-over wei: arbitrarily give it to long\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_21"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "locked-ether",
+                    "vulnerability_from_line": 225,
+                    "vulnerability_to_line": 227,
+                    "vulnerability_code": "    function() external payable {\n\n        revert(\"DERR_UNKNOWN_METHOD\");\n",
+                    "message": "Contract locking ether found in Degens.sol:\n\tContract Degens has payable functions:\n\t - fallback (Degens.sol#225-227)\n\tBut does not have a function to withdraw the ether\n"
+                },
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 257,
+                    "vulnerability_to_line": 318,
+                    "vulnerability_code": "    function matchOrders(uint matchId, address token, uint[4] calldata packedLeftOrder, uint[4][] calldata packedRightOrders) external {\n\n        require(packedRightOrders.length > 0, \"DERR_EMPTY_PACKEDRIGHTORDERS\");\n\n\n\n        Order memory leftOrder = unpackOrder(matchId, token, packedLeftOrder);\n\n\n\n        for (uint i = 0; i < packedRightOrders.length; i++) {\n\n            Order memory rightOrder = unpackOrder(matchId, token, packedRightOrders[i]);\n\n\n\n            require(leftOrder.maker != rightOrder.maker, \"DERR_SAME_MAKER\");\n\n            require(rightOrder.direction == 1 - leftOrder.direction, \"DERR_SAME_DIRECTION\");\n\n\n\n\n\n            (uint leftMaxPosition, uint leftAmount) = computeMaxPosition(leftOrder);\n\n            (uint rightMaxPosition, uint rightAmount) = computeMaxPosition(rightOrder);\n\n\n\n            if (leftMaxPosition > rightMaxPosition) {\n\n                leftAmount = uint(priceDivide(int(rightMaxPosition), leftOrder.direction == 1 ? (MAX_PRICE - leftOrder.price) : leftOrder.price));\n\n            } else {\n\n                rightAmount = uint(priceDivide(int(leftMaxPosition), leftOrder.direction == 1 ? rightOrder.price : (MAX_PRICE - rightOrder.price)));\n\n            }\n\n\n\n\n\n            Trade memory rightTrade = tradeCore(rightAmount, rightOrder, true);\n\n\n\n            if (rightTrade.status != TradeStatus.OK) {\n\n                emit LogTradeError(msg.sender, rightOrder.maker, rightOrder.matchId, rightOrder.token, rightOrder.fillHash, uint16(rightTrade.status));\n\n                continue;\n\n            }\n\n\n\n            applyTradePositions(rightOrder, rightTrade);\n\n\n\n            Trade memory leftTrade = tradeCore(leftAmount, leftOrder, true);\n\n\n\n            require(leftTrade.status == TradeStatus.OK, \"DERR_LEFT_TRADE_FAIL\");\n\n\n\n            applyTradePositions(leftOrder, leftTrade);\n\n\n\n\n\n            int takerBalanceDelta = 0;\n\n\n\n            if (leftOrder.direction == 1) {\n\n                takerBalanceDelta = leftTrade.shortBalanceDelta + rightTrade.longBalanceDelta;\n\n                leftTrade.shortBalanceDelta = rightTrade.longBalanceDelta = 0;\n\n            } else {\n\n                takerBalanceDelta = leftTrade.longBalanceDelta + rightTrade.shortBalanceDelta;\n\n                leftTrade.longBalanceDelta = rightTrade.shortBalanceDelta = 0;\n\n            }\n\n\n\n\n\n            if (takerBalanceDelta < 0) adjustBalance(leftOrder.token, msg.sender, takerBalanceDelta);\n\n\n\n            if (leftTrade.shortBalanceDelta + leftTrade.longBalanceDelta < rightTrade.shortBalanceDelta + rightTrade.longBalanceDelta) {\n\n                applyTrade(leftOrder, leftTrade);\n\n                applyTrade(rightOrder, rightTrade);\n\n            } else {\n\n                applyTrade(rightOrder, rightTrade);\n\n                applyTrade(leftOrder, leftTrade);\n\n            }\n\n\n\n            if (takerBalanceDelta > 0) adjustBalance(leftOrder.token, msg.sender, takerBalanceDelta);\n\n        }\n",
+                    "message": "Reentrancy in Degens.matchOrders (Degens.sol#257-318):\n\tExternal calls:\n\t- (leftMaxPosition,leftAmount) = computeMaxPosition(leftOrder) (Degens.sol#269)\n\t- (rightMaxPosition,rightAmount) = computeMaxPosition(rightOrder) (Degens.sol#270)\n\t- rightTrade = tradeCore(rightAmount,rightOrder,true) (Degens.sol#279)\n\tState variables written after the call(s):\n\t- matches (Degens.sol#286)\n"
+                },
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 257,
+                    "vulnerability_to_line": 318,
+                    "vulnerability_code": "    function matchOrders(uint matchId, address token, uint[4] calldata packedLeftOrder, uint[4][] calldata packedRightOrders) external {\n\n        require(packedRightOrders.length > 0, \"DERR_EMPTY_PACKEDRIGHTORDERS\");\n\n\n\n        Order memory leftOrder = unpackOrder(matchId, token, packedLeftOrder);\n\n\n\n        for (uint i = 0; i < packedRightOrders.length; i++) {\n\n            Order memory rightOrder = unpackOrder(matchId, token, packedRightOrders[i]);\n\n\n\n            require(leftOrder.maker != rightOrder.maker, \"DERR_SAME_MAKER\");\n\n            require(rightOrder.direction == 1 - leftOrder.direction, \"DERR_SAME_DIRECTION\");\n\n\n\n\n\n            (uint leftMaxPosition, uint leftAmount) = computeMaxPosition(leftOrder);\n\n            (uint rightMaxPosition, uint rightAmount) = computeMaxPosition(rightOrder);\n\n\n\n            if (leftMaxPosition > rightMaxPosition) {\n\n                leftAmount = uint(priceDivide(int(rightMaxPosition), leftOrder.direction == 1 ? (MAX_PRICE - leftOrder.price) : leftOrder.price));\n\n            } else {\n\n                rightAmount = uint(priceDivide(int(leftMaxPosition), leftOrder.direction == 1 ? rightOrder.price : (MAX_PRICE - rightOrder.price)));\n\n            }\n\n\n\n\n\n            Trade memory rightTrade = tradeCore(rightAmount, rightOrder, true);\n\n\n\n            if (rightTrade.status != TradeStatus.OK) {\n\n                emit LogTradeError(msg.sender, rightOrder.maker, rightOrder.matchId, rightOrder.token, rightOrder.fillHash, uint16(rightTrade.status));\n\n                continue;\n\n            }\n\n\n\n            applyTradePositions(rightOrder, rightTrade);\n\n\n\n            Trade memory leftTrade = tradeCore(leftAmount, leftOrder, true);\n\n\n\n            require(leftTrade.status == TradeStatus.OK, \"DERR_LEFT_TRADE_FAIL\");\n\n\n\n            applyTradePositions(leftOrder, leftTrade);\n\n\n\n\n\n            int takerBalanceDelta = 0;\n\n\n\n            if (leftOrder.direction == 1) {\n\n                takerBalanceDelta = leftTrade.shortBalanceDelta + rightTrade.longBalanceDelta;\n\n                leftTrade.shortBalanceDelta = rightTrade.longBalanceDelta = 0;\n\n            } else {\n\n                takerBalanceDelta = leftTrade.longBalanceDelta + rightTrade.shortBalanceDelta;\n\n                leftTrade.longBalanceDelta = rightTrade.shortBalanceDelta = 0;\n\n            }\n\n\n\n\n\n            if (takerBalanceDelta < 0) adjustBalance(leftOrder.token, msg.sender, takerBalanceDelta);\n\n\n\n            if (leftTrade.shortBalanceDelta + leftTrade.longBalanceDelta < rightTrade.shortBalanceDelta + rightTrade.longBalanceDelta) {\n\n                applyTrade(leftOrder, leftTrade);\n\n                applyTrade(rightOrder, rightTrade);\n\n            } else {\n\n                applyTrade(rightOrder, rightTrade);\n\n                applyTrade(leftOrder, leftTrade);\n\n            }\n\n\n\n            if (takerBalanceDelta > 0) adjustBalance(leftOrder.token, msg.sender, takerBalanceDelta);\n\n        }\n",
+                    "message": "Reentrancy in Degens.matchOrders (Degens.sol#257-318):\n\tExternal calls:\n\t- (leftMaxPosition,leftAmount) = computeMaxPosition(leftOrder) (Degens.sol#269)\n\t- (rightMaxPosition,rightAmount) = computeMaxPosition(rightOrder) (Degens.sol#270)\n\t- rightTrade = tradeCore(rightAmount,rightOrder,true) (Degens.sol#279)\n\t- leftTrade = tradeCore(leftAmount,leftOrder,true) (Degens.sol#288)\n\tState variables written after the call(s):\n\t- matches (Degens.sol#292)\n"
+                },
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 257,
+                    "vulnerability_to_line": 318,
+                    "vulnerability_code": "    function matchOrders(uint matchId, address token, uint[4] calldata packedLeftOrder, uint[4][] calldata packedRightOrders) external {\n\n        require(packedRightOrders.length > 0, \"DERR_EMPTY_PACKEDRIGHTORDERS\");\n\n\n\n        Order memory leftOrder = unpackOrder(matchId, token, packedLeftOrder);\n\n\n\n        for (uint i = 0; i < packedRightOrders.length; i++) {\n\n            Order memory rightOrder = unpackOrder(matchId, token, packedRightOrders[i]);\n\n\n\n            require(leftOrder.maker != rightOrder.maker, \"DERR_SAME_MAKER\");\n\n            require(rightOrder.direction == 1 - leftOrder.direction, \"DERR_SAME_DIRECTION\");\n\n\n\n\n\n            (uint leftMaxPosition, uint leftAmount) = computeMaxPosition(leftOrder);\n\n            (uint rightMaxPosition, uint rightAmount) = computeMaxPosition(rightOrder);\n\n\n\n            if (leftMaxPosition > rightMaxPosition) {\n\n                leftAmount = uint(priceDivide(int(rightMaxPosition), leftOrder.direction == 1 ? (MAX_PRICE - leftOrder.price) : leftOrder.price));\n\n            } else {\n\n                rightAmount = uint(priceDivide(int(leftMaxPosition), leftOrder.direction == 1 ? rightOrder.price : (MAX_PRICE - rightOrder.price)));\n\n            }\n\n\n\n\n\n            Trade memory rightTrade = tradeCore(rightAmount, rightOrder, true);\n\n\n\n            if (rightTrade.status != TradeStatus.OK) {\n\n                emit LogTradeError(msg.sender, rightOrder.maker, rightOrder.matchId, rightOrder.token, rightOrder.fillHash, uint16(rightTrade.status));\n\n                continue;\n\n            }\n\n\n\n            applyTradePositions(rightOrder, rightTrade);\n\n\n\n            Trade memory leftTrade = tradeCore(leftAmount, leftOrder, true);\n\n\n\n            require(leftTrade.status == TradeStatus.OK, \"DERR_LEFT_TRADE_FAIL\");\n\n\n\n            applyTradePositions(leftOrder, leftTrade);\n\n\n\n\n\n            int takerBalanceDelta = 0;\n\n\n\n            if (leftOrder.direction == 1) {\n\n                takerBalanceDelta = leftTrade.shortBalanceDelta + rightTrade.longBalanceDelta;\n\n                leftTrade.shortBalanceDelta = rightTrade.longBalanceDelta = 0;\n\n            } else {\n\n                takerBalanceDelta = leftTrade.longBalanceDelta + rightTrade.shortBalanceDelta;\n\n                leftTrade.longBalanceDelta = rightTrade.shortBalanceDelta = 0;\n\n            }\n\n\n\n\n\n            if (takerBalanceDelta < 0) adjustBalance(leftOrder.token, msg.sender, takerBalanceDelta);\n\n\n\n            if (leftTrade.shortBalanceDelta + leftTrade.longBalanceDelta < rightTrade.shortBalanceDelta + rightTrade.longBalanceDelta) {\n\n                applyTrade(leftOrder, leftTrade);\n\n                applyTrade(rightOrder, rightTrade);\n\n            } else {\n\n                applyTrade(rightOrder, rightTrade);\n\n                applyTrade(leftOrder, leftTrade);\n\n            }\n\n\n\n            if (takerBalanceDelta > 0) adjustBalance(leftOrder.token, msg.sender, takerBalanceDelta);\n\n        }\n",
+                    "message": "Reentrancy in Degens.matchOrders (Degens.sol#257-318):\n\tExternal calls:\n\t- (leftMaxPosition,leftAmount) = computeMaxPosition(leftOrder) (Degens.sol#269)\n\t- (rightMaxPosition,rightAmount) = computeMaxPosition(rightOrder) (Degens.sol#270)\n\t- rightTrade = tradeCore(rightAmount,rightOrder,true) (Degens.sol#279)\n\t- leftTrade = tradeCore(leftAmount,leftOrder,true) (Degens.sol#288)\n\t- adjustBalance(leftOrder.token,msg.sender,takerBalanceDelta) (Degens.sol#306)\n\t- applyTrade(leftOrder,leftTrade) (Degens.sol#309)\n\tState variables written after the call(s):\n\t- filledAmounts (Degens.sol#309)\n"
+                },
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 257,
+                    "vulnerability_to_line": 318,
+                    "vulnerability_code": "    function matchOrders(uint matchId, address token, uint[4] calldata packedLeftOrder, uint[4][] calldata packedRightOrders) external {\n\n        require(packedRightOrders.length > 0, \"DERR_EMPTY_PACKEDRIGHTORDERS\");\n\n\n\n        Order memory leftOrder = unpackOrder(matchId, token, packedLeftOrder);\n\n\n\n        for (uint i = 0; i < packedRightOrders.length; i++) {\n\n            Order memory rightOrder = unpackOrder(matchId, token, packedRightOrders[i]);\n\n\n\n            require(leftOrder.maker != rightOrder.maker, \"DERR_SAME_MAKER\");\n\n            require(rightOrder.direction == 1 - leftOrder.direction, \"DERR_SAME_DIRECTION\");\n\n\n\n\n\n            (uint leftMaxPosition, uint leftAmount) = computeMaxPosition(leftOrder);\n\n            (uint rightMaxPosition, uint rightAmount) = computeMaxPosition(rightOrder);\n\n\n\n            if (leftMaxPosition > rightMaxPosition) {\n\n                leftAmount = uint(priceDivide(int(rightMaxPosition), leftOrder.direction == 1 ? (MAX_PRICE - leftOrder.price) : leftOrder.price));\n\n            } else {\n\n                rightAmount = uint(priceDivide(int(leftMaxPosition), leftOrder.direction == 1 ? rightOrder.price : (MAX_PRICE - rightOrder.price)));\n\n            }\n\n\n\n\n\n            Trade memory rightTrade = tradeCore(rightAmount, rightOrder, true);\n\n\n\n            if (rightTrade.status != TradeStatus.OK) {\n\n                emit LogTradeError(msg.sender, rightOrder.maker, rightOrder.matchId, rightOrder.token, rightOrder.fillHash, uint16(rightTrade.status));\n\n                continue;\n\n            }\n\n\n\n            applyTradePositions(rightOrder, rightTrade);\n\n\n\n            Trade memory leftTrade = tradeCore(leftAmount, leftOrder, true);\n\n\n\n            require(leftTrade.status == TradeStatus.OK, \"DERR_LEFT_TRADE_FAIL\");\n\n\n\n            applyTradePositions(leftOrder, leftTrade);\n\n\n\n\n\n            int takerBalanceDelta = 0;\n\n\n\n            if (leftOrder.direction == 1) {\n\n                takerBalanceDelta = leftTrade.shortBalanceDelta + rightTrade.longBalanceDelta;\n\n                leftTrade.shortBalanceDelta = rightTrade.longBalanceDelta = 0;\n\n            } else {\n\n                takerBalanceDelta = leftTrade.longBalanceDelta + rightTrade.shortBalanceDelta;\n\n                leftTrade.longBalanceDelta = rightTrade.shortBalanceDelta = 0;\n\n            }\n\n\n\n\n\n            if (takerBalanceDelta < 0) adjustBalance(leftOrder.token, msg.sender, takerBalanceDelta);\n\n\n\n            if (leftTrade.shortBalanceDelta + leftTrade.longBalanceDelta < rightTrade.shortBalanceDelta + rightTrade.longBalanceDelta) {\n\n                applyTrade(leftOrder, leftTrade);\n\n                applyTrade(rightOrder, rightTrade);\n\n            } else {\n\n                applyTrade(rightOrder, rightTrade);\n\n                applyTrade(leftOrder, leftTrade);\n\n            }\n\n\n\n            if (takerBalanceDelta > 0) adjustBalance(leftOrder.token, msg.sender, takerBalanceDelta);\n\n        }\n",
+                    "message": "Reentrancy in Degens.matchOrders (Degens.sol#257-318):\n\tExternal calls:\n\t- (leftMaxPosition,leftAmount) = computeMaxPosition(leftOrder) (Degens.sol#269)\n\t- (rightMaxPosition,rightAmount) = computeMaxPosition(rightOrder) (Degens.sol#270)\n\t- rightTrade = tradeCore(rightAmount,rightOrder,true) (Degens.sol#279)\n\t- leftTrade = tradeCore(leftAmount,leftOrder,true) (Degens.sol#288)\n\t- adjustBalance(leftOrder.token,msg.sender,takerBalanceDelta) (Degens.sol#306)\n\t- applyTrade(leftOrder,leftTrade) (Degens.sol#309)\n\t- applyTrade(rightOrder,rightTrade) (Degens.sol#310)\n\tState variables written after the call(s):\n\t- filledAmounts (Degens.sol#310)\n"
+                },
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 257,
+                    "vulnerability_to_line": 318,
+                    "vulnerability_code": "    function matchOrders(uint matchId, address token, uint[4] calldata packedLeftOrder, uint[4][] calldata packedRightOrders) external {\n\n        require(packedRightOrders.length > 0, \"DERR_EMPTY_PACKEDRIGHTORDERS\");\n\n\n\n        Order memory leftOrder = unpackOrder(matchId, token, packedLeftOrder);\n\n\n\n        for (uint i = 0; i < packedRightOrders.length; i++) {\n\n            Order memory rightOrder = unpackOrder(matchId, token, packedRightOrders[i]);\n\n\n\n            require(leftOrder.maker != rightOrder.maker, \"DERR_SAME_MAKER\");\n\n            require(rightOrder.direction == 1 - leftOrder.direction, \"DERR_SAME_DIRECTION\");\n\n\n\n\n\n            (uint leftMaxPosition, uint leftAmount) = computeMaxPosition(leftOrder);\n\n            (uint rightMaxPosition, uint rightAmount) = computeMaxPosition(rightOrder);\n\n\n\n            if (leftMaxPosition > rightMaxPosition) {\n\n                leftAmount = uint(priceDivide(int(rightMaxPosition), leftOrder.direction == 1 ? (MAX_PRICE - leftOrder.price) : leftOrder.price));\n\n            } else {\n\n                rightAmount = uint(priceDivide(int(leftMaxPosition), leftOrder.direction == 1 ? rightOrder.price : (MAX_PRICE - rightOrder.price)));\n\n            }\n\n\n\n\n\n            Trade memory rightTrade = tradeCore(rightAmount, rightOrder, true);\n\n\n\n            if (rightTrade.status != TradeStatus.OK) {\n\n                emit LogTradeError(msg.sender, rightOrder.maker, rightOrder.matchId, rightOrder.token, rightOrder.fillHash, uint16(rightTrade.status));\n\n                continue;\n\n            }\n\n\n\n            applyTradePositions(rightOrder, rightTrade);\n\n\n\n            Trade memory leftTrade = tradeCore(leftAmount, leftOrder, true);\n\n\n\n            require(leftTrade.status == TradeStatus.OK, \"DERR_LEFT_TRADE_FAIL\");\n\n\n\n            applyTradePositions(leftOrder, leftTrade);\n\n\n\n\n\n            int takerBalanceDelta = 0;\n\n\n\n            if (leftOrder.direction == 1) {\n\n                takerBalanceDelta = leftTrade.shortBalanceDelta + rightTrade.longBalanceDelta;\n\n                leftTrade.shortBalanceDelta = rightTrade.longBalanceDelta = 0;\n\n            } else {\n\n                takerBalanceDelta = leftTrade.longBalanceDelta + rightTrade.shortBalanceDelta;\n\n                leftTrade.longBalanceDelta = rightTrade.shortBalanceDelta = 0;\n\n            }\n\n\n\n\n\n            if (takerBalanceDelta < 0) adjustBalance(leftOrder.token, msg.sender, takerBalanceDelta);\n\n\n\n            if (leftTrade.shortBalanceDelta + leftTrade.longBalanceDelta < rightTrade.shortBalanceDelta + rightTrade.longBalanceDelta) {\n\n                applyTrade(leftOrder, leftTrade);\n\n                applyTrade(rightOrder, rightTrade);\n\n            } else {\n\n                applyTrade(rightOrder, rightTrade);\n\n                applyTrade(leftOrder, leftTrade);\n\n            }\n\n\n\n            if (takerBalanceDelta > 0) adjustBalance(leftOrder.token, msg.sender, takerBalanceDelta);\n\n        }\n",
+                    "message": "Reentrancy in Degens.matchOrders (Degens.sol#257-318):\n\tExternal calls:\n\t- (leftMaxPosition,leftAmount) = computeMaxPosition(leftOrder) (Degens.sol#269)\n\t- (rightMaxPosition,rightAmount) = computeMaxPosition(rightOrder) (Degens.sol#270)\n\t- rightTrade = tradeCore(rightAmount,rightOrder,true) (Degens.sol#279)\n\t- leftTrade = tradeCore(leftAmount,leftOrder,true) (Degens.sol#288)\n\t- adjustBalance(leftOrder.token,msg.sender,takerBalanceDelta) (Degens.sol#306)\n\t- applyTrade(rightOrder,rightTrade) (Degens.sol#312)\n\tState variables written after the call(s):\n\t- filledAmounts (Degens.sol#312)\n"
+                },
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 257,
+                    "vulnerability_to_line": 318,
+                    "vulnerability_code": "    function matchOrders(uint matchId, address token, uint[4] calldata packedLeftOrder, uint[4][] calldata packedRightOrders) external {\n\n        require(packedRightOrders.length > 0, \"DERR_EMPTY_PACKEDRIGHTORDERS\");\n\n\n\n        Order memory leftOrder = unpackOrder(matchId, token, packedLeftOrder);\n\n\n\n        for (uint i = 0; i < packedRightOrders.length; i++) {\n\n            Order memory rightOrder = unpackOrder(matchId, token, packedRightOrders[i]);\n\n\n\n            require(leftOrder.maker != rightOrder.maker, \"DERR_SAME_MAKER\");\n\n            require(rightOrder.direction == 1 - leftOrder.direction, \"DERR_SAME_DIRECTION\");\n\n\n\n\n\n            (uint leftMaxPosition, uint leftAmount) = computeMaxPosition(leftOrder);\n\n            (uint rightMaxPosition, uint rightAmount) = computeMaxPosition(rightOrder);\n\n\n\n            if (leftMaxPosition > rightMaxPosition) {\n\n                leftAmount = uint(priceDivide(int(rightMaxPosition), leftOrder.direction == 1 ? (MAX_PRICE - leftOrder.price) : leftOrder.price));\n\n            } else {\n\n                rightAmount = uint(priceDivide(int(leftMaxPosition), leftOrder.direction == 1 ? rightOrder.price : (MAX_PRICE - rightOrder.price)));\n\n            }\n\n\n\n\n\n            Trade memory rightTrade = tradeCore(rightAmount, rightOrder, true);\n\n\n\n            if (rightTrade.status != TradeStatus.OK) {\n\n                emit LogTradeError(msg.sender, rightOrder.maker, rightOrder.matchId, rightOrder.token, rightOrder.fillHash, uint16(rightTrade.status));\n\n                continue;\n\n            }\n\n\n\n            applyTradePositions(rightOrder, rightTrade);\n\n\n\n            Trade memory leftTrade = tradeCore(leftAmount, leftOrder, true);\n\n\n\n            require(leftTrade.status == TradeStatus.OK, \"DERR_LEFT_TRADE_FAIL\");\n\n\n\n            applyTradePositions(leftOrder, leftTrade);\n\n\n\n\n\n            int takerBalanceDelta = 0;\n\n\n\n            if (leftOrder.direction == 1) {\n\n                takerBalanceDelta = leftTrade.shortBalanceDelta + rightTrade.longBalanceDelta;\n\n                leftTrade.shortBalanceDelta = rightTrade.longBalanceDelta = 0;\n\n            } else {\n\n                takerBalanceDelta = leftTrade.longBalanceDelta + rightTrade.shortBalanceDelta;\n\n                leftTrade.longBalanceDelta = rightTrade.shortBalanceDelta = 0;\n\n            }\n\n\n\n\n\n            if (takerBalanceDelta < 0) adjustBalance(leftOrder.token, msg.sender, takerBalanceDelta);\n\n\n\n            if (leftTrade.shortBalanceDelta + leftTrade.longBalanceDelta < rightTrade.shortBalanceDelta + rightTrade.longBalanceDelta) {\n\n                applyTrade(leftOrder, leftTrade);\n\n                applyTrade(rightOrder, rightTrade);\n\n            } else {\n\n                applyTrade(rightOrder, rightTrade);\n\n                applyTrade(leftOrder, leftTrade);\n\n            }\n\n\n\n            if (takerBalanceDelta > 0) adjustBalance(leftOrder.token, msg.sender, takerBalanceDelta);\n\n        }\n",
+                    "message": "Reentrancy in Degens.matchOrders (Degens.sol#257-318):\n\tExternal calls:\n\t- (leftMaxPosition,leftAmount) = computeMaxPosition(leftOrder) (Degens.sol#269)\n\t- (rightMaxPosition,rightAmount) = computeMaxPosition(rightOrder) (Degens.sol#270)\n\t- rightTrade = tradeCore(rightAmount,rightOrder,true) (Degens.sol#279)\n\t- leftTrade = tradeCore(leftAmount,leftOrder,true) (Degens.sol#288)\n\t- adjustBalance(leftOrder.token,msg.sender,takerBalanceDelta) (Degens.sol#306)\n\t- applyTrade(rightOrder,rightTrade) (Degens.sol#312)\n\t- applyTrade(leftOrder,leftTrade) (Degens.sol#313)\n\tState variables written after the call(s):\n\t- filledAmounts (Degens.sol#313)\n"
+                },
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 229,
+                    "vulnerability_to_line": 255,
+                    "vulnerability_code": "    function trade(uint amount, uint expiry, uint matchId, address token, uint[4][] calldata packedOrders) external {\n\n        //SWC-Block values as a proxy for time: L229\n\n        if (expiry != 0 && block.timestamp >= expiry) {\n\n            emit LogTradeError(msg.sender, address(0), matchId, token, 0, uint16(TradeStatus.TRADE_EXPIRED));\n\n            return;\n\n        }\n\n\n\n        require(packedOrders.length > 0, \"DERR_EMPTY_PACKEDORDERS\");\n\n\n\n        uint amountRemaining = amount;\n\n\n\n        for (uint i = 0; i < packedOrders.length; i++) {\n\n            Order memory o = unpackOrder(matchId, token, packedOrders[i]);\n\n\n\n            Trade memory t = tradeCore(amountRemaining, o, false);\n\n\n\n            if (t.status == TradeStatus.OK) {\n\n                applyTradePositions(o, t);\n\n                applyTrade(o, t);\n\n                amountRemaining = safeSub(amountRemaining, t.takerAmount);\n\n            } else {\n\n                emit LogTradeError(msg.sender, o.maker, o.matchId, o.token, o.fillHash, uint16(t.status));\n\n            }\n\n\n\n            if (amountRemaining < MIN_SANE_AMOUNT) break;\n\n        }\n",
+                    "message": "Reentrancy in Degens.trade (Degens.sol#229-255):\n\tExternal calls:\n\t- t = tradeCore(amountRemaining,o,false) (Degens.sol#243)\n\tState variables written after the call(s):\n\t- matches (Degens.sol#246)\n"
+                },
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 229,
+                    "vulnerability_to_line": 255,
+                    "vulnerability_code": "    function trade(uint amount, uint expiry, uint matchId, address token, uint[4][] calldata packedOrders) external {\n\n        //SWC-Block values as a proxy for time: L229\n\n        if (expiry != 0 && block.timestamp >= expiry) {\n\n            emit LogTradeError(msg.sender, address(0), matchId, token, 0, uint16(TradeStatus.TRADE_EXPIRED));\n\n            return;\n\n        }\n\n\n\n        require(packedOrders.length > 0, \"DERR_EMPTY_PACKEDORDERS\");\n\n\n\n        uint amountRemaining = amount;\n\n\n\n        for (uint i = 0; i < packedOrders.length; i++) {\n\n            Order memory o = unpackOrder(matchId, token, packedOrders[i]);\n\n\n\n            Trade memory t = tradeCore(amountRemaining, o, false);\n\n\n\n            if (t.status == TradeStatus.OK) {\n\n                applyTradePositions(o, t);\n\n                applyTrade(o, t);\n\n                amountRemaining = safeSub(amountRemaining, t.takerAmount);\n\n            } else {\n\n                emit LogTradeError(msg.sender, o.maker, o.matchId, o.token, o.fillHash, uint16(t.status));\n\n            }\n\n\n\n            if (amountRemaining < MIN_SANE_AMOUNT) break;\n\n        }\n",
+                    "message": "Reentrancy in Degens.trade (Degens.sol#229-255):\n\tExternal calls:\n\t- t = tradeCore(amountRemaining,o,false) (Degens.sol#243)\n\t- applyTrade(o,t) (Degens.sol#247)\n\tState variables written after the call(s):\n\t- filledAmounts (Degens.sol#247)\n"
+                },
+                {
+                    "name": "uninitialized-local",
+                    "vulnerability_from_line": 669,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            (uint longAmount, uint shortAmount) = computePriceWeightedAmounts(MAX_SANE_AMOUNT, getOrderAmount(o), o.price);\n",
+                    "message": "longAmount_scope_1 in Degens.computeMaxPosition (Degens.sol#669) is a local variable never initialiazed\n"
+                },
+                {
+                    "name": "uninitialized-local",
+                    "vulnerability_from_line": 669,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            (uint longAmount, uint shortAmount) = computePriceWeightedAmounts(MAX_SANE_AMOUNT, getOrderAmount(o), o.price);\n",
+                    "message": "shortAmount_scope_2 in Degens.computeMaxPosition (Degens.sol#669) is a local variable never initialiazed\n"
+                },
+                {
+                    "name": "reentrancy-benign",
+                    "vulnerability_from_line": 433,
+                    "vulnerability_to_line": 447,
+                    "vulnerability_code": "    function applyTrade(Order memory o, Trade memory t) private {\n\n        assert(t.status == TradeStatus.OK);\n\n\n\n        if (t.longBalanceDelta < t.shortBalanceDelta) {\n\n            adjustBalance(o.token, t.longAddr, t.longBalanceDelta);\n\n            adjustBalance(o.token, t.shortAddr, t.shortBalanceDelta);\n\n        } else {\n\n            adjustBalance(o.token, t.shortAddr, t.shortBalanceDelta);\n\n            adjustBalance(o.token, t.longAddr, t.longBalanceDelta);\n\n        }\n\n\n\n        filledAmounts[o.fillHash] += (o.direction == 0 ? t.shortAmount : t.longAmount);\n\n\n\n        emit LogTrade(msg.sender, o.maker, o.matchId, o.token, o.fillHash, o.direction, o.price, t.longAmount, t.newLongPosition, t.shortAmount, t.newShortPosition, t.longBalanceDelta, t.shortBalanceDelta);\n",
+                    "message": "Reentrancy in Degens.applyTrade (Degens.sol#433-447):\n\tExternal calls:\n\t- adjustBalance(o.token,t.longAddr,t.longBalanceDelta) (Degens.sol#437)\n\t- adjustBalance(o.token,t.shortAddr,t.shortBalanceDelta) (Degens.sol#438)\n\t- adjustBalance(o.token,t.shortAddr,t.shortBalanceDelta) (Degens.sol#440)\n\t- adjustBalance(o.token,t.longAddr,t.longBalanceDelta) (Degens.sol#441)\n\tState variables written after the call(s):\n\t- filledAmounts (Degens.sol#444)\n\t- filledAmounts (Degens.sol#444)\n"
+                },
+                {
+                    "name": "timestamp",
+                    "vulnerability_from_line": 229,
+                    "vulnerability_to_line": 255,
+                    "vulnerability_code": "    function trade(uint amount, uint expiry, uint matchId, address token, uint[4][] calldata packedOrders) external {\n\n        //SWC-Block values as a proxy for time: L229\n\n        if (expiry != 0 && block.timestamp >= expiry) {\n\n            emit LogTradeError(msg.sender, address(0), matchId, token, 0, uint16(TradeStatus.TRADE_EXPIRED));\n\n            return;\n\n        }\n\n\n\n        require(packedOrders.length > 0, \"DERR_EMPTY_PACKEDORDERS\");\n\n\n\n        uint amountRemaining = amount;\n\n\n\n        for (uint i = 0; i < packedOrders.length; i++) {\n\n            Order memory o = unpackOrder(matchId, token, packedOrders[i]);\n\n\n\n            Trade memory t = tradeCore(amountRemaining, o, false);\n\n\n\n            if (t.status == TradeStatus.OK) {\n\n                applyTradePositions(o, t);\n\n                applyTrade(o, t);\n\n                amountRemaining = safeSub(amountRemaining, t.takerAmount);\n\n            } else {\n\n                emit LogTradeError(msg.sender, o.maker, o.matchId, o.token, o.fillHash, uint16(t.status));\n\n            }\n\n\n\n            if (amountRemaining < MIN_SANE_AMOUNT) break;\n\n        }\n",
+                    "message": "Degens.trade (Degens.sol#229-255) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- expiry != 0 && block.timestamp >= expiry (Degens.sol#231-234)\n"
+                },
+                {
+                    "name": "timestamp",
+                    "vulnerability_from_line": 380,
+                    "vulnerability_to_line": 395,
+                    "vulnerability_code": "    function recoverFunds(uint256 detailsHash, uint256 recoveryTime, uint256 cancelPrice, uint256 graderQuorum, uint256 graderFee, address[] calldata graders) external {\n\n        bytes32 witness = keccak256(abi.encodePacked(detailsHash, recoveryTime, cancelPrice));\n\n        uint matchId = uint(keccak256(abi.encodePacked(witness, graderQuorum, graderFee, graders)));\n\n\n\n        Match storage m = matches[matchId];\n\n\n\n        require(!m.finalized, \"DERR_MATCH_IS_FINALIZED\");\n\n        require(recoveryTime < block.timestamp, \"DERR_TOO_SOON_TO_RECOVER\");\n\n        require(cancelPrice <= MAX_PRICE, \"DERR_INVALID_CANCELPRICE\");\n\n\n\n        m.finalized = true;\n\n        m.finalPrice = uint32(cancelPrice);\n\n        m.graderFee = 0;\n\n\n\n        emit LogFinalizeMatch(matchId, uint32(cancelPrice));\n",
+                    "message": "Degens.recoverFunds (Degens.sol#380-395) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- require(bool,string)(recoveryTime < block.timestamp,DERR_TOO_SOON_TO_RECOVER) (Degens.sol#387)\n"
+                },
+                {
+                    "name": "timestamp",
+                    "vulnerability_from_line": 519,
+                    "vulnerability_to_line": 647,
+                    "vulnerability_code": "    function tradeCore(uint amount, Order memory o, bool takerUnlimitedBalance) private view returns(Trade memory t) {\n\n        t.status = TradeStatus.INVALID;\n\n\n\n        if (block.timestamp >= o.expiry) {\n\n            t.status = TradeStatus.ORDER_EXPIRED;\n\n            return t;\n\n        }\n\n\n\n        uint orderFilledAmount = filledAmounts[o.fillHash];\n\n\n\n        if (cancelTimestamps[o.maker] >= o.timestamp || orderFilledAmount == uint(-1)) {\n\n            t.status = TradeStatus.ORDER_CANCELLED;\n\n            return t;\n\n        }\n\n\n\n        if (msg.sender == o.maker) {\n\n            t.status = TradeStatus.SELF_TRADE;\n\n            return t;\n\n        }\n\n\n\n        if (amount > MAX_SANE_AMOUNT) {\n\n            t.status = TradeStatus.AMOUNT_MALFORMED;\n\n            return t;\n\n        }\n\n\n\n        Match storage m = matches[o.matchId];\n\n\n\n        if (m.finalized) {\n\n            t.status = TradeStatus.MATCH_FINALIZED;\n\n            return t;\n\n        }\n\n\n\n\n\n        uint longAmount;\n\n        uint shortAmount;\n\n        uint longBalance;\n\n        uint shortBalance;\n\n\n\n        if (o.direction == 0) {\n\n            // maker short, taker long\n\n            t.longAddr = msg.sender;\n\n            longAmount = amount;\n\n\n\n            t.shortAddr = o.maker;\n\n            shortAmount = safeSub(o.amount, orderFilledAmount);\n\n\n\n            longBalance = takerUnlimitedBalance ? MAX_SANE_AMOUNT : lookupBalance(o.token, t.longAddr);\n\n            shortBalance = lookupBalance(o.token, t.shortAddr);\n\n        } else {\n\n            // maker long, taker short\n\n            t.longAddr = o.maker;\n\n            longAmount = safeSub(o.amount, orderFilledAmount);\n\n\n\n            t.shortAddr = msg.sender;\n\n            shortAmount = amount;\n\n\n\n            longBalance = lookupBalance(o.token, t.longAddr);\n\n            shortBalance = takerUnlimitedBalance ? MAX_SANE_AMOUNT : lookupBalance(o.token, t.shortAddr);\n\n        }\n\n\n\n        int oldLongPosition = m.positions[t.longAddr][o.token];\n\n        int oldShortPosition = m.positions[t.shortAddr][o.token];\n\n\n\n        longAmount = minu256(longAmount, computeEffectiveBalance(longBalance, oldLongPosition, o.price, true));\n\n        shortAmount = minu256(shortAmount, computeEffectiveBalance(shortBalance, oldShortPosition, o.price, false));\n\n\n\n        if (longAmount < MIN_SANE_AMOUNT) {\n\n            t.status = o.direction == 0 ? TradeStatus.TAKER_NO_BALANCE : TradeStatus.ORDER_NO_BALANCE;\n\n            return t;\n\n        }\n\n\n\n        if (shortAmount < MIN_SANE_AMOUNT) {\n\n            t.status = o.direction == 0 ? TradeStatus.ORDER_NO_BALANCE : TradeStatus.TAKER_NO_BALANCE;\n\n            return t;\n\n        }\n\n\n\n        (longAmount, shortAmount) = computePriceWeightedAmounts(longAmount, shortAmount, o.price);\n\n\n\n        if (longAmount < MIN_SANE_AMOUNT || shortAmount < MIN_SANE_AMOUNT) {\n\n            t.status = TradeStatus.TRADE_TOO_SMALL;\n\n            return t;\n\n        }\n\n\n\n        int newLongPosition = oldLongPosition + (int(longAmount) + int(shortAmount));\n\n        int newShortPosition = oldShortPosition - (int(longAmount) + int(shortAmount));\n\n\n\n\n\n        t.longBalanceDelta = 0;\n\n        t.shortBalanceDelta = 0;\n\n\n\n        if (oldLongPosition < 0) t.longBalanceDelta += priceDivide(-oldLongPosition + min256(0, newLongPosition), MAX_PRICE - o.price);\n\n        if (newLongPosition > 0) t.longBalanceDelta -= priceDivide(newLongPosition - max256(0, oldLongPosition), o.price);\n\n\n\n        if (oldShortPosition > 0) t.shortBalanceDelta += priceDivide(oldShortPosition - max256(0, newShortPosition), o.price);\n\n        if (newShortPosition < 0) t.shortBalanceDelta -= priceDivide(-newShortPosition + min256(0, oldShortPosition), MAX_PRICE - o.price);\n\n\n\n        int exposureDelta = computeExposureDelta(t.longBalanceDelta, t.shortBalanceDelta, oldLongPosition, newLongPosition, oldShortPosition, newShortPosition);\n\n\n\n        if (exposureDelta != 0) {\n\n            if (exposureDelta == 1) {\n\n                newLongPosition--;\n\n                newShortPosition++;\n\n            } else if (exposureDelta == -1) {\n\n                t.longBalanceDelta++; // one left-over wei: arbitrarily give it to long\n\n            } else {\n\n                assert(false);\n\n            }\n\n\n\n            exposureDelta = computeExposureDelta(t.longBalanceDelta, t.shortBalanceDelta, oldLongPosition, newLongPosition, oldShortPosition, newShortPosition);\n\n            assert(exposureDelta == 0);\n\n        }\n\n\n\n\n\n        t.status = TradeStatus.OK;\n\n        t.newLongPosition = newLongPosition;\n\n        t.newShortPosition = newShortPosition;\n\n        t.shortAmount = shortAmount;\n\n        t.longAmount = longAmount;\n\n\n\n        if (o.direction == 0) {\n\n            t.takerAmount = t.longAmount;\n\n            t.makerAmount = t.shortAmount;\n\n        } else {\n\n            t.takerAmount = t.shortAmount;\n\n            t.makerAmount = t.longAmount;\n\n        }\n\n\n\n        return t;\n",
+                    "message": "Degens.tradeCore (Degens.sol#519-647) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- cancelTimestamps[o.maker] >= o.timestamp || orderFilledAmount == uint256(- 1) (Degens.sol#529-532)\n\t- block.timestamp >= o.expiry (Degens.sol#522-525)\n"
+                },
+                {
+                    "name": "timestamp",
+                    "vulnerability_from_line": 649,
+                    "vulnerability_to_line": 661,
+                    "vulnerability_code": "    function getOrderAmount(Order memory o) private view returns(uint) {\n\n        if (block.timestamp >= o.expiry || cancelTimestamps[o.maker] >= o.timestamp) return 0;\n\n\n\n        uint filled = filledAmounts[o.fillHash];\n\n        if (filled == uint(-1)) return 0;\n\n\n\n        Match storage m = matches[o.matchId];\n\n\n\n        uint amount = safeSub(o.amount, filled);\n\n        int position = m.positions[o.maker][o.token];\n\n\n\n        return minu256(amount, computeEffectiveBalance(lookupBalance(o.token, o.maker), position, o.price, o.direction == 1));\n",
+                    "message": "Degens.getOrderAmount (Degens.sol#649-661) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- block.timestamp >= o.expiry || cancelTimestamps[o.maker] >= o.timestamp (Degens.sol#650)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOf(address tokenOwner) public view returns (uint balance);\n",
+                    "message": "IERC20Token.balanceOf (Degens.sol#8) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allowance(address tokenOwner, address spender) public view returns (uint remaining);\n",
+                    "message": "IERC20Token.allowance (Degens.sol#9) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address to, uint tokens) public returns (bool success);\n",
+                    "message": "IERC20Token.transfer (Degens.sol#10) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address from, address to, uint tokens) public returns (bool success);\n",
+                    "message": "IERC20Token.transferFrom (Degens.sol#11) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.10;\n",
+                    "message": "Detected issues with version pragma in Degens.sol:\n\t- pragma solidity^0.5.10 (Degens.sol#5): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address(0xcf37ae5ee9d0E686c1fC586E32BC5a806A9029A5) // set at deployment\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        o.taker = packed[0] & (0x01 << (11*8)) == 0 ? address(0) : msg.sender;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        o.price = uint32(packed[1] >> uint32((12*8)) & 0xFFFFFFFF);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        o.direction = uint8((packed[0] >> (10*8)) & 0xFF);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 135,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        o.expiry = (packed[0] >> (5*8)) & 0xFFFFFFFFFF;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 136,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        o.timestamp = packed[0] & 0xFFFFFFFFFF;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 137,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        o.orderGroup = packed[1] & 0xFFFFFFFFFFFFFFFFFFFFFFFF;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 170,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if ((packed[0] & (0x02 << (11*8))) != 0) signatureHash = keccak256(abi.encodePacked(\"\\x19Ethereum Signed Message:\\n32\", signatureHash));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        o.taker = packed[0] & (0x01 << (11*8)) == 0 ? address(0) : msg.sender;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 183,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        o.taker = address(0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 240,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < packedOrders.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 240,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < packedOrders.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Degens {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.10;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint private constant MAX_SANE_AMOUNT = (2**128) - 1;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint private constant MIN_SANE_AMOUNT = 2;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint private constant MAX_PRICE = 1000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes32 private constant EIP712_DOMAIN = keccak256(abi.encode(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(uint => Match) private matches;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 93,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(uint => uint) private filledAmounts;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 94,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(address => uint) private cancelTimestamps;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 114,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes32 private constant EIP712_ORDER_SCHEMA_HASH = keccak256(abi.encodePacked(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REDUNDANT_FALLBACK_REJECT",
+                    "vulnerability_from_line": 225,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function() external payable {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 257,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function matchOrders(uint matchId, address token, uint[4] calldata packedLeftOrder, uint[4][] calldata packedRightOrders) external {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 257,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function matchOrders(uint matchId, address token, uint[4] calldata packedLeftOrder, uint[4][] calldata packedRightOrders) external {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 257,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function matchOrders(uint matchId, address token, uint[4] calldata packedLeftOrder, uint[4][] calldata packedRightOrders) external {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 258,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(packedRightOrders.length > 0, \"DERR_EMPTY_PACKEDRIGHTORDERS\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 260,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        Order memory leftOrder = unpackOrder(matchId, token, packedLeftOrder);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 260,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        Order memory leftOrder = unpackOrder(matchId, token, packedLeftOrder);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 260,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        Order memory leftOrder = unpackOrder(matchId, token, packedLeftOrder);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 262,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < packedRightOrders.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 262,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < packedRightOrders.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 262,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < packedRightOrders.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 263,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            Order memory rightOrder = unpackOrder(matchId, token, packedRightOrders[i]);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 265,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(leftOrder.maker != rightOrder.maker, \"DERR_SAME_MAKER\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 265,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(leftOrder.maker != rightOrder.maker, \"DERR_SAME_MAKER\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 265,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(leftOrder.maker != rightOrder.maker, \"DERR_SAME_MAKER\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 266,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(rightOrder.direction == 1 - leftOrder.direction, \"DERR_SAME_DIRECTION\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 266,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(rightOrder.direction == 1 - leftOrder.direction, \"DERR_SAME_DIRECTION\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 266,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(rightOrder.direction == 1 - leftOrder.direction, \"DERR_SAME_DIRECTION\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 269,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            (uint leftMaxPosition, uint leftAmount) = computeMaxPosition(leftOrder);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 269,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            (uint leftMaxPosition, uint leftAmount) = computeMaxPosition(leftOrder);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 270,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            (uint rightMaxPosition, uint rightAmount) = computeMaxPosition(rightOrder);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 270,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            (uint rightMaxPosition, uint rightAmount) = computeMaxPosition(rightOrder);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 272,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            if (leftMaxPosition > rightMaxPosition) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 273,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                leftAmount = uint(priceDivide(int(rightMaxPosition), leftOrder.direction == 1 ? (MAX_PRICE - leftOrder.price) : leftOrder.price));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 273,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                leftAmount = uint(priceDivide(int(rightMaxPosition), leftOrder.direction == 1 ? (MAX_PRICE - leftOrder.price) : leftOrder.price));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 273,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                leftAmount = uint(priceDivide(int(rightMaxPosition), leftOrder.direction == 1 ? (MAX_PRICE - leftOrder.price) : leftOrder.price));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 273,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                leftAmount = uint(priceDivide(int(rightMaxPosition), leftOrder.direction == 1 ? (MAX_PRICE - leftOrder.price) : leftOrder.price));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 273,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                leftAmount = uint(priceDivide(int(rightMaxPosition), leftOrder.direction == 1 ? (MAX_PRICE - leftOrder.price) : leftOrder.price));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 273,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                leftAmount = uint(priceDivide(int(rightMaxPosition), leftOrder.direction == 1 ? (MAX_PRICE - leftOrder.price) : leftOrder.price));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 273,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                leftAmount = uint(priceDivide(int(rightMaxPosition), leftOrder.direction == 1 ? (MAX_PRICE - leftOrder.price) : leftOrder.price));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 273,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                leftAmount = uint(priceDivide(int(rightMaxPosition), leftOrder.direction == 1 ? (MAX_PRICE - leftOrder.price) : leftOrder.price));\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "degens-contract-a777d578f9354de257a26e9cb0b3c6d92ea7f8e7/contracts/QueryDegens.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < orders.length; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < accounts.length; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            for (uint j = 0; j < tokens.length; j++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < orders.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < accounts.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            for (uint j = 0; j < tokens.length; j++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < orders.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < accounts.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            for (uint j = 0; j < tokens.length; j++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_10"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "calls-loop",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            (available[i], filled[i]) = degens.testOrder(orders[i]);\n",
+                    "message": "QueryDegens.testOrderBatch has external calls inside a loop:\n\t- (available[i],filled[i]) = degens.testOrder(orders[i]) (QueryDegens.sol#24)\n"
+                },
+                {
+                    "name": "calls-loop",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                output[curr++] = IERC20Token(tokens[j]).balanceOf(accounts[i]);\n",
+                    "message": "QueryDegens.tokenBalancesAndApprovals has external calls inside a loop:\n\t- output[curr ++] = IERC20Token(tokens[j]).balanceOf(accounts[i]) (QueryDegens.sol#36)\n"
+                },
+                {
+                    "name": "calls-loop",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                output[curr++] = IERC20Token(tokens[j]).allowance(accounts[i], degensAddress);\n",
+                    "message": "QueryDegens.tokenBalancesAndApprovals has external calls inside a loop:\n\t- output[curr ++] = IERC20Token(tokens[j]).allowance(accounts[i],degensAddress) (QueryDegens.sol#37)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOf(address tokenOwner) public view returns (uint balance);\n",
+                    "message": "IERC20Token.balanceOf (QueryDegens.sol#6) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allowance(address tokenOwner, address spender) public view returns (uint remaining);\n",
+                    "message": "IERC20Token.allowance (QueryDegens.sol#7) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address to, uint tokens) public returns (bool success);\n",
+                    "message": "IERC20Token.transfer (QueryDegens.sol#8) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address from, address to, uint tokens) public returns (bool success);\n",
+                    "message": "IERC20Token.transferFrom (QueryDegens.sol#9) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": 28,
+                    "vulnerability_code": "    function testOrderBatch(address degensAddress, uint[4][] memory orders) public view returns (uint[] memory, uint[] memory) {\n\n        DegensInterface degens = DegensInterface(degensAddress);\n\n\n\n        uint[] memory available = new uint[](orders.length);\n\n        uint[] memory filled = new uint[](orders.length);\n\n        \n\n        for (uint i = 0; i < orders.length; i++) {\n\n            (available[i], filled[i]) = degens.testOrder(orders[i]);\n\n        }\n\n\n\n        return (available, filled);\n",
+                    "message": "QueryDegens.testOrderBatch (QueryDegens.sol#17-28) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": 42,
+                    "vulnerability_code": "    function tokenBalancesAndApprovals(address degensAddress, address[] memory accounts, address[] memory tokens) public view returns (uint[] memory) {\n\n        uint[] memory output = new uint[](accounts.length * tokens.length * 2);\n\n\n\n        uint curr = 0;\n\n        for (uint i = 0; i < accounts.length; i++) {\n\n            for (uint j = 0; j < tokens.length; j++) {\n\n                output[curr++] = IERC20Token(tokens[j]).balanceOf(accounts[i]);\n\n                output[curr++] = IERC20Token(tokens[j]).allowance(accounts[i], degensAddress);\n\n            }\n\n        }\n\n\n\n        return output;\n",
+                    "message": "QueryDegens.tokenBalancesAndApprovals (QueryDegens.sol#30-42) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.10;\n",
+                    "message": "Detected issues with version pragma in QueryDegens.sol:\n\t- pragma solidity^0.5.10 (QueryDegens.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < orders.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < accounts.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            for (uint j = 0; j < tokens.length; j++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < orders.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < accounts.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            for (uint j = 0; j < tokens.length; j++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.10;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function testOrder(uint[4] calldata packed) external view returns(uint256, uint256);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function testOrderBatch(address degensAddress, uint[4][] memory orders) public view returns (uint[] memory, uint[] memory) {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "degens-contract-a777d578f9354de257a26e9cb0b3c6d92ea7f8e7/contracts/TestToken.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bool transferFail = false;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bool transferReturnFalse = false;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 135,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bool transferFromFail = false;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 136,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bool transferFromReturnFalse = false;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 81,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 82,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 120,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 121,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        symbol = \"TST\";\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 122,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        name = \"Degens Test Token\";\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 123,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        decimals = 18;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 124,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        _totalSupply = 1000000 * 10**uint(decimals);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 125,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        balances[owner] = _totalSupply;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 126,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        emit Transfer(address(0), owner, _totalSupply);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 127,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 169,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(!transferFail, \"transfer failure\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 203,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(!transferFromFail, \"transferFrom failure\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_26"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "locked-ether",
+                    "vulnerability_from_line": 238,
+                    "vulnerability_to_line": 240,
+                    "vulnerability_code": "    function () external payable {\n\n        revert();\n",
+                    "message": "Contract locking ether found in TestToken.sol:\n\tContract TestToken has payable functions:\n\t - fallback (TestToken.sol#238-240)\n\tBut does not have a function to withdraw the ether\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function totalSupply() public view returns (uint);\n",
+                    "message": "ERC20Interface.totalSupply (TestToken.sol#49) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 150,
+                    "vulnerability_to_line": 152,
+                    "vulnerability_code": "    function totalSupply() public view returns (uint) {\n\n        return _totalSupply.sub(balances[address(0)]);\n",
+                    "message": "TestToken.totalSupply (TestToken.sol#150-152) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 158,
+                    "vulnerability_to_line": 160,
+                    "vulnerability_code": "    function balanceOf(address tokenOwner) public view returns (uint balance) {\n\n        return balances[tokenOwner];\n",
+                    "message": "TestToken.balanceOf (TestToken.sol#158-160) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 50,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOf(address tokenOwner) public view returns (uint balance);\n",
+                    "message": "ERC20Interface.balanceOf (TestToken.sol#50) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 217,
+                    "vulnerability_to_line": 219,
+                    "vulnerability_code": "    function allowance(address tokenOwner, address spender) public view returns (uint remaining) {\n\n        return allowed[tokenOwner][spender];\n",
+                    "message": "TestToken.allowance (TestToken.sol#217-219) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 51,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allowance(address tokenOwner, address spender) public view returns (uint remaining);\n",
+                    "message": "ERC20Interface.allowance (TestToken.sol#51) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 168,
+                    "vulnerability_to_line": 175,
+                    "vulnerability_code": "    function transfer(address to, uint tokens) public returns (bool success) {\n\n        require(!transferFail, \"transfer failure\");\n\n        if (transferReturnFalse) return false;\n\n        balances[msg.sender] = balances[msg.sender].sub(tokens);\n\n        balances[to] = balances[to].add(tokens);\n\n        emit Transfer(msg.sender, to, tokens);\n\n        return true;\n",
+                    "message": "TestToken.transfer (TestToken.sol#168-175) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address to, uint tokens) public returns (bool success);\n",
+                    "message": "ERC20Interface.transfer (TestToken.sol#52) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address spender, uint tokens) public returns (bool success);\n",
+                    "message": "ERC20Interface.approve (TestToken.sol#53) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 186,
+                    "vulnerability_to_line": 190,
+                    "vulnerability_code": "    function approve(address spender, uint tokens) public returns (bool success) {\n\n        allowed[msg.sender][spender] = tokens;\n\n        emit Approval(msg.sender, spender, tokens);\n\n        return true;\n",
+                    "message": "TestToken.approve (TestToken.sol#186-190) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 202,
+                    "vulnerability_to_line": 210,
+                    "vulnerability_code": "    function transferFrom(address from, address to, uint tokens) public returns (bool success) {\n\n        require(!transferFromFail, \"transferFrom failure\");\n\n        if (transferFromReturnFalse) return false;\n\n        balances[from] = balances[from].sub(tokens);\n\n        allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);\n\n        balances[to] = balances[to].add(tokens);\n\n        emit Transfer(from, to, tokens);\n\n        return true;\n",
+                    "message": "TestToken.transferFrom (TestToken.sol#202-210) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address from, address to, uint tokens) public returns (bool success);\n",
+                    "message": "ERC20Interface.transferFrom (TestToken.sol#54) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 67,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function receiveApproval(address from, uint256 tokens, address token, bytes memory data) public;\n",
+                    "message": "ApproveAndCallFallBack.receiveApproval (TestToken.sol#67) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": 91,
+                    "vulnerability_code": "    function transferOwnership(address _newOwner) public onlyOwner {\n\n        newOwner = _newOwner;\n",
+                    "message": "Owned.transferOwnership (TestToken.sol#89-91) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": 97,
+                    "vulnerability_code": "    function acceptOwnership() public {\n\n        require(msg.sender == newOwner);\n\n        emit OwnershipTransferred(owner, newOwner);\n\n        owner = newOwner;\n\n        newOwner = address(0);\n",
+                    "message": "Owned.acceptOwnership (TestToken.sol#92-97) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 138,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setTransferFail(bool status) public { transferFail = status; }\n",
+                    "message": "TestToken.setTransferFail (TestToken.sol#138) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setTransferFromFail(bool status) public { transferFromFail = status; }\n",
+                    "message": "TestToken.setTransferFromFail (TestToken.sol#139) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 140,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setTransferReturnFalse(bool status) public { transferReturnFalse = status; }\n",
+                    "message": "TestToken.setTransferReturnFalse (TestToken.sol#140) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setTransferFromReturnFalse(bool status) public { transferFromReturnFalse = status; }\n",
+                    "message": "TestToken.setTransferFromReturnFalse (TestToken.sol#141) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 142,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function magicMintTokens(address addr, uint tokens) public { balances[addr] += tokens; }\n",
+                    "message": "TestToken.magicMintTokens (TestToken.sol#142) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 227,
+                    "vulnerability_to_line": 232,
+                    "vulnerability_code": "    function approveAndCall(address spender, uint tokens, bytes memory data) public returns (bool success) {\n\n        allowed[msg.sender][spender] = tokens;\n\n        emit Approval(msg.sender, spender, tokens);\n\n        ApproveAndCallFallBack(spender).receiveApproval(msg.sender, tokens, address(this), data);\n\n        return true;\n",
+                    "message": "TestToken.approveAndCall (TestToken.sol#227-232) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 246,
+                    "vulnerability_to_line": 248,
+                    "vulnerability_code": "    function transferAnyERC20Token(address tokenAddress, uint tokens) public onlyOwner returns (bool success) {\n\n        return ERC20Interface(tokenAddress).transfer(owner, tokens);\n",
+                    "message": "TestToken.transferAnyERC20Token (TestToken.sol#246-248) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in TestToken.sol:\n\t- pragma solidity^0.5.0 (TestToken.sol#5): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferOwnership(address _newOwner) public onlyOwner {\n",
+                    "message": "Parameter '_newOwner' of Owned.transferOwnership (TestToken.sol#89) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 111,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint _totalSupply;\n",
+                    "message": "Variable 'TestToken._totalSupply' (TestToken.sol#111) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 96,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        newOwner = address(0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        return _totalSupply.sub(balances[address(0)]);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 186,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address spender, uint tokens) public returns (bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REDUNDANT_FALLBACK_REJECT",
+                    "vulnerability_from_line": 238,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function () external payable {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 106,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    using SafeMath for uint;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 111,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint _totalSupply;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 113,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(address => uint) balances;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 114,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(address => mapping(address => uint)) allowed;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bool transferFail = false;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bool transferReturnFalse = false;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 135,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bool transferFromFail = false;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 136,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bool transferFromReturnFalse = false;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

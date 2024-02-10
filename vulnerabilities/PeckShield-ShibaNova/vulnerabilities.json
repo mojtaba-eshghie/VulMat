@@ -1,0 +1,3430 @@
+{
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/PresaleContract.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 81,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Whitelisted is Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract NovaSwap is Ownable, Whitelisted {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 115,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < _purchaser.length; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bool public isSwapStarted = false;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owner = payable(msg.sender);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 148,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 149,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address payable _owner,\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 150,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _paymentWallet,\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        BUSDToken _BUSDToken,\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 152,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        NovaToken _novaToken\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 154,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        token0 = _BUSDToken; \n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 155,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        token1 = _novaToken;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 156,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owner = _owner;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 157,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        Payee = _paymentWallet;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            whitelist[_purchaser[i]] = true;\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 115,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < _purchaser.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 169,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(isSwapStarted == true, 'ShibanovaSwap::Swap not started');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 170,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(inAmount <= total, \"ShibanovaSwap::Insufficient funds\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 171,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(outAmount <= quota, \"ShibanovaSwap::Quota not enough\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 172,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(spent[msg.sender].add(inAmount) <= maxBuy, \"ShibanovaSwap: :Reached Max Buy\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 115,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < _purchaser.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 170,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(inAmount <= total, \"ShibanovaSwap::Insufficient funds\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_36"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 163,
+                    "vulnerability_to_line": 181,
+                    "vulnerability_code": "    function swap(uint256 inAmount) public onlyWhitelisted{\n\n        uint256 quota = token1.balanceOf(address(this));\n\n        uint256 total = token0.balanceOf(msg.sender);\n\n        uint256 outAmount = inAmount.mul(1000).div(swapRate);\n\n    \n\n\n\n        require(isSwapStarted == true, 'ShibanovaSwap::Swap not started');\n\n        require(inAmount <= total, \"ShibanovaSwap::Insufficient funds\");\n\n        require(outAmount <= quota, \"ShibanovaSwap::Quota not enough\");\n\n        require(spent[msg.sender].add(inAmount) <= maxBuy, \"ShibanovaSwap: :Reached Max Buy\");\n\n\n\n        token0.transferFrom(msg.sender, address(Payee), inAmount);\n\n        \n\n        spent[msg.sender] = spent[msg.sender] + inAmount;\n\n        \n\n        token1.transfer(msg.sender, outAmount);\n\n\n\n        emit Swap(msg.sender, inAmount, outAmount);\n",
+                    "message": "Reentrancy in NovaSwap.swap (PresaleContract.sol#163-181):\n\tExternal calls:\n\t- quota = token1.balanceOf(address(this)) (PresaleContract.sol#164)\n\t- total = token0.balanceOf(msg.sender) (PresaleContract.sol#165)\n\t- token0.transferFrom(msg.sender,address(Payee),inAmount) (PresaleContract.sol#174)\n\tState variables written after the call(s):\n\t- spent (PresaleContract.sol#176)\n"
+                },
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 163,
+                    "vulnerability_to_line": 181,
+                    "vulnerability_code": "    function swap(uint256 inAmount) public onlyWhitelisted{\n\n        uint256 quota = token1.balanceOf(address(this));\n\n        uint256 total = token0.balanceOf(msg.sender);\n\n        uint256 outAmount = inAmount.mul(1000).div(swapRate);\n\n    \n\n\n\n        require(isSwapStarted == true, 'ShibanovaSwap::Swap not started');\n\n        require(inAmount <= total, \"ShibanovaSwap::Insufficient funds\");\n\n        require(outAmount <= quota, \"ShibanovaSwap::Quota not enough\");\n\n        require(spent[msg.sender].add(inAmount) <= maxBuy, \"ShibanovaSwap: :Reached Max Buy\");\n\n\n\n        token0.transferFrom(msg.sender, address(Payee), inAmount);\n\n        \n\n        spent[msg.sender] = spent[msg.sender] + inAmount;\n\n        \n\n        token1.transfer(msg.sender, outAmount);\n\n\n\n        emit Swap(msg.sender, inAmount, outAmount);\n",
+                    "message": "NovaSwap.swap (PresaleContract.sol#163-181) does not use the value returned by external calls:\n\t-token0.transferFrom(msg.sender,address(Payee),inAmount) (PresaleContract.sol#174)\n\t-token1.transfer(msg.sender,outAmount) (PresaleContract.sol#178)\n"
+                },
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 216,
+                    "vulnerability_to_line": 218,
+                    "vulnerability_code": "    function WithdrawBUSD(address _token, uint256 amount) public onlyOwner {\n\n        BUSDToken(_token).transfer(msg.sender, amount);\n",
+                    "message": "NovaSwap.WithdrawBUSD (PresaleContract.sol#216-218) does not use the value returned by external calls:\n\t-BUSDToken(_token).transfer(msg.sender,amount) (PresaleContract.sol#217)\n"
+                },
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 220,
+                    "vulnerability_to_line": 222,
+                    "vulnerability_code": "    function WithdrawNova(address _token, uint256 amount) public onlyOwner {\n\n        NovaToken(_token).transfer(msg.sender, amount);\n",
+                    "message": "NovaSwap.WithdrawNova (PresaleContract.sol#220-222) does not use the value returned by external calls:\n\t-NovaToken(_token).transfer(msg.sender,amount) (PresaleContract.sol#221)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": 57,
+                    "vulnerability_code": "    function transferOwnership(address payable newOwner) onlyOwner public {\n\n        require(newOwner != address(0));\n\n        emit OwnershipTransferred(owner, newOwner);\n\n        owner = newOwner;\n",
+                    "message": "Ownable.transferOwnership (PresaleContract.sol#53-57) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 101,
+                    "vulnerability_to_line": 103,
+                    "vulnerability_code": "    function setProvider(address _provider) public onlyOwner {\n\n        provider[_provider] = true;\n",
+                    "message": "Whitelisted.setProvider (PresaleContract.sol#101-103) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 105,
+                    "vulnerability_to_line": 108,
+                    "vulnerability_code": "    function deactivateProvider(address _provider) public onlyOwner {\n\n        require(provider[_provider] == true);\n\n        provider[_provider] = false;\n",
+                    "message": "Whitelisted.deactivateProvider (PresaleContract.sol#105-108) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 110,
+                    "vulnerability_to_line": 112,
+                    "vulnerability_code": "    function joinWhitelist(address _purchaser) public onlyOwner{\n\n        whitelist[_purchaser] = true;\n",
+                    "message": "Whitelisted.joinWhitelist (PresaleContract.sol#110-112) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 114,
+                    "vulnerability_to_line": 118,
+                    "vulnerability_code": "    function whitelistAddresses (address[] memory _purchaser) public onlyOwner {\n\n        for (uint i = 0; i < _purchaser.length; i++) {\n\n            whitelist[_purchaser[i]] = true;\n\n        }\n",
+                    "message": "Whitelisted.whitelistAddresses (PresaleContract.sol#114-118) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 121,
+                    "vulnerability_to_line": 123,
+                    "vulnerability_code": "    function deleteFromWhitelist(address _purchaser) public onlyOwner {\n\n        whitelist[_purchaser] = false;\n",
+                    "message": "Whitelisted.deleteFromWhitelist (PresaleContract.sol#121-123) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 163,
+                    "vulnerability_to_line": 181,
+                    "vulnerability_code": "    function swap(uint256 inAmount) public onlyWhitelisted{\n\n        uint256 quota = token1.balanceOf(address(this));\n\n        uint256 total = token0.balanceOf(msg.sender);\n\n        uint256 outAmount = inAmount.mul(1000).div(swapRate);\n\n    \n\n\n\n        require(isSwapStarted == true, 'ShibanovaSwap::Swap not started');\n\n        require(inAmount <= total, \"ShibanovaSwap::Insufficient funds\");\n\n        require(outAmount <= quota, \"ShibanovaSwap::Quota not enough\");\n\n        require(spent[msg.sender].add(inAmount) <= maxBuy, \"ShibanovaSwap: :Reached Max Buy\");\n\n\n\n        token0.transferFrom(msg.sender, address(Payee), inAmount);\n\n        \n\n        spent[msg.sender] = spent[msg.sender] + inAmount;\n\n        \n\n        token1.transfer(msg.sender, outAmount);\n\n\n\n        emit Swap(msg.sender, inAmount, outAmount);\n",
+                    "message": "NovaSwap.swap (PresaleContract.sol#163-181) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 184,
+                    "vulnerability_to_line": 187,
+                    "vulnerability_code": "    function startSwap() public onlyOwner returns (bool) {\n\n        isSwapStarted = true;\n\n        return true;\n",
+                    "message": "NovaSwap.startSwap (PresaleContract.sol#184-187) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 189,
+                    "vulnerability_to_line": 192,
+                    "vulnerability_code": "    function stopSwap() public onlyOwner returns (bool) {\n\n        isSwapStarted = false;\n\n        return true;\n",
+                    "message": "NovaSwap.stopSwap (PresaleContract.sol#189-192) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 194,
+                    "vulnerability_to_line": 197,
+                    "vulnerability_code": "    function setSwapRate(uint256 newRate) public onlyOwner returns (bool) {\n\n        swapRate = newRate;\n\n        return true;\n",
+                    "message": "NovaSwap.setSwapRate (PresaleContract.sol#194-197) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 199,
+                    "vulnerability_to_line": 202,
+                    "vulnerability_code": "    function setMaxBuy(uint256 newMax) public onlyOwner returns (bool) {\n\n        maxBuy = newMax;\n\n        return true;\n",
+                    "message": "NovaSwap.setMaxBuy (PresaleContract.sol#199-202) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 204,
+                    "vulnerability_to_line": 208,
+                    "vulnerability_code": "    function transferPayee(address newPayee) public onlyOwner {\n\n        require(newPayee != address(0));\n\n        emit PayeeTransferred(Payee, newPayee);\n\n        Payee = newPayee;\n",
+                    "message": "NovaSwap.transferPayee (PresaleContract.sol#204-208) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 210,
+                    "vulnerability_to_line": 213,
+                    "vulnerability_code": "   function recoverLostBNB() public onlyOwner {\n\n        address payable _owner = msg.sender;\n\n        _owner.transfer(address(this).balance);\n",
+                    "message": "NovaSwap.recoverLostBNB (PresaleContract.sol#210-213) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 216,
+                    "vulnerability_to_line": 218,
+                    "vulnerability_code": "    function WithdrawBUSD(address _token, uint256 amount) public onlyOwner {\n\n        BUSDToken(_token).transfer(msg.sender, amount);\n",
+                    "message": "NovaSwap.WithdrawBUSD (PresaleContract.sol#216-218) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 220,
+                    "vulnerability_to_line": 222,
+                    "vulnerability_code": "    function WithdrawNova(address _token, uint256 amount) public onlyOwner {\n\n        NovaToken(_token).transfer(msg.sender, amount);\n",
+                    "message": "NovaSwap.WithdrawNova (PresaleContract.sol#220-222) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.6.2;\n",
+                    "message": "Detected issues with version pragma in PresaleContract.sol:\n\t- pragma solidity>=0.6.2 (PresaleContract.sol#9): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 97,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isProvider(address _provider) public view returns (bool){\n",
+                    "message": "Parameter '_provider' of Whitelisted.isProvider (PresaleContract.sol#97) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 101,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setProvider(address _provider) public onlyOwner {\n",
+                    "message": "Parameter '_provider' of Whitelisted.setProvider (PresaleContract.sol#101) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 105,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function deactivateProvider(address _provider) public onlyOwner {\n",
+                    "message": "Parameter '_provider' of Whitelisted.deactivateProvider (PresaleContract.sol#105) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 110,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function joinWhitelist(address _purchaser) public onlyOwner{\n",
+                    "message": "Parameter '_purchaser' of Whitelisted.joinWhitelist (PresaleContract.sol#110) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 114,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function whitelistAddresses (address[] memory _purchaser) public onlyOwner {\n",
+                    "message": "Parameter '_purchaser' of Whitelisted.whitelistAddresses (PresaleContract.sol#114) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 121,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function deleteFromWhitelist(address _purchaser) public onlyOwner {\n",
+                    "message": "Parameter '_purchaser' of Whitelisted.deleteFromWhitelist (PresaleContract.sol#121) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 126,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isWhitelisted(address _purchaser) public view returns (bool){\n",
+                    "message": "Parameter '_purchaser' of Whitelisted.isWhitelisted (PresaleContract.sol#126) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 149,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address payable _owner,\n",
+                    "message": "Parameter '_owner' of NovaSwap. (PresaleContract.sol#149) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 150,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _paymentWallet,\n",
+                    "message": "Parameter '_paymentWallet' of NovaSwap. (PresaleContract.sol#150) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        BUSDToken _BUSDToken,\n",
+                    "message": "Parameter '_BUSDToken' of NovaSwap. (PresaleContract.sol#151) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 152,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        NovaToken _novaToken\n",
+                    "message": "Parameter '_novaToken' of NovaSwap. (PresaleContract.sol#152) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 216,
+                    "vulnerability_to_line": 218,
+                    "vulnerability_code": "    function WithdrawBUSD(address _token, uint256 amount) public onlyOwner {\n\n        BUSDToken(_token).transfer(msg.sender, amount);\n",
+                    "message": "Function 'NovaSwap.WithdrawBUSD' (PresaleContract.sol#216-218) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 216,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function WithdrawBUSD(address _token, uint256 amount) public onlyOwner {\n",
+                    "message": "Parameter '_token' of NovaSwap.WithdrawBUSD (PresaleContract.sol#216) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 220,
+                    "vulnerability_to_line": 222,
+                    "vulnerability_code": "    function WithdrawNova(address _token, uint256 amount) public onlyOwner {\n\n        NovaToken(_token).transfer(msg.sender, amount);\n",
+                    "message": "Function 'NovaSwap.WithdrawNova' (PresaleContract.sol#220-222) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 220,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function WithdrawNova(address _token, uint256 amount) public onlyOwner {\n",
+                    "message": "Parameter '_token' of NovaSwap.WithdrawNova (PresaleContract.sol#220) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address public Payee;\n",
+                    "message": "Variable 'NovaSwap.Payee' (PresaleContract.sol#139) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 115,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < _purchaser.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 115,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < _purchaser.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Ownable {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract NovaSwap is Ownable, Whitelisted {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 101,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setProvider(address _provider) public onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.6.2;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 132,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferOwnership(address payable newOwner) onlyOwner public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 148,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address payable owner;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferOwnership(address payable newOwner) onlyOwner public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(newOwner != address(0));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(newOwner != address(0));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(newOwner != address(0));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        emit OwnershipTransferred(owner, newOwner);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        emit OwnershipTransferred(owner, newOwner);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 56,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owner = newOwner;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 149,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address payable _owner,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 150,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _paymentWallet,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        BUSDToken _BUSDToken,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 152,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        NovaToken _novaToken\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 154,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        token0 = _BUSDToken; \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 155,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        token1 = _novaToken;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 156,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owner = _owner;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 157,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        Payee = _paymentWallet;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/ShibaFactory/contracts/Migrations.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      msg.sender == owner,\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"This function is restricted to the contract's owner\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      msg.sender == owner,\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"This function is restricted to the contract's owner\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": 20,
+                    "vulnerability_code": "  function setCompleted(uint completed) public restricted {\n\n    last_completed_migration = completed;\n",
+                    "message": "Migrations.setCompleted (Migrations.sol#18-20) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.22 <0.9.0;\n",
+                    "message": "Detected issues with version pragma in Migrations.sol:\n\t- pragma solidity>=0.4.22<0.9.0 (Migrations.sol#4): is has a complex pragma\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint public last_completed_migration;\n",
+                    "message": "Variable 'Migrations.last_completed_migration' (Migrations.sol#8) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.22 <0.9.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.22 <0.9.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/ShibaFactory/contracts/ShibaPair.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-abi-encodecall-instead-of-encodewithselector",
+                    "vulnerability_from_line": 524,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        (bool success, bytes memory data) = token.call(abi.encodeWithSelector(SELECTOR, to, value));\n",
+                    "message": "To guarantee arguments type safety it is recommended to use `abi.encodeCall` instead of `abi.encodeWithSelector`."
+                },
+                {
+                    "name": "inefficient-state-variable-increment",
+                    "vulnerability_from_line": 558,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            price0CumulativeLast += uint(UQ112x112.encode(_reserve1).uqdiv(_reserve0)) * timeElapsed;\n",
+                    "message": "<x> += <y> costs more gas than <x> = <x> + <y> for state variables."
+                },
+                {
+                    "name": "inefficient-state-variable-increment",
+                    "vulnerability_from_line": 559,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            price1CumulativeLast += uint(UQ112x112.encode(_reserve0).uqdiv(_reserve1)) * timeElapsed;\n",
+                    "message": "<x> += <y> costs more gas than <x> = <x> + <y> for state variables."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 301,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 302,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint chainId;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 303,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 304,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            chainId := chainid\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 305,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 306,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        DOMAIN_SEPARATOR = keccak256(\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 307,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            abi.encode(\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 308,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                keccak256('EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)'),\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 309,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                keccak256(bytes(name)),\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 310,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                keccak256(bytes('1')),\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 540,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 541,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        factory = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 542,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 117,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(c >= a, 'SafeMath: addition overflow');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 176,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(c / a == b, 'SafeMath: multiplication overflow');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 359,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(deadline >= block.timestamp, 'ShibaNovaSwap: EXPIRED');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 368,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(recoveredAddress != address(0) && recoveredAddress == owner, 'ShibaNovaSwap: INVALID_SIGNATURE');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 511,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(unlocked == 1, 'ShibaSwap: LOCKED');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 525,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(success && (data.length == 0 || abi.decode(data, (bool))), 'ShibaSwap: TRANSFER_FAILED');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 546,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.sender == factory, 'ShibaSwap: FORBIDDEN'); // sufficient check\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 553,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(balance0 <= uint112(-1) && balance1 <= uint112(-1), 'ShibaSwap: OVERFLOW');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 604,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(liquidity > 0, 'ShibaSwap: INSUFFICIENT_LIQUIDITY_MINTED');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 625,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(amount0 > 0 && amount1 > 0, 'ShibaSwap: INSUFFICIENT_LIQUIDITY_BURNED');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 639,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(amount0Out > 0 || amount1Out > 0, 'ShibaSwap: INSUFFICIENT_OUTPUT_AMOUNT');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 641,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(amount0Out < _reserve0 && amount1Out < _reserve1, 'ShibaSwap: INSUFFICIENT_LIQUIDITY');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 648,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(to != _token0 && to != _token1, 'ShibaSwap: INVALID_TO');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 657,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(amount0In > 0 || amount1In > 0, 'ShibaSwap: INSUFFICIENT_INPUT_AMOUNT');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 661,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(balance0Adjusted.mul(balance1Adjusted) >= uint(_reserve0).mul(_reserve1).mul(10000**2), 'ShibaSwap: K');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 368,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(recoveredAddress != address(0) && recoveredAddress == owner, 'ShibaNovaSwap: INVALID_SIGNATURE');\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 525,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(success && (data.length == 0 || abi.decode(data, (bool))), 'ShibaSwap: TRANSFER_FAILED');\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 553,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(balance0 <= uint112(-1) && balance1 <= uint112(-1), 'ShibaSwap: OVERFLOW');\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 625,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(amount0 > 0 && amount1 > 0, 'ShibaSwap: INSUFFICIENT_LIQUIDITY_BURNED');\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 641,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(amount0Out < _reserve0 && amount1Out < _reserve1, 'ShibaSwap: INSUFFICIENT_LIQUIDITY');\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 648,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(to != _token0 && to != _token1, 'ShibaSwap: INVALID_TO');\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 556,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (timeElapsed > 0 && _reserve0 != 0 && _reserve1 != 0) {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 557,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            // * never overflows, and + overflow is desired\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 558,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            price0CumulativeLast += uint(UQ112x112.encode(_reserve1).uqdiv(_reserve0)) * timeElapsed;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 559,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            price1CumulativeLast += uint(UQ112x112.encode(_reserve0).uqdiv(_reserve1)) * timeElapsed;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 560,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        }\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 176,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(c / a == b, 'SafeMath: multiplication overflow');\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 604,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(liquidity > 0, 'ShibaSwap: INSUFFICIENT_LIQUIDITY_MINTED');\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 625,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(amount0 > 0 && amount1 > 0, 'ShibaSwap: INSUFFICIENT_LIQUIDITY_BURNED');\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 639,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(amount0Out > 0 || amount1Out > 0, 'ShibaSwap: INSUFFICIENT_OUTPUT_AMOUNT');\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 641,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(amount0Out < _reserve0 && amount1Out < _reserve1, 'ShibaSwap: INSUFFICIENT_LIQUIDITY');\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 657,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(amount0In > 0 || amount1In > 0, 'ShibaSwap: INSUFFICIENT_INPUT_AMOUNT');\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 600,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "           _mint(address(0), MINIMUM_LIQUIDITY); // permanently lock the first MINIMUM_LIQUIDITY tokens\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 340,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address spender, uint value) external returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 267,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            while (x < z) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 390,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            while (x < z) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 545,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function initialize(address _token0, address _token1) external {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.16;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 376,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.16;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 427,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 448,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 473,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 495,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes4 private constant SELECTOR = bytes4(keccak256(bytes('transfer(address,uint256)')));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 501,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint112 private reserve0;           // uses single storage slot, accessible via getReserves\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 502,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint112 private reserve1;           // uses single storage slot, accessible via getReserves\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 503,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint32  private blockTimestampLast; // uses single storage slot, accessible via getReserves\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 509,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint private unlocked = 1;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 284,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    using SafeMath for uint;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 491,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    using SafeMath  for uint;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getReserves() external view returns (uint112 reserve0, uint112 reserve1, uint32 blockTimestampLast);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 50,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function burn(address to) external returns (uint amount0, uint amount1);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 517,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getReserves() public view returns (uint112 _reserve0, uint112 _reserve1, uint32 _blockTimestampLast) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 613,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function burn(address to) external lock returns (uint amount0, uint amount1) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UNCHECKED_CALL",
+                    "vulnerability_from_line": 524,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        (bool success, bytes memory data) = token.call(abi.encodeWithSelector(SELECTOR, to, value));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 303,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 411,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint224 constant Q112 = 2**112;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/ShibaFactory/contracts/libs/Math.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.16;\n",
+                    "message": "Detected issues with version pragma in Math.sol:\n\t- pragma solidity>=0.5.16 (Math.sol#4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            while (x < z) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.16;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/ShibaFactory/contracts/interfaces/IERC20.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": "Detected issues with version pragma in IERC20.sol:\n\t- pragma solidity>=0.5.0 (IERC20.sol#4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/ShibaFactory/contracts/interfaces/IShibaFactory.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_4"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": "Detected issues with version pragma in IShibaFactory.sol:\n\t- pragma solidity>=0.5.0 (IShibaFactory.sol#4): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allPairs(uint) external view returns (address pair);\n",
+                    "message": "Parameter '' of IShibaFactory.allPairs (IShibaFactory.sol#17) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setFeeTo(address) external;\n",
+                    "message": "Parameter '' of IShibaFactory.setFeeTo (IShibaFactory.sol#22) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setFeeToSetter(address) external;\n",
+                    "message": "Parameter '' of IShibaFactory.setFeeToSetter (IShibaFactory.sol#23) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/ShibaFactory/contracts/interfaces/IShibaPair.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.16;\n",
+                    "message": "Detected issues with version pragma in IShibaPair.sol:\n\t- pragma solidity>=0.5.16 (IShibaPair.sol#5): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function DOMAIN_SEPARATOR() external view returns (bytes32);\n",
+                    "message": "Function 'IShibaPair.DOMAIN_SEPARATOR' (IShibaPair.sol#22) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function PERMIT_TYPEHASH() external pure returns (bytes32);\n",
+                    "message": "Function 'IShibaPair.PERMIT_TYPEHASH' (IShibaPair.sol#23) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function MINIMUM_LIQUIDITY() external pure returns (uint);\n",
+                    "message": "Function 'IShibaPair.MINIMUM_LIQUIDITY' (IShibaPair.sol#40) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function initialize(address, address) external;\n",
+                    "message": "Parameter '' of IShibaPair.initialize (IShibaPair.sol#55) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function initialize(address, address) external;\n",
+                    "message": "Parameter '_scope_0' of IShibaPair.initialize (IShibaPair.sol#55) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.16;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getReserves() external view returns (uint112 reserve0, uint112 reserve1, uint32 blockTimestampLast);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 50,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function burn(address to) external returns (uint amount0, uint amount1);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/ShibaFactory/contracts/interfaces/IShibaCallee.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": "Detected issues with version pragma in IShibaCallee.sol:\n\t- pragma solidity>=0.5.0 (IShibaCallee.sol#4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/ShibaFactory/contracts/interfaces/IShibaERC20.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": "Detected issues with version pragma in IShibaERC20.sol:\n\t- pragma solidity>=0.5.0 (IShibaERC20.sol#4): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function DOMAIN_SEPARATOR() external view returns (bytes32);\n",
+                    "message": "Function 'IShibaERC20.DOMAIN_SEPARATOR' (IShibaERC20.sol#21) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function PERMIT_TYPEHASH() external pure returns (bytes32);\n",
+                    "message": "Function 'IShibaERC20.PERMIT_TYPEHASH' (IShibaERC20.sol#22) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/shibanova/contracts/Migrations.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      msg.sender == owner,\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"This function is restricted to the contract's owner\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      msg.sender == owner,\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"This function is restricted to the contract's owner\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": 20,
+                    "vulnerability_code": "  function setCompleted(uint completed) public restricted {\n\n    last_completed_migration = completed;\n",
+                    "message": "Migrations.setCompleted (Migrations.sol#18-20) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.22 <0.9.0;\n",
+                    "message": "Detected issues with version pragma in Migrations.sol:\n\t- pragma solidity>=0.4.22<0.9.0 (Migrations.sol#4): is has a complex pragma\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint public last_completed_migration;\n",
+                    "message": "Variable 'Migrations.last_completed_migration' (Migrations.sol#8) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.22 <0.9.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.22 <0.9.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/shibanova/contracts/Multicall.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for(uint256 i = 0; i < calls.length; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for(uint256 i = 0; i < calls.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for(uint256 i = 0; i < calls.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_12"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "calls-loop",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            (bool success, bytes memory ret) = calls[i].target.call(calls[i].callData);\n",
+                    "message": "Multicall.aggregate has external calls inside a loop:\n\t- (success,ret) = calls[i].target.call(calls[i].callData) (Multicall.sol#22)\n"
+                },
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Different versions of Solidity is used in Multicall.sol:\n\t- Version used: ['0.6.12', 'ABIEncoderV2']\n\t- Multicall.sol#4 declares pragma solidity0.6.12\n\t- Multicall.sol#5 declares pragma experimentalABIEncoderV2\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": 26,
+                    "vulnerability_code": "    function aggregate(Call[] memory calls) public returns (uint256 blockNumber, bytes[] memory returnData) {\n\n        blockNumber = block.number;\n\n        returnData = new bytes[](calls.length);\n\n        for(uint256 i = 0; i < calls.length; i++) {\n\n            (bool success, bytes memory ret) = calls[i].target.call(calls[i].callData);\n\n            require(success);\n\n            returnData[i] = ret;\n\n        }\n",
+                    "message": "Multicall.aggregate (Multicall.sol#18-26) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": 30,
+                    "vulnerability_code": "    function getEthBalance(address addr) public view returns (uint256 balance) {\n\n        balance = addr.balance;\n",
+                    "message": "Multicall.getEthBalance (Multicall.sol#28-30) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": 33,
+                    "vulnerability_code": "    function getBlockHash(uint256 blockNumber) public view returns (bytes32 blockHash) {\n\n        blockHash = blockhash(blockNumber);\n",
+                    "message": "Multicall.getBlockHash (Multicall.sol#31-33) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": 36,
+                    "vulnerability_code": "    function getLastBlockHash() public view returns (bytes32 blockHash) {\n\n        blockHash = blockhash(block.number - 1);\n",
+                    "message": "Multicall.getLastBlockHash (Multicall.sol#34-36) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": 39,
+                    "vulnerability_code": "    function getCurrentBlockTimestamp() public view returns (uint256 timestamp) {\n\n        timestamp = block.timestamp;\n",
+                    "message": "Multicall.getCurrentBlockTimestamp (Multicall.sol#37-39) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": 42,
+                    "vulnerability_code": "    function getCurrentBlockDifficulty() public view returns (uint256 difficulty) {\n\n        difficulty = block.difficulty;\n",
+                    "message": "Multicall.getCurrentBlockDifficulty (Multicall.sol#40-42) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": 45,
+                    "vulnerability_code": "    function getCurrentBlockGasLimit() public view returns (uint256 gaslimit) {\n\n        gaslimit = block.gaslimit;\n",
+                    "message": "Multicall.getCurrentBlockGasLimit (Multicall.sol#43-45) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": 48,
+                    "vulnerability_code": "    function getCurrentBlockCoinbase() public view returns (address coinbase) {\n\n        coinbase = block.coinbase;\n",
+                    "message": "Multicall.getCurrentBlockCoinbase (Multicall.sol#46-48) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in Multicall.sol:\n\t- pragma solidity0.6.12 (Multicall.sol#4): it allows old versions\n"
+                },
+                {
+                    "name": "low-level-calls",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": 26,
+                    "vulnerability_code": "    function aggregate(Call[] memory calls) public returns (uint256 blockNumber, bytes[] memory returnData) {\n\n        blockNumber = block.number;\n\n        returnData = new bytes[](calls.length);\n\n        for(uint256 i = 0; i < calls.length; i++) {\n\n            (bool success, bytes memory ret) = calls[i].target.call(calls[i].callData);\n\n            require(success);\n\n            returnData[i] = ret;\n\n        }\n",
+                    "message": "Low level call in Multicall.aggregate (Multicall.sol#18-26):\n\t-(success,ret) = calls[i].target.call(calls[i].callData) Multicall.sol#22\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for(uint256 i = 0; i < calls.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for(uint256 i = 0; i < calls.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function aggregate(Call[] memory calls) public returns (uint256 blockNumber, bytes[] memory returnData) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UNCHECKED_CALL",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            (bool success, bytes memory ret) = calls[i].target.call(calls[i].callData);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/shibanova/contracts/libs/Address.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(address(this).balance >= amount, 'Address: insufficient balance');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(success, 'Address: unable to send value, recipient may have reverted');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 132,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(address(this).balance >= value, 'Address: insufficient balance for call');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 142,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(isContract(target), 'Address: call to non-contract');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(success, 'Address: unable to send value, recipient may have reverted');\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 132,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(address(this).balance >= value, 'Address: insufficient balance for call');\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.2;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isContract(address account) internal view returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function sendValue(address payable recipient, uint256 amount) internal {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function sendValue(address payable recipient, uint256 amount) internal {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function sendValue(address payable recipient, uint256 amount) internal {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(address(this).balance >= amount, 'Address: insufficient balance');\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(address(this).balance >= amount, 'Address: insufficient balance');\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(address(this).balance >= amount, 'Address: insufficient balance');\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(address(this).balance >= amount, 'Address: insufficient balance');\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        (bool success, ) = recipient.call{value: amount}('');\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        (bool success, ) = recipient.call{value: amount}('');\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        (bool success, ) = recipient.call{value: amount}('');\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/shibanova/contracts/libs/Math.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.16;\n",
+                    "message": "Detected issues with version pragma in Math.sol:\n\t- pragma solidity>=0.5.16 (Math.sol#4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            while (x < z) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.16;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/shibanova/contracts/libs/ShibaLibrary.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 317,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i; i < path.length - 1; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 328,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = path.length - 1; i > 0; i--) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 317,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i; i < path.length - 1; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 90,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(c >= a, 'SafeMath: addition overflow');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 149,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(c / a == b, 'SafeMath: multiplication overflow');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 261,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(tokenA != tokenB, 'ShibaLibrary: IDENTICAL_ADDRESSES');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 263,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(token0 != address(0), 'ShibaLibrary: ZERO_ADDRESS');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 288,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(amountA > 0, 'ShibaLibrary: INSUFFICIENT_AMOUNT');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 289,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(reserveA > 0 && reserveB > 0, 'ShibaLibrary: INSUFFICIENT_LIQUIDITY');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 295,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(amountIn > 0, 'ShibaLibrary: INSUFFICIENT_INPUT_AMOUNT');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 296,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(reserveIn > 0 && reserveOut > 0, 'ShibaLibrary: INSUFFICIENT_LIQUIDITY');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 305,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(amountOut > 0, 'ShibaLibrary: INSUFFICIENT_OUTPUT_AMOUNT');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 306,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(reserveIn > 0 && reserveOut > 0, 'ShibaLibrary: INSUFFICIENT_LIQUIDITY');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 314,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(path.length >= 2, 'ShibaLibrary: INVALID_PATH');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 325,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(path.length >= 2, 'ShibaLibrary: INVALID_PATH');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 289,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(reserveA > 0 && reserveB > 0, 'ShibaLibrary: INSUFFICIENT_LIQUIDITY');\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 296,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(reserveIn > 0 && reserveOut > 0, 'ShibaLibrary: INSUFFICIENT_LIQUIDITY');\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 306,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(reserveIn > 0 && reserveOut > 0, 'ShibaLibrary: INSUFFICIENT_LIQUIDITY');\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-prefix-decrement-not-postfix",
+                    "vulnerability_from_line": 328,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = path.length - 1; i > 0; i--) {\n",
+                    "message": "Consider using the prefix decrement expression whenever the return value is not needed. The prefix decrement expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 317,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i; i < path.length - 1; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 149,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(c / a == b, 'SafeMath: multiplication overflow');\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 261,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(tokenA != tokenB, 'ShibaLibrary: IDENTICAL_ADDRESSES');\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 288,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(amountA > 0, 'ShibaLibrary: INSUFFICIENT_AMOUNT');\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 289,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(reserveA > 0 && reserveB > 0, 'ShibaLibrary: INSUFFICIENT_LIQUIDITY');\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 295,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(amountIn > 0, 'ShibaLibrary: INSUFFICIENT_INPUT_AMOUNT');\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 296,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(reserveIn > 0 && reserveOut > 0, 'ShibaLibrary: INSUFFICIENT_LIQUIDITY');\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 305,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(amountOut > 0, 'ShibaLibrary: INSUFFICIENT_OUTPUT_AMOUNT');\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 306,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(reserveIn > 0 && reserveOut > 0, 'ShibaLibrary: INSUFFICIENT_LIQUIDITY');\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_8"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "uninitialized-local",
+                    "vulnerability_from_line": 317,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i; i < path.length - 1; i++) {\n",
+                    "message": "i in ShibaLibrary.getAmountsOut (ShibaLibrary.sol#317) is a local variable never initialiazed\n"
+                },
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.16;\n",
+                    "message": "Different versions of Solidity is used in ShibaLibrary.sol:\n\t- Version used: ['>=0.4.0', '>=0.5.0', '>=0.5.16']\n\t- ShibaLibrary.sol#5 declares pragma solidity>=0.5.16\n\t- ShibaLibrary.sol#62 declares pragma solidity>=0.4.0\n\t- ShibaLibrary.sol#253 declares pragma solidity>=0.5.0\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.16;\n",
+                    "message": "Detected issues with version pragma in ShibaLibrary.sol:\n\t- pragma solidity>=0.5.16 (ShibaLibrary.sol#5): it allows old versions\n\t- pragma solidity>=0.4.0 (ShibaLibrary.sol#62): it allows old versions\n\t- pragma solidity>=0.5.0 (ShibaLibrary.sol#253): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function DOMAIN_SEPARATOR() external view returns (bytes32);\n",
+                    "message": "Function 'IShibaPair.DOMAIN_SEPARATOR' (ShibaLibrary.sol#22) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function PERMIT_TYPEHASH() external pure returns (bytes32);\n",
+                    "message": "Function 'IShibaPair.PERMIT_TYPEHASH' (ShibaLibrary.sol#23) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function MINIMUM_LIQUIDITY() external pure returns (uint);\n",
+                    "message": "Function 'IShibaPair.MINIMUM_LIQUIDITY' (ShibaLibrary.sol#40) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function initialize(address, address) external;\n",
+                    "message": "Parameter '' of IShibaPair.initialize (ShibaLibrary.sol#55) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function initialize(address, address) external;\n",
+                    "message": "Parameter '_scope_0' of IShibaPair.initialize (ShibaLibrary.sol#55) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 317,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i; i < path.length - 1; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 240,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            while (x < z) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.16;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 253,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 257,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    using SafeMath for uint;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getReserves() external view returns (uint112 reserve0, uint112 reserve1, uint32 blockTimestampLast);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 50,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function burn(address to) external returns (uint amount0, uint amount1);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 260,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function sortTokens(address tokenA, address tokenB) internal pure returns (address token0, address token1) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 279,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getReserves(address factory, address tokenA, address tokenB) internal view returns (uint reserveA, uint reserveB) {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/shibanova/contracts/interfaces/IShibaRouter02.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.6.2;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 105,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.6.2;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external returns (uint amountA, uint amountB, uint liquidity);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external payable returns (uint amountToken, uint amountETH, uint liquidity);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external returns (uint amountA, uint amountB);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external returns (uint amountToken, uint amountETH);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external returns (uint amountA, uint amountB);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external returns (uint amountToken, uint amountETH);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactTokensForTokens(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapTokensForExactTokens(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapTokensForExactETH(uint amountOut, uint amountInMax, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapETHForExactTokens(uint amountOut, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 126,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactTokensForTokensSupportingFeeOnTransferTokens(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactETHForTokensSupportingFeeOnTransferTokens(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactTokensForETHSupportingFeeOnTransferTokens(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address[] calldata path,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 69,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address to,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 70,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint deadline\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external returns (uint[] memory amounts);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 75,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address[] calldata path,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 76,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address to,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 77,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint deadline\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 78,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external returns (uint[] memory amounts);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 82,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (uint[] memory amounts);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapTokensForExactETH(uint amountOut, uint amountInMax, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapTokensForExactETH(uint amountOut, uint amountInMax, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapTokensForExactETH(uint amountOut, uint amountInMax, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (uint[] memory amounts);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 88,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (uint[] memory amounts);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapETHForExactTokens(uint amountOut, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapETHForExactTokens(uint amountOut, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapETHForExactTokens(uint amountOut, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (uint[] memory amounts);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 129,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address[] calldata path,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 130,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address to,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint deadline\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 135,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address[] calldata path,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 136,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address to,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 137,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint deadline\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 142,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address[] calldata path,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 143,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address to,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 144,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint deadline\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/shibanova/contracts/interfaces/IERC20.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": "Detected issues with version pragma in IERC20.sol:\n\t- pragma solidity>=0.5.0 (IERC20.sol#4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/shibanova/contracts/interfaces/IShibaRouter01.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.6.2;\n",
+                    "message": "Detected issues with version pragma in IShibaRouter01.sol:\n\t- pragma solidity>=0.6.2 (IShibaRouter01.sol#5): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function WETH() external pure returns (address);\n",
+                    "message": "Function 'IShibaRouter01.WETH' (IShibaRouter01.sol#9) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.6.2;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external returns (uint amountA, uint amountB, uint liquidity);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external payable returns (uint amountToken, uint amountETH, uint liquidity);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external returns (uint amountA, uint amountB);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external returns (uint amountToken, uint amountETH);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external returns (uint amountA, uint amountB);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external returns (uint amountToken, uint amountETH);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactTokensForTokens(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapTokensForExactTokens(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapTokensForExactETH(uint amountOut, uint amountInMax, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapETHForExactTokens(uint amountOut, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address[] calldata path,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 69,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address to,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 70,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint deadline\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external returns (uint[] memory amounts);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 75,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address[] calldata path,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 76,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address to,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 77,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint deadline\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 78,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external returns (uint[] memory amounts);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 82,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (uint[] memory amounts);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapTokensForExactETH(uint amountOut, uint amountInMax, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapTokensForExactETH(uint amountOut, uint amountInMax, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapTokensForExactETH(uint amountOut, uint amountInMax, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (uint[] memory amounts);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 88,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (uint[] memory amounts);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapETHForExactTokens(uint amountOut, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapETHForExactTokens(uint amountOut, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapETHForExactTokens(uint amountOut, address[] calldata path, address to, uint deadline)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (uint[] memory amounts);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/shibanova/contracts/interfaces/IMoneyPot.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in IMoneyPot.sol:\n\t- pragma solidity0.6.12 (IMoneyPot.sol#4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/shibanova/contracts/interfaces/IBonusAggregator.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in IBonusAggregator.sol:\n\t- pragma solidity0.6.12 (IBonusAggregator.sol#4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/shibanova/contracts/interfaces/IWETH.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": "Detected issues with version pragma in IWETH.sol:\n\t- pragma solidity>=0.5.0 (IWETH.sol#4): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function withdraw(uint) external;\n",
+                    "message": "Parameter '' of IWETH.withdraw (IWETH.sol#9) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/shibanova/contracts/interfaces/IShibaFactory.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_4"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": "Detected issues with version pragma in IShibaFactory.sol:\n\t- pragma solidity>=0.5.0 (IShibaFactory.sol#4): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allPairs(uint) external view returns (address pair);\n",
+                    "message": "Parameter '' of IShibaFactory.allPairs (IShibaFactory.sol#15) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setFeeTo(address) external;\n",
+                    "message": "Parameter '' of IShibaFactory.setFeeTo (IShibaFactory.sol#20) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setFeeToSetter(address) external;\n",
+                    "message": "Parameter '' of IShibaFactory.setFeeToSetter (IShibaFactory.sol#21) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/shibanova/contracts/interfaces/IShibaPair.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.16;\n",
+                    "message": "Detected issues with version pragma in IShibaPair.sol:\n\t- pragma solidity>=0.5.16 (IShibaPair.sol#5): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function DOMAIN_SEPARATOR() external view returns (bytes32);\n",
+                    "message": "Function 'IShibaPair.DOMAIN_SEPARATOR' (IShibaPair.sol#22) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function PERMIT_TYPEHASH() external pure returns (bytes32);\n",
+                    "message": "Function 'IShibaPair.PERMIT_TYPEHASH' (IShibaPair.sol#23) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function MINIMUM_LIQUIDITY() external pure returns (uint);\n",
+                    "message": "Function 'IShibaPair.MINIMUM_LIQUIDITY' (IShibaPair.sol#40) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function initialize(address, address) external;\n",
+                    "message": "Parameter '' of IShibaPair.initialize (IShibaPair.sol#55) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function initialize(address, address) external;\n",
+                    "message": "Parameter '_scope_0' of IShibaPair.initialize (IShibaPair.sol#55) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.16;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getReserves() external view returns (uint112 reserve0, uint112 reserve1, uint32 blockTimestampLast);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 50,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function burn(address to) external returns (uint amount0, uint amount1);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/shibanova/contracts/interfaces/IShibaCallee.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": "Detected issues with version pragma in IShibaCallee.sol:\n\t- pragma solidity>=0.5.0 (IShibaCallee.sol#4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/shibanova/contracts/interfaces/IShibaERC20.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": "Detected issues with version pragma in IShibaERC20.sol:\n\t- pragma solidity>=0.5.0 (IShibaERC20.sol#4): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function DOMAIN_SEPARATOR() external view returns (bytes32);\n",
+                    "message": "Function 'IShibaERC20.DOMAIN_SEPARATOR' (IShibaERC20.sol#21) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function PERMIT_TYPEHASH() external pure returns (bytes32);\n",
+                    "message": "Function 'IShibaERC20.PERMIT_TYPEHASH' (IShibaERC20.sol#22) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/shibanova/contracts/interfaces/IMasterBonus.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in IMasterBonus.sol:\n\t- pragma solidity0.6.12 (IMasterBonus.sol#5): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    }
+}

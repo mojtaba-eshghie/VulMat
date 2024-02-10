@@ -1,0 +1,2207 @@
+{
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/gasprofile/test-contracts/Baz.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": 8,
+                    "vulnerability_code": "    function add (uint a, uint b) public pure returns (uint) {\n\n        return a + b;\n",
+                    "message": "Baz.add (Baz.sol#6-8) should be declared external\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.24;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/gasprofile/test-contracts/FooBase.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "inefficient-state-variable-increment",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            s += 1;\n",
+                    "message": "<x> += <y> costs more gas than <x> = <x> + <y> for state variables."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < c; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < c; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": 16,
+                    "vulnerability_code": "    function foo (uint c) public {\n\n        for (uint i = 0; i < c; i++) {\n\n            callBar(i);\n\n        }\n\n\n\n        if (s > 1) {\n\n            s += 1;\n\n        }\n",
+                    "message": "FooBase.foo (FooBase.sol#8-16) should be declared external\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.24;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UNCHECKED_CALL",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            callBar(i);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint s;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/gasprofile/test-contracts/Bar.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor () public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        baz = new Baz();\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        s = baz.add(0, 0);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": 28,
+                    "vulnerability_code": "    function bar (uint i) public returns (uint) {\n\n        uint sum = baz.add(s, i);\n\n        s = sum;\n\n        return sum;\n",
+                    "message": "Reentrancy in Bar.bar (Bar.sol#24-28):\n\tExternal calls:\n\t- sum = baz.add(s,i) (Bar.sol#25)\n\tState variables written after the call(s):\n\t- s (Bar.sol#26)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": 8,
+                    "vulnerability_code": "    function add (uint a, uint b) public pure returns (uint) {\n\n        return a + b;\n",
+                    "message": "Baz.add (Bar.sol#6-8) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": 28,
+                    "vulnerability_code": "    function bar (uint i) public returns (uint) {\n\n        uint sum = baz.add(s, i);\n\n        s = sum;\n\n        return sum;\n",
+                    "message": "Bar.bar (Bar.sol#24-28) should be declared external\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.24;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.24;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint s;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    Baz baz;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/gasprofile/test-contracts/Foo.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "inefficient-state-variable-increment",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            s += 1;\n",
+                    "message": "<x> += <y> costs more gas than <x> = <x> + <y> for state variables."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor () public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        baz = new Baz();\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        s = baz.add(0, 0);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 59,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor (address a) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 60,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bar = Bar(a);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < c; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < c; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": 48,
+                    "vulnerability_code": "    function bar (uint i) public returns (uint) {\n\n        uint sum = baz.add(s, i);\n\n        s = sum;\n\n        return sum;\n",
+                    "message": "Reentrancy in Bar.bar (Foo.sol#44-48):\n\tExternal calls:\n\t- sum = baz.add(s,i) (Foo.sol#45)\n\tState variables written after the call(s):\n\t- s (Foo.sol#46)\n"
+                },
+                {
+                    "name": "reentrancy-benign",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": 66,
+                    "vulnerability_code": "    function callBar(uint i) public {\n\n        uint ret = bar.bar(i);\n\n        s += ret;\n",
+                    "message": "Reentrancy in Foo.callBar (Foo.sol#63-66):\n\tExternal calls:\n\t- ret = bar.bar(i) (Foo.sol#64)\n\tState variables written after the call(s):\n\t- s (Foo.sol#65)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": 16,
+                    "vulnerability_code": "    function foo (uint c) public {\n\n        for (uint i = 0; i < c; i++) {\n\n            callBar(i);\n\n        }\n\n\n\n        if (s > 1) {\n\n            s += 1;\n\n        }\n",
+                    "message": "FooBase.foo (Foo.sol#8-16) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": 28,
+                    "vulnerability_code": "    function add (uint a, uint b) public pure returns (uint) {\n\n        return a + b;\n",
+                    "message": "Baz.add (Foo.sol#26-28) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": 48,
+                    "vulnerability_code": "    function bar (uint i) public returns (uint) {\n\n        uint sum = baz.add(s, i);\n\n        s = sum;\n\n        return sum;\n",
+                    "message": "Bar.bar (Foo.sol#44-48) should be declared external\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.24;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.24;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.24;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.24;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UNCHECKED_CALL",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            callBar(i);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint s;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint s;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    Baz baz;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    Bar bar;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.4.24/nos/test_helpers/PoolMock.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 213,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address _operators) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 214,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        operators = INodeOperatorsRegistry(_operators);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 215,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_11"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addSigningKeys(uint256 _operator_id, uint256 _quantity, bytes _pubkeys, bytes _signatures) external;\n",
+                    "message": "Parameter '_operator_id' of INodeOperatorsRegistry.addSigningKeys (PoolMock.sol#118) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addSigningKeysOperatorBH(uint256 _operator_id, uint256 _quantity, bytes _pubkeys, bytes _signatures) external;\n",
+                    "message": "Parameter '_operator_id' of INodeOperatorsRegistry.addSigningKeysOperatorBH (PoolMock.sol#131) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 138,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function removeSigningKey(uint256 _operator_id, uint256 _index) external;\n",
+                    "message": "Parameter '_operator_id' of INodeOperatorsRegistry.removeSigningKey (PoolMock.sol#138) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function removeSigningKeyOperatorBH(uint256 _operator_id, uint256 _index) external;\n",
+                    "message": "Parameter '_operator_id' of INodeOperatorsRegistry.removeSigningKeyOperatorBH (PoolMock.sol#145) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function removeSigningKeys(uint256 _operator_id, uint256 _index, uint256 _amount) external;\n",
+                    "message": "Parameter '_operator_id' of INodeOperatorsRegistry.removeSigningKeys (PoolMock.sol#153) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 161,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function removeSigningKeysOperatorBH(uint256 _operator_id, uint256 _index, uint256 _amount) external;\n",
+                    "message": "Parameter '_operator_id' of INodeOperatorsRegistry.removeSigningKeysOperatorBH (PoolMock.sol#161) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 166,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getTotalSigningKeyCount(uint256 _operator_id) external view returns (uint256);\n",
+                    "message": "Parameter '_operator_id' of INodeOperatorsRegistry.getTotalSigningKeyCount (PoolMock.sol#166) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 171,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getUnusedSigningKeyCount(uint256 _operator_id) external view returns (uint256);\n",
+                    "message": "Parameter '_operator_id' of INodeOperatorsRegistry.getUnusedSigningKeyCount (PoolMock.sol#171) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 181,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getSigningKey(uint256 _operator_id, uint256 _index) external view returns\n",
+                    "message": "Parameter '_operator_id' of INodeOperatorsRegistry.getSigningKey (PoolMock.sol#181) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 213,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address _operators) public {\n",
+                    "message": "Parameter '_operators' of PoolMock. (PoolMock.sol#213) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 217,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function assignNextSigningKeys(uint256 _numKeys) external {\n",
+                    "message": "Parameter '_numKeys' of PoolMock.assignNextSigningKeys (PoolMock.sol#217) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 211,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    INodeOperatorsRegistry private operators;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.4.24/oracle/ReportUtils.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 constant internal COUNT_OUTMASK = 0xFFFFFFFFFFFFFFFFFFFFFFFF0000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function decode(uint256 value) internal pure returns (uint64 beaconBalance, uint32 beaconValidators) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.4.24/template/IETHRegistrarController.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function MIN_REGISTRATION_DURATION() external view returns (uint256);\n",
+                    "message": "Function 'IETHRegistrarController.MIN_REGISTRATION_DURATION' (IETHRegistrarController.sol#10) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.4.24/template/IInterfaceResolver.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.4.24/lib/MemUtils.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 50,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_dstStart + _src.length <= _dst.length, \"BYTES_ARRAY_OUT_OF_BOUNDS\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_9"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": 21,
+                    "vulnerability_code": "    function unsafeAllocateBytes(uint256 _len) internal pure returns (bytes memory result) {\n\n        assembly {\n\n            result := mload(0x40)\n\n            mstore(result, _len)\n\n            mstore(0x40, add(add(result, _len), 32))\n\n        }\n",
+                    "message": "MemUtils.unsafeAllocateBytes (MemUtils.sol#15-21) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": 44,
+                    "vulnerability_code": "    function memcpy(uint256 _src, uint256 _dst, uint256 _len) internal pure {\n\n        assembly {\n\n            // while al least 32 bytes left, copy in 32-byte chunks\n\n            for { } gt(_len, 31) { } {\n\n                mstore(_dst, mload(_src))\n\n                _src := add(_src, 32)\n\n                _dst := add(_dst, 32)\n\n                _len := sub(_len, 32)\n\n            }\n\n            if gt(_len, 0) {\n\n                // read the next 32-byte chunk from _dst, replace the first N bytes\n\n                // with those left in the _src, and write the transformed chunk back\n\n                let mask := sub(shl(1, mul(8, sub(32, _len))), 1) // 2 ** (8 * (32 - _len)) - 1\n\n                let srcMasked := and(mload(_src), not(mask))\n\n                let dstMasked := and(mload(_dst), mask)\n\n                mstore(_dst, or(dstMasked, srcMasked))\n\n            }\n\n        }\n",
+                    "message": "MemUtils.memcpy (MemUtils.sol#26-44) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": 58,
+                    "vulnerability_code": "    function copyBytes(bytes memory _src, bytes memory _dst, uint256 _dstStart) internal pure {\n\n        require(_dstStart + _src.length <= _dst.length, \"BYTES_ARRAY_OUT_OF_BOUNDS\");\n\n        uint256 srcStartPos;\n\n        uint256 dstStartPos;\n\n        assembly {\n\n            srcStartPos := add(_src, 32)\n\n            dstStartPos := add(add(_dst, 32), _dstStart)\n\n        }\n\n        memcpy(srcStartPos, dstStartPos, _src.length);\n",
+                    "message": "MemUtils.copyBytes (MemUtils.sol#49-58) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": 21,
+                    "vulnerability_code": "    function unsafeAllocateBytes(uint256 _len) internal pure returns (bytes memory result) {\n\n        assembly {\n\n            result := mload(0x40)\n\n            mstore(result, _len)\n\n            mstore(0x40, add(add(result, _len), 32))\n\n        }\n",
+                    "message": "MemUtils.unsafeAllocateBytes uses assembly (MemUtils.sol#15-21)\n\t- MemUtils.sol#16-21\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": 44,
+                    "vulnerability_code": "    function memcpy(uint256 _src, uint256 _dst, uint256 _len) internal pure {\n\n        assembly {\n\n            // while al least 32 bytes left, copy in 32-byte chunks\n\n            for { } gt(_len, 31) { } {\n\n                mstore(_dst, mload(_src))\n\n                _src := add(_src, 32)\n\n                _dst := add(_dst, 32)\n\n                _len := sub(_len, 32)\n\n            }\n\n            if gt(_len, 0) {\n\n                // read the next 32-byte chunk from _dst, replace the first N bytes\n\n                // with those left in the _src, and write the transformed chunk back\n\n                let mask := sub(shl(1, mul(8, sub(32, _len))), 1) // 2 ** (8 * (32 - _len)) - 1\n\n                let srcMasked := and(mload(_src), not(mask))\n\n                let dstMasked := and(mload(_dst), mask)\n\n                mstore(_dst, or(dstMasked, srcMasked))\n\n            }\n\n        }\n",
+                    "message": "MemUtils.memcpy uses assembly (MemUtils.sol#26-44)\n\t- MemUtils.sol#27-44\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": 58,
+                    "vulnerability_code": "    function copyBytes(bytes memory _src, bytes memory _dst, uint256 _dstStart) internal pure {\n\n        require(_dstStart + _src.length <= _dst.length, \"BYTES_ARRAY_OUT_OF_BOUNDS\");\n\n        uint256 srcStartPos;\n\n        uint256 dstStartPos;\n\n        assembly {\n\n            srcStartPos := add(_src, 32)\n\n            dstStartPos := add(add(_dst, 32), _dstStart)\n\n        }\n\n        memcpy(srcStartPos, dstStartPos, _src.length);\n",
+                    "message": "MemUtils.copyBytes uses assembly (MemUtils.sol#49-58)\n\t- MemUtils.sol#53-57\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function copyBytes(bytes memory _src, bytes memory _dst, uint256 _dstStart) internal pure {\n",
+                    "message": "Parameter '_src' of MemUtils.copyBytes (MemUtils.sol#49) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function copyBytes(bytes memory _src, bytes memory _dst, uint256 _dstStart) internal pure {\n",
+                    "message": "Parameter '_dst' of MemUtils.copyBytes (MemUtils.sol#49) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function copyBytes(bytes memory _src, bytes memory _dst, uint256 _dstStart) internal pure {\n",
+                    "message": "Parameter '_dstStart' of MemUtils.copyBytes (MemUtils.sol#49) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function unsafeAllocateBytes(uint256 _len) internal pure returns (bytes memory result) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_PURE",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function unsafeAllocateBytes(uint256 _len) internal pure returns (bytes memory result) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_PURE",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function memcpy(uint256 _src, uint256 _dst, uint256 _len) internal pure {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_PURE",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function copyBytes(bytes memory _src, bytes memory _dst, uint256 _dstStart) internal pure {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 27,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.4.24/test_helpers/DepositContractMock.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_8"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "locked-ether",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": 63,
+                    "vulnerability_code": "    function deposit(\n\n        bytes /* 48 */ pubkey,\n\n        bytes /* 32 */ withdrawal_credentials,\n\n        bytes /* 96 */ signature,\n\n        bytes32 deposit_data_root\n\n    )\n\n        external\n\n        payable\n\n    {\n\n        calls.push(Call(pubkey, withdrawal_credentials, signature, deposit_data_root, msg.value));\n",
+                    "message": "Contract locking ether found in DepositContractMock.sol:\n\tContract DepositContractMock has payable functions:\n\t - deposit (DepositContractMock.sol#53-63)\n\tBut does not have a function to withdraw the ether\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes /* 32 */ withdrawal_credentials,\n",
+                    "message": "Parameter 'withdrawal_credentials' of IDepositContract.deposit (DepositContractMock.sol#23) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes32 deposit_data_root\n",
+                    "message": "Parameter 'deposit_data_root' of IDepositContract.deposit (DepositContractMock.sol#25) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes /* 32 */ withdrawal_credentials,\n",
+                    "message": "Parameter 'withdrawal_credentials' of DepositContractMock.deposit (DepositContractMock.sol#55) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes32 deposit_data_root\n",
+                    "message": "Parameter 'deposit_data_root' of DepositContractMock.deposit (DepositContractMock.sol#57) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 73,
+                    "vulnerability_to_line": 75,
+                    "vulnerability_code": "    function get_deposit_root() external view returns (bytes32) {\n\n        return depositRoot;\n",
+                    "message": "Function 'DepositContractMock.get_deposit_root' (DepositContractMock.sol#73-75) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 77,
+                    "vulnerability_to_line": 79,
+                    "vulnerability_code": "    function set_deposit_root(bytes32 _newRoot) external {\n\n        depositRoot = _newRoot;\n",
+                    "message": "Function 'DepositContractMock.set_deposit_root' (DepositContractMock.sol#77-79) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 77,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function set_deposit_root(bytes32 _newRoot) external {\n",
+                    "message": "Parameter '_newRoot' of DepositContractMock.set_deposit_root (DepositContractMock.sol#77) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ARRAY_LENGTH_MANIPULATION",
+                    "vulnerability_from_line": 70,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        calls.length = 0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract DepositContractMock is IDepositContract {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.4.24/test_helpers/ReportUtilsMock.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": 66,
+                    "vulnerability_code": "    function encode(uint64 beaconBalance, uint32 beaconValidators) public pure returns (uint256) {\n\n        return ReportUtils.encode(beaconBalance, beaconValidators);\n",
+                    "message": "ReportUtilsMock.encode (ReportUtilsMock.sol#64-66) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": 70,
+                    "vulnerability_code": "    function decode(uint256 value) public pure returns (uint64 beaconBalance, uint32 beaconValidators) {\n\n        return value.decode();\n",
+                    "message": "ReportUtilsMock.decode (ReportUtilsMock.sol#68-70) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": 80,
+                    "vulnerability_code": "    function decodeWithCount(uint256 value)\n\n        public pure\n\n        returns (\n\n            uint64 beaconBalance,\n\n            uint32 beaconValidators,\n\n            uint16 count)\n\n    {\n\n        return value.decodeWithCount();\n",
+                    "message": "ReportUtilsMock.decodeWithCount (ReportUtilsMock.sol#72-80) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 82,
+                    "vulnerability_to_line": 84,
+                    "vulnerability_code": "    function isDifferent(uint256 value, uint256 that) public pure returns(bool) {\n\n        return value.isDifferent(that);\n",
+                    "message": "ReportUtilsMock.isDifferent (ReportUtilsMock.sol#82-84) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": 88,
+                    "vulnerability_code": "    function getCount(uint256 value) public pure returns(uint16) {\n\n        return value.getCount();\n",
+                    "message": "ReportUtilsMock.getCount (ReportUtilsMock.sol#86-88) should be declared external\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 constant internal COUNT_OUTMASK = 0xFFFFFFFFFFFFFFFFFFFFFFFF0000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function decode(uint256 value) internal pure returns (uint64 beaconBalance, uint32 beaconValidators) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.4.24/test_helpers/OracleMock.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 208,
+                    "vulnerability_to_line": 210,
+                    "vulnerability_code": "    function setBeaconReportReceiver(address _receiver) {\n\n        beaconReceiver = _receiver;\n",
+                    "message": "OracleMock.setBeaconReportReceiver (OracleMock.sol#208-210) should be declared external\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 200,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setPool(address _pool) external {\n",
+                    "message": "Parameter '_pool' of OracleMock.setPool (OracleMock.sol#200) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 204,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function reportBeacon(uint256 _epochId, uint128 _beaconValidators, uint128 _beaconBalance) external {\n",
+                    "message": "Parameter '_beaconValidators' of OracleMock.reportBeacon (OracleMock.sol#204) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 204,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function reportBeacon(uint256 _epochId, uint128 _beaconValidators, uint128 _beaconBalance) external {\n",
+                    "message": "Parameter '_beaconBalance' of OracleMock.reportBeacon (OracleMock.sol#204) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 208,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setBeaconReportReceiver(address _receiver) {\n",
+                    "message": "Parameter '_receiver' of OracleMock.setBeaconReportReceiver (OracleMock.sol#208) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 197,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ILido private pool;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 198,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address private beaconReceiver;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 208,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setBeaconReportReceiver(address _receiver) {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.4.24/test_helpers/VaultMock.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "locked-ether",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function() public payable {}\n",
+                    "message": "Contract locking ether found in VaultMock.sol:\n\tContract VaultMock has payable functions:\n\t - fallback (VaultMock.sol#14)\n\tBut does not have a function to withdraw the ether\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function() public payable {}\n",
+                    "message": "VaultMock.fallback (VaultMock.sol#14) should be declared external\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract VaultMock {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function() public payable {}\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.4.24/test_helpers/BeaconReportReceiverMock.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function processLidoOracleReport(uint256 _postTotalPooledEther,\n",
+                    "message": "Parameter '_postTotalPooledEther' of BeaconReportReceiverMock.processLidoOracleReport (BeaconReportReceiverMock.sol#39) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                                     uint256 _preTotalPooledEther,\n",
+                    "message": "Parameter '_preTotalPooledEther' of BeaconReportReceiverMock.processLidoOracleReport (BeaconReportReceiverMock.sol#40) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                                     uint256 _timeElapsed) external {\n",
+                    "message": "Parameter '_timeElapsed' of BeaconReportReceiverMock.processLidoOracleReport (BeaconReportReceiverMock.sol#41) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.4.24/test_helpers/LidoMockForOracle.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": 26,
+                    "vulnerability_code": "    function getTotalShares() public view returns (uint256) {\n\n        return 42;\n",
+                    "message": "LidoMockForOracle.getTotalShares (LidoMockForOracle.sol#24-26) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": 30,
+                    "vulnerability_code": "    function pretendTotalPooledEtherGweiForTest(uint256 _val) public {\n\n        totalPooledEther = _val * 1e9; // gwei to wei\n",
+                    "message": "LidoMockForOracle.pretendTotalPooledEtherGweiForTest (LidoMockForOracle.sol#28-30) should be declared external\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function handleOracleReport(uint256 /*_beaconValidators*/, uint256 _beaconBalance) external {\n",
+                    "message": "Parameter '' of LidoMockForOracle.handleOracleReport (LidoMockForOracle.sol#20) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function handleOracleReport(uint256 /*_beaconValidators*/, uint256 _beaconBalance) external {\n",
+                    "message": "Parameter '_beaconBalance' of LidoMockForOracle.handleOracleReport (LidoMockForOracle.sol#20) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function pretendTotalPooledEtherGweiForTest(uint256 _val) public {\n",
+                    "message": "Parameter '_val' of LidoMockForOracle.pretendTotalPooledEtherGweiForTest (LidoMockForOracle.sol#28) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 private totalPooledEther;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.4.24/interfaces/IACL.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function hasPermission(address who, address where, bytes32 what, bytes how) public view returns (bool);\n",
+                    "message": "IACL.hasPermission (IACL.sol#15) should be declared external\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.24;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function hasPermission(address who, address where, bytes32 what, bytes how) public view returns (bool);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function hasPermission(address who, address where, bytes32 what, bytes how) public view returns (bool);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.4.24/interfaces/IBeaconReportReceiver.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.4.24/interfaces/IDepositContract.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes /* 32 */ withdrawal_credentials,\n",
+                    "message": "Parameter 'withdrawal_credentials' of IDepositContract.deposit (IDepositContract.sol#23) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes32 deposit_data_root\n",
+                    "message": "Parameter 'deposit_data_root' of IDepositContract.deposit (IDepositContract.sol#25) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.4.24/interfaces/ILidoOracle.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 235,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getLido() public view returns (ILido);\n",
+                    "message": "ILidoOracle.getLido (ILidoOracle.sol#235) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 240,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getQuorum() public view returns (uint256);\n",
+                    "message": "ILidoOracle.getQuorum (ILidoOracle.sol#240) should be declared external\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 395,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function finalizeUpgrade_v3() external;\n",
+                    "message": "Function 'ILidoOracle.finalizeUpgrade_v3' (ILidoOracle.sol#395) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 235,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getLido() public view returns (ILido);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 240,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getQuorum() public view returns (uint256);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.4.24/interfaces/ILido.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.4.24/interfaces/ILidoMevTxFeeVault.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.4.24/interfaces/INodeOperatorsRegistry.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_9"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addSigningKeys(uint256 _operator_id, uint256 _quantity, bytes _pubkeys, bytes _signatures) external;\n",
+                    "message": "Parameter '_operator_id' of INodeOperatorsRegistry.addSigningKeys (INodeOperatorsRegistry.sol#118) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addSigningKeysOperatorBH(uint256 _operator_id, uint256 _quantity, bytes _pubkeys, bytes _signatures) external;\n",
+                    "message": "Parameter '_operator_id' of INodeOperatorsRegistry.addSigningKeysOperatorBH (INodeOperatorsRegistry.sol#131) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 138,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function removeSigningKey(uint256 _operator_id, uint256 _index) external;\n",
+                    "message": "Parameter '_operator_id' of INodeOperatorsRegistry.removeSigningKey (INodeOperatorsRegistry.sol#138) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function removeSigningKeyOperatorBH(uint256 _operator_id, uint256 _index) external;\n",
+                    "message": "Parameter '_operator_id' of INodeOperatorsRegistry.removeSigningKeyOperatorBH (INodeOperatorsRegistry.sol#145) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function removeSigningKeys(uint256 _operator_id, uint256 _index, uint256 _amount) external;\n",
+                    "message": "Parameter '_operator_id' of INodeOperatorsRegistry.removeSigningKeys (INodeOperatorsRegistry.sol#153) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 161,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function removeSigningKeysOperatorBH(uint256 _operator_id, uint256 _index, uint256 _amount) external;\n",
+                    "message": "Parameter '_operator_id' of INodeOperatorsRegistry.removeSigningKeysOperatorBH (INodeOperatorsRegistry.sol#161) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 166,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getTotalSigningKeyCount(uint256 _operator_id) external view returns (uint256);\n",
+                    "message": "Parameter '_operator_id' of INodeOperatorsRegistry.getTotalSigningKeyCount (INodeOperatorsRegistry.sol#166) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 171,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getUnusedSigningKeyCount(uint256 _operator_id) external view returns (uint256);\n",
+                    "message": "Parameter '_operator_id' of INodeOperatorsRegistry.getUnusedSigningKeyCount (INodeOperatorsRegistry.sol#171) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 181,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getSigningKey(uint256 _operator_id, uint256 _index) external view returns\n",
+                    "message": "Parameter '_operator_id' of INodeOperatorsRegistry.getSigningKey (INodeOperatorsRegistry.sol#181) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.6.11/deposit_contract.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "inefficient-state-variable-increment",
+                    "vulnerability_from_line": 148,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        deposit_count += 1;\n",
+                    "message": "<x> += <y> costs more gas than <x> = <x> + <y> for state variables."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 76,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 77,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        // Compute hashes in empty sparse Merkle tree\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 78,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH - 1; height++)\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            zero_hashes[height + 1] = sha256(abi.encodePacked(zero_hashes[height], zero_hashes[height]));\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 87,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                node = sha256(abi.encodePacked(branch[height], node));\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                node = sha256(abi.encodePacked(node, zero_hashes[height]));\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 152,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                branch[height] = node;\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 155,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            node = sha256(abi.encodePacked(branch[height], node));\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH; height++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 150,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH; height++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 110,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(pubkey.length == 48, \"DepositContract: invalid pubkey length\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 111,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(withdrawal_credentials.length == 32, \"DepositContract: invalid withdrawal_credentials length\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 112,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(signature.length == 96, \"DepositContract: invalid signature length\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 115,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.value >= 1 ether, \"DepositContract: deposit value too low\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.value % 1 gwei == 0, \"DepositContract: deposit value not multiple of gwei\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(deposit_amount <= type(uint64).max, \"DepositContract: deposit value too high\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 142,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(node == deposit_data_root, \"DepositContract: reconstructed DepositData does not match supplied deposit_data_root\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(deposit_count < MAX_DEPOSIT_COUNT, \"DepositContract: merkle tree full\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 78,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH - 1; height++)\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH; height++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 150,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH; height++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 110,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(pubkey.length == 48, \"DepositContract: invalid pubkey length\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 111,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(withdrawal_credentials.length == 32, \"DepositContract: invalid withdrawal_credentials length\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 112,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(signature.length == 96, \"DepositContract: invalid signature length\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 115,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.value >= 1 ether, \"DepositContract: deposit value too low\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.value % 1 gwei == 0, \"DepositContract: deposit value not multiple of gwei\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(deposit_amount <= type(uint64).max, \"DepositContract: deposit value too high\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 142,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(node == deposit_data_root, \"DepositContract: reconstructed DepositData does not match supplied deposit_data_root\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(deposit_count < MAX_DEPOSIT_COUNT, \"DepositContract: merkle tree full\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 78,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH - 1; height++)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH; height++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function deposit(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 103,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function deposit(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata withdrawal_credentials,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata signature,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata signature,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes32 deposit_data_root\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 67,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant DEPOSIT_CONTRACT_TREE_DEPTH = 32;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 69,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant MAX_DEPOSIT_COUNT = 2**DEPOSIT_CONTRACT_TREE_DEPTH - 1;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes32[DEPOSIT_CONTRACT_TREE_DEPTH] branch;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 deposit_count;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes32[DEPOSIT_CONTRACT_TREE_DEPTH] zero_hashes;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 105,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata withdrawal_credentials,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 106,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata signature,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 106,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata signature,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 107,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes32 deposit_data_root\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 110,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(pubkey.length == 48, \"DepositContract: invalid pubkey length\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 111,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(withdrawal_credentials.length == 32, \"DepositContract: invalid withdrawal_credentials length\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 112,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(signature.length == 96, \"DepositContract: invalid signature length\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 115,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.value >= 1 ether, \"DepositContract: deposit value too low\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.value % 1 gwei == 0, \"DepositContract: deposit value not multiple of gwei\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 117,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint deposit_amount = msg.value / 1 gwei;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(deposit_amount <= type(uint64).max, \"DepositContract: deposit value too high\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(deposit_amount <= type(uint64).max, \"DepositContract: deposit value too high\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(deposit_amount <= type(uint64).max, \"DepositContract: deposit value too high\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 121,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes memory amount = to_little_endian_64(uint64(deposit_amount));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 122,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        emit DepositEvent(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 122,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        emit DepositEvent(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 125,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            amount,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 127,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            to_little_endian_64(uint64(deposit_count))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 127,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            to_little_endian_64(uint64(deposit_count))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 127,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            to_little_endian_64(uint64(deposit_count))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes32 pubkey_root = sha256(abi.encodePacked(pubkey, bytes16(0)));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 132,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes32 signature_root = sha256(abi.encodePacked(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 136,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes32 node = sha256(abi.encodePacked(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 142,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(node == deposit_data_root, \"DepositContract: reconstructed DepositData does not match supplied deposit_data_root\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 142,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(node == deposit_data_root, \"DepositContract: reconstructed DepositData does not match supplied deposit_data_root\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(deposit_count < MAX_DEPOSIT_COUNT, \"DepositContract: merkle tree full\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(deposit_count < MAX_DEPOSIT_COUNT, \"DepositContract: merkle tree full\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 148,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        deposit_count += 1;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 149,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint size = deposit_count;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 150,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH; height++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 150,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH; height++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 150,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH; height++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            if ((size & 1) == 1) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 152,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                branch[height] = node;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.8.9/lib/ECDSA.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(uint256(s) <= 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5D576E7357A4501DDFE92F46681B20A0, \"ECDSA: invalid signature 's' value\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(v == 27 || v == 28, \"ECDSA: invalid signature 'v' value\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(signer != address(0), \"ECDSA: invalid signature\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(uint256(s) <= 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5D576E7357A4501DDFE92F46681B20A0, \"ECDSA: invalid signature 's' value\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(v == 27 || v == 28, \"ECDSA: invalid signature 'v' value\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_PURE",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function recover(bytes32 hash, bytes32 r, bytes32 vs) internal pure returns (address) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.8.9/test_helpers/NodeOperatorsRegistryMockForSecurityModule.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.8.9/test_helpers/DepositContractMockForDepositSecurityModule.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.8.9/test_helpers/ETHForwarderMock.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract ETHForwarderMock {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address payable _target) payable {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address payable _target) payable {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        selfdestruct(_target);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.8.9/test_helpers/LidoMockForDepositSecurityModule.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.8.9/interfaces/IBeaconReportReceiver.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "lido-dao-801d3e854efb33ff33a59fe51187e187047a6be2/contracts/0.8.9/interfaces/IOrderedCallbacksArray.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    }
+}

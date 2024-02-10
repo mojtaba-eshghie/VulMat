@@ -1,0 +1,535 @@
+{
+    "StrategyBasisBacDaiLp0x31dfcB1C5dF01A27F8b0b5F9cD1585FE92C7970e/contracts/lib/safe-math.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(c >= a, \"SafeMath: addition overflow\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 88,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(c / a == b, \"SafeMath: multiplication overflow\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 88,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(c / a == b, \"SafeMath: multiplication overflow\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": 7,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n\n\n",
+                    "message": "Detected issues with version pragma in safe-math.sol:\n\t- pragma solidity^0.6.0 (safe-math.sol#5-7): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "StrategyBasisBacDaiLp0x31dfcB1C5dF01A27F8b0b5F9cD1585FE92C7970e/contracts/lib/context.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": 7,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n\n\n",
+                    "message": "Detected issues with version pragma in context.sol:\n\t- pragma solidity^0.6.0 (context.sol#5-7): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": 22,
+                    "vulnerability_code": "    function _msgSender() internal view virtual returns (address payable) {\n\n        return msg.sender;\n\n    }\n\n\n",
+                    "message": "Function 'Context._msgSender' (context.sol#18-22) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": 26,
+                    "vulnerability_code": "    function _msgData() internal view virtual returns (bytes memory) {\n\n        this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691\n\n        return msg.data;\n\n    }\n",
+                    "message": "Function 'Context._msgData' (context.sol#22-26) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "StrategyBasisBacDaiLp0x31dfcB1C5dF01A27F8b0b5F9cD1585FE92C7970e/contracts/interfaces/controller.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_7"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": "Detected issues with version pragma in controller.sol:\n\t- pragma solidity^0.6.0 (controller.sol#5): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function jars(address) external view returns (address);\n",
+                    "message": "Parameter '' of IController.jars (controller.sol#8) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOf(address) external view returns (uint256);\n",
+                    "message": "Parameter '' of IController.balanceOf (controller.sol#16) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function withdraw(address, uint256) external;\n",
+                    "message": "Parameter '' of IController.withdraw (controller.sol#18) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function withdraw(address, uint256) external;\n",
+                    "message": "Parameter '_scope_0' of IController.withdraw (controller.sol#18) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function earn(address, uint256) external;\n",
+                    "message": "Parameter '' of IController.earn (controller.sol#20) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function earn(address, uint256) external;\n",
+                    "message": "Parameter '_scope_0' of IController.earn (controller.sol#20) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "StrategyBasisBacDaiLp0x31dfcB1C5dF01A27F8b0b5F9cD1585FE92C7970e/contracts/interfaces/uniswapv2.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.2;\n",
+                    "message": "Detected issues with version pragma in uniswapv2.sol:\n\t- pragma solidity^0.6.2 (uniswapv2.sol#6): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function DOMAIN_SEPARATOR() external view returns (bytes32);\n",
+                    "message": "Function 'IUniswapV2Pair.DOMAIN_SEPARATOR' (uniswapv2.sol#118) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 120,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function PERMIT_TYPEHASH() external pure returns (bytes32);\n",
+                    "message": "Function 'IUniswapV2Pair.PERMIT_TYPEHASH' (uniswapv2.sol#120) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function MINIMUM_LIQUIDITY() external pure returns (uint256);\n",
+                    "message": "Function 'IUniswapV2Pair.MINIMUM_LIQUIDITY' (uniswapv2.sol#151) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 205,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allPairs(uint256) external view returns (address pair);\n",
+                    "message": "Parameter '' of IUniswapV2Factory.allPairs (uniswapv2.sol#205) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.2;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external returns (uint256 amountA, uint256 amountB);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 162,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 178,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (uint256 amount0, uint256 amount1);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactTokensForTokens(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 70,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapETHForExactTokens(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 77,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactETHForTokens(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address[] calldata path,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address to,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 deadline\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external returns (uint256[] memory amounts);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address[] calldata path,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 73,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address to,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 deadline\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 75,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external payable returns (uint256[] memory amounts);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address[] calldata path,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address to,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 81,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 deadline\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 82,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external payable returns (uint256[] memory amounts);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "StrategyBasisBacDaiLp0x31dfcB1C5dF01A27F8b0b5F9cD1585FE92C7970e/contracts/interfaces/staking-rewards.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.2;\n",
+                    "message": "Detected issues with version pragma in staking-rewards.sol:\n\t- pragma solidity^0.6.2 (staking-rewards.sol#4): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function rewards(address) external view returns (uint256);\n",
+                    "message": "Parameter '' of IStakingRewards.rewards (staking-rewards.sol#37) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function userRewardPerTokenPaid(address) external view returns (uint256);\n",
+                    "message": "Parameter '' of IStakingRewards.userRewardPerTokenPaid (staking-rewards.sol#61) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function stakingRewardsInfoByStakingToken(address)\n",
+                    "message": "Parameter '' of IStakingRewardsFactory.stakingRewardsInfoByStakingToken (staking-rewards.sol#85) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 90,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function stakingTokens(uint256) external view returns (address);\n",
+                    "message": "Parameter '' of IStakingRewardsFactory.stakingTokens (staking-rewards.sol#90) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.2;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 88,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (address stakingRewards, uint256 rewardAmount);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "StrategyBasisBacDaiLp0x31dfcB1C5dF01A27F8b0b5F9cD1585FE92C7970e/contracts/interfaces/masterchef.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.7;\n",
+                    "message": "Detected issues with version pragma in masterchef.sol:\n\t- pragma solidity^0.6.7 (masterchef.sol#4): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function BONUS_MULTIPLIER() external view returns (uint256);\n",
+                    "message": "Function 'IMasterchef.BONUS_MULTIPLIER' (masterchef.sol#7) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function poolInfo(uint256)\n",
+                    "message": "Parameter '' of IMasterchef.poolInfo (masterchef.sol#45) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function userInfo(uint256, address)\n",
+                    "message": "Parameter '' of IMasterchef.userInfo (masterchef.sol#79) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function userInfo(uint256, address)\n",
+                    "message": "Parameter '_scope_0' of IMasterchef.userInfo (masterchef.sol#79) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.7;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 48,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 82,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (uint256 amount, uint256 rewardDebt);\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

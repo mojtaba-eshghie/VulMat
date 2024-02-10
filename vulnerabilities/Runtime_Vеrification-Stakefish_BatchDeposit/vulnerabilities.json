@@ -1,0 +1,683 @@
+{
+    "eth2-batch-deposit-a4912b2d839305da8447b7cec6b2f09238b90e37/contracts/Migrations.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      msg.sender == owner,\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"This function is restricted to the contract's owner\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      msg.sender == owner,\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"This function is restricted to the contract's owner\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": 21,
+                    "vulnerability_code": "  function setCompleted(uint completed) public restricted {\n\n    last_completed_migration = completed;\n\n  }\n",
+                    "message": "Migrations.setCompleted (Migrations.sol#18-21) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": 5,
+                    "vulnerability_code": "pragma solidity >=0.4.22 <0.8.0;\n",
+                    "message": "Detected issues with version pragma in Migrations.sol:\n\t- pragma solidity>=0.4.22<0.8.0 (Migrations.sol#4-5): is has a complex pragma\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint public last_completed_migration;\n",
+                    "message": "Variable 'Migrations.last_completed_migration' (Migrations.sol#8) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.22 <0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.22 <0.8.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "eth2-batch-deposit-a4912b2d839305da8447b7cec6b2f09238b90e37/contracts/DepositContract.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "inefficient-state-variable-increment",
+                    "vulnerability_from_line": 154,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        deposit_count += 1;\n",
+                    "message": "<x> += <y> costs more gas than <x> = <x> + <y> for state variables."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 82,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        // Compute hashes in empty sparse Merkle tree\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH - 1; height++)\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            zero_hashes[height + 1] = sha256(abi.encodePacked(zero_hashes[height], zero_hashes[height]));\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 93,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                node = sha256(abi.encodePacked(branch[height], node));\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 95,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                node = sha256(abi.encodePacked(node, zero_hashes[height]));\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 158,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                branch[height] = node;\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 161,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            node = sha256(abi.encodePacked(branch[height], node));\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 91,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH; height++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 156,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH; height++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(pubkey.length == 48, \"DepositContract: invalid pubkey length\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 117,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(withdrawal_credentials.length == 32, \"DepositContract: invalid withdrawal_credentials length\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(signature.length == 96, \"DepositContract: invalid signature length\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 121,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.value >= 1 ether, \"DepositContract: deposit value too low\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 122,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.value % 1 gwei == 0, \"DepositContract: deposit value not multiple of gwei\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 124,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(deposit_amount <= type(uint64).max, \"DepositContract: deposit value too high\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 148,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(node == deposit_data_root, \"DepositContract: reconstructed DepositData does not match supplied deposit_data_root\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(deposit_count < MAX_DEPOSIT_COUNT, \"DepositContract: merkle tree full\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH - 1; height++)\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 91,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH; height++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 156,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH; height++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(pubkey.length == 48, \"DepositContract: invalid pubkey length\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 117,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(withdrawal_credentials.length == 32, \"DepositContract: invalid withdrawal_credentials length\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(signature.length == 96, \"DepositContract: invalid signature length\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 121,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.value >= 1 ether, \"DepositContract: deposit value too low\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 122,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.value % 1 gwei == 0, \"DepositContract: deposit value not multiple of gwei\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 124,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(deposit_amount <= type(uint64).max, \"DepositContract: deposit value too high\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 148,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(node == deposit_data_root, \"DepositContract: reconstructed DepositData does not match supplied deposit_data_root\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(deposit_count < MAX_DEPOSIT_COUNT, \"DepositContract: merkle tree full\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH - 1; height++)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 91,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH; height++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function deposit(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 109,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function deposit(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata withdrawal_credentials,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata signature,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata signature,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes32 deposit_data_root\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 73,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant DEPOSIT_CONTRACT_TREE_DEPTH = 32;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 75,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant MAX_DEPOSIT_COUNT = 2**DEPOSIT_CONTRACT_TREE_DEPTH - 1;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 77,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes32[DEPOSIT_CONTRACT_TREE_DEPTH] branch;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 78,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 deposit_count;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes32[DEPOSIT_CONTRACT_TREE_DEPTH] zero_hashes;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 111,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata withdrawal_credentials,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 112,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata signature,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 112,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata signature,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 113,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes32 deposit_data_root\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(pubkey.length == 48, \"DepositContract: invalid pubkey length\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 117,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(withdrawal_credentials.length == 32, \"DepositContract: invalid withdrawal_credentials length\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(signature.length == 96, \"DepositContract: invalid signature length\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 121,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.value >= 1 ether, \"DepositContract: deposit value too low\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 122,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.value % 1 gwei == 0, \"DepositContract: deposit value not multiple of gwei\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 123,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint deposit_amount = msg.value / 1 gwei;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 124,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(deposit_amount <= type(uint64).max, \"DepositContract: deposit value too high\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 124,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(deposit_amount <= type(uint64).max, \"DepositContract: deposit value too high\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 124,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(deposit_amount <= type(uint64).max, \"DepositContract: deposit value too high\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 127,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes memory amount = to_little_endian_64(uint64(deposit_amount));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 128,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        emit DepositEvent(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 128,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        emit DepositEvent(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            amount,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            to_little_endian_64(uint64(deposit_count))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            to_little_endian_64(uint64(deposit_count))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            to_little_endian_64(uint64(deposit_count))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 137,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes32 pubkey_root = sha256(abi.encodePacked(pubkey, bytes16(0)));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 138,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes32 signature_root = sha256(abi.encodePacked(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 142,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes32 node = sha256(abi.encodePacked(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 148,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(node == deposit_data_root, \"DepositContract: reconstructed DepositData does not match supplied deposit_data_root\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 148,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(node == deposit_data_root, \"DepositContract: reconstructed DepositData does not match supplied deposit_data_root\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(deposit_count < MAX_DEPOSIT_COUNT, \"DepositContract: merkle tree full\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(deposit_count < MAX_DEPOSIT_COUNT, \"DepositContract: merkle tree full\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 154,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        deposit_count += 1;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 155,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint size = deposit_count;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 156,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH; height++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 156,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH; height++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 156,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH; height++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 157,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            if ((size & 1) == 1) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 158,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                branch[height] = node;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

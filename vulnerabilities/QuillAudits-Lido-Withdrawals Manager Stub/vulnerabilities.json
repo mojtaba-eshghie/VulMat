@@ -1,0 +1,101 @@
+{
+    "withdrawals-manager-stub-c41292ed9c3be765d06c4249b9f2ad4d427b84bf/contracts/WithdrawalsManagerStub.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        revert(\"not supported\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "locked-ether",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": 25,
+                    "vulnerability_code": "    receive() external payable {\n\n        revert(\"not supported\");\n",
+                    "message": "Contract locking ether found in WithdrawalsManagerStub.sol:\n\tContract WithdrawalsManagerStub has payable functions:\n\t - fallback (WithdrawalsManagerStub.sol#23-25)\n\tBut does not have a function to withdraw the ether\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.8.4;\n",
+                    "message": "Detected issues with version pragma in WithdrawalsManagerStub.sol:\n\t- pragma solidity0.8.4 (WithdrawalsManagerStub.sol#5): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    receive() external payable {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        revert(\"not supported\");\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "withdrawals-manager-stub-c41292ed9c3be765d06c4249b9f2ad4d427b84bf/contracts/test_helpers/Test__NewImplementation.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    receive() external payable {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        emit EtherReceived(msg.value);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        emit EtherReceived(msg.value);\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

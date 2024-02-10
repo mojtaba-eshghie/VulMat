@@ -1,0 +1,96 @@
+{
+    "smart-contracts-c4f02cdd41cb85d28bba637a01f20a8ee8bb04bd/contracts/Migrations.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": 4,
+                    "vulnerability_code": "pragma solidity 0.4.24;\n",
+                    "message": "Different versions of Solidity is used in Migrations.sol:\n\t- Version used: ['0.4.24', 'v0.5.0']\n\t- Migrations.sol#3-4 declares pragma solidity0.4.24\n\t- Migrations.sol#4-6 declares pragma experimentalv0.5.0\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": 23,
+                    "vulnerability_code": "    function setCompleted(uint completed) public restricted {\n\n        last_completed_migration = completed;\n\n    }\n\n\n",
+                    "message": "Migrations.setCompleted (Migrations.sol#19-23) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": 27,
+                    "vulnerability_code": "    function upgrade(address new_address) public restricted {\n\n        Migrations upgraded = Migrations(new_address);\n\n        upgraded.setCompleted(last_completed_migration);\n\n    }\n",
+                    "message": "Migrations.upgrade (Migrations.sol#23-27) should be declared external\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgrade(address new_address) public restricted {\n",
+                    "message": "Parameter 'new_address' of Migrations.upgrade (Migrations.sol#23) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": 10,
+                    "vulnerability_code": "    uint public last_completed_migration;\n",
+                    "message": "Variable 'Migrations.last_completed_migration' (Migrations.sol#9-10) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "smart-contracts-c4f02cdd41cb85d28bba637a01f20a8ee8bb04bd/contracts/token/ITokenContract.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    }
+}

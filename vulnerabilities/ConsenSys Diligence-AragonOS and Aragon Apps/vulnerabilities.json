@@ -1,0 +1,1533 @@
+{
+    "aragon-apps-cdaee275d2831168a4ce2b9843a1f62abcf8e210/shared/minime/contracts/MiniMeToken.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 222,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require((_to != 0) && (_to != address(this)));\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_68"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "uninitialized-state",
+                    "vulnerability_from_line": 122,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping (address => Checkpoint[]) balances;\n",
+                    "message": "MiniMeToken.balances (MiniMeToken.sol#122) is never initialized. It is used in:\n\t- doTransfer (MiniMeToken.sol#216-245)\n\t- balanceOfAt (MiniMeToken.sol#323-342)\n\t- generateTokens (MiniMeToken.sol#415-424)\n\t- destroyTokens (MiniMeToken.sol#431-440)\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 503,
+                    "vulnerability_to_line": 513,
+                    "vulnerability_code": "    function isContract(address _addr) constant internal returns(bool) {\n\n        uint size;\n\n        if (_addr == 0)\n\n            return false;\n\n\n\n        assembly {\n\n            size := extcodesize(_addr)\n\n        }\n\n\n\n        return size>0;\n",
+                    "message": "MiniMeToken.isContract (MiniMeToken.sol#503-513) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 259,
+                    "vulnerability_to_line": 277,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _amount) public returns (bool success) {\n\n        require(transfersEnabled);\n\n\n\n        // To change the approve amount you first have to reduce the addresses`\n\n        //  allowance to zero by calling `approve(_spender,0)` if it is not\n\n        //  already 0 to mitigate the race condition described here:\n\n        //  https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729\n\n        require((_amount == 0) || (allowed[msg.sender][_spender] == 0));\n\n\n\n        // Alerts the token controller of the approve function call\n\n        if (isContract(controller)) {\n\n            // Adding the ` == true` makes the linter shut up so...\n\n            require(ITokenController(controller).onApprove(msg.sender, _spender, _amount) == true);\n\n        }\n\n\n\n        allowed[msg.sender][_spender] = _amount;\n\n        Approval(msg.sender, _spender, _amount);\n\n        return true;\n",
+                    "message": "Reentrancy in MiniMeToken.approve (MiniMeToken.sol#259-277):\n\tExternal calls:\n\t- require(bool)(ITokenController(controller).onApprove(msg.sender,_spender,_amount) == true) (MiniMeToken.sol#271)\n\tState variables written after the call(s):\n\t- allowed (MiniMeToken.sol#274)\n"
+                },
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 537,
+                    "vulnerability_to_line": 547,
+                    "vulnerability_code": "    function claimTokens(address _token) onlyController public {\n\n        if (_token == 0x0) {\n\n            controller.transfer(this.balance);\n\n            return;\n\n        }\n\n\n\n        MiniMeToken token = MiniMeToken(_token);\n\n        uint balance = token.balanceOf(this);\n\n        token.transfer(controller, balance);\n\n        ClaimedTokens(_token, controller, balance);\n",
+                    "message": "MiniMeToken.claimTokens (MiniMeToken.sol#537-547) does not use the value returned by external calls:\n\t-token.transfer(controller,balance) (MiniMeToken.sol#545)\n"
+                },
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 472,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint min = 0;\n",
+                    "message": "MiniMeToken.getValueAt.min (local variable @ MiniMeToken.sol#472) shadows:\n\t- MiniMeToken.min (function @ MiniMeToken.sol#516-518)\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 503,
+                    "vulnerability_to_line": 513,
+                    "vulnerability_code": "    function isContract(address _addr) constant internal returns(bool) {\n\n        uint size;\n\n        if (_addr == 0)\n\n            return false;\n\n\n\n        assembly {\n\n            size := extcodesize(_addr)\n\n        }\n\n\n\n        return size>0;\n",
+                    "message": "MiniMeToken.isContract uses assembly (MiniMeToken.sol#503-513)\n\t- MiniMeToken.sol#508-512\n"
+                },
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 93,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    string public version = \"MMT_0.1\"; //An arbitrary versioning scheme\n",
+                    "message": "MiniMeToken.version should be constant (MiniMeToken.sol#93)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": 73,
+                    "vulnerability_code": "    function changeController(address _newController) onlyController  public {\n\n        controller = _newController;\n",
+                    "message": "Controlled.changeController (MiniMeToken.sol#71-73) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 77,
+                    "vulnerability_to_line": 82,
+                    "vulnerability_code": "    function receiveApproval(\n\n        address from,\n\n        uint256 _amount,\n\n        address _token,\n\n        bytes _data\n",
+                    "message": "ApproveAndCallFallBack.receiveApproval (MiniMeToken.sol#77-82) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 182,
+                    "vulnerability_to_line": 185,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _amount) public returns (bool success) {\n\n        require(transfersEnabled);\n\n        return doTransfer(msg.sender, _to, _amount);\n",
+                    "message": "MiniMeToken.transfer (MiniMeToken.sol#182-185) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 193,
+                    "vulnerability_to_line": 208,
+                    "vulnerability_code": "    function transferFrom(address _from, address _to, uint256 _amount) public returns (bool success) {\n\n\n\n        // The controller of this contract can move tokens around at will,\n\n        //  this is important to recognize! Confirm that you trust the\n\n        //  controller of this contract, which in most situations should be\n\n        //  another open source smart contract or 0x0\n\n        if (msg.sender != controller) {\n\n            require(transfersEnabled);\n\n\n\n            // The standard ERC 20 transferFrom functionality\n\n            if (allowed[_from][msg.sender] < _amount)\n\n                return false;\n\n            allowed[_from][msg.sender] -= _amount;\n\n        }\n\n        return doTransfer(_from, _to, _amount);\n",
+                    "message": "MiniMeToken.transferFrom (MiniMeToken.sol#193-208) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 284,
+                    "vulnerability_to_line": 286,
+                    "vulnerability_code": "    function allowance(address _owner, address _spender) public constant returns (uint256 remaining) {\n\n        return allowed[_owner][_spender];\n",
+                    "message": "MiniMeToken.allowance (MiniMeToken.sol#284-286) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 295,
+                    "vulnerability_to_line": 306,
+                    "vulnerability_code": "    function approveAndCall(ApproveAndCallFallBack _spender, uint256 _amount, bytes _extraData) public returns (bool success) {\n\n        require(approve(_spender, _amount));\n\n\n\n        _spender.receiveApproval(\n\n            msg.sender,\n\n            _amount,\n\n            this,\n\n            _extraData\n\n        );\n\n\n\n        return true;\n",
+                    "message": "MiniMeToken.approveAndCall (MiniMeToken.sol#295-306) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 381,
+                    "vulnerability_to_line": 405,
+                    "vulnerability_code": "    function createCloneToken(\n\n        string _cloneTokenName,\n\n        uint8 _cloneDecimalUnits,\n\n        string _cloneTokenSymbol,\n\n        uint _snapshotBlock,\n\n        bool _transfersEnabled\n\n    ) public returns(MiniMeToken)\n\n    {\n\n        uint256 snapshot = _snapshotBlock == 0 ? block.number - 1 : _snapshotBlock;\n\n\n\n        MiniMeToken cloneToken = tokenFactory.createCloneToken(\n\n            this,\n\n            snapshot,\n\n            _cloneTokenName,\n\n            _cloneDecimalUnits,\n\n            _cloneTokenSymbol,\n\n            _transfersEnabled\n\n        );\n\n\n\n        cloneToken.changeController(msg.sender);\n\n\n\n        // An event to make the token easy to find on the blockchain\n\n        NewCloneToken(address(cloneToken), snapshot);\n\n        return cloneToken;\n",
+                    "message": "MiniMeToken.createCloneToken (MiniMeToken.sol#381-405) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 415,
+                    "vulnerability_to_line": 424,
+                    "vulnerability_code": "    function generateTokens(address _owner, uint _amount) onlyController public returns (bool) {\n\n        uint curTotalSupply = totalSupply();\n\n        require(curTotalSupply + _amount >= curTotalSupply); // Check for overflow\n\n        uint previousBalanceTo = balanceOf(_owner);\n\n        require(previousBalanceTo + _amount >= previousBalanceTo); // Check for overflow\n\n        updateValueAtNow(totalSupplyHistory, curTotalSupply + _amount);\n\n        updateValueAtNow(balances[_owner], previousBalanceTo + _amount);\n\n        Transfer(0, _owner, _amount);\n\n        return true;\n",
+                    "message": "MiniMeToken.generateTokens (MiniMeToken.sol#415-424) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 431,
+                    "vulnerability_to_line": 440,
+                    "vulnerability_code": "    function destroyTokens(address _owner, uint _amount) onlyController public returns (bool) {\n\n        uint curTotalSupply = totalSupply();\n\n        require(curTotalSupply >= _amount);\n\n        uint previousBalanceFrom = balanceOf(_owner);\n\n        require(previousBalanceFrom >= _amount);\n\n        updateValueAtNow(totalSupplyHistory, curTotalSupply - _amount);\n\n        updateValueAtNow(balances[_owner], previousBalanceFrom - _amount);\n\n        Transfer(_owner, 0, _amount);\n\n        return true;\n",
+                    "message": "MiniMeToken.destroyTokens (MiniMeToken.sol#431-440) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 449,
+                    "vulnerability_to_line": 451,
+                    "vulnerability_code": "    function enableTransfers(bool _transfersEnabled) onlyController public {\n\n        transfersEnabled = _transfersEnabled;\n",
+                    "message": "MiniMeToken.enableTransfers (MiniMeToken.sol#449-451) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 537,
+                    "vulnerability_to_line": 547,
+                    "vulnerability_code": "    function claimTokens(address _token) onlyController public {\n\n        if (_token == 0x0) {\n\n            controller.transfer(this.balance);\n\n            return;\n\n        }\n\n\n\n        MiniMeToken token = MiniMeToken(_token);\n\n        uint balance = token.balanceOf(this);\n\n        token.transfer(controller, balance);\n\n        ClaimedTokens(_token, controller, balance);\n",
+                    "message": "MiniMeToken.claimTokens (MiniMeToken.sol#537-547) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 583,
+                    "vulnerability_to_line": 604,
+                    "vulnerability_code": "    function createCloneToken(\n\n        MiniMeToken _parentToken,\n\n        uint _snapshotBlock,\n\n        string _tokenName,\n\n        uint8 _decimalUnits,\n\n        string _tokenSymbol,\n\n        bool _transfersEnabled\n\n    ) public returns (MiniMeToken)\n\n    {\n\n        MiniMeToken newToken = new MiniMeToken(\n\n            this,\n\n            _parentToken,\n\n            _snapshotBlock,\n\n            _tokenName,\n\n            _decimalUnits,\n\n            _tokenSymbol,\n\n            _transfersEnabled\n\n        );\n\n\n\n        newToken.changeController(msg.sender);\n\n        return newToken;\n",
+                    "message": "MiniMeTokenFactory.createCloneToken (MiniMeToken.sol#583-604) should be declared external\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 67,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function Controlled()  public { controller = msg.sender;}\n",
+                    "message": "Function 'Controlled.Controlled' (MiniMeToken.sol#67) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function changeController(address _newController) onlyController  public {\n",
+                    "message": "Parameter '_newController' of Controlled.changeController (MiniMeToken.sol#71) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": 171,
+                    "vulnerability_code": "    function MiniMeToken(\n\n        MiniMeTokenFactory _tokenFactory,\n\n        MiniMeToken _parentToken,\n\n        uint _parentSnapShotBlock,\n\n        string _tokenName,\n\n        uint8 _decimalUnits,\n\n        string _tokenSymbol,\n\n        bool _transfersEnabled\n\n    )  public\n\n    {\n\n        tokenFactory = _tokenFactory;\n\n        name = _tokenName;                                 // Set the name\n\n        decimals = _decimalUnits;                          // Set the decimals\n\n        symbol = _tokenSymbol;                             // Set the symbol\n\n        parentToken = _parentToken;\n\n        parentSnapShotBlock = _parentSnapShotBlock;\n\n        transfersEnabled = _transfersEnabled;\n\n        creationBlock = block.number;\n",
+                    "message": "Function 'MiniMeToken.MiniMeToken' (MiniMeToken.sol#153-171) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 154,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        MiniMeTokenFactory _tokenFactory,\n",
+                    "message": "Parameter '_tokenFactory' of MiniMeToken.MiniMeToken (MiniMeToken.sol#154) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 155,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        MiniMeToken _parentToken,\n",
+                    "message": "Parameter '_parentToken' of MiniMeToken.MiniMeToken (MiniMeToken.sol#155) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 156,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint _parentSnapShotBlock,\n",
+                    "message": "Parameter '_parentSnapShotBlock' of MiniMeToken.MiniMeToken (MiniMeToken.sol#156) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 157,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string _tokenName,\n",
+                    "message": "Parameter '_tokenName' of MiniMeToken.MiniMeToken (MiniMeToken.sol#157) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 158,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint8 _decimalUnits,\n",
+                    "message": "Parameter '_decimalUnits' of MiniMeToken.MiniMeToken (MiniMeToken.sol#158) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 159,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string _tokenSymbol,\n",
+                    "message": "Parameter '_tokenSymbol' of MiniMeToken.MiniMeToken (MiniMeToken.sol#159) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 160,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bool _transfersEnabled\n",
+                    "message": "Parameter '_transfersEnabled' of MiniMeToken.MiniMeToken (MiniMeToken.sol#160) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 182,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _amount) public returns (bool success) {\n",
+                    "message": "Parameter '_to' of MiniMeToken.transfer (MiniMeToken.sol#182) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 182,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _amount) public returns (bool success) {\n",
+                    "message": "Parameter '_amount' of MiniMeToken.transfer (MiniMeToken.sol#182) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 193,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address _from, address _to, uint256 _amount) public returns (bool success) {\n",
+                    "message": "Parameter '_from' of MiniMeToken.transferFrom (MiniMeToken.sol#193) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 193,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address _from, address _to, uint256 _amount) public returns (bool success) {\n",
+                    "message": "Parameter '_to' of MiniMeToken.transferFrom (MiniMeToken.sol#193) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 193,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address _from, address _to, uint256 _amount) public returns (bool success) {\n",
+                    "message": "Parameter '_amount' of MiniMeToken.transferFrom (MiniMeToken.sol#193) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 216,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function doTransfer(address _from, address _to, uint _amount) internal returns(bool) {\n",
+                    "message": "Parameter '_from' of MiniMeToken.doTransfer (MiniMeToken.sol#216) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 216,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function doTransfer(address _from, address _to, uint _amount) internal returns(bool) {\n",
+                    "message": "Parameter '_to' of MiniMeToken.doTransfer (MiniMeToken.sol#216) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 216,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function doTransfer(address _from, address _to, uint _amount) internal returns(bool) {\n",
+                    "message": "Parameter '_amount' of MiniMeToken.doTransfer (MiniMeToken.sol#216) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 249,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOf(address _owner) public constant returns (uint256 balance) {\n",
+                    "message": "Parameter '_owner' of MiniMeToken.balanceOf (MiniMeToken.sol#249) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 259,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _amount) public returns (bool success) {\n",
+                    "message": "Parameter '_spender' of MiniMeToken.approve (MiniMeToken.sol#259) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 259,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _amount) public returns (bool success) {\n",
+                    "message": "Parameter '_amount' of MiniMeToken.approve (MiniMeToken.sol#259) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 284,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allowance(address _owner, address _spender) public constant returns (uint256 remaining) {\n",
+                    "message": "Parameter '_owner' of MiniMeToken.allowance (MiniMeToken.sol#284) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 284,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allowance(address _owner, address _spender) public constant returns (uint256 remaining) {\n",
+                    "message": "Parameter '_spender' of MiniMeToken.allowance (MiniMeToken.sol#284) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 295,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approveAndCall(ApproveAndCallFallBack _spender, uint256 _amount, bytes _extraData) public returns (bool success) {\n",
+                    "message": "Parameter '_spender' of MiniMeToken.approveAndCall (MiniMeToken.sol#295) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 295,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approveAndCall(ApproveAndCallFallBack _spender, uint256 _amount, bytes _extraData) public returns (bool success) {\n",
+                    "message": "Parameter '_amount' of MiniMeToken.approveAndCall (MiniMeToken.sol#295) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 295,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approveAndCall(ApproveAndCallFallBack _spender, uint256 _amount, bytes _extraData) public returns (bool success) {\n",
+                    "message": "Parameter '_extraData' of MiniMeToken.approveAndCall (MiniMeToken.sol#295) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 323,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOfAt(address _owner, uint _blockNumber) public constant returns (uint) {\n",
+                    "message": "Parameter '_owner' of MiniMeToken.balanceOfAt (MiniMeToken.sol#323) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 323,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOfAt(address _owner, uint _blockNumber) public constant returns (uint) {\n",
+                    "message": "Parameter '_blockNumber' of MiniMeToken.balanceOfAt (MiniMeToken.sol#323) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 347,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function totalSupplyAt(uint _blockNumber) public constant returns(uint) {\n",
+                    "message": "Parameter '_blockNumber' of MiniMeToken.totalSupplyAt (MiniMeToken.sol#347) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 382,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string _cloneTokenName,\n",
+                    "message": "Parameter '_cloneTokenName' of MiniMeToken.createCloneToken (MiniMeToken.sol#382) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 383,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint8 _cloneDecimalUnits,\n",
+                    "message": "Parameter '_cloneDecimalUnits' of MiniMeToken.createCloneToken (MiniMeToken.sol#383) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 384,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string _cloneTokenSymbol,\n",
+                    "message": "Parameter '_cloneTokenSymbol' of MiniMeToken.createCloneToken (MiniMeToken.sol#384) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 385,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint _snapshotBlock,\n",
+                    "message": "Parameter '_snapshotBlock' of MiniMeToken.createCloneToken (MiniMeToken.sol#385) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 386,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bool _transfersEnabled\n",
+                    "message": "Parameter '_transfersEnabled' of MiniMeToken.createCloneToken (MiniMeToken.sol#386) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 415,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function generateTokens(address _owner, uint _amount) onlyController public returns (bool) {\n",
+                    "message": "Parameter '_owner' of MiniMeToken.generateTokens (MiniMeToken.sol#415) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 415,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function generateTokens(address _owner, uint _amount) onlyController public returns (bool) {\n",
+                    "message": "Parameter '_amount' of MiniMeToken.generateTokens (MiniMeToken.sol#415) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 431,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function destroyTokens(address _owner, uint _amount) onlyController public returns (bool) {\n",
+                    "message": "Parameter '_owner' of MiniMeToken.destroyTokens (MiniMeToken.sol#431) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 431,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function destroyTokens(address _owner, uint _amount) onlyController public returns (bool) {\n",
+                    "message": "Parameter '_amount' of MiniMeToken.destroyTokens (MiniMeToken.sol#431) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 449,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function enableTransfers(bool _transfersEnabled) onlyController public {\n",
+                    "message": "Parameter '_transfersEnabled' of MiniMeToken.enableTransfers (MiniMeToken.sol#449) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 461,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getValueAt(Checkpoint[] storage checkpoints, uint _block) constant internal returns (uint) {\n",
+                    "message": "Parameter '_block' of MiniMeToken.getValueAt (MiniMeToken.sol#461) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 489,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function updateValueAtNow(Checkpoint[] storage checkpoints, uint _value) internal {\n",
+                    "message": "Parameter '_value' of MiniMeToken.updateValueAtNow (MiniMeToken.sol#489) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 503,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isContract(address _addr) constant internal returns(bool) {\n",
+                    "message": "Parameter '_addr' of MiniMeToken.isContract (MiniMeToken.sol#503) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 537,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function claimTokens(address _token) onlyController public {\n",
+                    "message": "Parameter '_token' of MiniMeToken.claimTokens (MiniMeToken.sol#537) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 584,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        MiniMeToken _parentToken,\n",
+                    "message": "Parameter '_parentToken' of MiniMeTokenFactory.createCloneToken (MiniMeToken.sol#584) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 585,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint _snapshotBlock,\n",
+                    "message": "Parameter '_snapshotBlock' of MiniMeTokenFactory.createCloneToken (MiniMeToken.sol#585) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 586,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string _tokenName,\n",
+                    "message": "Parameter '_tokenName' of MiniMeTokenFactory.createCloneToken (MiniMeToken.sol#586) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 587,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint8 _decimalUnits,\n",
+                    "message": "Parameter '_decimalUnits' of MiniMeTokenFactory.createCloneToken (MiniMeToken.sol#587) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 588,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string _tokenSymbol,\n",
+                    "message": "Parameter '_tokenSymbol' of MiniMeTokenFactory.createCloneToken (MiniMeToken.sol#588) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 589,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bool _transfersEnabled\n",
+                    "message": "Parameter '_transfersEnabled' of MiniMeTokenFactory.createCloneToken (MiniMeToken.sol#589) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ARRAY_LENGTH_MANIPULATION",
+                    "vulnerability_from_line": 491,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            Checkpoint storage newCheckPoint = checkpoints[checkpoints.length++];\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 249,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOf(address _owner) public constant returns (uint256 balance) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 284,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allowance(address _owner, address _spender) public constant returns (uint256 remaining) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 310,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function totalSupply() public constant returns (uint) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 323,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOfAt(address _owner, uint _blockNumber) public constant returns (uint) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 347,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function totalSupplyAt(uint _blockNumber) public constant returns(uint) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 461,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getValueAt(Checkpoint[] storage checkpoints, uint _block) constant internal returns (uint) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 503,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isContract(address _addr) constant internal returns(bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 259,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _amount) public returns (bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 474,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        while (max > min) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.24;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.24;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 81,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes _data\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 157,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string _tokenName,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 159,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string _tokenSymbol,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 295,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approveAndCall(ApproveAndCallFallBack _spender, uint256 _amount, bytes _extraData) public returns (bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 382,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string _cloneTokenName,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 384,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string _cloneTokenSymbol,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 586,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string _tokenName,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 588,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string _tokenSymbol,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 122,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping (address => Checkpoint[]) balances;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 125,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping (address => mapping (address => uint256)) allowed;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 128,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    Checkpoint[] totalSupplyHistory;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "aragon-apps-cdaee275d2831168a4ce2b9843a1f62abcf8e210/shared/minime/contracts/ITokenController.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.24;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "aragon-apps-cdaee275d2831168a4ce2b9843a1f62abcf8e210/future-apps/payroll/test/mocks/ExecutionTarget.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "inefficient-state-variable-increment",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        counter += 1;\n",
+                    "message": "<x> += <y> costs more gas than <x> = <x> + <y> for state variables."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.4.18;\n",
+                    "message": "Detected issues with version pragma in ExecutionTarget.sol:\n\t- pragma solidity0.4.18 (ExecutionTarget.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "aragon-apps-cdaee275d2831168a4ce2b9843a1f62abcf8e210/future-apps/payroll/test/mocks/Zombie.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "suicidal",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": 17,
+                    "vulnerability_code": "    function escapeHatch() public {\n\n        selfdestruct(owner);\n",
+                    "message": "Zombie.escapeHatch (Zombie.sol#15-17) allows anyone to destruct the contract\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function() public payable {}\n",
+                    "message": "Zombie.fallback (Zombie.sol#13) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": 17,
+                    "vulnerability_code": "    function escapeHatch() public {\n\n        selfdestruct(owner);\n",
+                    "message": "Zombie.escapeHatch (Zombie.sol#15-17) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.4.18;\n",
+                    "message": "Detected issues with version pragma in Zombie.sol:\n\t- pragma solidity0.4.18 (Zombie.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": 11,
+                    "vulnerability_code": "    function Zombie(address _owner) public {\n\n        owner = _owner;\n",
+                    "message": "Function 'Zombie.Zombie' (Zombie.sol#9-11) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function Zombie(address _owner) public {\n",
+                    "message": "Parameter '_owner' of Zombie.Zombie (Zombie.sol#9) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function() public payable {}\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "aragon-apps-cdaee275d2831168a4ce2b9843a1f62abcf8e210/future-apps/payroll/test/mocks/oracle/OracleMock.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": 29,
+                    "vulnerability_code": "    function query(address pr, address token) public returns(bool) {\n\n        uint256 rate = toInt(token);\n\n        setRate(pr, token, rate);\n\n        return true;\n",
+                    "message": "OracleMock.query (OracleMock.sol#25-29) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function query(address token, address pr) public returns(bool);\n",
+                    "message": "OracleInterface.query (OracleMock.sol#8) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.4.18;\n",
+                    "message": "Detected issues with version pragma in OracleMock.sol:\n\t- pragma solidity0.4.18 (OracleMock.sol#3): it allows old versions\n\t- pragma solidity0.4.18 (OracleMock.sol#13): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setExchangeRate(address, uint256) external;\n",
+                    "message": "Parameter '' of PayrollInterface.setExchangeRate (OracleMock.sol#16) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setExchangeRate(address, uint256) external;\n",
+                    "message": "Parameter '_scope_0' of PayrollInterface.setExchangeRate (OracleMock.sol#16) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "aragon-apps-cdaee275d2831168a4ce2b9843a1f62abcf8e210/future-apps/payroll/test/mocks/oracle/OracleInterface.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function query(address token, address pr) public returns(bool);\n",
+                    "message": "OracleInterface.query (OracleInterface.sol#8) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.4.18;\n",
+                    "message": "Detected issues with version pragma in OracleInterface.sol:\n\t- pragma solidity0.4.18 (OracleInterface.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "aragon-apps-cdaee275d2831168a4ce2b9843a1f62abcf8e210/future-apps/payroll/test/mocks/oracle/OracleFailMock.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public exchangeRate;\n",
+                    "message": "OracleFailMock.exchangeRate should be constant (OracleFailMock.sol#21)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function query(address token, address pr) public returns(bool);\n",
+                    "message": "OracleInterface.query (OracleFailMock.sol#8) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": 30,
+                    "vulnerability_code": "    function query(address pr, address token) public returns(bool) {\n\n        uint256 rate = 0;\n\n        setRate(pr, token, rate);\n\n        return true;\n",
+                    "message": "OracleFailMock.query (OracleFailMock.sol#26-30) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.4.18;\n",
+                    "message": "Detected issues with version pragma in OracleFailMock.sol:\n\t- pragma solidity0.4.18 (OracleFailMock.sol#3): it allows old versions\n\t- pragma solidity0.4.18 (OracleFailMock.sol#13): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setExchangeRate(address, uint256) external;\n",
+                    "message": "Parameter '' of PayrollInterface.setExchangeRate (OracleFailMock.sol#16) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setExchangeRate(address, uint256) external;\n",
+                    "message": "Parameter '_scope_0' of PayrollInterface.setExchangeRate (OracleFailMock.sol#16) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "aragon-apps-cdaee275d2831168a4ce2b9843a1f62abcf8e210/future-apps/payroll/contracts/Migrations.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": 21,
+                    "vulnerability_code": "    function setCompleted(uint completed) public restricted {\n\n        last_completed_migration = completed;\n",
+                    "message": "Migrations.setCompleted (Migrations.sol#19-21) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": 26,
+                    "vulnerability_code": "    function upgrade(address new_address) public restricted {\n\n        Migrations upgraded = Migrations(new_address);\n\n        upgraded.setCompleted(last_completed_migration);\n",
+                    "message": "Migrations.upgrade (Migrations.sol#23-26) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.4.18;\n",
+                    "message": "Detected issues with version pragma in Migrations.sol:\n\t- pragma solidity0.4.18 (Migrations.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": 17,
+                    "vulnerability_code": "    function Migrations() public {\n\n        owner = msg.sender;\n",
+                    "message": "Function 'Migrations.Migrations' (Migrations.sol#15-17) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgrade(address new_address) public restricted {\n",
+                    "message": "Parameter 'new_address' of Migrations.upgrade (Migrations.sol#23) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint public last_completed_migration;\n",
+                    "message": "Variable 'Migrations.last_completed_migration' (Migrations.sol#8) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "aragon-apps-cdaee275d2831168a4ce2b9843a1f62abcf8e210/apps/token-manager/contracts/test/mocks/ExecutionTarget.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "inefficient-state-variable-increment",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        counter += 1;\n",
+                    "message": "<x> += <y> costs more gas than <x> = <x> + <y> for state variables."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": 12,
+                    "vulnerability_code": "    function execute() public {\n\n        counter += 1;\n\n        emit Executed(counter);\n",
+                    "message": "ExecutionTarget.execute (ExecutionTarget.sol#9-12) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": 16,
+                    "vulnerability_code": "    function setCounter(uint x) public {\n\n        counter = x;\n",
+                    "message": "ExecutionTarget.setCounter (ExecutionTarget.sol#14-16) should be declared external\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "aragon-apps-cdaee275d2831168a4ce2b9843a1f62abcf8e210/apps/voting/contracts/test/mocks/ExecutionTarget.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "inefficient-state-variable-increment",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        counter += 1;\n",
+                    "message": "<x> += <y> costs more gas than <x> = <x> + <y> for state variables."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": 12,
+                    "vulnerability_code": "    function execute() public {\n\n        counter += 1;\n\n        emit Executed(counter);\n",
+                    "message": "ExecutionTarget.execute (ExecutionTarget.sol#9-12) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": 16,
+                    "vulnerability_code": "    function setCounter(uint x) public {\n\n        counter = x;\n",
+                    "message": "ExecutionTarget.setCounter (ExecutionTarget.sol#14-16) should be declared external\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "aragon-apps-cdaee275d2831168a4ce2b9843a1f62abcf8e210/apps/finance/contracts/test/mocks/ExecutionTarget.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "inefficient-state-variable-increment",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        counter += 1;\n",
+                    "message": "<x> += <y> costs more gas than <x> = <x> + <y> for state variables."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": 12,
+                    "vulnerability_code": "    function execute() public {\n\n        counter += 1;\n\n        emit Executed(counter);\n",
+                    "message": "ExecutionTarget.execute (ExecutionTarget.sol#9-12) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": 16,
+                    "vulnerability_code": "    function setCounter(uint x) public {\n\n        counter = x;\n",
+                    "message": "ExecutionTarget.setCounter (ExecutionTarget.sol#14-16) should be declared external\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "aragon-apps-cdaee275d2831168a4ce2b9843a1f62abcf8e210/apps/finance/contracts/test/mocks/ForceSendETH.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "aragon-apps-cdaee275d2831168a4ce2b9843a1f62abcf8e210/apps/vault/test/mocks/DestinationMock.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "locked-ether",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": 11,
+                    "vulnerability_code": "    function () external payable {\n\n        test = test + 1;\n",
+                    "message": "Contract locking ether found in DestinationMock.sol:\n\tContract DestinationMock has payable functions:\n\t - fallback (DestinationMock.sol#9-11)\n\tBut does not have a function to withdraw the ether\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract DestinationMock {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 test;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "aragon-apps-cdaee275d2831168a4ce2b9843a1f62abcf8e210/apps/vault/contracts/test/mocks/SimpleERC20.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        balances[msg.sender] = _totalSupply;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (balances[msg.sender] >= _amount\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            && _amount > 0\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            && balances[_to] + _amount > balances[_to]) {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            balances[msg.sender] -= _amount;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            balances[_to] += _amount;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            return true;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        } else {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            return false;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        }\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 59,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (balances[_from] >= _amount\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 60,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            && allowed[_from][msg.sender] >= _amount\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            && _amount > 0\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            && balances[_to] + _amount > balances[_to]) {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            balances[_from] -= _amount;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            allowed[_from][msg.sender] -= _amount;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            balances[_to] += _amount;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 66,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            return true;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 67,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        } else {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            return false;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_18"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public _totalSupply = 10**9 * 10**18;\n",
+                    "message": "SimpleERC20._totalSupply should be constant (SimpleERC20.sol#10)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": 23,
+                    "vulnerability_code": "    function totalSupply() public view returns (uint ts) {\n\n        ts = _totalSupply;\n",
+                    "message": "SimpleERC20.totalSupply (SimpleERC20.sol#21-23) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": 28,
+                    "vulnerability_code": "    function balanceOf(address _owner) public view returns (uint256 balance) {\n\n        return balances[_owner];\n",
+                    "message": "SimpleERC20.balanceOf (SimpleERC20.sol#26-28) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": 42,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _amount) public returns (bool success) {\n\n        /* solium-disable-next-line */\n\n        if (balances[msg.sender] >= _amount\n\n            && _amount > 0\n\n            && balances[_to] + _amount > balances[_to]) {\n\n            balances[msg.sender] -= _amount;\n\n            balances[_to] += _amount;\n\n            return true;\n\n        } else {\n\n            return false;\n\n        }\n",
+                    "message": "SimpleERC20.transfer (SimpleERC20.sol#31-42) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 50,
+                    "vulnerability_to_line": 70,
+                    "vulnerability_code": "    function transferFrom(\n\n        address _from,\n\n        address _to,\n\n        uint256 _amount\n\n    )\n\n        public\n\n        returns (bool success)\n\n    {\n\n        /* solium-disable-next-line */\n\n        if (balances[_from] >= _amount\n\n            && allowed[_from][msg.sender] >= _amount\n\n            && _amount > 0\n\n            && balances[_to] + _amount > balances[_to]) {\n\n            balances[_from] -= _amount;\n\n            allowed[_from][msg.sender] -= _amount;\n\n            balances[_to] += _amount;\n\n            return true;\n\n        } else {\n\n            return false;\n\n        }\n",
+                    "message": "SimpleERC20.transferFrom (SimpleERC20.sol#50-70) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": 77,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _amount) public returns (bool success) {\n\n        allowed[msg.sender][_spender] = _amount;\n\n        return true;\n",
+                    "message": "SimpleERC20.approve (SimpleERC20.sol#74-77) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": 82,
+                    "vulnerability_code": "    function allowance(address _owner, address _spender) public view returns (uint remaining) {\n\n        remaining = allowed[_owner][_spender];\n",
+                    "message": "SimpleERC20.allowance (SimpleERC20.sol#80-82) should be declared external\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOf(address _owner) public view returns (uint256 balance) {\n",
+                    "message": "Parameter '_owner' of SimpleERC20.balanceOf (SimpleERC20.sol#26) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _amount) public returns (bool success) {\n",
+                    "message": "Parameter '_to' of SimpleERC20.transfer (SimpleERC20.sol#31) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _amount) public returns (bool success) {\n",
+                    "message": "Parameter '_amount' of SimpleERC20.transfer (SimpleERC20.sol#31) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 51,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _from,\n",
+                    "message": "Parameter '_from' of SimpleERC20.transferFrom (SimpleERC20.sol#51) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _to,\n",
+                    "message": "Parameter '_to' of SimpleERC20.transferFrom (SimpleERC20.sol#52) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _amount\n",
+                    "message": "Parameter '_amount' of SimpleERC20.transferFrom (SimpleERC20.sol#53) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _amount) public returns (bool success) {\n",
+                    "message": "Parameter '_spender' of SimpleERC20.approve (SimpleERC20.sol#74) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _amount) public returns (bool success) {\n",
+                    "message": "Parameter '_amount' of SimpleERC20.approve (SimpleERC20.sol#74) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allowance(address _owner, address _spender) public view returns (uint remaining) {\n",
+                    "message": "Parameter '_owner' of SimpleERC20.allowance (SimpleERC20.sol#80) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allowance(address _owner, address _spender) public view returns (uint remaining) {\n",
+                    "message": "Parameter '_spender' of SimpleERC20.allowance (SimpleERC20.sol#80) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public _totalSupply = 10**9 * 10**18;\n",
+                    "message": "Variable 'SimpleERC20._totalSupply' (SimpleERC20.sol#10) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _amount) public returns (bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_TRANSFER_SHOULD_THROW",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _amount) public returns (bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_TRANSFER_SHOULD_THROW",
+                    "vulnerability_from_line": 50,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(address => uint256) private balances;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(address => mapping (address => uint256)) private allowed;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

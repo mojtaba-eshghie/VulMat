@@ -1,0 +1,395 @@
+{
+    "simple-multisig-master/contracts/TestRegistry.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "locked-ether",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": 12,
+                    "vulnerability_code": "  function register(uint x) payable public {\n\n    registry[msg.sender] = x;\n",
+                    "message": "Contract locking ether found in TestRegistry.sol:\n\tContract TestRegistry has payable functions:\n\t - register (TestRegistry.sol#10-12)\n\tBut does not have a function to withdraw the ether\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": 12,
+                    "vulnerability_code": "  function register(uint x) payable public {\n\n    registry[msg.sender] = x;\n",
+                    "message": "TestRegistry.register (TestRegistry.sol#10-12) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in TestRegistry.sol:\n\t- pragma solidity^0.4.18 (TestRegistry.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract TestRegistry {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "simple-multisig-master/contracts/SimpleMultiSig.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint i = 0; i < owners_.length; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor(uint threshold_, address[] owners_, uint chainId) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(owners_.length <= 10 && threshold_ <= owners_.length && threshold_ > 0);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address lastAdd = address(0);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint i = 0; i < owners_.length; i++) {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      require(owners_[i] > lastAdd);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      isOwner[owners_[i]] = true;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      lastAdd = owners_[i];\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ownersArr = owners_;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      isOwner[owners_[i]] = true;\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint i = 0; i < threshold; i++) {\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      require(recovered > lastAdd && isOwner[recovered]);\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint i = 0; i < owners_.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint i = 0; i < threshold; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(owners_.length <= 10 && threshold_ <= owners_.length && threshold_ > 0);\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(sigR.length == sigS.length && sigR.length == sigV.length);\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      require(recovered > lastAdd && isOwner[recovered]);\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint i = 0; i < owners_.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint i = 0; i < threshold; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_4"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "locked-ether",
+                    "vulnerability_from_line": 77,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function () payable external {}\n",
+                    "message": "Contract locking ether found in SimpleMultiSig.sol:\n\tContract SimpleMultiSig has payable functions:\n\t - fallback (SimpleMultiSig.sol#77)\n\tBut does not have a function to withdraw the ether\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": 75,
+                    "vulnerability_code": "  function execute(uint8[] sigV, bytes32[] sigR, bytes32[] sigS, address destination, uint value, bytes data, address executor, uint gasLimit) public {\n\n    require(sigR.length == threshold);\n\n    require(sigR.length == sigS.length && sigR.length == sigV.length);\n\n    require(executor == msg.sender || executor == address(0));\n\n\n\n    // EIP712 scheme: https://github.com/ethereum/EIPs/blob/master/EIPS/eip-712.md\n\n    bytes32 txInputHash = keccak256(abi.encode(TXTYPE_HASH, destination, value, keccak256(data), nonce, executor, gasLimit));\n\n    bytes32 totalHash = keccak256(abi.encodePacked(\"\\x19\\x01\", DOMAIN_SEPARATOR, txInputHash));\n\n\n\n    address lastAdd = address(0); // cannot have address(0) as an owner\n\n    for (uint i = 0; i < threshold; i++) {\n\n      address recovered = ecrecover(totalHash, sigV[i], sigR[i], sigS[i]);\n\n      require(recovered > lastAdd && isOwner[recovered]);\n\n      lastAdd = recovered;\n\n    }\n\n\n\n    // If we make it here all signatures are accounted for.\n\n    // The address.call() syntax is no longer recommended, see:\n\n    // https://github.com/ethereum/solidity/issues/2884\n\n    nonce = nonce + 1;\n\n    bool success = false;\n\n    assembly { success := call(gasLimit, destination, value, add(data, 0x20), mload(data), 0, 0) }\n\n    require(success);\n",
+                    "message": "SimpleMultiSig.execute uses assembly (SimpleMultiSig.sol#52-75)\n\t- SimpleMultiSig.sol#73-74\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": 75,
+                    "vulnerability_code": "  function execute(uint8[] sigV, bytes32[] sigR, bytes32[] sigS, address destination, uint value, bytes data, address executor, uint gasLimit) public {\n\n    require(sigR.length == threshold);\n\n    require(sigR.length == sigS.length && sigR.length == sigV.length);\n\n    require(executor == msg.sender || executor == address(0));\n\n\n\n    // EIP712 scheme: https://github.com/ethereum/EIPs/blob/master/EIPS/eip-712.md\n\n    bytes32 txInputHash = keccak256(abi.encode(TXTYPE_HASH, destination, value, keccak256(data), nonce, executor, gasLimit));\n\n    bytes32 totalHash = keccak256(abi.encodePacked(\"\\x19\\x01\", DOMAIN_SEPARATOR, txInputHash));\n\n\n\n    address lastAdd = address(0); // cannot have address(0) as an owner\n\n    for (uint i = 0; i < threshold; i++) {\n\n      address recovered = ecrecover(totalHash, sigV[i], sigR[i], sigS[i]);\n\n      require(recovered > lastAdd && isOwner[recovered]);\n\n      lastAdd = recovered;\n\n    }\n\n\n\n    // If we make it here all signatures are accounted for.\n\n    // The address.call() syntax is no longer recommended, see:\n\n    // https://github.com/ethereum/solidity/issues/2884\n\n    nonce = nonce + 1;\n\n    bool success = false;\n\n    assembly { success := call(gasLimit, destination, value, add(data, 0x20), mload(data), 0, 0) }\n\n    require(success);\n",
+                    "message": "SimpleMultiSig.execute (SimpleMultiSig.sol#52-75) should be declared external\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  bytes32 DOMAIN_SEPARATOR;          // hash for EIP712, computed from contract address\n",
+                    "message": "Variable 'SimpleMultiSig.DOMAIN_SEPARATOR' (SimpleMultiSig.sol#28) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address lastAdd = address(0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address lastAdd = address(0); // cannot have address(0) as an owner\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint i = 0; i < owners_.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint i = 0; i < threshold; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint i = 0; i < owners_.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract SimpleMultiSig {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.24;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor(uint threshold_, address[] owners_, uint chainId) public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function execute(uint8[] sigV, bytes32[] sigR, bytes32[] sigS, address destination, uint value, bytes data, address executor, uint gasLimit) public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function execute(uint8[] sigV, bytes32[] sigR, bytes32[] sigS, address destination, uint value, bytes data, address executor, uint gasLimit) public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function execute(uint8[] sigV, bytes32[] sigR, bytes32[] sigS, address destination, uint value, bytes data, address executor, uint gasLimit) public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function execute(uint8[] sigV, bytes32[] sigR, bytes32[] sigS, address destination, uint value, bytes data, address executor, uint gasLimit) public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 73,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    assembly { success := call(gasLimit, destination, value, add(data, 0x20), mload(data), 0, 0) }\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "bytes32 constant EIP712DOMAINTYPE_HASH = 0xd87cd6ef79d4e2b95e15ce8abf732db51ec771f1ca2edccf22a46c729ac56472;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "bytes32 constant NAME_HASH = 0xb7a0bfa1b79f2443f4d73ebb9259cddbcd510b18be6fc4da7d1aa7b1786e73e6;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "bytes32 constant VERSION_HASH = 0xc89efdaa54c0f20c7adf612882df0950f5a951637e0307cdcb4c672f298b8bc6;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "bytes32 constant TXTYPE_HASH = 0x3ee892349ae4bbe61dce18f95115b5dc02daf49204cc602458cd4c1f540d56d7;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "bytes32 constant SALT = 0x251543af6a222378665a76fe38dbceae4871a070b7fdaf5c6c30cf758dc33cc0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping (address => bool) isOwner; // immutable state\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  bytes32 DOMAIN_SEPARATOR;          // hash for EIP712, computed from contract address\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

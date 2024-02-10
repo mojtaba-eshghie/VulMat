@@ -1,0 +1,373 @@
+{
+    "MasterChef0x15Bee180BB39eE5c0166E63313C33984376930Db/contracts/lib/safe-math.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(c >= a, \"SafeMath: addition overflow\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 88,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(c / a == b, \"SafeMath: multiplication overflow\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 88,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(c / a == b, \"SafeMath: multiplication overflow\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": 7,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n\n\n",
+                    "message": "Detected issues with version pragma in safe-math.sol:\n\t- pragma solidity^0.6.0 (safe-math.sol#5-7): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "MasterChef0x15Bee180BB39eE5c0166E63313C33984376930Db/contracts/lib/ownable.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor () internal {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address msgSender = _msgSender();\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        _owner = msgSender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 56,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        emit OwnershipTransferred(address(0), msgSender);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 70,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_owner == _msgSender(), \"Ownable: caller is not the owner\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 91,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(newOwner != address(0), \"Ownable: new owner is the zero address\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 91,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(newOwner != address(0), \"Ownable: new owner is the zero address\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        _owner = address(0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address private _owner;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "MasterChef0x15Bee180BB39eE5c0166E63313C33984376930Db/contracts/lib/enumerableSet.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(set._values.length > index, \"EnumerableSet: index out of bounds\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(set._values.length > index, \"EnumerableSet: index out of bounds\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_7"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": 111,
+                    "vulnerability_code": "    function _remove(Set storage set, bytes32 value) private returns (bool) {\n\n        // We read and store the value's index to prevent multiple reads from the same storage slot\n\n        uint256 valueIndex = set._indexes[value];\n\n\n\n        if (valueIndex != 0) { // Equivalent to contains(set, value)\n\n            // To delete an element from the _values array in O(1), we swap the element to delete with the last one in\n\n            // the array, and then remove the last element (sometimes called as 'swap and pop').\n\n            // This modifies the order of the array, as noted in {at}.\n\n\n\n            uint256 toDeleteIndex = valueIndex - 1;\n\n            uint256 lastIndex = set._values.length - 1;\n\n\n\n            // When the value to delete is the last one, the swap operation is unnecessary. However, since this occurs\n\n            // so rarely, we still do the swap anyway to avoid the gas cost of adding an 'if' statement.\n\n\n\n            bytes32 lastvalue = set._values[lastIndex];\n\n\n\n            // Move the last value to the index where the value to delete is\n\n            set._values[toDeleteIndex] = lastvalue;\n\n            // Update the index for the moved value\n\n            set._indexes[lastvalue] = toDeleteIndex + 1; // All indexes are 1-based\n\n\n\n            // Delete the slot where the moved value was stored\n\n            set._values.pop();\n\n\n\n            // Delete the index for the deleted slot\n\n            delete set._indexes[value];\n\n\n\n            return true;\n\n        } else {\n\n            return false;\n\n        }\n\n    }\n\n\n\n    /**\n\n     * @dev Returns true if the value is in the set. O(1).\n\n     */\n",
+                    "message": "EnumerableSet._remove (enumerableSet.sol#74-111) does not use the value returned by external calls:\n\t-set._values.pop() (enumerableSet.sol#100)\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": 7,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n\n\n",
+                    "message": "Detected issues with version pragma in enumerableSet.sol:\n\t- pragma solidity^0.6.0 (enumerableSet.sol#5-7): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 56,
+                    "vulnerability_to_line": 71,
+                    "vulnerability_code": "    function _add(Set storage set, bytes32 value) private returns (bool) {\n\n        if (!_contains(set, value)) {\n\n            set._values.push(value);\n\n            // The value is stored at length-1, but we add 1 to all indexes\n\n            // and use 0 as a sentinel value\n\n            set._indexes[value] = set._values.length;\n\n            return true;\n\n        } else {\n\n            return false;\n\n        }\n\n    }\n\n\n\n    /**\n\n     * @dev Removes a value from a set. O(1).\n\n     *\n",
+                    "message": "Function 'EnumerableSet._add' (enumerableSet.sol#56-71) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": 111,
+                    "vulnerability_code": "    function _remove(Set storage set, bytes32 value) private returns (bool) {\n\n        // We read and store the value's index to prevent multiple reads from the same storage slot\n\n        uint256 valueIndex = set._indexes[value];\n\n\n\n        if (valueIndex != 0) { // Equivalent to contains(set, value)\n\n            // To delete an element from the _values array in O(1), we swap the element to delete with the last one in\n\n            // the array, and then remove the last element (sometimes called as 'swap and pop').\n\n            // This modifies the order of the array, as noted in {at}.\n\n\n\n            uint256 toDeleteIndex = valueIndex - 1;\n\n            uint256 lastIndex = set._values.length - 1;\n\n\n\n            // When the value to delete is the last one, the swap operation is unnecessary. However, since this occurs\n\n            // so rarely, we still do the swap anyway to avoid the gas cost of adding an 'if' statement.\n\n\n\n            bytes32 lastvalue = set._values[lastIndex];\n\n\n\n            // Move the last value to the index where the value to delete is\n\n            set._values[toDeleteIndex] = lastvalue;\n\n            // Update the index for the moved value\n\n            set._indexes[lastvalue] = toDeleteIndex + 1; // All indexes are 1-based\n\n\n\n            // Delete the slot where the moved value was stored\n\n            set._values.pop();\n\n\n\n            // Delete the index for the deleted slot\n\n            delete set._indexes[value];\n\n\n\n            return true;\n\n        } else {\n\n            return false;\n\n        }\n\n    }\n\n\n\n    /**\n\n     * @dev Returns true if the value is in the set. O(1).\n\n     */\n",
+                    "message": "Function 'EnumerableSet._remove' (enumerableSet.sol#74-111) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 112,
+                    "vulnerability_to_line": 118,
+                    "vulnerability_code": "        return set._indexes[value] != 0;\n\n    }\n\n\n\n    /**\n\n     * @dev Returns the number of values on the set. O(1).\n\n     */\n",
+                    "message": "Function 'EnumerableSet._contains' (enumerableSet.sol#112-118) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 122,
+                    "vulnerability_to_line": 125,
+                    "vulnerability_code": "   /**\n\n    * @dev Returns the value stored at position `index` in the set. O(1).\n\n    *\n",
+                    "message": "Function 'EnumerableSet._length' (enumerableSet.sol#122-125) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": 146,
+                    "vulnerability_code": "        require(set._values.length > index, \"EnumerableSet: index out of bounds\");\n\n        return set._values[index];\n\n    }\n\n\n\n    // AddressSet\n\n\n\n    struct AddressSet {\n\n        Set _inner;\n\n    }\n\n\n\n    /**\n\n     * @dev Add a value to a set. O(1).\n\n     *\n",
+                    "message": "Function 'EnumerableSet._at' (enumerableSet.sol#133-146) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "MasterChef0x15Bee180BB39eE5c0166E63313C33984376930Db/contracts/lib/context.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": 7,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n\n\n",
+                    "message": "Detected issues with version pragma in context.sol:\n\t- pragma solidity^0.6.0 (context.sol#5-7): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": 22,
+                    "vulnerability_code": "    function _msgSender() internal view virtual returns (address payable) {\n\n        return msg.sender;\n\n    }\n\n\n",
+                    "message": "Function 'Context._msgSender' (context.sol#18-22) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": 26,
+                    "vulnerability_code": "    function _msgData() internal view virtual returns (bytes memory) {\n\n        this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691\n\n        return msg.data;\n\n    }\n",
+                    "message": "Function 'Context._msgData' (context.sol#22-26) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "MasterChef0x15Bee180BB39eE5c0166E63313C33984376930Db/contracts/interfaces/strategy.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.2;\n",
+                    "message": "Detected issues with version pragma in strategy.sol:\n\t- pragma solidity^0.6.2 (strategy.sol#4): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function withdrawForSwap(uint256) external returns (uint256);\n",
+                    "message": "Parameter '' of IStrategy.withdrawForSwap (strategy.sol#17) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function withdraw(address) external;\n",
+                    "message": "Parameter '' of IStrategy.withdraw (strategy.sol#19) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function withdraw(uint256) external;\n",
+                    "message": "Parameter '' of IStrategy.withdraw (strategy.sol#21) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function withdrawAll(address) external returns (uint256);\n",
+                    "message": "Parameter '' of IStrategy.withdrawAll (strategy.sol#25) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setTimelock(address) external;\n",
+                    "message": "Parameter '' of IStrategy.setTimelock (strategy.sol#33) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.2;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

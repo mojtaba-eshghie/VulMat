@@ -1,0 +1,808 @@
+{
+    "Liquidity_v9(1).sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 170,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Liquidity_v8 is Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 105,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() internal {}\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() internal {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 132,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        _owner = _msgSender();\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        emit OwnershipTransferred(address(0), _owner);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 237,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 238,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string memory name_,\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 239,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address tokenAddress_,\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 240,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address rewardTokenAddress_,\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 241,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint64 rate_,\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 242,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 lockDuration_\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 243,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) public Ownable() {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 244,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        name = name_;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 245,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(tokenAddress_ != address(0), \"Token address: 0 address\");\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 246,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        tokenAddress = tokenAddress_;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 461,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint64 i = userIndex; i < index; i++) {\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 463,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            if (endTime < rates[i + 1].timeStamp) {\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 467,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                time = rates[i + 1].timeStamp.sub(depositTime);\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 468,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                interest = amount.mul(rates[i].newInterestRate).mul(time).div(\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 472,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                depositTime = rates[i + 1].timeStamp;\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 461,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint64 i = userIndex; i < index; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(c >= a, \"SafeMath: addition overflow\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(b <= a, \"SafeMath: subtraction overflow\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(c / a == b, \"SafeMath: multiplication overflow\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 87,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(b > 0, \"SafeMath: division by zero\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 95,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(b != 0, \"SafeMath: modulo by zero\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(isOwner(), \"Ownable: caller is not the owner\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 159,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 160,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            newOwner != address(0),\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 161,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Ownable: new owner is the zero address\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 162,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 245,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(tokenAddress_ != address(0), \"Token address: 0 address\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 247,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 248,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            rewardTokenAddress_ != address(0),\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 249,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Reward token address: 0 address\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 250,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 252,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(rate_ != 0, \"Zero interest rate\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 262,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(rate_ != 0, \"Zero interest rate\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 286,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(rewardAmount > 0, \"Reward must be positive\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 333,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(amount > 0, \"Can't stake 0 amount\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 335,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(hasStaked[from] == false, \"Already staked\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 364,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(hasStaked[from] == true, \"No stakes found for user\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 365,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 366,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            block.timestamp >= deposits[from].endTime,\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 367,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Requesting before lock time\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 368,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 369,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(deposits[from].paid == false, \"Already paid out\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 378,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(reward <= rewardBalance, \"Not enough rewards\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 387,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(principalPaid && rewardPaid, \"Error paying\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 411,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(hasStaked[from] == true, \"No stakes found for user\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 412,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 413,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            block.timestamp >= deposits[from].endTime,\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 414,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Requesting before lock time\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 415,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 416,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(deposits[from].paid == false, \"Already paid out\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 428,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(principalPaid, \"Error paying\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 530,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(amount <= ourAllowance, \"Make sure to add enough allowance\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 387,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(principalPaid && rewardPaid, \"Error paying\");\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 263,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        index++;\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 461,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint64 i = userIndex; i < index; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 473,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                userIndex++;\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(c / a == b, \"SafeMath: multiplication overflow\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 159,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 160,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            newOwner != address(0),\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 161,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Ownable: new owner is the zero address\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 162,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 530,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(amount <= ourAllowance, \"Make sure to add enough allowance\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_30"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "incorrect-equality",
+                    "vulnerability_from_line": 409,
+                    "vulnerability_to_line": 419,
+                    "vulnerability_code": "    function emergencyWithdraw() external returns (bool) {\n\n        address from = msg.sender;\n\n        require(hasStaked[from] == true, \"No stakes found for user\");\n\n        require(\n\n            block.timestamp >= deposits[from].endTime,\n\n            \"Requesting before lock time\"\n\n        );\n\n        require(deposits[from].paid == false, \"Already paid out\");\n\n\n\n        return (_emergencyWithdraw(from));\n",
+                    "message": "Liquidity_v8.emergencyWithdraw (Liquidity_v9(1).sol#409-419) uses a dangerous strict equality:\n\t- require(bool,string)(deposits[from].paid == false,Already paid out)\n"
+                },
+                {
+                    "name": "incorrect-equality",
+                    "vulnerability_from_line": 409,
+                    "vulnerability_to_line": 419,
+                    "vulnerability_code": "    function emergencyWithdraw() external returns (bool) {\n\n        address from = msg.sender;\n\n        require(hasStaked[from] == true, \"No stakes found for user\");\n\n        require(\n\n            block.timestamp >= deposits[from].endTime,\n\n            \"Requesting before lock time\"\n\n        );\n\n        require(deposits[from].paid == false, \"Already paid out\");\n\n\n\n        return (_emergencyWithdraw(from));\n",
+                    "message": "Liquidity_v8.emergencyWithdraw (Liquidity_v9(1).sol#409-419) uses a dangerous strict equality:\n\t- require(bool,string)(deposits[from].paid == false,Already paid out)\nLiquidity_v8.withdraw (Liquidity_v9(1).sol#362-372) uses a dangerous strict equality:\n\t- require(bool,string)(deposits[from].paid == false,Already paid out)\n"
+                },
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 374,
+                    "vulnerability_to_line": 391,
+                    "vulnerability_code": "    function _withdraw(address from) private returns (bool) {\n\n        uint256 getPeggedBNF = getPeggedValue();\n\n        uint256 reward = _calculate(from).mul(getPeggedBNF).div(10**18);\n\n        uint256 amount = deposits[from].depositAmount;\n\n        require(reward <= rewardBalance, \"Not enough rewards\");\n\n\n\n        stakedBalance = stakedBalance.sub(amount);\n\n        rewardBalance = rewardBalance.sub(reward);\n\n        deposits[from].paid = true;\n\n        hasStaked[from] = false; //Check-Effects-Interactions pattern\n\n\n\n        bool principalPaid = _payDirect(from, amount, tokenAddress);\n\n        bool rewardPaid = _payDirect(from, reward, rewardTokenAddress);\n\n        require(principalPaid && rewardPaid, \"Error paying\");\n\n        emit PaidOut(tokenAddress, rewardTokenAddress, from, amount, reward);\n\n\n\n        return true;\n",
+                    "message": "Reentrancy in Liquidity_v8._withdraw (Liquidity_v9(1).sol#374-391):\n\tExternal calls:\n\t- getPeggedBNF = getPeggedValue() (Liquidity_v9(1).sol#375)\n\t- principalPaid = _payDirect(from,amount,tokenAddress) (Liquidity_v9(1).sol#385)\n\tState variables written after the call(s):\n\t- ERC20Interface (Liquidity_v9(1).sol#385)\n"
+                },
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 374,
+                    "vulnerability_to_line": 391,
+                    "vulnerability_code": "    function _withdraw(address from) private returns (bool) {\n\n        uint256 getPeggedBNF = getPeggedValue();\n\n        uint256 reward = _calculate(from).mul(getPeggedBNF).div(10**18);\n\n        uint256 amount = deposits[from].depositAmount;\n\n        require(reward <= rewardBalance, \"Not enough rewards\");\n\n\n\n        stakedBalance = stakedBalance.sub(amount);\n\n        rewardBalance = rewardBalance.sub(reward);\n\n        deposits[from].paid = true;\n\n        hasStaked[from] = false; //Check-Effects-Interactions pattern\n\n\n\n        bool principalPaid = _payDirect(from, amount, tokenAddress);\n\n        bool rewardPaid = _payDirect(from, reward, rewardTokenAddress);\n\n        require(principalPaid && rewardPaid, \"Error paying\");\n\n        emit PaidOut(tokenAddress, rewardTokenAddress, from, amount, reward);\n\n\n\n        return true;\n",
+                    "message": "Reentrancy in Liquidity_v8._withdraw (Liquidity_v9(1).sol#374-391):\n\tExternal calls:\n\t- getPeggedBNF = getPeggedValue() (Liquidity_v9(1).sol#375)\n\t- principalPaid = _payDirect(from,amount,tokenAddress) (Liquidity_v9(1).sol#385)\n\t- rewardPaid = _payDirect(from,reward,rewardTokenAddress) (Liquidity_v9(1).sol#386)\n\tState variables written after the call(s):\n\t- ERC20Interface (Liquidity_v9(1).sol#386)\n"
+                },
+                {
+                    "name": "uninitialized-local",
+                    "vulnerability_from_line": 459,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 interest;\n",
+                    "message": "interest in Liquidity_v8._calculate (Liquidity_v9(1).sol#459) is a local variable never initialiazed\n"
+                },
+                {
+                    "name": "reentrancy-benign",
+                    "vulnerability_from_line": 339,
+                    "vulnerability_to_line": 357,
+                    "vulnerability_code": "    function _stake(address staker, uint256 amount) private returns (bool) {\n\n        if (!_payMe(staker, amount, tokenAddress)) {\n\n            return false;\n\n        }\n\n        hasStaked[staker] = true;\n\n        deposits[staker] = Deposits(\n\n            amount,\n\n            block.timestamp,\n\n            block.timestamp.add((lockDuration.mul(86400))), //(lockDuration * 24 * 3600)\n\n            index,\n\n            false\n\n        );\n\n        emit Staked(tokenAddress, staker, amount);\n\n\n\n        // Transfer is completed\n\n        stakedBalance = stakedBalance.add(amount);\n\n        stakedTotal = stakedTotal.add(amount);\n\n        return true;\n",
+                    "message": "Reentrancy in Liquidity_v8._stake (Liquidity_v9(1).sol#339-357):\n\tExternal calls:\n\t- ! _payMe(staker,amount,tokenAddress) (Liquidity_v9(1).sol#340-342)\n\tState variables written after the call(s):\n\t- deposits (Liquidity_v9(1).sol#344-350)\n\t- hasStaked (Liquidity_v9(1).sol#343)\n\t- stakedBalance (Liquidity_v9(1).sol#354)\n\t- stakedTotal (Liquidity_v9(1).sol#355)\n"
+                },
+                {
+                    "name": "reentrancy-benign",
+                    "vulnerability_from_line": 374,
+                    "vulnerability_to_line": 391,
+                    "vulnerability_code": "    function _withdraw(address from) private returns (bool) {\n\n        uint256 getPeggedBNF = getPeggedValue();\n\n        uint256 reward = _calculate(from).mul(getPeggedBNF).div(10**18);\n\n        uint256 amount = deposits[from].depositAmount;\n\n        require(reward <= rewardBalance, \"Not enough rewards\");\n\n\n\n        stakedBalance = stakedBalance.sub(amount);\n\n        rewardBalance = rewardBalance.sub(reward);\n\n        deposits[from].paid = true;\n\n        hasStaked[from] = false; //Check-Effects-Interactions pattern\n\n\n\n        bool principalPaid = _payDirect(from, amount, tokenAddress);\n\n        bool rewardPaid = _payDirect(from, reward, rewardTokenAddress);\n\n        require(principalPaid && rewardPaid, \"Error paying\");\n\n        emit PaidOut(tokenAddress, rewardTokenAddress, from, amount, reward);\n\n\n\n        return true;\n",
+                    "message": "Reentrancy in Liquidity_v8._withdraw (Liquidity_v9(1).sol#374-391):\n\tExternal calls:\n\t- getPeggedBNF = getPeggedValue() (Liquidity_v9(1).sol#375)\n\tState variables written after the call(s):\n\t- deposits (Liquidity_v9(1).sol#382)\n\t- hasStaked (Liquidity_v9(1).sol#383)\n\t- rewardBalance (Liquidity_v9(1).sol#381)\n\t- stakedBalance (Liquidity_v9(1).sol#380)\n"
+                },
+                {
+                    "name": "reentrancy-benign",
+                    "vulnerability_from_line": 281,
+                    "vulnerability_to_line": 294,
+                    "vulnerability_code": "    function addReward(uint256 rewardAmount)\n\n        external\n\n        _hasAllowance(msg.sender, rewardAmount, rewardTokenAddress)\n\n        returns (bool)\n\n    {\n\n        require(rewardAmount > 0, \"Reward must be positive\");\n\n        address from = msg.sender;\n\n        if (!_payMe(from, rewardAmount, rewardTokenAddress)) {\n\n            return false;\n\n        }\n\n        totalReward = totalReward.add(rewardAmount);\n\n        rewardBalance = rewardBalance.add(rewardAmount);\n\n        return true;\n",
+                    "message": "Reentrancy in Liquidity_v8.addReward (Liquidity_v9(1).sol#281-294):\n\tExternal calls:\n\t- ! _payMe(from,rewardAmount,rewardTokenAddress) (Liquidity_v9(1).sol#288-290)\n\tState variables written after the call(s):\n\t- rewardBalance (Liquidity_v9(1).sol#292)\n\t- totalReward (Liquidity_v9(1).sol#291)\n"
+                },
+                {
+                    "name": "timestamp",
+                    "vulnerability_from_line": 362,
+                    "vulnerability_to_line": 372,
+                    "vulnerability_code": "    function withdraw() external returns (bool) {\n\n        address from = msg.sender;\n\n        require(hasStaked[from] == true, \"No stakes found for user\");\n\n        require(\n\n            block.timestamp >= deposits[from].endTime,\n\n            \"Requesting before lock time\"\n\n        );\n\n        require(deposits[from].paid == false, \"Already paid out\");\n\n\n\n        return (_withdraw(from));\n",
+                    "message": "Liquidity_v8.withdraw (Liquidity_v9(1).sol#362-372) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- require(bool,string)(deposits[from].paid == false,Already paid out) (Liquidity_v9(1).sol#369)\n\t- require(bool,string)(block.timestamp >= deposits[from].endTime,Requesting before lock time) (Liquidity_v9(1).sol#365-368)\n"
+                },
+                {
+                    "name": "timestamp",
+                    "vulnerability_from_line": 374,
+                    "vulnerability_to_line": 391,
+                    "vulnerability_code": "    function _withdraw(address from) private returns (bool) {\n\n        uint256 getPeggedBNF = getPeggedValue();\n\n        uint256 reward = _calculate(from).mul(getPeggedBNF).div(10**18);\n\n        uint256 amount = deposits[from].depositAmount;\n\n        require(reward <= rewardBalance, \"Not enough rewards\");\n\n\n\n        stakedBalance = stakedBalance.sub(amount);\n\n        rewardBalance = rewardBalance.sub(reward);\n\n        deposits[from].paid = true;\n\n        hasStaked[from] = false; //Check-Effects-Interactions pattern\n\n\n\n        bool principalPaid = _payDirect(from, amount, tokenAddress);\n\n        bool rewardPaid = _payDirect(from, reward, rewardTokenAddress);\n\n        require(principalPaid && rewardPaid, \"Error paying\");\n\n        emit PaidOut(tokenAddress, rewardTokenAddress, from, amount, reward);\n\n\n\n        return true;\n",
+                    "message": "Liquidity_v8._withdraw (Liquidity_v9(1).sol#374-391) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- require(bool,string)(principalPaid && rewardPaid,Error paying) (Liquidity_v9(1).sol#387)\n"
+                },
+                {
+                    "name": "timestamp",
+                    "vulnerability_from_line": 409,
+                    "vulnerability_to_line": 419,
+                    "vulnerability_code": "    function emergencyWithdraw() external returns (bool) {\n\n        address from = msg.sender;\n\n        require(hasStaked[from] == true, \"No stakes found for user\");\n\n        require(\n\n            block.timestamp >= deposits[from].endTime,\n\n            \"Requesting before lock time\"\n\n        );\n\n        require(deposits[from].paid == false, \"Already paid out\");\n\n\n\n        return (_emergencyWithdraw(from));\n",
+                    "message": "Liquidity_v8.emergencyWithdraw (Liquidity_v9(1).sol#409-419) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- require(bool,string)(block.timestamp >= deposits[from].endTime,Requesting before lock time) (Liquidity_v9(1).sol#412-415)\n\t- require(bool,string)(deposits[from].paid == false,Already paid out) (Liquidity_v9(1).sol#416)\n"
+                },
+                {
+                    "name": "timestamp",
+                    "vulnerability_from_line": 421,
+                    "vulnerability_to_line": 432,
+                    "vulnerability_code": "    function _emergencyWithdraw(address from) private returns (bool) {\n\n        uint256 amount = deposits[from].depositAmount;\n\n        stakedBalance = stakedBalance.sub(amount);\n\n        deposits[from].paid = true;\n\n        hasStaked[from] = false; //Check-Effects-Interactions pattern\n\n\n\n        bool principalPaid = _payDirect(from, amount, tokenAddress);\n\n        require(principalPaid, \"Error paying\");\n\n        emit PaidOut(tokenAddress, address(0), from, amount, 0);\n\n\n\n        return true;\n",
+                    "message": "Liquidity_v8._emergencyWithdraw (Liquidity_v9(1).sol#421-432) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- require(bool,string)(principalPaid,Error paying) (Liquidity_v9(1).sol#428)\n"
+                },
+                {
+                    "name": "timestamp",
+                    "vulnerability_from_line": 443,
+                    "vulnerability_to_line": 490,
+                    "vulnerability_code": "    function _calculate(address from) private view returns (uint256) {\n\n        if (!hasStaked[from]) return 0;\n\n        (\n\n            uint256 amount,\n\n            uint256 depositTime,\n\n            uint256 endTime,\n\n            uint64 userIndex\n\n        ) =\n\n            (\n\n                deposits[from].depositAmount,\n\n                deposits[from].depositTime,\n\n                deposits[from].endTime,\n\n                deposits[from].userIndex\n\n            );\n\n\n\n        uint256 time;\n\n        uint256 interest;\n\n        uint256 _lockduration = endTime.sub(depositTime);\n\n        for (uint64 i = userIndex; i < index; i++) {\n\n            //loop runs till the latest index/interest rate change\n\n            if (endTime < rates[i + 1].timeStamp) {\n\n                //if the change occurs after the endTime loop breaks\n\n                break;\n\n            } else {\n\n                time = rates[i + 1].timeStamp.sub(depositTime);\n\n                interest = amount.mul(rates[i].newInterestRate).mul(time).div(\n\n                    _lockduration.mul(10000)\n\n                ); //replace with (_lockduration * 10000)\n\n                amount += interest;\n\n                depositTime = rates[i + 1].timeStamp;\n\n                userIndex++;\n\n            }\n\n        }\n\n\n\n        if (depositTime < endTime) {\n\n            //final calculation for the remaining time period\n\n            time = endTime.sub(depositTime);\n\n\n\n            interest = time\n\n                .mul(amount)\n\n                .mul(rates[userIndex].newInterestRate)\n\n                .div(_lockduration.mul(10000)); //replace with (lockduration * 10000)\n\n\n\n            amount += interest;\n\n        }\n\n\n\n        return (interest);\n",
+                    "message": "Liquidity_v8._calculate (Liquidity_v9(1).sol#443-490) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- depositTime < endTime (Liquidity_v9(1).sol#477-487)\n\t- endTime < rates[i + 1].timeStamp (Liquidity_v9(1).sol#463-474)\n\t- i < index (Liquidity_v9(1).sol#461-475)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 136,
+                    "vulnerability_to_line": 138,
+                    "vulnerability_code": "    function owner() public view returns (address) {\n\n        return _owner;\n",
+                    "message": "Ownable.owner (Liquidity_v9(1).sol#136-138) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 149,
+                    "vulnerability_to_line": 152,
+                    "vulnerability_code": "    function renounceOwnership() public onlyOwner {\n\n        emit OwnershipTransferred(_owner, address(0));\n\n        _owner = address(0);\n",
+                    "message": "Ownable.renounceOwnership (Liquidity_v9(1).sol#149-152) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 154,
+                    "vulnerability_to_line": 156,
+                    "vulnerability_code": "    function transferOwnership(address newOwner) public onlyOwner {\n\n        _transferOwnership(newOwner);\n",
+                    "message": "Ownable.transferOwnership (Liquidity_v9(1).sol#154-156) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in Liquidity_v9(1).sol:\n\t- pragma solidity^0.5.0 (Liquidity_v9(1).sol#5): it allows old versions\n\t- pragma solidity^0.5.0 (Liquidity_v9(1).sol#57): it allows old versions\n\t- pragma solidity^0.5.0 (Liquidity_v9(1).sol#102): it allows old versions\n\t- pragma solidity^0.5.0 (Liquidity_v9(1).sol#121): it allows old versions\n\t- pragma solidity^0.5.0 (Liquidity_v9(1).sol#168): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 109,
+                    "vulnerability_to_line": 111,
+                    "vulnerability_code": "    function _msgSender() internal view returns (address payable) {\n\n        return msg.sender;\n",
+                    "message": "Function 'Context._msgSender' (Liquidity_v9(1).sol#109-111) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 113,
+                    "vulnerability_to_line": 116,
+                    "vulnerability_code": "    function _msgData() internal view returns (bytes memory) {\n\n        this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691\n\n        return msg.data;\n",
+                    "message": "Function 'Context._msgData' (Liquidity_v9(1).sol#113-116) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 158,
+                    "vulnerability_to_line": 165,
+                    "vulnerability_code": "    function _transferOwnership(address newOwner) internal {\n\n        require(\n\n            newOwner != address(0),\n\n            \"Ownable: new owner is the zero address\"\n\n        );\n\n        emit OwnershipTransferred(_owner, newOwner);\n\n        _owner = newOwner;\n",
+                    "message": "Function 'Ownable._transferOwnership' (Liquidity_v9(1).sol#158-165) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 170,
+                    "vulnerability_to_line": 533,
+                    "vulnerability_code": "contract Liquidity_v8 is Ownable {\n\n    using SafeMath for uint256;\n\n\n\n    /**\n\n     * @dev Structs to store user staking data.\n\n     */\n\n    struct Deposits {\n\n        uint256 depositAmount;\n\n        uint256 depositTime;\n\n        uint256 endTime;\n\n        uint64 userIndex;\n\n        bool paid;\n\n    }\n\n\n\n    /**\n\n     * @dev Structs to store interest rate change.\n\n     */\n\n    struct Rates {\n\n        uint64 newInterestRate;\n\n        uint256 timeStamp;\n\n    }\n\n\n\n    mapping(address => bool) private hasStaked;\n\n    mapping(address => Deposits) private deposits;\n\n    mapping(uint64 => Rates) public rates;\n\n\n\n    string public name;\n\n    address public tokenAddress;\n\n    address public rewardTokenAddress;\n\n    uint256 public stakedTotal;\n\n    uint256 public totalReward;\n\n    uint256 public rewardBalance;\n\n    uint256 public stakedBalance;\n\n    uint64 public rate;\n\n    uint64 public index;\n\n    uint256 public lockDuration;\n\n\n\n    IERC20 public ERC20Interface;\n\n\n\n    /**\n\n     * @dev Emitted when user stakes 'stakedAmount' value of tokens\n\n     */\n\n    event Staked(\n\n        address indexed token,\n\n        address indexed staker_,\n\n        uint256 stakedAmount_\n\n    );\n\n\n\n    /**\n\n     * @dev Emitted when user withdraws his stakings\n\n     */\n\n    event PaidOut(\n\n        address indexed token,\n\n        address indexed rewardToken,\n\n        address indexed staker_,\n\n        uint256 amount_,\n\n        uint256 reward_\n\n    );\n\n\n\n    /**\n\n     *   @param\n\n     *   name_, name of the contract\n\n     *   tokenAddress_, contract address of the token\n\n     *   rewardTokenAddress_, contract address of the reward token\n\n     *   rate_, rate multiplied by 100\n\n     *   lockduration_, duration in days\n\n     */\n\n    constructor(\n\n        string memory name_,\n\n        address tokenAddress_,\n\n        address rewardTokenAddress_,\n\n        uint64 rate_,\n\n        uint256 lockDuration_\n\n    ) public Ownable() {\n\n        name = name_;\n\n        require(tokenAddress_ != address(0), \"Token address: 0 address\");\n\n        tokenAddress = tokenAddress_;\n\n        require(\n\n            rewardTokenAddress_ != address(0),\n\n            \"Reward token address: 0 address\"\n\n        );\n\n        rewardTokenAddress = rewardTokenAddress_;\n\n        require(rate_ != 0, \"Zero interest rate\");\n\n        rate = rate_;\n\n        lockDuration = lockDuration_;\n\n        rates[index] = Rates(rate, block.timestamp);\n\n    }\n\n\n\n    /**\n\n     * @dev to set interest rates\n\n     */\n\n    function setRate(uint64 rate_) external onlyOwner {\n\n        require(rate_ != 0, \"Zero interest rate\");\n\n        index++;\n\n        rates[index] = Rates(rate_, block.timestamp);\n\n        rate = rate_;\n\n    }\n\n\n\n    /**\n\n     *  Requirements:\n\n     *  `lockduration_' lock days\n\n     *  @dev to set lock duration days\n\n     */\n\n    function changeLockDuration(uint256 lockduration_) external onlyOwner {\n\n        lockDuration = lockduration_;\n\n    }\n\n\n\n    /**\n\n     * @dev to add rewards to the staking contract\n\n     * once the allowance is given to this contract for 'rewardAmount' by the user\n\n     */\n\n    function addReward(uint256 rewardAmount)\n\n        external\n\n        _hasAllowance(msg.sender, rewardAmount, rewardTokenAddress)\n\n        returns (bool)\n\n    {\n\n        require(rewardAmount > 0, \"Reward must be positive\");\n\n        address from = msg.sender;\n\n        if (!_payMe(from, rewardAmount, rewardTokenAddress)) {\n\n            return false;\n\n        }\n\n        totalReward = totalReward.add(rewardAmount);\n\n        rewardBalance = rewardBalance.add(rewardAmount);\n\n        return true;\n\n    }\n\n\n\n    /**\n\n     * @dev returns user staking data\n\n     */\n\n    function userDeposits(address user)\n\n        external\n\n        view\n\n        returns (\n\n            uint256,\n\n            uint256,\n\n            uint256,\n\n            uint256,\n\n            bool\n\n        )\n\n    {\n\n        if (hasStaked[user]) {\n\n            return (\n\n                deposits[user].depositAmount,\n\n                deposits[user].depositTime,\n\n                deposits[user].endTime,\n\n                deposits[user].userIndex,\n\n                deposits[user].paid\n\n            );\n\n        }\n\n    }\n\n\n\n    /**\n\n     * Requirements:\n\n     * - `amount` Amount to be staked\n\n     /**\n\n     * @dev to stake 'amount' value of tokens \n\n     * once the user has given allowance to the staking contract\n\n     */\n\n    function stake(uint256 amount)\n\n        external\n\n        _hasAllowance(msg.sender, amount, tokenAddress)\n\n        returns (bool)\n\n    {\n\n        require(amount > 0, \"Can't stake 0 amount\");\n\n        address from = msg.sender;\n\n        require(hasStaked[from] == false, \"Already staked\");\n\n        return _stake(from, amount);\n\n    }\n\n\n\n    function _stake(address staker, uint256 amount) private returns (bool) {\n\n        if (!_payMe(staker, amount, tokenAddress)) {\n\n            return false;\n\n        }\n\n        hasStaked[staker] = true;\n\n        deposits[staker] = Deposits(\n\n            amount,\n\n            block.timestamp,\n\n            block.timestamp.add((lockDuration.mul(86400))), //(lockDuration * 24 * 3600)\n\n            index,\n\n            false\n\n        );\n\n        emit Staked(tokenAddress, staker, amount);\n\n\n\n        // Transfer is completed\n\n        stakedBalance = stakedBalance.add(amount);\n\n        stakedTotal = stakedTotal.add(amount);\n\n        return true;\n\n    }\n\n\n\n    /**\n\n     * @dev to withdraw user stakings after the lock period ends.\n\n     */\n\n    function withdraw() external returns (bool) {\n\n        address from = msg.sender;\n\n        require(hasStaked[from] == true, \"No stakes found for user\");\n\n        require(\n\n            block.timestamp >= deposits[from].endTime,\n\n            \"Requesting before lock time\"\n\n        );\n\n        require(deposits[from].paid == false, \"Already paid out\");\n\n\n\n        return (_withdraw(from));\n\n    }\n\n\n\n    function _withdraw(address from) private returns (bool) {\n\n        uint256 getPeggedBNF = getPeggedValue();\n\n        uint256 reward = _calculate(from).mul(getPeggedBNF).div(10**18);\n\n        uint256 amount = deposits[from].depositAmount;\n\n        require(reward <= rewardBalance, \"Not enough rewards\");\n\n\n\n        stakedBalance = stakedBalance.sub(amount);\n\n        rewardBalance = rewardBalance.sub(reward);\n\n        deposits[from].paid = true;\n\n        hasStaked[from] = false; //Check-Effects-Interactions pattern\n\n\n\n        bool principalPaid = _payDirect(from, amount, tokenAddress);\n\n        bool rewardPaid = _payDirect(from, reward, rewardTokenAddress);\n\n        require(principalPaid && rewardPaid, \"Error paying\");\n\n        emit PaidOut(tokenAddress, rewardTokenAddress, from, amount, reward);\n\n\n\n        return true;\n\n    }\n\n\n\n    /**\n\n     * @dev to calculate the price of BNF per UNIv2 in the LP\n\n     */\n\n    function getPeggedValue() private returns (uint256) {\n\n        ERC20Interface = IERC20(tokenAddress);\n\n        uint256 getReserves;\n\n        if (ERC20Interface.token0() == rewardTokenAddress) {\n\n            (getReserves, , ) = ERC20Interface.getReserves();\n\n        } else {\n\n            (, getReserves, ) = ERC20Interface.getReserves();\n\n        }\n\n\n\n        uint256 totalSupply = ERC20Interface.totalSupply();\n\n        return (getReserves.mul(10**18).div(totalSupply));\n\n    }\n\n\n\n    function emergencyWithdraw() external returns (bool) {\n\n        address from = msg.sender;\n\n        require(hasStaked[from] == true, \"No stakes found for user\");\n\n        require(\n\n            block.timestamp >= deposits[from].endTime,\n\n            \"Requesting before lock time\"\n\n        );\n\n        require(deposits[from].paid == false, \"Already paid out\");\n\n\n\n        return (_emergencyWithdraw(from));\n\n    }\n\n\n\n    function _emergencyWithdraw(address from) private returns (bool) {\n\n        uint256 amount = deposits[from].depositAmount;\n\n        stakedBalance = stakedBalance.sub(amount);\n\n        deposits[from].paid = true;\n\n        hasStaked[from] = false; //Check-Effects-Interactions pattern\n\n\n\n        bool principalPaid = _payDirect(from, amount, tokenAddress);\n\n        require(principalPaid, \"Error paying\");\n\n        emit PaidOut(tokenAddress, address(0), from, amount, 0);\n\n\n\n        return true;\n\n    }\n\n\n\n    /**\n\n     * @param\n\n     * 'from' user wallet address\n\n     * @dev to calculate the rewards based on user staked 'amount'\n\n     */\n\n    function calculate(address from) external view returns (uint256) {\n\n        return _calculate(from);\n\n    }\n\n\n\n    function _calculate(address from) private view returns (uint256) {\n\n        if (!hasStaked[from]) return 0;\n\n        (\n\n            uint256 amount,\n\n            uint256 depositTime,\n\n            uint256 endTime,\n\n            uint64 userIndex\n\n        ) =\n\n            (\n\n                deposits[from].depositAmount,\n\n                deposits[from].depositTime,\n\n                deposits[from].endTime,\n\n                deposits[from].userIndex\n\n            );\n\n\n\n        uint256 time;\n\n        uint256 interest;\n\n        uint256 _lockduration = endTime.sub(depositTime);\n\n        for (uint64 i = userIndex; i < index; i++) {\n\n            //loop runs till the latest index/interest rate change\n\n            if (endTime < rates[i + 1].timeStamp) {\n\n                //if the change occurs after the endTime loop breaks\n\n                break;\n\n            } else {\n\n                time = rates[i + 1].timeStamp.sub(depositTime);\n\n                interest = amount.mul(rates[i].newInterestRate).mul(time).div(\n\n                    _lockduration.mul(10000)\n\n                ); //replace with (_lockduration * 10000)\n\n                amount += interest;\n\n                depositTime = rates[i + 1].timeStamp;\n\n                userIndex++;\n\n            }\n\n        }\n\n\n\n        if (depositTime < endTime) {\n\n            //final calculation for the remaining time period\n\n            time = endTime.sub(depositTime);\n\n\n\n            interest = time\n\n                .mul(amount)\n\n                .mul(rates[userIndex].newInterestRate)\n\n                .div(_lockduration.mul(10000)); //replace with (lockduration * 10000)\n\n\n\n            amount += interest;\n\n        }\n\n\n\n        return (interest);\n\n    }\n\n\n\n    function _payMe(\n\n        address payer,\n\n        uint256 amount,\n\n        address token\n\n    ) private returns (bool) {\n\n        return _payTo(payer, address(this), amount, token);\n\n    }\n\n\n\n    function _payTo(\n\n        address allower,\n\n        address receiver,\n\n        uint256 amount,\n\n        address token\n\n    ) private _hasAllowance(allower, amount, token) returns (bool) {\n\n        // Request to transfer amount from the contract to receiver.\n\n        // contract does not own the funds, so the allower must have added allowance to the contract\n\n        // Allower is the original owner.\n\n        ERC20Interface = IERC20(token);\n\n        return ERC20Interface.transferFrom(allower, receiver, amount);\n\n    }\n\n\n\n    function _payDirect(\n\n        address to,\n\n        uint256 amount,\n\n        address token\n\n    ) private returns (bool) {\n\n        ERC20Interface = IERC20(token);\n\n        return ERC20Interface.transfer(to, amount);\n\n    }\n\n\n\n    modifier _hasAllowance(\n\n        address allower,\n\n        uint256 amount,\n\n        address token\n\n    ) {\n\n        // Make sure the allower has provided the right allowance.\n\n        ERC20Interface = IERC20(token);\n\n        uint256 ourAllowance = ERC20Interface.allowance(allower, address(this));\n\n        require(amount <= ourAllowance, \"Make sure to add enough allowance\");\n\n        _;\n\n    }\n",
+                    "message": "Contract 'Liquidity_v8' (Liquidity_v9(1).sol#170-533) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 339,
+                    "vulnerability_to_line": 357,
+                    "vulnerability_code": "    function _stake(address staker, uint256 amount) private returns (bool) {\n\n        if (!_payMe(staker, amount, tokenAddress)) {\n\n            return false;\n\n        }\n\n        hasStaked[staker] = true;\n\n        deposits[staker] = Deposits(\n\n            amount,\n\n            block.timestamp,\n\n            block.timestamp.add((lockDuration.mul(86400))), //(lockDuration * 24 * 3600)\n\n            index,\n\n            false\n\n        );\n\n        emit Staked(tokenAddress, staker, amount);\n\n\n\n        // Transfer is completed\n\n        stakedBalance = stakedBalance.add(amount);\n\n        stakedTotal = stakedTotal.add(amount);\n\n        return true;\n",
+                    "message": "Function 'Liquidity_v8._stake' (Liquidity_v9(1).sol#339-357) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 374,
+                    "vulnerability_to_line": 391,
+                    "vulnerability_code": "    function _withdraw(address from) private returns (bool) {\n\n        uint256 getPeggedBNF = getPeggedValue();\n\n        uint256 reward = _calculate(from).mul(getPeggedBNF).div(10**18);\n\n        uint256 amount = deposits[from].depositAmount;\n\n        require(reward <= rewardBalance, \"Not enough rewards\");\n\n\n\n        stakedBalance = stakedBalance.sub(amount);\n\n        rewardBalance = rewardBalance.sub(reward);\n\n        deposits[from].paid = true;\n\n        hasStaked[from] = false; //Check-Effects-Interactions pattern\n\n\n\n        bool principalPaid = _payDirect(from, amount, tokenAddress);\n\n        bool rewardPaid = _payDirect(from, reward, rewardTokenAddress);\n\n        require(principalPaid && rewardPaid, \"Error paying\");\n\n        emit PaidOut(tokenAddress, rewardTokenAddress, from, amount, reward);\n\n\n\n        return true;\n",
+                    "message": "Function 'Liquidity_v8._withdraw' (Liquidity_v9(1).sol#374-391) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 421,
+                    "vulnerability_to_line": 432,
+                    "vulnerability_code": "    function _emergencyWithdraw(address from) private returns (bool) {\n\n        uint256 amount = deposits[from].depositAmount;\n\n        stakedBalance = stakedBalance.sub(amount);\n\n        deposits[from].paid = true;\n\n        hasStaked[from] = false; //Check-Effects-Interactions pattern\n\n\n\n        bool principalPaid = _payDirect(from, amount, tokenAddress);\n\n        require(principalPaid, \"Error paying\");\n\n        emit PaidOut(tokenAddress, address(0), from, amount, 0);\n\n\n\n        return true;\n",
+                    "message": "Function 'Liquidity_v8._emergencyWithdraw' (Liquidity_v9(1).sol#421-432) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 443,
+                    "vulnerability_to_line": 490,
+                    "vulnerability_code": "    function _calculate(address from) private view returns (uint256) {\n\n        if (!hasStaked[from]) return 0;\n\n        (\n\n            uint256 amount,\n\n            uint256 depositTime,\n\n            uint256 endTime,\n\n            uint64 userIndex\n\n        ) =\n\n            (\n\n                deposits[from].depositAmount,\n\n                deposits[from].depositTime,\n\n                deposits[from].endTime,\n\n                deposits[from].userIndex\n\n            );\n\n\n\n        uint256 time;\n\n        uint256 interest;\n\n        uint256 _lockduration = endTime.sub(depositTime);\n\n        for (uint64 i = userIndex; i < index; i++) {\n\n            //loop runs till the latest index/interest rate change\n\n            if (endTime < rates[i + 1].timeStamp) {\n\n                //if the change occurs after the endTime loop breaks\n\n                break;\n\n            } else {\n\n                time = rates[i + 1].timeStamp.sub(depositTime);\n\n                interest = amount.mul(rates[i].newInterestRate).mul(time).div(\n\n                    _lockduration.mul(10000)\n\n                ); //replace with (_lockduration * 10000)\n\n                amount += interest;\n\n                depositTime = rates[i + 1].timeStamp;\n\n                userIndex++;\n\n            }\n\n        }\n\n\n\n        if (depositTime < endTime) {\n\n            //final calculation for the remaining time period\n\n            time = endTime.sub(depositTime);\n\n\n\n            interest = time\n\n                .mul(amount)\n\n                .mul(rates[userIndex].newInterestRate)\n\n                .div(_lockduration.mul(10000)); //replace with (lockduration * 10000)\n\n\n\n            amount += interest;\n\n        }\n\n\n\n        return (interest);\n",
+                    "message": "Function 'Liquidity_v8._calculate' (Liquidity_v9(1).sol#443-490) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 492,
+                    "vulnerability_to_line": 498,
+                    "vulnerability_code": "    function _payMe(\n\n        address payer,\n\n        uint256 amount,\n\n        address token\n\n    ) private returns (bool) {\n\n        return _payTo(payer, address(this), amount, token);\n",
+                    "message": "Function 'Liquidity_v8._payMe' (Liquidity_v9(1).sol#492-498) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 500,
+                    "vulnerability_to_line": 511,
+                    "vulnerability_code": "    function _payTo(\n\n        address allower,\n\n        address receiver,\n\n        uint256 amount,\n\n        address token\n\n    ) private _hasAllowance(allower, amount, token) returns (bool) {\n\n        // Request to transfer amount from the contract to receiver.\n\n        // contract does not own the funds, so the allower must have added allowance to the contract\n\n        // Allower is the original owner.\n\n        ERC20Interface = IERC20(token);\n\n        return ERC20Interface.transferFrom(allower, receiver, amount);\n",
+                    "message": "Function 'Liquidity_v8._payTo' (Liquidity_v9(1).sol#500-511) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 513,
+                    "vulnerability_to_line": 520,
+                    "vulnerability_code": "    function _payDirect(\n\n        address to,\n\n        uint256 amount,\n\n        address token\n\n    ) private returns (bool) {\n\n        ERC20Interface = IERC20(token);\n\n        return ERC20Interface.transfer(to, amount);\n",
+                    "message": "Function 'Liquidity_v8._payDirect' (Liquidity_v9(1).sol#513-520) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 207,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    IERC20 public ERC20Interface;\n",
+                    "message": "Variable 'Liquidity_v8.ERC20Interface' (Liquidity_v9(1).sol#207) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 522,
+                    "vulnerability_to_line": 532,
+                    "vulnerability_code": "    modifier _hasAllowance(\n\n        address allower,\n\n        uint256 amount,\n\n        address token\n\n    ) {\n\n        // Make sure the allower has provided the right allowance.\n\n        ERC20Interface = IERC20(token);\n\n        uint256 ourAllowance = ERC20Interface.allowance(allower, address(this));\n\n        require(amount <= ourAllowance, \"Make sure to add enough allowance\");\n\n        _;\n",
+                    "message": "Modifier 'Liquidity_v8._hasAllowance' (Liquidity_v9(1).sol#522-532) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        _owner = address(0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 461,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint64 i = userIndex; i < index; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 261,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setRate(uint64 rate_) external onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 102,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 121,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 168,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 124,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address private _owner;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 192,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(address => bool) private hasStaked;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 193,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(address => Deposits) private deposits;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 171,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 302,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

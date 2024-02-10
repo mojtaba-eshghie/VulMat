@@ -1,0 +1,150 @@
+{
+    "pooltogether-yearnv2-yield-source-a34857f1555908a6263d2ebd189f0cb40e1858da/contracts/external/openzeppelin/ProxyFactory.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      require(success, \"ProxyFactory/constructor-call-failed\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      require(success, \"ProxyFactory/constructor-call-failed\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": 31,
+                    "vulnerability_code": "  function deployMinimal(address _logic, bytes memory _data) public returns (address proxy) {\n\n    // Adapted from https://github.com/optionality/clone-factory/blob/32782f82dfc5a00d103a7e61a17a5dedbd1e8e9d/contracts/CloneFactory.sol\n\n    bytes20 targetBytes = bytes20(_logic);\n\n    assembly {\n\n      let clone := mload(0x40)\n\n      mstore(clone, 0x3d602d80600a3d3981f3363d3d373d3d3d363d73000000000000000000000000)\n\n      mstore(add(clone, 0x14), targetBytes)\n\n      mstore(add(clone, 0x28), 0x5af43d82803e903d91602b57fd5bf30000000000000000000000000000000000)\n\n      proxy := create(0, clone, 0x37)\n\n    }\n\n\n\n    emit ProxyCreated(address(proxy));\n\n\n\n    if(_data.length > 0) {\n\n      (bool success,) = proxy.call(_data);\n\n      require(success, \"ProxyFactory/constructor-call-failed\");\n\n    }\n\n  }\n",
+                    "message": "ProxyFactory.deployMinimal uses assembly (ProxyFactory.sol#13-31)\n\t- ProxyFactory.sol#16-24\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": 31,
+                    "vulnerability_code": "  function deployMinimal(address _logic, bytes memory _data) public returns (address proxy) {\n\n    // Adapted from https://github.com/optionality/clone-factory/blob/32782f82dfc5a00d103a7e61a17a5dedbd1e8e9d/contracts/CloneFactory.sol\n\n    bytes20 targetBytes = bytes20(_logic);\n\n    assembly {\n\n      let clone := mload(0x40)\n\n      mstore(clone, 0x3d602d80600a3d3981f3363d3d373d3d3d363d73000000000000000000000000)\n\n      mstore(add(clone, 0x14), targetBytes)\n\n      mstore(add(clone, 0x28), 0x5af43d82803e903d91602b57fd5bf30000000000000000000000000000000000)\n\n      proxy := create(0, clone, 0x37)\n\n    }\n\n\n\n    emit ProxyCreated(address(proxy));\n\n\n\n    if(_data.length > 0) {\n\n      (bool success,) = proxy.call(_data);\n\n      require(success, \"ProxyFactory/constructor-call-failed\");\n\n    }\n\n  }\n",
+                    "message": "ProxyFactory.deployMinimal (ProxyFactory.sol#13-31) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": 7,
+                    "vulnerability_code": "pragma solidity >=0.6.0 <0.7.0;\n\n\n",
+                    "message": "Detected issues with version pragma in ProxyFactory.sol:\n\t- pragma solidity>=0.6.0<0.7.0 (ProxyFactory.sol#5-7): is has a complex pragma\n"
+                },
+                {
+                    "name": "low-level-calls",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": 31,
+                    "vulnerability_code": "  function deployMinimal(address _logic, bytes memory _data) public returns (address proxy) {\n\n    // Adapted from https://github.com/optionality/clone-factory/blob/32782f82dfc5a00d103a7e61a17a5dedbd1e8e9d/contracts/CloneFactory.sol\n\n    bytes20 targetBytes = bytes20(_logic);\n\n    assembly {\n\n      let clone := mload(0x40)\n\n      mstore(clone, 0x3d602d80600a3d3981f3363d3d373d3d3d363d73000000000000000000000000)\n\n      mstore(add(clone, 0x14), targetBytes)\n\n      mstore(add(clone, 0x28), 0x5af43d82803e903d91602b57fd5bf30000000000000000000000000000000000)\n\n      proxy := create(0, clone, 0x37)\n\n    }\n\n\n\n    emit ProxyCreated(address(proxy));\n\n\n\n    if(_data.length > 0) {\n\n      (bool success,) = proxy.call(_data);\n\n      require(success, \"ProxyFactory/constructor-call-failed\");\n\n    }\n\n  }\n",
+                    "message": "Low level call in ProxyFactory.deployMinimal (ProxyFactory.sol#13-31):\n\t-(success) = proxy.call(_data) ProxyFactory.sol#27-28\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function deployMinimal(address _logic, bytes memory _data) public returns (address proxy) {\n",
+                    "message": "Parameter '_logic' of ProxyFactory.deployMinimal (ProxyFactory.sol#13) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function deployMinimal(address _logic, bytes memory _data) public returns (address proxy) {\n",
+                    "message": "Parameter '_data' of ProxyFactory.deployMinimal (ProxyFactory.sol#13) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function deployMinimal(address _logic, bytes memory _data) public returns (address proxy) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.6.0 <0.7.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.6.0 <0.7.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    assembly {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "pooltogether-yearnv2-yield-source-a34857f1555908a6263d2ebd189f0cb40e1858da/contracts/interfaces/IYieldSource.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": 7,
+                    "vulnerability_code": "pragma solidity >=0.6.0 <0.8.0;\n\n\n",
+                    "message": "Detected issues with version pragma in IYieldSource.sol:\n\t- pragma solidity>=0.6.0<0.8.0 (IYieldSource.sol#5-7): is has a complex pragma\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.6.0 <0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.6.0 <0.8.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,2423 @@
+{
+    "dai-backstop-syndicate-965a3dbd44e42705ac4aa38e37e21949032f2fc8/contracts/syndicate/SimpleFlopper.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 106,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor(address auction) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 107,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    _auction = IFlopper(auction);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 108,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_12"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 114,
+                    "vulnerability_to_line": 116,
+                    "vulnerability_code": "  function isEnabled() public view returns (bool status) {\n\n    return (_auction.live() == 1) ? true : false;\n",
+                    "message": "SimpleFlopper.isEnabled (SimpleFlopper.sol#114-116) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 120,
+                    "vulnerability_to_line": 122,
+                    "vulnerability_code": "  function getTotalNumberOfAuctions() public view returns (uint256 auctionID) {\n\n    return _auction.kicks();\n",
+                    "message": "SimpleFlopper.getTotalNumberOfAuctions (SimpleFlopper.sol#120-122) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 126,
+                    "vulnerability_to_line": 128,
+                    "vulnerability_code": "  function getFlopperAddress() public view returns (address flopper) {\n\n    return address(_auction);\n",
+                    "message": "SimpleFlopper.getFlopperAddress (SimpleFlopper.sol#126-128) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 135,
+                    "vulnerability_to_line": 142,
+                    "vulnerability_code": "  function getAuctionInformation() public view returns (\n\n    uint256 bidIncrement,\n\n    uint256 repriceIncrement,\n\n    uint256 bidDuration,\n\n    uint256 auctionDuration\n\n  ) {\n\n    return (_auction.beg(), _auction.pad(), _auction.ttl(), _auction.tau());\n",
+                    "message": "SimpleFlopper.getAuctionInformation (SimpleFlopper.sol#135-142) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 150,
+                    "vulnerability_to_line": 158,
+                    "vulnerability_code": "  function getCurrentBid(uint256 auctionID) public view returns (\n\n    uint256 amountDAI,\n\n    uint256 amountMKR,\n\n    address bidder,\n\n    uint48 bidDeadline,\n\n    uint48 auctionDeadline\n\n  ) {\n\n    return _auction.bids(auctionID);\n",
+                    "message": "SimpleFlopper.getCurrentBid (SimpleFlopper.sol#150-158) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.16;\n",
+                    "message": "Detected issues with version pragma in SimpleFlopper.sol:\n\t- pragma solidity0.5.16 (SimpleFlopper.sol#3): it allows old versions\n\t- pragma solidity0.5.16 (SimpleFlopper.sol#99): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function wards(address) external view returns (uint256);\n",
+                    "message": "Parameter '' of IFlopper.wards (SimpleFlopper.sol#8) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function bids(uint256) external view returns (\n",
+                    "message": "Parameter '' of IFlopper.bids (SimpleFlopper.sol#15) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function ONE() external pure returns (uint256);\n",
+                    "message": "Function 'IFlopper.ONE' (SimpleFlopper.sol#29) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 165,
+                    "vulnerability_to_line": 167,
+                    "vulnerability_code": "  function _reprice(uint256 auctionID) internal {\n\n    _auction.tick(auctionID);\n",
+                    "message": "Function 'SimpleFlopper._reprice' (SimpleFlopper.sol#165-167) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 172,
+                    "vulnerability_to_line": 174,
+                    "vulnerability_code": "  function _bid(uint256 auctionID, uint256 amountMKR, uint256 amountDAI) internal {\n\n    _auction.dent(auctionID, amountMKR, amountDAI);\n",
+                    "message": "Function 'SimpleFlopper._bid' (SimpleFlopper.sol#172-174) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 179,
+                    "vulnerability_to_line": 181,
+                    "vulnerability_code": "  function _finalize(uint256 auctionID) internal {\n\n    _auction.deal(auctionID);\n",
+                    "message": "Function 'SimpleFlopper._finalize' (SimpleFlopper.sol#179-181) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 104,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  IFlopper private _auction;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function bids(uint256) external view returns (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 135,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function getAuctionInformation() public view returns (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 150,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function getCurrentBid(uint256 auctionID) public view returns (\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "dai-backstop-syndicate-965a3dbd44e42705ac4aa38e37e21949032f2fc8/contracts/syndicate/TwoStepOwnable.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor() internal {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    _owner = tx.origin;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    emit OwnershipTransferred(address(0), _owner);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(isOwner(), \"TwoStepOwnable: caller is not the owner.\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      newOwner != address(0),\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"TwoStepOwnable: new potential owner is the zero address.\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 66,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      msg.sender == _newPotentialOwner,\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"TwoStepOwnable: current owner must set caller as new potential owner.\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 87,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(isOwner(), \"TwoStepOwnable: caller is not the owner.\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      newOwner != address(0),\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"TwoStepOwnable: new potential owner is the zero address.\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 66,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      msg.sender == _newPotentialOwner,\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"TwoStepOwnable: current owner must set caller as new potential owner.\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 87,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": 41,
+                    "vulnerability_code": "  function owner() public view returns (address) {\n\n    return _owner;\n",
+                    "message": "TwoStepOwnable.owner (TwoStepOwnable.sol#39-41) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": 69,
+                    "vulnerability_code": "  function transferOwnership(address newOwner) public onlyOwner {\n\n    require(\n\n      newOwner != address(0),\n\n      \"TwoStepOwnable: new potential owner is the zero address.\"\n\n    );\n\n\n\n    _newPotentialOwner = newOwner;\n",
+                    "message": "TwoStepOwnable.transferOwnership (TwoStepOwnable.sol#62-69) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 75,
+                    "vulnerability_to_line": 77,
+                    "vulnerability_code": "  function cancelOwnershipTransfer() public onlyOwner {\n\n    delete _newPotentialOwner;\n",
+                    "message": "TwoStepOwnable.cancelOwnershipTransfer (TwoStepOwnable.sol#75-77) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": 94,
+                    "vulnerability_code": "  function acceptOwnership() public {\n\n    require(\n\n      msg.sender == _newPotentialOwner,\n\n      \"TwoStepOwnable: current owner must set caller as new potential owner.\"\n\n    );\n\n\n\n    delete _newPotentialOwner;\n\n\n\n    emit OwnershipTransferred(_owner, msg.sender);\n\n\n\n    _owner = msg.sender;\n",
+                    "message": "TwoStepOwnable.acceptOwnership (TwoStepOwnable.sol#83-94) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.16;\n",
+                    "message": "Detected issues with version pragma in TwoStepOwnable.sol:\n\t- pragma solidity0.5.16 (TwoStepOwnable.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  address private _owner;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  address private _newPotentialOwner;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_TX_ORIGIN",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    _owner = tx.origin;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "dai-backstop-syndicate-965a3dbd44e42705ac4aa38e37e21949032f2fc8/contracts/syndicate/EnumerableSet.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 97,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint256 i; i < set.values.length; i++){\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 97,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint256 i; i < set.values.length; i++){\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 97,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint256 i; i < set.values.length; i++){\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "uninitialized-local",
+                    "vulnerability_from_line": 97,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint256 i; i < set.values.length; i++){\n",
+                    "message": "i in EnumerableSet.enumerate (EnumerableSet.sol#97) is a local variable never initialiazed\n"
+                },
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": 72,
+                    "vulnerability_code": "  function remove(AuctionIDSet storage set, uint256 value)\n\n    internal\n\n    returns (bool)\n\n  {\n\n    if (contains(set, value)){\n\n      uint256 toDeleteIndex = set.index[value] - 1;\n\n      uint256 lastIndex = set.values.length - 1;\n\n\n\n      // If the element we're deleting is the last one, we can just remove it without doing a swap\n\n      if (lastIndex != toDeleteIndex) {\n\n        uint256 lastValue = set.values[lastIndex];\n\n\n\n        // Move the last value to the index where the deleted value is\n\n        set.values[toDeleteIndex] = lastValue;\n\n        // Update the index for the moved value\n\n        set.index[lastValue] = toDeleteIndex + 1; // All indexes are 1-based\n\n      }\n\n\n\n      // Delete the index entry for the deleted value\n\n      delete set.index[value];\n\n\n\n      // Delete the old entry for the moved value\n\n      set.values.pop();\n\n\n\n      return true;\n\n    } else {\n\n      return false;\n\n    }\n\n  }\n",
+                    "message": "EnumerableSet.remove (EnumerableSet.sol#43-72) does not use the value returned by external calls:\n\t-set.values.pop() (EnumerableSet.sol#65)\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.16;\n",
+                    "message": "Detected issues with version pragma in EnumerableSet.sol:\n\t- pragma solidity0.5.16 (EnumerableSet.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 97,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint256 i; i < set.values.length; i++){\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 97,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint256 i; i < set.values.length; i++){\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "dai-backstop-syndicate-965a3dbd44e42705ac4aa38e37e21949032f2fc8/contracts/mcd/Dai.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 112,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor(uint256 chainId_) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 113,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    wards[msg.sender] = 1;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 114,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    DOMAIN_SEPARATOR = keccak256(abi.encode(\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 115,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      keccak256(\"EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)\"),\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      keccak256(bytes(name)),\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 117,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      keccak256(bytes(version)),\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      chainId_,\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 119,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      address(this)\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 120,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ));\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 121,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 81,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(wards[msg.sender] == 1, \"Dai/not-authorized\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 130,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(balanceOf[src] >= wad, \"Dai/insufficient-balance\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 132,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      require(allowance[src][msg.sender] >= wad, \"Dai/insufficient-allowance\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 146,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(balanceOf[usr] >= wad, \"Dai/insufficient-balance\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 148,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      require(allowance[usr][msg.sender] >= wad, \"Dai/insufficient-allowance\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 188,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(holder != address(0), \"Dai/invalid-address-0\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 189,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(holder == ecrecover(digest, v, r, s), \"Dai/invalid-permit\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 190,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(expiry == 0 || now <= expiry, \"Dai/permit-expired\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 191,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(nonce == nonces[holder]++, \"Dai/invalid-nonce\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (src != msg.sender && allowance[src][msg.sender] != uint(-1)) {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 132,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      require(allowance[src][msg.sender] >= wad, \"Dai/insufficient-allowance\");\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      allowance[src][msg.sender] = sub(allowance[src][msg.sender], wad);\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 147,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (usr != msg.sender && allowance[usr][msg.sender] != uint(-1)) {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 148,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      require(allowance[usr][msg.sender] >= wad, \"Dai/insufficient-allowance\");\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 149,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      allowance[usr][msg.sender] = sub(allowance[usr][msg.sender], wad);\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 150,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 191,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(nonce == nonces[holder]++, \"Dai/invalid-nonce\");\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.16;\n",
+                    "message": "Detected issues with version pragma in Dai.sol:\n\t- pragma solidity0.5.16 (Dai.sol#8): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 88,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  string  public constant version  = \"1\";\n",
+                    "message": "Constant 'Dai.version' (Dai.sol#88) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 108,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  bytes32 public DOMAIN_SEPARATOR;\n",
+                    "message": "Variable 'Dai.DOMAIN_SEPARATOR' (Dai.sol#108) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    assembly {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "dai-backstop-syndicate-965a3dbd44e42705ac4aa38e37e21949032f2fc8/contracts/mcd/Vat.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 100,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 101,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    wards[msg.sender] = 1;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 102,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    live = 1;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 103,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function rely(address usr) external note auth { require(live == 1, \"Vat/not-live\"); wards[usr] = 1; }\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function deny(address usr) external note auth { require(live == 1, \"Vat/not-live\"); wards[usr] = 0; }\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(wards[msg.sender] == 1, \"Vat/not-authorized\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(ilks[ilk].rate == 0, \"Vat/ilk-already-init\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 137,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(live == 1, \"Vat/not-live\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    else revert(\"Vat/file-unrecognized-param\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 142,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(live == 1, \"Vat/not-live\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 146,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    else revert(\"Vat/file-unrecognized-param\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 157,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(wish(src, msg.sender), \"Vat/not-allowed\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 162,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(wish(src, msg.sender), \"Vat/not-allowed\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 177,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(live == 1, \"Vat/not-live\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 182,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(ilk.rate != 0, \"Vat/ilk-not-init\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 193,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(either(dart <= 0, both(mul(ilk.Art, ilk.rate) <= ilk.line, debt <= Line)), \"Vat/ceiling-exceeded\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 195,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(either(both(dart <= 0, dink >= 0), tab <= mul(urn.ink, ilk.spot)), \"Vat/not-safe\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 198,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(either(both(dart <= 0, dink >= 0), wish(u, msg.sender)), \"Vat/not-allowed-u\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 200,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(either(dink <= 0, wish(v, msg.sender)), \"Vat/not-allowed-v\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 202,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(either(dart >= 0, wish(w, msg.sender)), \"Vat/not-allowed-w\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 205,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(either(urn.art == 0, tab >= ilk.dust), \"Vat/dust\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 228,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(both(wish(src, msg.sender), wish(dst, msg.sender)), \"Vat/not-allowed\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 231,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(utab <= mul(u.ink, i.spot), \"Vat/not-safe-src\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 232,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(vtab <= mul(v.ink, i.spot), \"Vat/not-safe-dst\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 235,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(either(utab >= i.dust, u.art == 0), \"Vat/dust-src\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 236,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(either(vtab >= i.dust, v.art == 0), \"Vat/dust-dst\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 271,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(live == 1, \"Vat/not-live\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 167,
+                    "vulnerability_to_line": 169,
+                    "vulnerability_code": "  function either(bool x, bool y) internal pure returns (bool z) {\n\n    assembly{ z := or(x, y)}\n",
+                    "message": "Vat.either (Vat.sol#167-169) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 170,
+                    "vulnerability_to_line": 172,
+                    "vulnerability_code": "  function both(bool x, bool y) internal pure returns (bool z) {\n\n    assembly{ z := and(x, y)}\n",
+                    "message": "Vat.both (Vat.sol#170-172) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 167,
+                    "vulnerability_to_line": 169,
+                    "vulnerability_code": "  function either(bool x, bool y) internal pure returns (bool z) {\n\n    assembly{ z := or(x, y)}\n",
+                    "message": "Vat.either uses assembly (Vat.sol#167-169)\n\t- Vat.sol#168\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 170,
+                    "vulnerability_to_line": 172,
+                    "vulnerability_code": "  function both(bool x, bool y) internal pure returns (bool z) {\n\n    assembly{ z := and(x, y)}\n",
+                    "message": "Vat.both uses assembly (Vat.sol#170-172)\n\t- Vat.sol#171\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.16;\n",
+                    "message": "Detected issues with version pragma in Vat.sol:\n\t- pragma solidity0.5.16 (Vat.sol#8): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public Line;  // Total Debt Ceiling  [rad]\n",
+                    "message": "Variable 'Vat.Line' (Vat.sol#68) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 167,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function either(bool x, bool y) internal pure returns (bool z) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 170,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function both(bool x, bool y) internal pure returns (bool z) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 138,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (what == \"Line\") Line = data;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    else if (what == \"dust\") ilks[ilk].dust = data;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_PURE",
+                    "vulnerability_from_line": 167,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function either(bool x, bool y) internal pure returns (bool z) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_PURE",
+                    "vulnerability_from_line": 170,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function both(bool x, bool y) internal pure returns (bool z) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 82,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 168,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    assembly{ z := or(x, y)}\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 171,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    assembly{ z := and(x, y)}\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "dai-backstop-syndicate-965a3dbd44e42705ac4aa38e37e21949032f2fc8/contracts/mcd/DaiJoin.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 126,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor(address vat_, address dai_) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 127,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    wards[msg.sender] = 1;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 128,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    live = 1;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 129,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    vat = VatLike(vat_);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 130,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    dai = DSTokenLike(dai_);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(wards[msg.sender] == 1, \"DaiJoin/not-authorized\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 144,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(live == 1, \"DaiJoin/not-live\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_17"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 78,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function decimals() public view returns (uint);\n",
+                    "message": "GemLike.decimals (DaiJoin.sol#78) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.16;\n",
+                    "message": "Detected issues with version pragma in DaiJoin.sol:\n\t- pragma solidity0.5.16 (DaiJoin.sol#8): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address,uint) external returns (bool);\n",
+                    "message": "Parameter '' of GemLike.transfer (DaiJoin.sol#79) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address,uint) external returns (bool);\n",
+                    "message": "Parameter '_scope_0' of GemLike.transfer (DaiJoin.sol#79) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address,address,uint) external returns (bool);\n",
+                    "message": "Parameter '' of GemLike.transferFrom (DaiJoin.sol#80) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address,address,uint) external returns (bool);\n",
+                    "message": "Parameter '_scope_0' of GemLike.transferFrom (DaiJoin.sol#80) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address,address,uint) external returns (bool);\n",
+                    "message": "Parameter '_scope_1' of GemLike.transferFrom (DaiJoin.sol#80) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function mint(address,uint) external;\n",
+                    "message": "Parameter '' of DSTokenLike.mint (DaiJoin.sol#84) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function mint(address,uint) external;\n",
+                    "message": "Parameter '_scope_0' of DSTokenLike.mint (DaiJoin.sol#84) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function burn(address,uint) external;\n",
+                    "message": "Parameter '' of DSTokenLike.burn (DaiJoin.sol#85) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function burn(address,uint) external;\n",
+                    "message": "Parameter '_scope_0' of DSTokenLike.burn (DaiJoin.sol#85) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function slip(bytes32,address,int) external;\n",
+                    "message": "Parameter '' of VatLike.slip (DaiJoin.sol#89) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function slip(bytes32,address,int) external;\n",
+                    "message": "Parameter '_scope_0' of VatLike.slip (DaiJoin.sol#89) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function slip(bytes32,address,int) external;\n",
+                    "message": "Parameter '_scope_1' of VatLike.slip (DaiJoin.sol#89) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 90,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function move(address,address,uint) external;\n",
+                    "message": "Parameter '' of VatLike.move (DaiJoin.sol#90) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 90,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function move(address,address,uint) external;\n",
+                    "message": "Parameter '_scope_0' of VatLike.move (DaiJoin.sol#90) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 90,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function move(address,address,uint) external;\n",
+                    "message": "Parameter '_scope_1' of VatLike.move (DaiJoin.sol#90) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 135,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint constant ONE = 10 ** 27;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "dai-backstop-syndicate-965a3dbd44e42705ac4aa38e37e21949032f2fc8/contracts/mcd/DSToken.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 473,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  bytes32   public  name = \"\";\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    emit LogSetOwner(msg.sender);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 336,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor(uint supply) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 337,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    _balances[msg.sender] = supply;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 338,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    _supply = supply;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 339,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 409,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor(bytes32 symbol_) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 410,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    symbol = symbol_;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 411,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 429,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (src != msg.sender && _approvals[src][msg.sender] != uint(-1)) {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 430,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      _approvals[src][msg.sender] = sub(_approvals[src][msg.sender], wad);\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 431,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 463,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (guy != msg.sender && _approvals[guy][msg.sender] != uint(-1)) {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 464,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      _approvals[guy][msg.sender] = sub(_approvals[guy][msg.sender], wad);\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 465,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_26"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "locked-ether",
+                    "vulnerability_from_line": 267,
+                    "vulnerability_to_line": 269,
+                    "vulnerability_code": "  function stop() public payable auth note {\n\n    stopped = true;\n",
+                    "message": "Contract locking ether found in DSToken.sol:\n\tContract DSToken has payable functions:\n\t - stop (DSToken.sol#267-269)\n\t - start (DSToken.sol#270-272)\n\tBut does not have a function to withdraw the ether\n"
+                },
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 407,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256  public  decimals = 18; // standard token precision. override to customize\n",
+                    "message": "DSToken.decimals should be constant (DSToken.sol#407)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function canCall(address src, address dst, bytes4 sig) public view returns (bool);\n",
+                    "message": "DSAuthority.canCall (DSToken.sol#29) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": 52,
+                    "vulnerability_code": "  function setOwner(address owner_)\n\n    public\n\n    auth\n\n  {\n\n    owner = owner_;\n\n    emit LogSetOwner(owner);\n",
+                    "message": "DSAuth.setOwner (DSToken.sol#46-52) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": 60,
+                    "vulnerability_code": "  function setAuthority(DSAuthority authority_)\n\n    public\n\n    auth\n\n  {\n\n    authority = authority_;\n\n    emit LogSetAuthority(address(authority));\n",
+                    "message": "DSAuth.setAuthority (DSToken.sol#54-60) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 267,
+                    "vulnerability_to_line": 269,
+                    "vulnerability_code": "  function stop() public payable auth note {\n\n    stopped = true;\n",
+                    "message": "DSStop.stop (DSToken.sol#267-269) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 270,
+                    "vulnerability_to_line": 272,
+                    "vulnerability_code": "  function start() public payable auth note {\n\n    stopped = false;\n",
+                    "message": "DSStop.start (DSToken.sol#270-272) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 296,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function totalSupply() public view returns (uint supply);\n",
+                    "message": "ERC20.totalSupply (DSToken.sol#296) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 341,
+                    "vulnerability_to_line": 343,
+                    "vulnerability_code": "  function totalSupply() public view returns (uint) {\n\n    return _supply;\n",
+                    "message": "DSTokenBase.totalSupply (DSToken.sol#341-343) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 297,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf( address who ) public view returns (uint value);\n",
+                    "message": "ERC20.balanceOf (DSToken.sol#297) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 344,
+                    "vulnerability_to_line": 346,
+                    "vulnerability_code": "  function balanceOf(address src) public view returns (uint) {\n\n    return _balances[src];\n",
+                    "message": "DSTokenBase.balanceOf (DSToken.sol#344-346) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 298,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance( address owner, address spender ) public view returns (uint _allowance);\n",
+                    "message": "ERC20.allowance (DSToken.sol#298) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 347,
+                    "vulnerability_to_line": 349,
+                    "vulnerability_code": "  function allowance(address src, address guy) public view returns (uint) {\n\n    return _approvals[src][guy];\n",
+                    "message": "DSTokenBase.allowance (DSToken.sol#347-349) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 300,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer( address to, uint value) public returns (bool ok);\n",
+                    "message": "ERC20.transfer (DSToken.sol#300) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 351,
+                    "vulnerability_to_line": 353,
+                    "vulnerability_code": "  function transfer(address dst, uint wad) public returns (bool) {\n\n    return transferFrom(msg.sender, dst, wad);\n",
+                    "message": "DSTokenBase.transfer (DSToken.sol#351-353) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 416,
+                    "vulnerability_to_line": 418,
+                    "vulnerability_code": "  function approve(address guy) public stoppable returns (bool) {\n\n    return super.approve(guy, uint(-1));\n",
+                    "message": "DSToken.approve (DSToken.sol#416-418) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 441,
+                    "vulnerability_to_line": 443,
+                    "vulnerability_code": "  function push(address dst, uint wad) public {\n\n    transferFrom(msg.sender, dst, wad);\n",
+                    "message": "DSToken.push (DSToken.sol#441-443) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 444,
+                    "vulnerability_to_line": 446,
+                    "vulnerability_code": "  function pull(address src, uint wad) public {\n\n    transferFrom(src, msg.sender, wad);\n",
+                    "message": "DSToken.pull (DSToken.sol#444-446) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 447,
+                    "vulnerability_to_line": 449,
+                    "vulnerability_code": "  function move(address src, address dst, uint wad) public {\n\n    transferFrom(src, dst, wad);\n",
+                    "message": "DSToken.move (DSToken.sol#447-449) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 451,
+                    "vulnerability_to_line": 453,
+                    "vulnerability_code": "  function mint(uint wad) public {\n\n    mint(msg.sender, wad);\n",
+                    "message": "DSToken.mint (DSToken.sol#451-453) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 454,
+                    "vulnerability_to_line": 456,
+                    "vulnerability_code": "  function burn(uint wad) public {\n\n    burn(msg.sender, wad);\n",
+                    "message": "DSToken.burn (DSToken.sol#454-456) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 475,
+                    "vulnerability_to_line": 477,
+                    "vulnerability_code": "  function setName(bytes32 name_) public auth {\n\n    name = name_;\n",
+                    "message": "DSToken.setName (DSToken.sol#475-477) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.16;\n",
+                    "message": "Detected issues with version pragma in DSToken.sol:\n\t- pragma solidity0.5.16 (DSToken.sol#10): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 332,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256                      _supply;\n",
+                    "message": "Variable 'DSTokenBase._supply' (DSToken.sol#332) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 333,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping (address => uint256)             _balances;\n",
+                    "message": "Variable 'DSTokenBase._balances' (DSToken.sol#333) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 334,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping (address => mapping (address => uint256))  _approvals;\n",
+                    "message": "Variable 'DSTokenBase._approvals' (DSToken.sol#334) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 371,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address guy, uint wad) public returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 416,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address guy) public stoppable returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 420,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address guy, uint wad) public stoppable returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 259,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract DSStop is DSNote, DSAuth {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 198,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 122,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint constant WAD = 10 ** 18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 123,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint constant RAY = 10 ** 27;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 332,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256                      _supply;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 333,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping (address => uint256)             _balances;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 334,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping (address => mapping (address => uint256))  _approvals;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "dai-backstop-syndicate-965a3dbd44e42705ac4aa38e37e21949032f2fc8/contracts/mcd/MkrAuthority.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    root = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_9"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": 33,
+                    "vulnerability_code": "  function setRoot(address usr) public sudo {\n\n    root = usr;\n\n    emit LogSetRoot(usr);\n",
+                    "message": "MkrAuthority.setRoot (MkrAuthority.sol#30-33) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function rely(address usr) public sudo { wards[usr] = 1; emit LogRely(usr); }\n",
+                    "message": "MkrAuthority.rely (MkrAuthority.sol#37) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function deny(address usr) public sudo { wards[usr] = 0; emit LogDeny(usr); }\n",
+                    "message": "MkrAuthority.deny (MkrAuthority.sol#39) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": 62,
+                    "vulnerability_code": "  function canCall(address src, address, bytes4 sig)\n\n      public view returns (bool)\n\n  {\n\n    if (sig == burn || sig == burnFrom || src == root) {\n\n      return true;\n\n    } else if (sig == mint) {\n\n      return (wards[src] == 1);\n\n    } else {\n\n      return false;\n\n    }\n",
+                    "message": "MkrAuthority.canCall (MkrAuthority.sol#52-62) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.12;\n",
+                    "message": "Detected issues with version pragma in MkrAuthority.sol:\n\t- pragma solidity^0.5.12 (MkrAuthority.sol#24): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function canCall(address src, address, bytes4 sig)\n",
+                    "message": "Parameter '' of MkrAuthority.canCall (MkrAuthority.sol#52) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  bytes4 constant burn = bytes4(0x42966c68);\n",
+                    "message": "Constant 'MkrAuthority.burn' (MkrAuthority.sol#46) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 48,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  bytes4 constant burnFrom = bytes4(0x9dc29fac);\n",
+                    "message": "Constant 'MkrAuthority.burnFrom' (MkrAuthority.sol#48) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 50,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  bytes4 constant mint = bytes4(0x40c10f19);\n",
+                    "message": "Constant 'MkrAuthority.mint' (MkrAuthority.sol#50) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  bytes4 constant burn = bytes4(0x42966c68);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 48,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  bytes4 constant burnFrom = bytes4(0x9dc29fac);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 50,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  bytes4 constant mint = bytes4(0x40c10f19);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.12;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  bytes4 constant burn = bytes4(0x42966c68);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 48,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  bytes4 constant burnFrom = bytes4(0x9dc29fac);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 50,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  bytes4 constant mint = bytes4(0x40c10f19);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "dai-backstop-syndicate-965a3dbd44e42705ac4aa38e37e21949032f2fc8/contracts/mcd/Flopper.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 135,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public kicks = 0;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 143,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor(address vat_, address gem_) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 144,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    wards[msg.sender] = 1;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    vat = VatLike(vat_);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 146,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    gem = GemLike(gem_);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 147,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    live = 1;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 148,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 112,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(wards[msg.sender] == 1, \"Flopper/not-authorized\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 164,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    else revert(\"Flopper/file-unrecognized-param\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 173,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(live == 1, \"Flopper/not-live\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 174,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(kicks < uint256(-1), \"Flopper/overflow\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 185,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(bids[id].end < now, \"Flopper/not-finished\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 186,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(bids[id].tic == 0, \"Flopper/bid-already-placed\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 191,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(live == 1, \"Flopper/not-live\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 192,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(bids[id].guy != address(0), \"Flopper/guy-not-set\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 193,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 194,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      bids[id].tic > now || bids[id].tic == 0,\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 195,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"Flopper/already-finished-tic\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 196,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 197,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(bids[id].end > now, \"Flopper/already-finished-end\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 199,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(bid == bids[id].bid, \"Flopper/not-matching-bid\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 200,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(lot < bids[id].lot, \"Flopper/lot-not-lower\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 201,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 202,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      mul(beg, lot) <= mul(bids[id].lot, ONE),\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 203,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"Flopper/insufficient-decrease\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 204,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 213,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(live == 1, \"Flopper/not-live\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 214,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 215,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      bids[id].tic != 0 && (bids[id].tic < now || bids[id].end < now),\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 216,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"Flopper/not-finished\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 217,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 227,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(live == 0, \"Flopper/still-live\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 228,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(bids[id].guy != address(0), \"Flopper/guy-not-set\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 214,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 215,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      bids[id].tic != 0 && (bids[id].tic < now || bids[id].end < now),\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 216,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"Flopper/not-finished\"\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 217,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_12"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 212,
+                    "vulnerability_to_line": 220,
+                    "vulnerability_code": "  function deal(uint256 id) external note {\n\n    require(live == 1, \"Flopper/not-live\");\n\n    require(\n\n      bids[id].tic != 0 && (bids[id].tic < now || bids[id].end < now),\n\n      \"Flopper/not-finished\"\n\n    );\n\n    gem.mint(bids[id].guy, bids[id].lot);\n\n    delete bids[id];\n",
+                    "message": "Reentrancy in Flopper.deal (Flopper.sol#212-220):\n\tExternal calls:\n\t- gem.mint(bids[id].guy,bids[id].lot) (Flopper.sol#218)\n\tState variables written after the call(s):\n\t- bids (Flopper.sol#219)\n"
+                },
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 190,
+                    "vulnerability_to_line": 211,
+                    "vulnerability_code": "  function dent(uint256 id, uint256 lot, uint256 bid) external note {\n\n    require(live == 1, \"Flopper/not-live\");\n\n    require(bids[id].guy != address(0), \"Flopper/guy-not-set\");\n\n    require(\n\n      bids[id].tic > now || bids[id].tic == 0,\n\n      \"Flopper/already-finished-tic\"\n\n    );\n\n    require(bids[id].end > now, \"Flopper/already-finished-end\");\n\n\n\n    require(bid == bids[id].bid, \"Flopper/not-matching-bid\");\n\n    require(lot < bids[id].lot, \"Flopper/lot-not-lower\");\n\n    require(\n\n      mul(beg, lot) <= mul(bids[id].lot, ONE),\n\n      \"Flopper/insufficient-decrease\"\n\n    );\n\n\n\n    vat.move(msg.sender, bids[id].guy, bid);\n\n\n\n    bids[id].guy = msg.sender;\n\n    bids[id].lot = lot;\n\n    bids[id].tic = add(uint48(now), ttl);\n",
+                    "message": "Reentrancy in Flopper.dent (Flopper.sol#190-211):\n\tExternal calls:\n\t- vat.move(msg.sender,bids[id].guy,bid) (Flopper.sol#206)\n\tState variables written after the call(s):\n\t- bids (Flopper.sol#208)\n\t- bids (Flopper.sol#209)\n\t- bids (Flopper.sol#210)\n"
+                },
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 226,
+                    "vulnerability_to_line": 231,
+                    "vulnerability_code": "  function yank(uint256 id) external note {\n\n    require(live == 0, \"Flopper/still-live\");\n\n    require(bids[id].guy != address(0), \"Flopper/guy-not-set\");\n\n    vat.suck(vow, bids[id].guy, bids[id].bid);\n\n    delete bids[id];\n",
+                    "message": "Reentrancy in Flopper.yank (Flopper.sol#226-231):\n\tExternal calls:\n\t- vat.suck(vow,bids[id].guy,bids[id].bid) (Flopper.sol#229)\n\tState variables written after the call(s):\n\t- bids (Flopper.sol#230)\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.16;\n",
+                    "message": "Detected issues with version pragma in Flopper.sol:\n\t- pragma solidity0.5.16 (Flopper.sol#12): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function move(address, address, uint256) external;\n",
+                    "message": "Parameter '' of VatLike.move (Flopper.sol#84) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function move(address, address, uint256) external;\n",
+                    "message": "Parameter '_scope_0' of VatLike.move (Flopper.sol#84) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function move(address, address, uint256) external;\n",
+                    "message": "Parameter '_scope_1' of VatLike.move (Flopper.sol#84) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function suck(address, address, uint256) external;\n",
+                    "message": "Parameter '' of VatLike.suck (Flopper.sol#85) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function suck(address, address, uint256) external;\n",
+                    "message": "Parameter '_scope_0' of VatLike.suck (Flopper.sol#85) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function suck(address, address, uint256) external;\n",
+                    "message": "Parameter '_scope_1' of VatLike.suck (Flopper.sol#85) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 88,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function mint(address, uint256) external;\n",
+                    "message": "Parameter '' of GemLike.mint (Flopper.sol#88) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 88,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function mint(address, uint256) external;\n",
+                    "message": "Parameter '_scope_0' of GemLike.mint (Flopper.sol#88) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 163,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    else if (what == \"tau\") tau = uint48(data);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 130,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 constant ONE = 1.00E18;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "dai-backstop-syndicate-965a3dbd44e42705ac4aa38e37e21949032f2fc8/contracts/interfaces/IDaiBackstopSyndicate.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.16;\n",
+                    "message": "Detected issues with version pragma in IDaiBackstopSyndicate.sol:\n\t- pragma solidity0.5.16 (IDaiBackstopSyndicate.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function defect(uint256 backstopTokenAmount) external returns (uint256 daiRedeemed, uint256 mkrRedeemed);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "dai-backstop-syndicate-965a3dbd44e42705ac4aa38e37e21949032f2fc8/contracts/interfaces/IVow.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.16;\n",
+                    "message": "Detected issues with version pragma in IVow.sol:\n\t- pragma solidity0.5.16 (IVow.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "dai-backstop-syndicate-965a3dbd44e42705ac4aa38e37e21949032f2fc8/contracts/interfaces/IFlopper.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_4"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.16;\n",
+                    "message": "Detected issues with version pragma in IFlopper.sol:\n\t- pragma solidity0.5.16 (IFlopper.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function wards(address) external view returns (uint256);\n",
+                    "message": "Parameter '' of IFlopper.wards (IFlopper.sol#8) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function bids(uint256) external view returns (\n",
+                    "message": "Parameter '' of IFlopper.bids (IFlopper.sol#15) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function ONE() external pure returns (uint256);\n",
+                    "message": "Function 'IFlopper.ONE' (IFlopper.sol#29) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function bids(uint256) external view returns (\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "dai-backstop-syndicate-965a3dbd44e42705ac4aa38e37e21949032f2fc8/contracts/interfaces/IJoin.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.16;\n",
+                    "message": "Detected issues with version pragma in IJoin.sol:\n\t- pragma solidity0.5.16 (IJoin.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function join(address, uint256) external;\n",
+                    "message": "Parameter '' of IJoin.join (IJoin.sol#7) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function join(address, uint256) external;\n",
+                    "message": "Parameter '_scope_0' of IJoin.join (IJoin.sol#7) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function exit(address, uint256) external;\n",
+                    "message": "Parameter '' of IJoin.exit (IJoin.sol#8) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function exit(address, uint256) external;\n",
+                    "message": "Parameter '_scope_0' of IJoin.exit (IJoin.sol#8) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "dai-backstop-syndicate-965a3dbd44e42705ac4aa38e37e21949032f2fc8/contracts/interfaces/IVat.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.16;\n",
+                    "message": "Detected issues with version pragma in IVat.sol:\n\t- pragma solidity0.5.16 (IVat.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function dai(address) external view returns (uint256);\n",
+                    "message": "Parameter '' of IVat.dai (IVat.sol#7) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function hope(address) external;\n",
+                    "message": "Parameter '' of IVat.hope (IVat.sol#8) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function move(address, address, uint256) external;\n",
+                    "message": "Parameter '' of IVat.move (IVat.sol#9) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function move(address, address, uint256) external;\n",
+                    "message": "Parameter '_scope_0' of IVat.move (IVat.sol#9) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function move(address, address, uint256) external;\n",
+                    "message": "Parameter '_scope_1' of IVat.move (IVat.sol#9) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    }
+}

@@ -1,0 +1,376 @@
+{
+    "ngnt-61765c1b9983bb8b2b80aeba913d7031fa6ac844/contracts/Pausable.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Pausable is Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 96,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bool public paused = false;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        setOwner(msg.sender);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": 67,
+                    "vulnerability_code": "    function transferOwnership(address newOwner) public onlyOwner {\n\n        require(newOwner != address(0));\n\n        emit OwnershipTransferred(owner(), newOwner);\n\n        setOwner(newOwner);\n",
+                    "message": "Ownable.transferOwnership (Pausable.sol#63-67) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 117,
+                    "vulnerability_to_line": 120,
+                    "vulnerability_code": "    function pause() onlyPauser public {\n\n        paused = true;\n\n        emit Pause();\n",
+                    "message": "Pausable.pause (Pausable.sol#117-120) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 125,
+                    "vulnerability_to_line": 128,
+                    "vulnerability_code": "    function unpause() onlyPauser public {\n\n        paused = false;\n\n        emit Unpause();\n",
+                    "message": "Pausable.unpause (Pausable.sol#125-128) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": 137,
+                    "vulnerability_code": "    function updatePauser(address _newPauser) onlyOwner public {\n\n        require(_newPauser != address(0));\n\n        pauser = _newPauser;\n\n        emit PauserChanged(pauser);\n",
+                    "message": "Pausable.updatePauser (Pausable.sol#133-137) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.5;\n",
+                    "message": "Detected issues with version pragma in Pausable.sol:\n\t- pragma solidity0.5.5 (Pausable.sol#3): it allows old versions\n\t- pragma solidity0.5.5 (Pausable.sol#72): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function updatePauser(address _newPauser) onlyOwner public {\n",
+                    "message": "Parameter '_newPauser' of Pausable.updatePauser (Pausable.sol#133) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address private _owner;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "ngnt-61765c1b9983bb8b2b80aeba913d7031fa6ac844/contracts/Ownable.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        setOwner(msg.sender);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": 67,
+                    "vulnerability_code": "    function transferOwnership(address newOwner) public onlyOwner {\n\n        require(newOwner != address(0));\n\n        emit OwnershipTransferred(owner(), newOwner);\n\n        setOwner(newOwner);\n",
+                    "message": "Ownable.transferOwnership (Ownable.sol#63-67) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.5;\n",
+                    "message": "Detected issues with version pragma in Ownable.sol:\n\t- pragma solidity0.5.5 (Ownable.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address private _owner;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "ngnt-61765c1b9983bb8b2b80aeba913d7031fa6ac844/contracts/Migrations.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": 19,
+                    "vulnerability_code": "    function setCompleted(uint completed) public restricted {\n\n        last_completed_migration = completed;\n",
+                    "message": "Migrations.setCompleted (Migrations.sol#17-19) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": 24,
+                    "vulnerability_code": "    function upgrade(address new_address) public restricted {\n\n        Migrations upgraded = Migrations(new_address);\n\n        upgraded.setCompleted(last_completed_migration);\n",
+                    "message": "Migrations.upgrade (Migrations.sol#21-24) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.5;\n",
+                    "message": "Detected issues with version pragma in Migrations.sol:\n\t- pragma solidity0.5.5 (Migrations.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgrade(address new_address) public restricted {\n",
+                    "message": "Parameter 'new_address' of Migrations.upgrade (Migrations.sol#21) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint public last_completed_migration;\n",
+                    "message": "Variable 'Migrations.last_completed_migration' (Migrations.sol#7) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "ngnt-61765c1b9983bb8b2b80aeba913d7031fa6ac844/contracts/Blacklistable.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Blacklistable is Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        setOwner(msg.sender);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_10"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": 67,
+                    "vulnerability_code": "    function transferOwnership(address newOwner) public onlyOwner {\n\n        require(newOwner != address(0));\n\n        emit OwnershipTransferred(owner(), newOwner);\n\n        setOwner(newOwner);\n",
+                    "message": "Ownable.transferOwnership (Blacklistable.sol#63-67) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 110,
+                    "vulnerability_to_line": 112,
+                    "vulnerability_code": "    function isBlacklisted(address _account) public view returns (bool) {\n\n        return blacklisted[_account];\n",
+                    "message": "Blacklistable.isBlacklisted (Blacklistable.sol#110-112) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": 121,
+                    "vulnerability_code": "    function blacklist(address _account) public onlyBlacklister {\n\n        blacklisted[_account] = true;\n\n        emit Blacklisted(_account);\n",
+                    "message": "Blacklistable.blacklist (Blacklistable.sol#118-121) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 127,
+                    "vulnerability_to_line": 130,
+                    "vulnerability_code": "    function unBlacklist(address _account) public onlyBlacklister {\n\n        blacklisted[_account] = false;\n\n        emit UnBlacklisted(_account);\n",
+                    "message": "Blacklistable.unBlacklist (Blacklistable.sol#127-130) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 132,
+                    "vulnerability_to_line": 136,
+                    "vulnerability_code": "    function updateBlacklister(address _newBlacklister) public onlyOwner {\n\n        require(_newBlacklister != address(0));\n\n        blacklister = _newBlacklister;\n\n        emit BlacklisterChanged(blacklister);\n",
+                    "message": "Blacklistable.updateBlacklister (Blacklistable.sol#132-136) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.5;\n",
+                    "message": "Detected issues with version pragma in Blacklistable.sol:\n\t- pragma solidity0.5.5 (Blacklistable.sol#3): it allows old versions\n\t- pragma solidity0.5.5 (Blacklistable.sol#72): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 110,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isBlacklisted(address _account) public view returns (bool) {\n",
+                    "message": "Parameter '_account' of Blacklistable.isBlacklisted (Blacklistable.sol#110) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function blacklist(address _account) public onlyBlacklister {\n",
+                    "message": "Parameter '_account' of Blacklistable.blacklist (Blacklistable.sol#118) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 127,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function unBlacklist(address _account) public onlyBlacklister {\n",
+                    "message": "Parameter '_account' of Blacklistable.unBlacklist (Blacklistable.sol#127) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 132,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function updateBlacklister(address _newBlacklister) public onlyOwner {\n",
+                    "message": "Parameter '_newBlacklister' of Blacklistable.updateBlacklister (Blacklistable.sol#132) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address private _owner;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

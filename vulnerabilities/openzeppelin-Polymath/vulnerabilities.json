@@ -1,0 +1,2174 @@
+{
+    "polymath-token-672fabe081e8f90ea025252d92c2eb247d60010e/flat/PolyToken.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_31"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  string public name = 'Polymath';\n",
+                    "message": "PolyToken.name should be constant (PolyToken.sol#62)\nPolyToken.symbol should be constant (PolyToken.sol#63)\nPolyToken.totalSupply should be constant (PolyToken.sol#66)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address who) public view returns (uint256);\n",
+                    "message": "IERC20.balanceOf (PolyToken.sol#10) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": 85,
+                    "vulnerability_code": "  function balanceOf(address _owner) public view returns (uint256 balance) {\n\n    return balances[_owner];\n",
+                    "message": "PolyToken.balanceOf (PolyToken.sol#83-85) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address owner, address spender) public view returns (uint256);\n",
+                    "message": "IERC20.allowance (PolyToken.sol#11) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 93,
+                    "vulnerability_to_line": 95,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public view returns (uint256) {\n\n    return allowed[_owner][_spender];\n",
+                    "message": "PolyToken.allowance (PolyToken.sol#93-95) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address to, uint256 value) public returns (bool);\n",
+                    "message": "IERC20.transfer (PolyToken.sol#12) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 102,
+                    "vulnerability_to_line": 111,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n\n    require(_to != address(0));\n\n    require(_value <= balances[msg.sender]);\n\n\n\n    // SafeMath.sub will throw if there is not enough balance.\n\n    balances[msg.sender] = balances[msg.sender].sub(_value);\n\n    balances[_to] = balances[_to].add(_value);\n\n    Transfer(msg.sender, _to, _value);\n\n    return true;\n",
+                    "message": "PolyToken.transfer (PolyToken.sol#102-111) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address from, address to, uint256 value) public returns (bool);\n",
+                    "message": "IERC20.transferFrom (PolyToken.sol#13) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 119,
+                    "vulnerability_to_line": 129,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n\n    require(_to != address(0));\n\n    require(_value <= balances[_from]);\n\n    require(_value <= allowed[_from][msg.sender]);\n\n\n\n    balances[_from] = balances[_from].sub(_value);\n\n    balances[_to] = balances[_to].add(_value);\n\n    allowed[_from][msg.sender] = allowed[_from][msg.sender].sub(_value);\n\n    Transfer(_from, _to, _value);\n\n    return true;\n",
+                    "message": "PolyToken.transferFrom (PolyToken.sol#119-129) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address spender, uint256 value) public returns (bool);\n",
+                    "message": "IERC20.approve (PolyToken.sol#14) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": 145,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n\n    allowed[msg.sender][_spender] = _value;\n\n    Approval(msg.sender, _spender, _value);\n\n    return true;\n",
+                    "message": "PolyToken.approve (PolyToken.sol#141-145) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 157,
+                    "vulnerability_to_line": 161,
+                    "vulnerability_code": "  function increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n\n    allowed[msg.sender][_spender] = allowed[msg.sender][_spender].add(_addedValue);\n\n    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n\n    return true;\n",
+                    "message": "PolyToken.increaseApproval (PolyToken.sol#157-161) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 173,
+                    "vulnerability_to_line": 182,
+                    "vulnerability_code": "  function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n\n    uint oldValue = allowed[msg.sender][_spender];\n\n    if (_subtractedValue > oldValue) {\n\n      allowed[msg.sender][_spender] = 0;\n\n    } else {\n\n      allowed[msg.sender][_spender] = oldValue.sub(_subtractedValue);\n\n    }\n\n    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n\n    return true;\n",
+                    "message": "PolyToken.decreaseApproval (PolyToken.sol#173-182) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in PolyToken.sol:\n\t- pragma solidity^0.4.18 (PolyToken.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address _owner) public view returns (uint256 balance) {\n",
+                    "message": "Parameter '_owner' of PolyToken.balanceOf (PolyToken.sol#83) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 93,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public view returns (uint256) {\n",
+                    "message": "Parameter '_owner' of PolyToken.allowance (PolyToken.sol#93) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 93,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public view returns (uint256) {\n",
+                    "message": "Parameter '_spender' of PolyToken.allowance (PolyToken.sol#93) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 102,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_to' of PolyToken.transfer (PolyToken.sol#102) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 102,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of PolyToken.transfer (PolyToken.sol#102) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 119,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_from' of PolyToken.transferFrom (PolyToken.sol#119) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 119,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_to' of PolyToken.transferFrom (PolyToken.sol#119) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 119,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of PolyToken.transferFrom (PolyToken.sol#119) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of PolyToken.approve (PolyToken.sol#141) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of PolyToken.approve (PolyToken.sol#141) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": 76,
+                    "vulnerability_code": "  function PolyToken(address _polyDistributionContractAddress) public {\n\n    balances[_polyDistributionContractAddress] = totalSupply;\n",
+                    "message": "Function 'PolyToken.PolyToken' (PolyToken.sol#74-76) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function PolyToken(address _polyDistributionContractAddress) public {\n",
+                    "message": "Parameter '_polyDistributionContractAddress' of PolyToken.PolyToken (PolyToken.sol#74) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 157,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of PolyToken.increaseApproval (PolyToken.sol#157) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 157,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n",
+                    "message": "Parameter '_addedValue' of PolyToken.increaseApproval (PolyToken.sol#157) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 173,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of PolyToken.decreaseApproval (PolyToken.sol#173) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 173,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n",
+                    "message": "Parameter '_subtractedValue' of PolyToken.decreaseApproval (PolyToken.sol#173) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public constant decimalFactor = 10 ** uint256(decimals);\n",
+                    "message": "Constant 'PolyToken.decimalFactor' (PolyToken.sol#65) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 59,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 67,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping (address => uint256) balances;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "polymath-token-672fabe081e8f90ea025252d92c2eb247d60010e/flat/Ownable.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": 39,
+                    "vulnerability_code": "  function transferOwnership(address newOwner) public onlyOwner {\n\n    require(newOwner != address(0));\n\n    OwnershipTransferred(owner, newOwner);\n\n    owner = newOwner;\n",
+                    "message": "Ownable.transferOwnership (Ownable.sol#35-39) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in Ownable.sol:\n\t- pragma solidity^0.4.18 (Ownable.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": 21,
+                    "vulnerability_code": "  function Ownable() public {\n\n    owner = msg.sender;\n",
+                    "message": "Function 'Ownable.Ownable' (Ownable.sol#19-21) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "polymath-token-672fabe081e8f90ea025252d92c2eb247d60010e/flat/SafeMath.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in SafeMath.sol:\n\t- pragma solidity^0.4.18 (SafeMath.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "polymath-token-672fabe081e8f90ea025252d92c2eb247d60010e/flat/Migrations.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": 19,
+                    "vulnerability_code": "  function setCompleted(uint completed) public restricted {\n\n    last_completed_migration = completed;\n",
+                    "message": "Migrations.setCompleted (Migrations.sol#17-19) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": 24,
+                    "vulnerability_code": "  function upgrade(address new_address) public restricted {\n\n    Migrations upgraded = Migrations(new_address);\n\n    upgraded.setCompleted(last_completed_migration);\n",
+                    "message": "Migrations.upgrade (Migrations.sol#21-24) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in Migrations.sol:\n\t- pragma solidity^0.4.18 (Migrations.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": 15,
+                    "vulnerability_code": "  function Migrations() public {\n\n    owner = msg.sender;\n",
+                    "message": "Function 'Migrations.Migrations' (Migrations.sol#13-15) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function upgrade(address new_address) public restricted {\n",
+                    "message": "Parameter 'new_address' of Migrations.upgrade (Migrations.sol#21) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint public last_completed_migration;\n",
+                    "message": "Variable 'Migrations.last_completed_migration' (Migrations.sol#7) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "polymath-token-672fabe081e8f90ea025252d92c2eb247d60010e/flat/PolyDistribution.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 229,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract PolyDistribution is Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 243,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public grandTotalAllocated = 0;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 244,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public grandTotalClaimed = 0;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 278,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(allocations[_recipient].totalAllocated == 0 && _totalAllocated > 0);\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 279,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(_supply >= 0 && _supply <= 5);\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_56"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 309,
+                    "vulnerability_to_line": 325,
+                    "vulnerability_code": "  function transferTokens (address _recipient) public {\n\n    require(allocations[_recipient].amountClaimed < allocations[_recipient].totalAllocated);\n\n    require(now >= allocations[_recipient].endCliff);\n\n    uint256 newAmountClaimed;\n\n    if (allocations[_recipient].endVesting > now) {\n\n      // Transfer available amount based on vesting schedule and allocation\n\n      newAmountClaimed = allocations[_recipient].totalAllocated.mul(now.sub(startTime)).div(allocations[_recipient].endVesting.sub(startTime));\n\n    } else {\n\n      // Transfer total allocated (minus previously claimed tokens)\n\n      newAmountClaimed = allocations[_recipient].totalAllocated;\n\n    }\n\n    uint256 tokensToTransfer = newAmountClaimed.sub(allocations[_recipient].amountClaimed);\n\n    allocations[_recipient].amountClaimed = newAmountClaimed;\n\n    POLY.transfer(_recipient, tokensToTransfer);\n\n    grandTotalClaimed = grandTotalClaimed.add(tokensToTransfer);\n\n    LogPolyClaimed(_recipient, allocations[_recipient].AllocationSupply, tokensToTransfer, newAmountClaimed, grandTotalClaimed);\n",
+                    "message": "PolyDistribution.transferTokens (PolyDistribution.sol#309-325) does not use the value returned by external calls:\n\t-POLY.transfer(_recipient,tokensToTransfer) (PolyDistribution.sol#322)\n"
+                },
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 328,
+                    "vulnerability_to_line": 333,
+                    "vulnerability_code": "  function refundTokens(address _recipient, address _token) public onlyOwner {\n\n    require(_token != address(this));\n\n    IERC20 token = IERC20(_token);\n\n    uint256 balance = token.balanceOf(this);\n\n    token.transfer(_recipient, balance);\n",
+                    "message": "PolyDistribution.refundTokens (PolyDistribution.sol#328-333) does not use the value returned by external calls:\n\t-token.transfer(_recipient,balance) (PolyDistribution.sol#332)\n"
+                },
+                {
+                    "name": "reentrancy-benign",
+                    "vulnerability_from_line": 309,
+                    "vulnerability_to_line": 325,
+                    "vulnerability_code": "  function transferTokens (address _recipient) public {\n\n    require(allocations[_recipient].amountClaimed < allocations[_recipient].totalAllocated);\n\n    require(now >= allocations[_recipient].endCliff);\n\n    uint256 newAmountClaimed;\n\n    if (allocations[_recipient].endVesting > now) {\n\n      // Transfer available amount based on vesting schedule and allocation\n\n      newAmountClaimed = allocations[_recipient].totalAllocated.mul(now.sub(startTime)).div(allocations[_recipient].endVesting.sub(startTime));\n\n    } else {\n\n      // Transfer total allocated (minus previously claimed tokens)\n\n      newAmountClaimed = allocations[_recipient].totalAllocated;\n\n    }\n\n    uint256 tokensToTransfer = newAmountClaimed.sub(allocations[_recipient].amountClaimed);\n\n    allocations[_recipient].amountClaimed = newAmountClaimed;\n\n    POLY.transfer(_recipient, tokensToTransfer);\n\n    grandTotalClaimed = grandTotalClaimed.add(tokensToTransfer);\n\n    LogPolyClaimed(_recipient, allocations[_recipient].AllocationSupply, tokensToTransfer, newAmountClaimed, grandTotalClaimed);\n",
+                    "message": "Reentrancy in PolyDistribution.transferTokens (PolyDistribution.sol#309-325):\n\tExternal calls:\n\t- POLY.transfer(_recipient,tokensToTransfer) (PolyDistribution.sol#322)\n\tState variables written after the call(s):\n\t- grandTotalClaimed (PolyDistribution.sol#323)\n"
+                },
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  string public name = 'Polymath';\n",
+                    "message": "PolyToken.name should be constant (PolyDistribution.sol#62)\nPolyToken.symbol should be constant (PolyDistribution.sol#63)\nPolyToken.totalSupply should be constant (PolyDistribution.sol#66)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": 85,
+                    "vulnerability_code": "  function balanceOf(address _owner) public view returns (uint256 balance) {\n\n    return balances[_owner];\n",
+                    "message": "PolyToken.balanceOf (PolyDistribution.sol#83-85) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address who) public view returns (uint256);\n",
+                    "message": "IERC20.balanceOf (PolyDistribution.sol#10) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address owner, address spender) public view returns (uint256);\n",
+                    "message": "IERC20.allowance (PolyDistribution.sol#11) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 93,
+                    "vulnerability_to_line": 95,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public view returns (uint256) {\n\n    return allowed[_owner][_spender];\n",
+                    "message": "PolyToken.allowance (PolyDistribution.sol#93-95) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 102,
+                    "vulnerability_to_line": 111,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n\n    require(_to != address(0));\n\n    require(_value <= balances[msg.sender]);\n\n\n\n    // SafeMath.sub will throw if there is not enough balance.\n\n    balances[msg.sender] = balances[msg.sender].sub(_value);\n\n    balances[_to] = balances[_to].add(_value);\n\n    Transfer(msg.sender, _to, _value);\n\n    return true;\n",
+                    "message": "PolyToken.transfer (PolyDistribution.sol#102-111) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address to, uint256 value) public returns (bool);\n",
+                    "message": "IERC20.transfer (PolyDistribution.sol#12) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 119,
+                    "vulnerability_to_line": 129,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n\n    require(_to != address(0));\n\n    require(_value <= balances[_from]);\n\n    require(_value <= allowed[_from][msg.sender]);\n\n\n\n    balances[_from] = balances[_from].sub(_value);\n\n    balances[_to] = balances[_to].add(_value);\n\n    allowed[_from][msg.sender] = allowed[_from][msg.sender].sub(_value);\n\n    Transfer(_from, _to, _value);\n\n    return true;\n",
+                    "message": "PolyToken.transferFrom (PolyDistribution.sol#119-129) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address from, address to, uint256 value) public returns (bool);\n",
+                    "message": "IERC20.transferFrom (PolyDistribution.sol#13) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address spender, uint256 value) public returns (bool);\n",
+                    "message": "IERC20.approve (PolyDistribution.sol#14) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": 145,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n\n    allowed[msg.sender][_spender] = _value;\n\n    Approval(msg.sender, _spender, _value);\n\n    return true;\n",
+                    "message": "PolyToken.approve (PolyDistribution.sol#141-145) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 157,
+                    "vulnerability_to_line": 161,
+                    "vulnerability_code": "  function increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n\n    allowed[msg.sender][_spender] = allowed[msg.sender][_spender].add(_addedValue);\n\n    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n\n    return true;\n",
+                    "message": "PolyToken.increaseApproval (PolyDistribution.sol#157-161) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 173,
+                    "vulnerability_to_line": 182,
+                    "vulnerability_code": "  function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n\n    uint oldValue = allowed[msg.sender][_spender];\n\n    if (_subtractedValue > oldValue) {\n\n      allowed[msg.sender][_spender] = 0;\n\n    } else {\n\n      allowed[msg.sender][_spender] = oldValue.sub(_subtractedValue);\n\n    }\n\n    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n\n    return true;\n",
+                    "message": "PolyToken.decreaseApproval (PolyDistribution.sol#173-182) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 216,
+                    "vulnerability_to_line": 220,
+                    "vulnerability_code": "  function transferOwnership(address newOwner) public onlyOwner {\n\n    require(newOwner != address(0));\n\n    OwnershipTransferred(owner, newOwner);\n\n    owner = newOwner;\n",
+                    "message": "Ownable.transferOwnership (PolyDistribution.sol#216-220) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 277,
+                    "vulnerability_to_line": 303,
+                    "vulnerability_code": "  function setAllocation (address _recipient, uint256 _totalAllocated, uint8 _supply) onlyOwner public {\n\n    require(allocations[_recipient].totalAllocated == 0 && _totalAllocated > 0);\n\n    require(_supply >= 0 && _supply <= 5);\n\n    require(_recipient != address(0));\n\n    if (_supply == 0) {\n\n      AVAILABLE_PRESALE_SUPPLY = AVAILABLE_PRESALE_SUPPLY.sub(_totalAllocated);\n\n      allocations[_recipient] = Allocation(uint8(AllocationType.PRESALE), 0, 0, _totalAllocated, 0);\n\n    } else if (_supply == 1) {\n\n      AVAILABLE_FOUNDER_SUPPLY = AVAILABLE_FOUNDER_SUPPLY.sub(_totalAllocated);\n\n      allocations[_recipient] = Allocation(uint8(AllocationType.FOUNDER), startTime + 1 years, startTime + 4 years, _totalAllocated, 0);\n\n    } else if (_supply == 2) {\n\n      AVAILABLE_AIRDROP_SUPPLY = AVAILABLE_AIRDROP_SUPPLY.sub(_totalAllocated);\n\n      allocations[_recipient] = Allocation(uint8(AllocationType.AIRDROP), 0, 0, _totalAllocated, 0);\n\n    } else if (_supply == 3) {\n\n      AVAILABLE_ADVISOR_SUPPLY = AVAILABLE_ADVISOR_SUPPLY.sub(_totalAllocated);\n\n      allocations[_recipient] = Allocation(uint8(AllocationType.ADVISOR), startTime + 212 days, 0, _totalAllocated, 0);\n\n    } else if (_supply == 4) {\n\n      AVAILABLE_BONUS_SUPPLY = AVAILABLE_BONUS_SUPPLY.sub(_totalAllocated);\n\n      allocations[_recipient] = Allocation(uint8(AllocationType.BONUS), startTime + 1 years, startTime + 4 years, _totalAllocated, 0);\n\n    } else if (_supply == 5) {\n\n      AVAILABLE_RESERVE_SUPPLY = AVAILABLE_RESERVE_SUPPLY.sub(_totalAllocated);\n\n      allocations[_recipient] = Allocation(uint8(AllocationType.RESERVE), startTime + 182 days, startTime + 4 years, _totalAllocated, 0);\n\n    }\n\n    AVAILABLE_TOTAL_SUPPLY = AVAILABLE_TOTAL_SUPPLY.sub(_totalAllocated);\n\n    grandTotalAllocated = grandTotalAllocated.add(_totalAllocated);\n\n    LogNewAllocation(_recipient, _supply, _totalAllocated, grandTotalAllocated);\n",
+                    "message": "PolyDistribution.setAllocation (PolyDistribution.sol#277-303) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 309,
+                    "vulnerability_to_line": 325,
+                    "vulnerability_code": "  function transferTokens (address _recipient) public {\n\n    require(allocations[_recipient].amountClaimed < allocations[_recipient].totalAllocated);\n\n    require(now >= allocations[_recipient].endCliff);\n\n    uint256 newAmountClaimed;\n\n    if (allocations[_recipient].endVesting > now) {\n\n      // Transfer available amount based on vesting schedule and allocation\n\n      newAmountClaimed = allocations[_recipient].totalAllocated.mul(now.sub(startTime)).div(allocations[_recipient].endVesting.sub(startTime));\n\n    } else {\n\n      // Transfer total allocated (minus previously claimed tokens)\n\n      newAmountClaimed = allocations[_recipient].totalAllocated;\n\n    }\n\n    uint256 tokensToTransfer = newAmountClaimed.sub(allocations[_recipient].amountClaimed);\n\n    allocations[_recipient].amountClaimed = newAmountClaimed;\n\n    POLY.transfer(_recipient, tokensToTransfer);\n\n    grandTotalClaimed = grandTotalClaimed.add(tokensToTransfer);\n\n    LogPolyClaimed(_recipient, allocations[_recipient].AllocationSupply, tokensToTransfer, newAmountClaimed, grandTotalClaimed);\n",
+                    "message": "PolyDistribution.transferTokens (PolyDistribution.sol#309-325) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 328,
+                    "vulnerability_to_line": 333,
+                    "vulnerability_code": "  function refundTokens(address _recipient, address _token) public onlyOwner {\n\n    require(_token != address(this));\n\n    IERC20 token = IERC20(_token);\n\n    uint256 balance = token.balanceOf(this);\n\n    token.transfer(_recipient, balance);\n",
+                    "message": "PolyDistribution.refundTokens (PolyDistribution.sol#328-333) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in PolyDistribution.sol:\n\t- pragma solidity^0.4.18 (PolyDistribution.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address _owner) public view returns (uint256 balance) {\n",
+                    "message": "Parameter '_owner' of PolyToken.balanceOf (PolyDistribution.sol#83) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 93,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public view returns (uint256) {\n",
+                    "message": "Parameter '_owner' of PolyToken.allowance (PolyDistribution.sol#93) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 93,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public view returns (uint256) {\n",
+                    "message": "Parameter '_spender' of PolyToken.allowance (PolyDistribution.sol#93) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 102,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_to' of PolyToken.transfer (PolyDistribution.sol#102) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 102,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of PolyToken.transfer (PolyDistribution.sol#102) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 119,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_from' of PolyToken.transferFrom (PolyDistribution.sol#119) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 119,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_to' of PolyToken.transferFrom (PolyDistribution.sol#119) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 119,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of PolyToken.transferFrom (PolyDistribution.sol#119) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of PolyToken.approve (PolyDistribution.sol#141) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of PolyToken.approve (PolyDistribution.sol#141) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": 76,
+                    "vulnerability_code": "  function PolyToken(address _polyDistributionContractAddress) public {\n\n    balances[_polyDistributionContractAddress] = totalSupply;\n",
+                    "message": "Function 'PolyToken.PolyToken' (PolyDistribution.sol#74-76) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function PolyToken(address _polyDistributionContractAddress) public {\n",
+                    "message": "Parameter '_polyDistributionContractAddress' of PolyToken.PolyToken (PolyDistribution.sol#74) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 157,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of PolyToken.increaseApproval (PolyDistribution.sol#157) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 157,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n",
+                    "message": "Parameter '_addedValue' of PolyToken.increaseApproval (PolyDistribution.sol#157) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 173,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of PolyToken.decreaseApproval (PolyDistribution.sol#173) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 173,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n",
+                    "message": "Parameter '_subtractedValue' of PolyToken.decreaseApproval (PolyDistribution.sol#173) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public constant decimalFactor = 10 ** uint256(decimals);\n",
+                    "message": "Constant 'PolyToken.decimalFactor' (PolyDistribution.sol#65) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 200,
+                    "vulnerability_to_line": 202,
+                    "vulnerability_code": "  function Ownable() public {\n\n    owner = msg.sender;\n",
+                    "message": "Function 'Ownable.Ownable' (PolyDistribution.sol#200-202) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 264,
+                    "vulnerability_to_line": 269,
+                    "vulnerability_code": "    function PolyDistribution(uint256 _startTime) public {\n\n      require(_startTime >= now);\n\n      require(AVAILABLE_TOTAL_SUPPLY == AVAILABLE_PRESALE_SUPPLY.add(AVAILABLE_FOUNDER_SUPPLY).add(AVAILABLE_AIRDROP_SUPPLY).add(AVAILABLE_ADVISOR_SUPPLY).add(AVAILABLE_BONUS_SUPPLY).add(AVAILABLE_RESERVE_SUPPLY));\n\n      startTime = _startTime;\n\n      POLY = new PolyToken(this);\n",
+                    "message": "Function 'PolyDistribution.PolyDistribution' (PolyDistribution.sol#264-269) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 264,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function PolyDistribution(uint256 _startTime) public {\n",
+                    "message": "Parameter '_startTime' of PolyDistribution.PolyDistribution (PolyDistribution.sol#264) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 277,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setAllocation (address _recipient, uint256 _totalAllocated, uint8 _supply) onlyOwner public {\n",
+                    "message": "Parameter '_recipient' of PolyDistribution.setAllocation (PolyDistribution.sol#277) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 277,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setAllocation (address _recipient, uint256 _totalAllocated, uint8 _supply) onlyOwner public {\n",
+                    "message": "Parameter '_totalAllocated' of PolyDistribution.setAllocation (PolyDistribution.sol#277) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 277,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setAllocation (address _recipient, uint256 _totalAllocated, uint8 _supply) onlyOwner public {\n",
+                    "message": "Parameter '_supply' of PolyDistribution.setAllocation (PolyDistribution.sol#277) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 309,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferTokens (address _recipient) public {\n",
+                    "message": "Parameter '_recipient' of PolyDistribution.transferTokens (PolyDistribution.sol#309) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 328,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function refundTokens(address _recipient, address _token) public onlyOwner {\n",
+                    "message": "Parameter '_recipient' of PolyDistribution.refundTokens (PolyDistribution.sol#328) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 328,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function refundTokens(address _recipient, address _token) public onlyOwner {\n",
+                    "message": "Parameter '_token' of PolyDistribution.refundTokens (PolyDistribution.sol#328) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 232,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  PolyToken public POLY;\n",
+                    "message": "Variable 'PolyDistribution.POLY' (PolyDistribution.sol#232) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 236,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public AVAILABLE_TOTAL_SUPPLY    = 1000000000 * decimals;\n",
+                    "message": "Variable 'PolyDistribution.AVAILABLE_TOTAL_SUPPLY' (PolyDistribution.sol#236) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 237,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public AVAILABLE_PRESALE_SUPPLY  = 240000000 * decimals; // 100% Released on Token Distribution (TD)\n",
+                    "message": "Variable 'PolyDistribution.AVAILABLE_PRESALE_SUPPLY' (PolyDistribution.sol#237) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 238,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public AVAILABLE_FOUNDER_SUPPLY  = 150000000 * decimals; // 25% Released TD +1 year + 100% released TD +4 years\n",
+                    "message": "Variable 'PolyDistribution.AVAILABLE_FOUNDER_SUPPLY' (PolyDistribution.sol#238) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 239,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public AVAILABLE_AIRDROP_SUPPLY  = 10000000 * decimals;  // 10% Released on TD\n",
+                    "message": "Variable 'PolyDistribution.AVAILABLE_AIRDROP_SUPPLY' (PolyDistribution.sol#239) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 240,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public AVAILABLE_ADVISOR_SUPPLY  = 25000000 * decimals;  // 100% Released on TD +\n",
+                    "message": "Variable 'PolyDistribution.AVAILABLE_ADVISOR_SUPPLY' (PolyDistribution.sol#240) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 241,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public AVAILABLE_BONUS_SUPPLY    = 80000000 * decimals;  //\n",
+                    "message": "Variable 'PolyDistribution.AVAILABLE_BONUS_SUPPLY' (PolyDistribution.sol#241) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 242,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public AVAILABLE_RESERVE_SUPPLY  = 495000000 * decimals; // 10M Released every month after\n",
+                    "message": "Variable 'PolyDistribution.AVAILABLE_RESERVE_SUPPLY' (PolyDistribution.sol#242) is not in mixedCase\n"
+                },
+                {
+                    "name": "unused-state",
+                    "vulnerability_from_line": 234,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 private constant decimals = 10**uint256(18);\n",
+                    "message": "PolyDistribution.decimals (PolyDistribution.sol#234) is never used in PolyDistribution\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 286,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      allocations[_recipient] = Allocation(uint8(AllocationType.FOUNDER), startTime + 1 years, startTime + 4 years, _totalAllocated, 0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 286,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      allocations[_recipient] = Allocation(uint8(AllocationType.FOUNDER), startTime + 1 years, startTime + 4 years, _totalAllocated, 0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 295,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      allocations[_recipient] = Allocation(uint8(AllocationType.BONUS), startTime + 1 years, startTime + 4 years, _totalAllocated, 0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 295,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      allocations[_recipient] = Allocation(uint8(AllocationType.BONUS), startTime + 1 years, startTime + 4 years, _totalAllocated, 0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 298,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      allocations[_recipient] = Allocation(uint8(AllocationType.RESERVE), startTime + 182 days, startTime + 4 years, _totalAllocated, 0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 277,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setAllocation (address _recipient, uint256 _totalAllocated, uint8 _supply) onlyOwner public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 234,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 private constant decimals = 10**uint256(18);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 59,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 230,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 67,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping (address => uint256) balances;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "polymath-token-672fabe081e8f90ea025252d92c2eb247d60010e/contracts/PolyToken.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_31"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 94,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  string public name = 'Polymath';\n",
+                    "message": "PolyToken.name should be constant (PolyToken.sol#94)\nPolyToken.symbol should be constant (PolyToken.sol#95)\nPolyToken.totalSupply should be constant (PolyToken.sol#98)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address who) public view returns (uint256);\n",
+                    "message": "IERC20.balanceOf (PolyToken.sol#10) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 115,
+                    "vulnerability_to_line": 117,
+                    "vulnerability_code": "  function balanceOf(address _owner) public view returns (uint256 balance) {\n\n    return balances[_owner];\n",
+                    "message": "PolyToken.balanceOf (PolyToken.sol#115-117) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 125,
+                    "vulnerability_to_line": 127,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public view returns (uint256) {\n\n    return allowed[_owner][_spender];\n",
+                    "message": "PolyToken.allowance (PolyToken.sol#125-127) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address owner, address spender) public view returns (uint256);\n",
+                    "message": "IERC20.allowance (PolyToken.sol#11) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address to, uint256 value) public returns (bool);\n",
+                    "message": "IERC20.transfer (PolyToken.sol#12) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": 143,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n\n    require(_to != address(0));\n\n    require(_value <= balances[msg.sender]);\n\n\n\n    // SafeMath.sub will throw if there is not enough balance.\n\n    balances[msg.sender] = balances[msg.sender].sub(_value);\n\n    balances[_to] = balances[_to].add(_value);\n\n    Transfer(msg.sender, _to, _value);\n\n    return true;\n",
+                    "message": "PolyToken.transfer (PolyToken.sol#134-143) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address from, address to, uint256 value) public returns (bool);\n",
+                    "message": "IERC20.transferFrom (PolyToken.sol#13) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": 161,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n\n    require(_to != address(0));\n\n    require(_value <= balances[_from]);\n\n    require(_value <= allowed[_from][msg.sender]);\n\n\n\n    balances[_from] = balances[_from].sub(_value);\n\n    balances[_to] = balances[_to].add(_value);\n\n    allowed[_from][msg.sender] = allowed[_from][msg.sender].sub(_value);\n\n    Transfer(_from, _to, _value);\n\n    return true;\n",
+                    "message": "PolyToken.transferFrom (PolyToken.sol#151-161) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 173,
+                    "vulnerability_to_line": 177,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n\n    allowed[msg.sender][_spender] = _value;\n\n    Approval(msg.sender, _spender, _value);\n\n    return true;\n",
+                    "message": "PolyToken.approve (PolyToken.sol#173-177) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address spender, uint256 value) public returns (bool);\n",
+                    "message": "IERC20.approve (PolyToken.sol#14) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 189,
+                    "vulnerability_to_line": 193,
+                    "vulnerability_code": "  function increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n\n    allowed[msg.sender][_spender] = allowed[msg.sender][_spender].add(_addedValue);\n\n    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n\n    return true;\n",
+                    "message": "PolyToken.increaseApproval (PolyToken.sol#189-193) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 205,
+                    "vulnerability_to_line": 214,
+                    "vulnerability_code": "  function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n\n    uint oldValue = allowed[msg.sender][_spender];\n\n    if (_subtractedValue > oldValue) {\n\n      allowed[msg.sender][_spender] = 0;\n\n    } else {\n\n      allowed[msg.sender][_spender] = oldValue.sub(_subtractedValue);\n\n    }\n\n    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n\n    return true;\n",
+                    "message": "PolyToken.decreaseApproval (PolyToken.sol#205-214) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in PolyToken.sol:\n\t- pragma solidity^0.4.18 (PolyToken.sol#3): it allows old versions\n\t- pragma solidity^0.4.18 (PolyToken.sol#21): it allows old versions\n\t- pragma solidity^0.4.18 (PolyToken.sol#81): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 115,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address _owner) public view returns (uint256 balance) {\n",
+                    "message": "Parameter '_owner' of PolyToken.balanceOf (PolyToken.sol#115) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 125,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public view returns (uint256) {\n",
+                    "message": "Parameter '_owner' of PolyToken.allowance (PolyToken.sol#125) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 125,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public view returns (uint256) {\n",
+                    "message": "Parameter '_spender' of PolyToken.allowance (PolyToken.sol#125) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_to' of PolyToken.transfer (PolyToken.sol#134) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of PolyToken.transfer (PolyToken.sol#134) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_from' of PolyToken.transferFrom (PolyToken.sol#151) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_to' of PolyToken.transferFrom (PolyToken.sol#151) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of PolyToken.transferFrom (PolyToken.sol#151) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 173,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of PolyToken.approve (PolyToken.sol#173) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 173,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of PolyToken.approve (PolyToken.sol#173) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 106,
+                    "vulnerability_to_line": 108,
+                    "vulnerability_code": "  function PolyToken(address _polyDistributionContractAddress) public {\n\n    balances[_polyDistributionContractAddress] = totalSupply;\n",
+                    "message": "Function 'PolyToken.PolyToken' (PolyToken.sol#106-108) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 106,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function PolyToken(address _polyDistributionContractAddress) public {\n",
+                    "message": "Parameter '_polyDistributionContractAddress' of PolyToken.PolyToken (PolyToken.sol#106) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 189,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of PolyToken.increaseApproval (PolyToken.sol#189) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 189,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n",
+                    "message": "Parameter '_addedValue' of PolyToken.increaseApproval (PolyToken.sol#189) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 205,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of PolyToken.decreaseApproval (PolyToken.sol#205) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 205,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n",
+                    "message": "Parameter '_subtractedValue' of PolyToken.decreaseApproval (PolyToken.sol#205) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 97,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public constant decimalFactor = 10 ** uint256(decimals);\n",
+                    "message": "Constant 'PolyToken.decimalFactor' (PolyToken.sol#97) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 173,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 81,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 91,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 99,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping (address => uint256) balances;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "polymath-token-672fabe081e8f90ea025252d92c2eb247d60010e/contracts/Ownable.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": 62,
+                    "vulnerability_code": "  function transferOwnership(address newOwner) public onlyOwner {\n\n    require(newOwner != address(0));\n\n    OwnershipTransferred(owner, newOwner);\n\n    owner = newOwner;\n",
+                    "message": "Ownable.transferOwnership (Ownable.sol#58-62) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in Ownable.sol:\n\t- pragma solidity^0.4.18 (Ownable.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": 44,
+                    "vulnerability_code": "  function Ownable() public {\n\n    owner = msg.sender;\n",
+                    "message": "Function 'Ownable.Ownable' (Ownable.sol#42-44) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "polymath-token-672fabe081e8f90ea025252d92c2eb247d60010e/contracts/SafeMath.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in SafeMath.sol:\n\t- pragma solidity^0.4.18 (SafeMath.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "polymath-token-672fabe081e8f90ea025252d92c2eb247d60010e/contracts/Migrations.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": 19,
+                    "vulnerability_code": "  function setCompleted(uint completed) public restricted {\n\n    last_completed_migration = completed;\n",
+                    "message": "Migrations.setCompleted (Migrations.sol#17-19) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": 24,
+                    "vulnerability_code": "  function upgrade(address new_address) public restricted {\n\n    Migrations upgraded = Migrations(new_address);\n\n    upgraded.setCompleted(last_completed_migration);\n",
+                    "message": "Migrations.upgrade (Migrations.sol#21-24) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in Migrations.sol:\n\t- pragma solidity^0.4.18 (Migrations.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": 15,
+                    "vulnerability_code": "  function Migrations() public {\n\n    owner = msg.sender;\n",
+                    "message": "Function 'Migrations.Migrations' (Migrations.sol#13-15) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function upgrade(address new_address) public restricted {\n",
+                    "message": "Parameter 'new_address' of Migrations.upgrade (Migrations.sol#21) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint public last_completed_migration;\n",
+                    "message": "Variable 'Migrations.last_completed_migration' (Migrations.sol#7) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "polymath-token-672fabe081e8f90ea025252d92c2eb247d60010e/contracts/PolyDistribution.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 295,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract PolyDistribution is Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 403,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for(uint8 i = 0; i< _recipient.length; i++)\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 314,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public grandTotalClaimed = 0;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 405,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (!airdrops[_recipient[i]]) {\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 406,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "          airdrops[_recipient[i]] = true;\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 407,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "          require(POLY.transfer(_recipient[i], 250 * decimalFactor));\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 403,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for(uint8 i = 0; i< _recipient.length; i++)\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 359,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(allocations[_recipient].totalAllocated == 0 && _totalAllocated > 0);\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 360,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(_supply >= AllocationType.PRESALE && _supply <= AllocationType.BONUS3);\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 403,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for(uint8 i = 0; i< _recipient.length; i++)\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_65"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "uninitialized-local",
+                    "vulnerability_from_line": 401,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint airdropped;\n",
+                    "message": "airdropped in PolyDistribution.airdropTokens (PolyDistribution.sol#401) is a local variable never initialiazed\n"
+                },
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 420,
+                    "vulnerability_to_line": 437,
+                    "vulnerability_code": "  function transferTokens (address _recipient) public {\n\n    require(allocations[_recipient].amountClaimed < allocations[_recipient].totalAllocated);\n\n    require(now >= allocations[_recipient].endCliff);\n\n    require(now >= startTime);\n\n    uint256 newAmountClaimed;\n\n    if (allocations[_recipient].endVesting > now) {\n\n      // Transfer available amount based on vesting schedule and allocation\n\n      newAmountClaimed = allocations[_recipient].totalAllocated.mul(now.sub(startTime)).div(allocations[_recipient].endVesting.sub(startTime));\n\n    } else {\n\n      // Transfer total allocated (minus previously claimed tokens)\n\n      newAmountClaimed = allocations[_recipient].totalAllocated;\n\n    }\n\n    uint256 tokensToTransfer = newAmountClaimed.sub(allocations[_recipient].amountClaimed);\n\n    allocations[_recipient].amountClaimed = newAmountClaimed;\n\n    POLY.transfer(_recipient, tokensToTransfer);\n\n    grandTotalClaimed = grandTotalClaimed.add(tokensToTransfer);\n\n    LogPolyClaimed(_recipient, allocations[_recipient].AllocationSupply, tokensToTransfer, newAmountClaimed, grandTotalClaimed);\n",
+                    "message": "PolyDistribution.transferTokens (PolyDistribution.sol#420-437) does not use the value returned by external calls:\n\t-POLY.transfer(_recipient,tokensToTransfer) (PolyDistribution.sol#434)\n"
+                },
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 445,
+                    "vulnerability_to_line": 450,
+                    "vulnerability_code": "  function refundTokens(address _recipient, address _token) public onlyOwner {\n\n    require(_token != address(POLY));\n\n    IERC20 token = IERC20(_token);\n\n    uint256 balance = token.balanceOf(this);\n\n    token.transfer(_recipient, balance);\n",
+                    "message": "PolyDistribution.refundTokens (PolyDistribution.sol#445-450) does not use the value returned by external calls:\n\t-token.transfer(_recipient,balance) (PolyDistribution.sol#449)\n"
+                },
+                {
+                    "name": "calls-loop",
+                    "vulnerability_from_line": 407,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "          require(POLY.transfer(_recipient[i], 250 * decimalFactor));\n",
+                    "message": "PolyDistribution.airdropTokens has external calls inside a loop:\n\t- require(bool)(POLY.transfer(_recipient[i],250 * decimalFactor)) (PolyDistribution.sol#407)\n"
+                },
+                {
+                    "name": "reentrancy-benign",
+                    "vulnerability_from_line": 420,
+                    "vulnerability_to_line": 437,
+                    "vulnerability_code": "  function transferTokens (address _recipient) public {\n\n    require(allocations[_recipient].amountClaimed < allocations[_recipient].totalAllocated);\n\n    require(now >= allocations[_recipient].endCliff);\n\n    require(now >= startTime);\n\n    uint256 newAmountClaimed;\n\n    if (allocations[_recipient].endVesting > now) {\n\n      // Transfer available amount based on vesting schedule and allocation\n\n      newAmountClaimed = allocations[_recipient].totalAllocated.mul(now.sub(startTime)).div(allocations[_recipient].endVesting.sub(startTime));\n\n    } else {\n\n      // Transfer total allocated (minus previously claimed tokens)\n\n      newAmountClaimed = allocations[_recipient].totalAllocated;\n\n    }\n\n    uint256 tokensToTransfer = newAmountClaimed.sub(allocations[_recipient].amountClaimed);\n\n    allocations[_recipient].amountClaimed = newAmountClaimed;\n\n    POLY.transfer(_recipient, tokensToTransfer);\n\n    grandTotalClaimed = grandTotalClaimed.add(tokensToTransfer);\n\n    LogPolyClaimed(_recipient, allocations[_recipient].AllocationSupply, tokensToTransfer, newAmountClaimed, grandTotalClaimed);\n",
+                    "message": "Reentrancy in PolyDistribution.transferTokens (PolyDistribution.sol#420-437):\n\tExternal calls:\n\t- POLY.transfer(_recipient,tokensToTransfer) (PolyDistribution.sol#434)\n\tState variables written after the call(s):\n\t- grandTotalClaimed (PolyDistribution.sol#435)\n"
+                },
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 94,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  string public name = 'Polymath';\n",
+                    "message": "PolyToken.name should be constant (PolyDistribution.sol#94)\nPolyToken.symbol should be constant (PolyDistribution.sol#95)\nPolyToken.totalSupply should be constant (PolyDistribution.sol#98)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address who) public view returns (uint256);\n",
+                    "message": "IERC20.balanceOf (PolyDistribution.sol#10) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 115,
+                    "vulnerability_to_line": 117,
+                    "vulnerability_code": "  function balanceOf(address _owner) public view returns (uint256 balance) {\n\n    return balances[_owner];\n",
+                    "message": "PolyToken.balanceOf (PolyDistribution.sol#115-117) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 125,
+                    "vulnerability_to_line": 127,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public view returns (uint256) {\n\n    return allowed[_owner][_spender];\n",
+                    "message": "PolyToken.allowance (PolyDistribution.sol#125-127) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address owner, address spender) public view returns (uint256);\n",
+                    "message": "IERC20.allowance (PolyDistribution.sol#11) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address to, uint256 value) public returns (bool);\n",
+                    "message": "IERC20.transfer (PolyDistribution.sol#12) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": 143,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n\n    require(_to != address(0));\n\n    require(_value <= balances[msg.sender]);\n\n\n\n    // SafeMath.sub will throw if there is not enough balance.\n\n    balances[msg.sender] = balances[msg.sender].sub(_value);\n\n    balances[_to] = balances[_to].add(_value);\n\n    Transfer(msg.sender, _to, _value);\n\n    return true;\n",
+                    "message": "PolyToken.transfer (PolyDistribution.sol#134-143) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": 161,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n\n    require(_to != address(0));\n\n    require(_value <= balances[_from]);\n\n    require(_value <= allowed[_from][msg.sender]);\n\n\n\n    balances[_from] = balances[_from].sub(_value);\n\n    balances[_to] = balances[_to].add(_value);\n\n    allowed[_from][msg.sender] = allowed[_from][msg.sender].sub(_value);\n\n    Transfer(_from, _to, _value);\n\n    return true;\n",
+                    "message": "PolyToken.transferFrom (PolyDistribution.sol#151-161) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address from, address to, uint256 value) public returns (bool);\n",
+                    "message": "IERC20.transferFrom (PolyDistribution.sol#13) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 173,
+                    "vulnerability_to_line": 177,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n\n    allowed[msg.sender][_spender] = _value;\n\n    Approval(msg.sender, _spender, _value);\n\n    return true;\n",
+                    "message": "PolyToken.approve (PolyDistribution.sol#173-177) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address spender, uint256 value) public returns (bool);\n",
+                    "message": "IERC20.approve (PolyDistribution.sol#14) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 189,
+                    "vulnerability_to_line": 193,
+                    "vulnerability_code": "  function increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n\n    allowed[msg.sender][_spender] = allowed[msg.sender][_spender].add(_addedValue);\n\n    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n\n    return true;\n",
+                    "message": "PolyToken.increaseApproval (PolyDistribution.sol#189-193) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 205,
+                    "vulnerability_to_line": 214,
+                    "vulnerability_code": "  function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n\n    uint oldValue = allowed[msg.sender][_spender];\n\n    if (_subtractedValue > oldValue) {\n\n      allowed[msg.sender][_spender] = 0;\n\n    } else {\n\n      allowed[msg.sender][_spender] = oldValue.sub(_subtractedValue);\n\n    }\n\n    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n\n    return true;\n",
+                    "message": "PolyToken.decreaseApproval (PolyDistribution.sol#205-214) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 275,
+                    "vulnerability_to_line": 279,
+                    "vulnerability_code": "  function transferOwnership(address newOwner) public onlyOwner {\n\n    require(newOwner != address(0));\n\n    OwnershipTransferred(owner, newOwner);\n\n    owner = newOwner;\n",
+                    "message": "Ownable.transferOwnership (PolyDistribution.sol#275-279) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 358,
+                    "vulnerability_to_line": 386,
+                    "vulnerability_code": "  function setAllocation (address _recipient, uint256 _totalAllocated, AllocationType _supply) onlyOwner public {\n\n    require(allocations[_recipient].totalAllocated == 0 && _totalAllocated > 0);\n\n    require(_supply >= AllocationType.PRESALE && _supply <= AllocationType.BONUS3);\n\n    require(_recipient != address(0));\n\n    if (_supply == AllocationType.PRESALE) {\n\n      AVAILABLE_PRESALE_SUPPLY = AVAILABLE_PRESALE_SUPPLY.sub(_totalAllocated);\n\n      allocations[_recipient] = Allocation(uint8(AllocationType.PRESALE), 0, 0, _totalAllocated, 0);\n\n    } else if (_supply == AllocationType.FOUNDER) {\n\n      AVAILABLE_FOUNDER_SUPPLY = AVAILABLE_FOUNDER_SUPPLY.sub(_totalAllocated);\n\n      allocations[_recipient] = Allocation(uint8(AllocationType.FOUNDER), startTime + 1 years, startTime + 4 years, _totalAllocated, 0);\n\n    } else if (_supply == AllocationType.ADVISOR) {\n\n      AVAILABLE_ADVISOR_SUPPLY = AVAILABLE_ADVISOR_SUPPLY.sub(_totalAllocated);\n\n      allocations[_recipient] = Allocation(uint8(AllocationType.ADVISOR), startTime + 212 days, 0, _totalAllocated, 0);\n\n    } else if (_supply == AllocationType.RESERVE) {\n\n      AVAILABLE_RESERVE_SUPPLY = AVAILABLE_RESERVE_SUPPLY.sub(_totalAllocated);\n\n      allocations[_recipient] = Allocation(uint8(AllocationType.RESERVE), startTime + 182 days, startTime + 4 years, _totalAllocated, 0);\n\n    } else if (_supply == AllocationType.BONUS1) {\n\n      AVAILABLE_BONUS1_SUPPLY = AVAILABLE_BONUS1_SUPPLY.sub(_totalAllocated);\n\n      allocations[_recipient] = Allocation(uint8(AllocationType.BONUS1), startTime + 1 years, startTime + 1 years, _totalAllocated, 0);\n\n    } else if (_supply == AllocationType.BONUS2) {\n\n      AVAILABLE_BONUS2_SUPPLY = AVAILABLE_BONUS2_SUPPLY.sub(_totalAllocated);\n\n      allocations[_recipient] = Allocation(uint8(AllocationType.BONUS2), startTime + 2 years, startTime + 2 years, _totalAllocated, 0);\n\n    } else if (_supply == AllocationType.BONUS3) {\n\n      AVAILABLE_BONUS3_SUPPLY = AVAILABLE_BONUS3_SUPPLY.sub(_totalAllocated);\n\n      allocations[_recipient] = Allocation(uint8(AllocationType.BONUS3), startTime + 3 years, startTime + 3 years, _totalAllocated, 0);\n\n    }\n\n    AVAILABLE_TOTAL_SUPPLY = AVAILABLE_TOTAL_SUPPLY.sub(_totalAllocated);\n\n    LogNewAllocation(_recipient, _supply, _totalAllocated, grandTotalAllocated());\n",
+                    "message": "PolyDistribution.setAllocation (PolyDistribution.sol#358-386) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 391,
+                    "vulnerability_to_line": 393,
+                    "vulnerability_code": "  function setAirdropAdmin(address _admin, bool _isAdmin) public onlyOwner {\n\n    airdropAdmins[_admin] = _isAdmin;\n",
+                    "message": "PolyDistribution.setAirdropAdmin (PolyDistribution.sol#391-393) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 399,
+                    "vulnerability_to_line": 414,
+                    "vulnerability_code": "  function airdropTokens(address[] _recipient) public onlyOwnerOrAdmin {\n\n    require(now >= startTime);\n\n    uint airdropped;\n\n    //SWC-Integer Overflow and Underflow: L121\n\n    for(uint8 i = 0; i< _recipient.length; i++)\n\n    {\n\n        if (!airdrops[_recipient[i]]) {\n\n          airdrops[_recipient[i]] = true;\n\n          require(POLY.transfer(_recipient[i], 250 * decimalFactor));\n\n          airdropped = airdropped.add(250 * decimalFactor);\n\n        }\n\n    }\n\n    AVAILABLE_AIRDROP_SUPPLY = AVAILABLE_AIRDROP_SUPPLY.sub(airdropped);\n\n    AVAILABLE_TOTAL_SUPPLY = AVAILABLE_TOTAL_SUPPLY.sub(airdropped);\n\n    grandTotalClaimed = grandTotalClaimed.add(airdropped);\n",
+                    "message": "PolyDistribution.airdropTokens (PolyDistribution.sol#399-414) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 420,
+                    "vulnerability_to_line": 437,
+                    "vulnerability_code": "  function transferTokens (address _recipient) public {\n\n    require(allocations[_recipient].amountClaimed < allocations[_recipient].totalAllocated);\n\n    require(now >= allocations[_recipient].endCliff);\n\n    require(now >= startTime);\n\n    uint256 newAmountClaimed;\n\n    if (allocations[_recipient].endVesting > now) {\n\n      // Transfer available amount based on vesting schedule and allocation\n\n      newAmountClaimed = allocations[_recipient].totalAllocated.mul(now.sub(startTime)).div(allocations[_recipient].endVesting.sub(startTime));\n\n    } else {\n\n      // Transfer total allocated (minus previously claimed tokens)\n\n      newAmountClaimed = allocations[_recipient].totalAllocated;\n\n    }\n\n    uint256 tokensToTransfer = newAmountClaimed.sub(allocations[_recipient].amountClaimed);\n\n    allocations[_recipient].amountClaimed = newAmountClaimed;\n\n    POLY.transfer(_recipient, tokensToTransfer);\n\n    grandTotalClaimed = grandTotalClaimed.add(tokensToTransfer);\n\n    LogPolyClaimed(_recipient, allocations[_recipient].AllocationSupply, tokensToTransfer, newAmountClaimed, grandTotalClaimed);\n",
+                    "message": "PolyDistribution.transferTokens (PolyDistribution.sol#420-437) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 445,
+                    "vulnerability_to_line": 450,
+                    "vulnerability_code": "  function refundTokens(address _recipient, address _token) public onlyOwner {\n\n    require(_token != address(POLY));\n\n    IERC20 token = IERC20(_token);\n\n    uint256 balance = token.balanceOf(this);\n\n    token.transfer(_recipient, balance);\n",
+                    "message": "PolyDistribution.refundTokens (PolyDistribution.sol#445-450) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in PolyDistribution.sol:\n\t- pragma solidity^0.4.18 (PolyDistribution.sol#3): it allows old versions\n\t- pragma solidity^0.4.18 (PolyDistribution.sol#21): it allows old versions\n\t- pragma solidity^0.4.18 (PolyDistribution.sol#81): it allows old versions\n\t- pragma solidity^0.4.18 (PolyDistribution.sol#220): it allows old versions\n\t- pragma solidity^0.4.18 (PolyDistribution.sol#285): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 115,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address _owner) public view returns (uint256 balance) {\n",
+                    "message": "Parameter '_owner' of PolyToken.balanceOf (PolyDistribution.sol#115) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 125,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public view returns (uint256) {\n",
+                    "message": "Parameter '_owner' of PolyToken.allowance (PolyDistribution.sol#125) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 125,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public view returns (uint256) {\n",
+                    "message": "Parameter '_spender' of PolyToken.allowance (PolyDistribution.sol#125) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_to' of PolyToken.transfer (PolyDistribution.sol#134) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of PolyToken.transfer (PolyDistribution.sol#134) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_from' of PolyToken.transferFrom (PolyDistribution.sol#151) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_to' of PolyToken.transferFrom (PolyDistribution.sol#151) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of PolyToken.transferFrom (PolyDistribution.sol#151) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 173,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of PolyToken.approve (PolyDistribution.sol#173) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 173,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of PolyToken.approve (PolyDistribution.sol#173) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 106,
+                    "vulnerability_to_line": 108,
+                    "vulnerability_code": "  function PolyToken(address _polyDistributionContractAddress) public {\n\n    balances[_polyDistributionContractAddress] = totalSupply;\n",
+                    "message": "Function 'PolyToken.PolyToken' (PolyDistribution.sol#106-108) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 106,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function PolyToken(address _polyDistributionContractAddress) public {\n",
+                    "message": "Parameter '_polyDistributionContractAddress' of PolyToken.PolyToken (PolyDistribution.sol#106) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 189,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of PolyToken.increaseApproval (PolyDistribution.sol#189) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 189,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n",
+                    "message": "Parameter '_addedValue' of PolyToken.increaseApproval (PolyDistribution.sol#189) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 205,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of PolyToken.decreaseApproval (PolyDistribution.sol#205) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 205,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n",
+                    "message": "Parameter '_subtractedValue' of PolyToken.decreaseApproval (PolyDistribution.sol#205) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 97,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public constant decimalFactor = 10 ** uint256(decimals);\n",
+                    "message": "Constant 'PolyToken.decimalFactor' (PolyDistribution.sol#97) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 259,
+                    "vulnerability_to_line": 261,
+                    "vulnerability_code": "  function Ownable() public {\n\n    owner = msg.sender;\n",
+                    "message": "Function 'Ownable.Ownable' (PolyDistribution.sol#259-261) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 345,
+                    "vulnerability_to_line": 350,
+                    "vulnerability_code": "    function PolyDistribution(uint256 _startTime) public {\n\n      require(_startTime >= now);\n\n      require(AVAILABLE_TOTAL_SUPPLY == AVAILABLE_PRESALE_SUPPLY.add(AVAILABLE_FOUNDER_SUPPLY).add(AVAILABLE_AIRDROP_SUPPLY).add(AVAILABLE_ADVISOR_SUPPLY).add(AVAILABLE_BONUS1_SUPPLY).add(AVAILABLE_BONUS2_SUPPLY).add(AVAILABLE_BONUS3_SUPPLY).add(AVAILABLE_RESERVE_SUPPLY));\n\n      startTime = _startTime;\n\n      POLY = new PolyToken(this);\n",
+                    "message": "Function 'PolyDistribution.PolyDistribution' (PolyDistribution.sol#345-350) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 345,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function PolyDistribution(uint256 _startTime) public {\n",
+                    "message": "Parameter '_startTime' of PolyDistribution.PolyDistribution (PolyDistribution.sol#345) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 358,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setAllocation (address _recipient, uint256 _totalAllocated, AllocationType _supply) onlyOwner public {\n",
+                    "message": "Parameter '_recipient' of PolyDistribution.setAllocation (PolyDistribution.sol#358) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 358,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setAllocation (address _recipient, uint256 _totalAllocated, AllocationType _supply) onlyOwner public {\n",
+                    "message": "Parameter '_totalAllocated' of PolyDistribution.setAllocation (PolyDistribution.sol#358) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 358,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setAllocation (address _recipient, uint256 _totalAllocated, AllocationType _supply) onlyOwner public {\n",
+                    "message": "Parameter '_supply' of PolyDistribution.setAllocation (PolyDistribution.sol#358) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 391,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setAirdropAdmin(address _admin, bool _isAdmin) public onlyOwner {\n",
+                    "message": "Parameter '_admin' of PolyDistribution.setAirdropAdmin (PolyDistribution.sol#391) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 391,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setAirdropAdmin(address _admin, bool _isAdmin) public onlyOwner {\n",
+                    "message": "Parameter '_isAdmin' of PolyDistribution.setAirdropAdmin (PolyDistribution.sol#391) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 399,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function airdropTokens(address[] _recipient) public onlyOwnerOrAdmin {\n",
+                    "message": "Parameter '_recipient' of PolyDistribution.airdropTokens (PolyDistribution.sol#399) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 420,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferTokens (address _recipient) public {\n",
+                    "message": "Parameter '_recipient' of PolyDistribution.transferTokens (PolyDistribution.sol#420) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 445,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function refundTokens(address _recipient, address _token) public onlyOwner {\n",
+                    "message": "Parameter '_recipient' of PolyDistribution.refundTokens (PolyDistribution.sol#445) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 445,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function refundTokens(address _recipient, address _token) public onlyOwner {\n",
+                    "message": "Parameter '_token' of PolyDistribution.refundTokens (PolyDistribution.sol#445) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 298,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  PolyToken public POLY;\n",
+                    "message": "Variable 'PolyDistribution.POLY' (PolyDistribution.sol#298) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 300,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 private constant decimalFactor = 10**uint256(18);\n",
+                    "message": "Constant 'PolyDistribution.decimalFactor' (PolyDistribution.sol#300) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 303,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public AVAILABLE_TOTAL_SUPPLY    = 1000000000 * decimalFactor;\n",
+                    "message": "Variable 'PolyDistribution.AVAILABLE_TOTAL_SUPPLY' (PolyDistribution.sol#303) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 304,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public AVAILABLE_PRESALE_SUPPLY  =  240000000 * decimalFactor; // 100% Released at Token Distribution (TD)\n",
+                    "message": "Variable 'PolyDistribution.AVAILABLE_PRESALE_SUPPLY' (PolyDistribution.sol#304) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 305,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public AVAILABLE_FOUNDER_SUPPLY  =  150000000 * decimalFactor; // 25% Released at TD +1 year -> 100% at TD +4 years\n",
+                    "message": "Variable 'PolyDistribution.AVAILABLE_FOUNDER_SUPPLY' (PolyDistribution.sol#305) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 306,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public AVAILABLE_AIRDROP_SUPPLY  =   10000000 * decimalFactor; // 100% Released at TD\n",
+                    "message": "Variable 'PolyDistribution.AVAILABLE_AIRDROP_SUPPLY' (PolyDistribution.sol#306) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 307,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public AVAILABLE_ADVISOR_SUPPLY  =   25000000 * decimalFactor; // 100% Released at TD +7 months\n",
+                    "message": "Variable 'PolyDistribution.AVAILABLE_ADVISOR_SUPPLY' (PolyDistribution.sol#307) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 308,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public AVAILABLE_RESERVE_SUPPLY  =  495000000 * decimalFactor; // 12.5% Released at TD +6 months -> 100% at TD +4 years\n",
+                    "message": "Variable 'PolyDistribution.AVAILABLE_RESERVE_SUPPLY' (PolyDistribution.sol#308) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 310,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public AVAILABLE_BONUS1_SUPPLY  =    20000000 * decimalFactor;\n",
+                    "message": "Variable 'PolyDistribution.AVAILABLE_BONUS1_SUPPLY' (PolyDistribution.sol#310) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 311,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public AVAILABLE_BONUS2_SUPPLY  =    30000000 * decimalFactor;\n",
+                    "message": "Variable 'PolyDistribution.AVAILABLE_BONUS2_SUPPLY' (PolyDistribution.sol#311) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 312,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public AVAILABLE_BONUS3_SUPPLY  =    30000000 * decimalFactor;\n",
+                    "message": "Variable 'PolyDistribution.AVAILABLE_BONUS3_SUPPLY' (PolyDistribution.sol#312) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 367,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      allocations[_recipient] = Allocation(uint8(AllocationType.FOUNDER), startTime + 1 years, startTime + 4 years, _totalAllocated, 0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 367,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      allocations[_recipient] = Allocation(uint8(AllocationType.FOUNDER), startTime + 1 years, startTime + 4 years, _totalAllocated, 0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 373,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      allocations[_recipient] = Allocation(uint8(AllocationType.RESERVE), startTime + 182 days, startTime + 4 years, _totalAllocated, 0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 376,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      allocations[_recipient] = Allocation(uint8(AllocationType.BONUS1), startTime + 1 years, startTime + 1 years, _totalAllocated, 0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 376,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      allocations[_recipient] = Allocation(uint8(AllocationType.BONUS1), startTime + 1 years, startTime + 1 years, _totalAllocated, 0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 379,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      allocations[_recipient] = Allocation(uint8(AllocationType.BONUS2), startTime + 2 years, startTime + 2 years, _totalAllocated, 0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 379,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      allocations[_recipient] = Allocation(uint8(AllocationType.BONUS2), startTime + 2 years, startTime + 2 years, _totalAllocated, 0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 382,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      allocations[_recipient] = Allocation(uint8(AllocationType.BONUS3), startTime + 3 years, startTime + 3 years, _totalAllocated, 0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 382,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      allocations[_recipient] = Allocation(uint8(AllocationType.BONUS3), startTime + 3 years, startTime + 3 years, _totalAllocated, 0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 173,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 403,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for(uint8 i = 0; i< _recipient.length; i++)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 403,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for(uint8 i = 0; i< _recipient.length; i++)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 358,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setAllocation (address _recipient, uint256 _totalAllocated, AllocationType _supply) onlyOwner public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 391,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setAirdropAdmin(address _admin, bool _isAdmin) public onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 81,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 220,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 285,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 300,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 private constant decimalFactor = 10**uint256(18);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 91,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 296,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 399,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function airdropTokens(address[] _recipient) public onlyOwnerOrAdmin {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 99,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping (address => uint256) balances;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "polymath-token-672fabe081e8f90ea025252d92c2eb247d60010e/contracts/interfaces/IERC20.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address who) public view returns (uint256);\n",
+                    "message": "IERC20.balanceOf (IERC20.sol#10) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address owner, address spender) public view returns (uint256);\n",
+                    "message": "IERC20.allowance (IERC20.sol#11) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address to, uint256 value) public returns (bool);\n",
+                    "message": "IERC20.transfer (IERC20.sol#12) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address from, address to, uint256 value) public returns (bool);\n",
+                    "message": "IERC20.transferFrom (IERC20.sol#13) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address spender, uint256 value) public returns (bool);\n",
+                    "message": "IERC20.approve (IERC20.sol#14) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in IERC20.sol:\n\t- pragma solidity^0.4.18 (IERC20.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

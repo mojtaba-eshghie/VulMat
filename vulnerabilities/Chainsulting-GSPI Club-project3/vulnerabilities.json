@@ -1,0 +1,729 @@
+{
+    "spi_staking.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 757,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Staking is Ownable, Pausable, ReentrancyGuard {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 785,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tconstructor(IERC20 _lpToken, uint256 _emissionRate) {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 786,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tspiToken = _lpToken;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 787,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\temissionRate = _emissionRate;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 788,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t}\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 296,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(owner() == _msgSender(), \"Ownable: caller is not the owner\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 315,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(newOwner != address(0), \"Ownable: new owner is the zero address\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 401,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(!paused(), \"Pausable: paused\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 408,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(paused(), \"Pausable: not paused\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 495,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_status != _ENTERED, \"ReentrancyGuard: reentrant call\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 798,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(_amount >= minimumAmount, \"amount below minimumAmount\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 799,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(_amount <= maxAmount, \"amount greater than maxAmount\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 800,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(spiToken.transferFrom(msg.sender, address(this), _amount), \"failed to transfer\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 827,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(user.amount >= 0, \"insufficient staked\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 828,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(user.createdAt + lockTime <= block.timestamp, \"tokens are locked\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 858,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(address(token) != address(0), \"no 0 address\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 859,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(address(token) != address(spiToken), \"can't withdraw the reward\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 861,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(_amount <= balance, \"you can't withdraw more than you have\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 315,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(newOwner != address(0), \"Ownable: new owner is the zero address\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 861,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(_amount <= balance, \"you can't withdraw more than you have\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 307,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        _transferOwnership(address(0));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 224,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 251,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 335,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 441,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 521,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 602,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 630,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 749,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.3;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 266,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address private _owner;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 357,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bool private _paused;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 471,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 private constant _NOT_ENTERED = 1;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 472,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 private constant _ENTERED = 2;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 474,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 private _status;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 758,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tusing SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function tryAdd(uint256 a, uint256 b) internal pure returns (bool, uint256) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function trySub(uint256 a, uint256 b) internal pure returns (bool, uint256) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function tryMul(uint256 a, uint256 b) internal pure returns (bool, uint256) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 66,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function tryDiv(uint256 a, uint256 b) internal pure returns (bool, uint256) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 78,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function tryMod(uint256 a, uint256 b) internal pure returns (bool, uint256) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UINT_CANT_BE_NEGATIVE",
+                    "vulnerability_from_line": 827,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(user.amount >= 0, \"insufficient staked\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 241,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _msgData() internal view virtual returns (bytes calldata) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 273,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 362,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 476,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 736,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function safeBatchTransferFrom(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 785,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tconstructor(IERC20 _lpToken, uint256 _emissionRate) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 739,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256[] calldata ids,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 740,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256[] calldata amounts,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 740,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256[] calldata amounts,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 741,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata data\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 776,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tIERC20 spiToken; // token being staked\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Staking.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 580,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Staking is Ownable, Pausable, ReentrancyGuard {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 607,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tconstructor(IERC20 _lpToken, uint256 _emissionRate) {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 608,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tspiToken = _lpToken;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 609,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\temissionRate = _emissionRate;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 610,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t}\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 251,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(owner() == _msgSender(), \"Ownable: caller is not the owner\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 272,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(newOwner != address(0), \"Ownable: new owner is the zero address\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 313,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(!paused(), \"Pausable: paused\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 325,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(paused(), \"Pausable: not paused\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 384,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_status != _ENTERED, \"ReentrancyGuard: reentrant call\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 620,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(_amount >= minimumAmount, \"amount below minimumAmount\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 621,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(_amount <= maxAmount, \"amount greater than maxAmount\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 622,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(spiToken.transferFrom(msg.sender, address(this), _amount), \"failed to transfer\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 649,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(user.amount >= 0, \"insufficient staked\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 650,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(user.createdAt + lockTime <= block.timestamp, \"tokens are locked\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 680,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(address(token) != address(0), \"no 0 address\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 681,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(address(token) != address(spiToken), \"can't withdraw the reward\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 683,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(_amount <= balance, \"you can't withdraw more than you have\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 272,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(newOwner != address(0), \"Ownable: new owner is the zero address\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 683,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(_amount <= balance, \"you can't withdraw more than you have\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 264,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        _owner = address(0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.3;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 227,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address private _owner;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 289,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bool private _paused;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 366,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 private constant _NOT_ENTERED = 1;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 367,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 private constant _ENTERED = 2;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 369,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 private _status;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 581,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tusing SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function tryAdd(uint256 a, uint256 b) internal pure returns (bool, uint256) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function trySub(uint256 a, uint256 b) internal pure returns (bool, uint256) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function tryMul(uint256 a, uint256 b) internal pure returns (bool, uint256) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function tryDiv(uint256 a, uint256 b) internal pure returns (bool, uint256) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 70,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function tryMod(uint256 a, uint256 b) internal pure returns (bool, uint256) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UINT_CANT_BE_NEGATIVE",
+                    "vulnerability_from_line": 649,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(user.amount >= 0, \"insufficient staked\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 220,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _msgData() internal view virtual returns (bytes calldata) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 234,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor () {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 294,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor () {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 371,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor () {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 576,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function safeBatchTransferFrom(address from, address to, uint256[] calldata ids, uint256[] calldata amounts, bytes calldata data) external;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 607,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tconstructor(IERC20 _lpToken, uint256 _emissionRate) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 576,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function safeBatchTransferFrom(address from, address to, uint256[] calldata ids, uint256[] calldata amounts, bytes calldata data) external;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 576,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function safeBatchTransferFrom(address from, address to, uint256[] calldata ids, uint256[] calldata amounts, bytes calldata data) external;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 576,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function safeBatchTransferFrom(address from, address to, uint256[] calldata ids, uint256[] calldata amounts, bytes calldata data) external;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 576,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function safeBatchTransferFrom(address from, address to, uint256[] calldata ids, uint256[] calldata amounts, bytes calldata data) external;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 599,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tIERC20 spiToken; // token being staked\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

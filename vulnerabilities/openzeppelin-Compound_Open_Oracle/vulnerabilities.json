@@ -1,0 +1,51 @@
+{
+    "open-oracle-e7a928334e5e454a88eec38e4ee1be5ee3b13f08/OpenOracleData.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.12;\n",
+                    "message": "Different versions of Solidity is used in OpenOracleData.sol:\n\t- Version used: ['ABIEncoderV2', '^0.5.12']\n\t- OpenOracleData.sol#3 declares pragma solidity^0.5.12\n\t- OpenOracleData.sol#4 declares pragma experimentalABIEncoderV2\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": 44,
+                    "vulnerability_code": "    function source(bytes memory message, bytes memory signature) public pure returns (address) {\n\n        (bytes32 r, bytes32 s, uint8 v) = abi.decode(signature, (bytes32, bytes32, uint8));\n\n        bytes32 hash = keccak256(abi.encodePacked(\"\\x19Ethereum Signed Message:\\n32\", keccak256(message)));\n\n        return ecrecover(hash, v, r, s);\n",
+                    "message": "OpenOracleData.source (OpenOracleData.sol#40-44) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.12;\n",
+                    "message": "Detected issues with version pragma in OpenOracleData.sol:\n\t- pragma solidity^0.5.12 (OpenOracleData.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.12;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}
