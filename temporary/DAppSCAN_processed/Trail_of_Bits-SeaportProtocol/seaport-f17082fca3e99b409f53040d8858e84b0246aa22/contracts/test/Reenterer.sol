@@ -1,0 +1,37 @@
+// File: ../sc_datasets/DAppSCAN/Trail_of_Bits-SeaportProtocol/seaport-f17082fca3e99b409f53040d8858e84b0246aa22/contracts/test/Reenterer.sol
+
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.13;
+
+contract Reenterer {
+    address public target;
+    uint256 public msgValue;
+    bytes public callData;
+
+    event Reentered(bytes returnData);
+
+    function prepare(
+        address targetToUse,
+        uint256 msgValueToUse,
+        bytes calldata callDataToUse
+    ) external {
+        target = targetToUse;
+        msgValue = msgValueToUse;
+        callData = callDataToUse;
+    }
+
+    receive() external payable {
+        (bool success, bytes memory returnData) = target.call{
+            value: msgValue
+        }(callData);
+
+        if (!success) {
+            assembly {
+                returndatacopy(0, 0, returndatasize())
+                revert(0, returndatasize())
+            }
+        }
+
+        emit Reentered(returnData);
+    }
+}

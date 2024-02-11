@@ -1,0 +1,32 @@
+// File: ../sc_datasets/DAppSCAN/QuillAudits-AAVE-ParaSwap Adapter/aave-protocol-v2-14e2ab47d95f42ec5ee486f367067e78a7588878/contracts/misc/interfaces/IWETHGateway.sol
+
+// SPDX-License-Identifier: agpl-3.0
+pragma solidity 0.6.12;
+
+interface IWETHGateway {
+  function depositETH(
+    address lendingPool,
+    address onBehalfOf,
+    uint16 referralCode
+  ) external payable;
+
+  function withdrawETH(
+    address lendingPool,
+    uint256 amount,
+    address onBehalfOf
+  ) external;
+
+  function repayETH(
+    address lendingPool,
+    uint256 amount,
+    uint256 rateMode,
+    address onBehalfOf
+  ) external payable;
+
+  function borrowETH(
+    address lendingPool,
+    uint256 amount,
+    uint256 interesRateMode,
+    uint16 referralCode
+  ) external;
+}

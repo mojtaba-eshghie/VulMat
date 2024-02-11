@@ -1,0 +1,21 @@
+// File: ../sc_datasets/DAppSCAN/PeckShield-Metatime/metatime-6fd2d5b132377b007c3baa79938a53132fd2f955/contracts/interfaces/IWETH.sol
+
+// SPDX-License-Identifier: MIT
+
+pragma solidity >=0.5.0;
+
+interface IWETH {
+    function totalSupply() external view returns (uint256);
+
+    function balanceOf(address account) external view returns (uint256);
+
+    function allowance(address owner, address spender) external view returns (uint256);
+
+    function approve(address spender, uint256 amount) external returns (bool);
+
+    function deposit() external payable;
+
+    function transfer(address to, uint256 value) external returns (bool);
+
+    function withdraw(uint256) external;
+}

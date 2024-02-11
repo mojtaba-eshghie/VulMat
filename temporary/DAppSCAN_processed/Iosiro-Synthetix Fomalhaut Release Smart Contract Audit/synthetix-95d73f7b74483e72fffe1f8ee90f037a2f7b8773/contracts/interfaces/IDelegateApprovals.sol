@@ -1,0 +1,36 @@
+// File: ../sc_datasets/DAppSCAN/Iosiro-Synthetix Fomalhaut Release Smart Contract Audit/synthetix-95d73f7b74483e72fffe1f8ee90f037a2f7b8773/contracts/interfaces/IDelegateApprovals.sol
+
+pragma solidity >=0.4.24;
+
+
+interface IDelegateApprovals {
+    // Views
+    function canBurnFor(address authoriser, address delegate) external view returns (bool);
+
+    function canIssueFor(address authoriser, address delegate) external view returns (bool);
+
+    function canClaimFor(address authoriser, address delegate) external view returns (bool);
+
+    function canExchangeFor(address authoriser, address delegate) external view returns (bool);
+
+    // Mutative
+    function approveAllDelegatePowers(address delegate) external;
+
+    function removeAllDelegatePowers(address delegate) external;
+
+    function approveBurnOnBehalf(address delegate) external;
+
+    function removeBurnOnBehalf(address delegate) external;
+
+    function approveIssueOnBehalf(address delegate) external;
+
+    function removeIssueOnBehalf(address delegate) external;
+
+    function approveClaimOnBehalf(address delegate) external;
+
+    function removeClaimOnBehalf(address delegate) external;
+
+    function approveExchangeOnBehalf(address delegate) external;
+
+    function removeExchangeOnBehalf(address delegate) external;
+}

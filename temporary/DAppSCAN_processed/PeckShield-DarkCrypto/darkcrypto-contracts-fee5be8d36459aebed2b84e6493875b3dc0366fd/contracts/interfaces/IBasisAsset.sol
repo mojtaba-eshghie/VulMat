@@ -1,0 +1,17 @@
+// File: ../sc_datasets/DAppSCAN/PeckShield-DarkCrypto/darkcrypto-contracts-fee5be8d36459aebed2b84e6493875b3dc0366fd/contracts/interfaces/IBasisAsset.sol
+
+pragma solidity 0.6.12;
+
+interface IBasisAsset {
+    function mint(address recipient, uint256 amount) external returns (bool);
+
+    function burn(uint256 amount) external;
+
+    function burnFrom(address from, uint256 amount) external;
+
+    function isOperator() external returns (bool);
+
+    function operator() external view returns (address);
+
+    function transferOperator(address newOperator_) external;
+}

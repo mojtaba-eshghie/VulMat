@@ -1,0 +1,57 @@
+// File: ../sc_datasets/DAppSCAN/consensys-OmiseGo_MoreVP/plasma-contracts-e13aaf759c979cf6516c1d8de865c9e324bc2db6/plasma_framework/contracts/src/utils/TxPosLib.sol
+
+pragma solidity 0.5.11;
+
+/**
+ * @dev Transaction position = (blockNumber * BLOCK_OFFSET_FOR_TX_POS + txIndex)
+ */
+library TxPosLib {
+    struct TxPos {
+        uint256 value;
+    }
+
+    uint256 constant internal BLOCK_OFFSET_FOR_TX_POS = 1000000000 / 10000;
+
+    /**
+     * @notice Returns the block number for a given a tx position
+     * @param _txPos Position of the transaction
+     * @return Block number of the output
+     */
+    function blockNum(TxPos memory _txPos)
+        internal
+        pure
+        returns (uint256)
+    {
+        return _txPos.value / BLOCK_OFFSET_FOR_TX_POS;
+    }
+
+    /**
+     * @notice Returns the transaction index for a given tx position
+     * @param _txPos Position of the transaction
+     * @return Transaction index of the output
+     */
+    function txIndex(TxPos memory _txPos)
+        internal
+        pure
+        returns (uint256)
+    {
+        return _txPos.value % BLOCK_OFFSET_FOR_TX_POS;
+    }
+}
+
+// File: ../sc_datasets/DAppSCAN/consensys-OmiseGo_MoreVP/plasma-contracts-e13aaf759c979cf6516c1d8de865c9e324bc2db6/plasma_framework/contracts/mocks/utils/TxPosLibWrapper.sol
+
+pragma solidity 0.5.11;
+pragma experimental ABIEncoderV2;
+
+contract TxPosLibWrapper {
+    using TxPosLib for TxPosLib.TxPos;
+
+    function blockNum(uint256 _txPos) public pure returns (uint256) {
+        return TxPosLib.TxPos(_txPos).blockNum();
+    }
+
+    function txIndex(uint256 _txPos) public pure returns (uint256) {
+        return TxPosLib.TxPos(_txPos).txIndex();
+    }
+}

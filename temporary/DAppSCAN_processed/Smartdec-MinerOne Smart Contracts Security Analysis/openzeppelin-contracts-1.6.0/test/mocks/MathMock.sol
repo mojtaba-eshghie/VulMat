@@ -1,0 +1,42 @@
+// File: ../sc_datasets/DAppSCAN/Smartdec-MinerOne Smart Contracts Security Analysis/openzeppelin-contracts-1.6.0/contracts/math/Math.sol
+
+pragma solidity ^0.4.18;
+
+
+/**
+ * @title Math
+ * @dev Assorted math operations
+ */
+library Math {
+  function max64(uint64 a, uint64 b) internal pure returns (uint64) {
+    return a >= b ? a : b;
+  }
+
+  function min64(uint64 a, uint64 b) internal pure returns (uint64) {
+    return a < b ? a : b;
+  }
+
+  function max256(uint256 a, uint256 b) internal pure returns (uint256) {
+    return a >= b ? a : b;
+  }
+
+  function min256(uint256 a, uint256 b) internal pure returns (uint256) {
+    return a < b ? a : b;
+  }
+}
+
+// File: ../sc_datasets/DAppSCAN/Smartdec-MinerOne Smart Contracts Security Analysis/openzeppelin-contracts-1.6.0/test/mocks/MathMock.sol
+
+pragma solidity ^0.4.18;
+
+contract MathMock {
+  uint64 public result;
+
+  function max64(uint64 a, uint64 b) public {
+    result = Math.max64(a, b);
+  }
+
+  function min64(uint64 a, uint64 b) public {
+    result = Math.min64(a, b);
+  }
+}

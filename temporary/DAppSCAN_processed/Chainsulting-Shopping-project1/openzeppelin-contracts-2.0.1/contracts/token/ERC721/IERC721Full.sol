@@ -1,0 +1,119 @@
+// File: ../sc_datasets/DAppSCAN/Chainsulting-Shopping-project1/openzeppelin-contracts-2.0.1/contracts/introspection/IERC165.sol
+
+pragma solidity ^0.4.24;
+
+/**
+ * @title IERC165
+ * @dev https://github.com/ethereum/EIPs/blob/master/EIPS/eip-165.md
+ */
+interface IERC165 {
+
+  /**
+   * @notice Query if a contract implements an interface
+   * @param interfaceId The interface identifier, as specified in ERC-165
+   * @dev Interface identification is specified in ERC-165. This function
+   * uses less than 30,000 gas.
+   */
+  function supportsInterface(bytes4 interfaceId)
+    external
+    view
+    returns (bool);
+}
+
+// File: ../sc_datasets/DAppSCAN/Chainsulting-Shopping-project1/openzeppelin-contracts-2.0.1/contracts/token/ERC721/IERC721.sol
+
+pragma solidity ^0.4.24;
+
+/**
+ * @title ERC721 Non-Fungible Token Standard basic interface
+ * @dev see https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md
+ */
+contract IERC721 is IERC165 {
+
+  event Transfer(
+    address indexed from,
+    address indexed to,
+    uint256 indexed tokenId
+  );
+  event Approval(
+    address indexed owner,
+    address indexed approved,
+    uint256 indexed tokenId
+  );
+  event ApprovalForAll(
+    address indexed owner,
+    address indexed operator,
+    bool approved
+  );
+
+  function balanceOf(address owner) public view returns (uint256 balance);
+  function ownerOf(uint256 tokenId) public view returns (address owner);
+
+  function approve(address to, uint256 tokenId) public;
+  function getApproved(uint256 tokenId)
+    public view returns (address operator);
+
+  function setApprovalForAll(address operator, bool _approved) public;
+  function isApprovedForAll(address owner, address operator)
+    public view returns (bool);
+
+  function transferFrom(address from, address to, uint256 tokenId) public;
+  function safeTransferFrom(address from, address to, uint256 tokenId)
+    public;
+
+  function safeTransferFrom(
+    address from,
+    address to,
+    uint256 tokenId,
+    bytes data
+  )
+    public;
+}
+
+// File: ../sc_datasets/DAppSCAN/Chainsulting-Shopping-project1/openzeppelin-contracts-2.0.1/contracts/token/ERC721/IERC721Enumerable.sol
+
+pragma solidity ^0.4.24;
+
+/**
+ * @title ERC-721 Non-Fungible Token Standard, optional enumeration extension
+ * @dev See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md
+ */
+contract IERC721Enumerable is IERC721 {
+  function totalSupply() public view returns (uint256);
+  function tokenOfOwnerByIndex(
+    address owner,
+    uint256 index
+  )
+    public
+    view
+    returns (uint256 tokenId);
+
+  function tokenByIndex(uint256 index) public view returns (uint256);
+}
+
+// File: ../sc_datasets/DAppSCAN/Chainsulting-Shopping-project1/openzeppelin-contracts-2.0.1/contracts/token/ERC721/IERC721Metadata.sol
+
+pragma solidity ^0.4.24;
+
+/**
+ * @title ERC-721 Non-Fungible Token Standard, optional metadata extension
+ * @dev See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md
+ */
+contract IERC721Metadata is IERC721 {
+  function name() external view returns (string);
+  function symbol() external view returns (string);
+  function tokenURI(uint256 tokenId) external view returns (string);
+}
+
+// File: ../sc_datasets/DAppSCAN/Chainsulting-Shopping-project1/openzeppelin-contracts-2.0.1/contracts/token/ERC721/IERC721Full.sol
+
+pragma solidity ^0.4.24;
+
+
+
+/**
+ * @title ERC-721 Non-Fungible Token Standard, full implementation interface
+ * @dev See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md
+ */
+contract IERC721Full is IERC721, IERC721Enumerable, IERC721Metadata {
+}
