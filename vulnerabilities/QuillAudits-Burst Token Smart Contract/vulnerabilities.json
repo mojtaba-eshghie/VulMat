@@ -1,0 +1,234 @@
+{
+    "BURST-Token-33b0e2e7ec14828e000ae95e7d4cef77e0796acd/burst.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 51,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        name = \"BURST\";\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        symbol = \"BURST\";\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        decimals = 18;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        _totalSupply = 31000000000000000000000000;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 56,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        balances[msg.sender] = _totalSupply;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        emit Transfer(address(0), msg.sender, _totalSupply);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 59,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_16"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": 65,
+                    "vulnerability_code": "    function totalSupply() public view returns (uint) {\n\n        return _totalSupply  - balances[address(0)];\n\n    }\n\n\n",
+                    "message": "BURST.totalSupply (burst.sol#61-65) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": 11,
+                    "vulnerability_code": "    function totalSupply() public view returns (uint);\n",
+                    "message": "ERC20Interface.totalSupply (burst.sol#10-11) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": 12,
+                    "vulnerability_code": "    function balanceOf(address tokenOwner) public view returns (uint balance);\n",
+                    "message": "ERC20Interface.balanceOf (burst.sol#11-12) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": 69,
+                    "vulnerability_code": "    function balanceOf(address tokenOwner) public view returns (uint balance) {\n\n        return balances[tokenOwner];\n\n    }\n\n\n",
+                    "message": "BURST.balanceOf (burst.sol#65-69) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 69,
+                    "vulnerability_to_line": 72,
+                    "vulnerability_code": "    function allowance(address tokenOwner, address spender) public view returns (uint remaining) {\n\n        return allowed[tokenOwner][spender];\n\n    }\n",
+                    "message": "BURST.allowance (burst.sol#69-72) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": 13,
+                    "vulnerability_code": "    function allowance(address tokenOwner, address spender) public view returns (uint remaining);\n",
+                    "message": "ERC20Interface.allowance (burst.sol#12-13) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": 14,
+                    "vulnerability_code": "    function transfer(address to, uint tokens) public returns (bool success);\n",
+                    "message": "ERC20Interface.transfer (burst.sol#13-14) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": 86,
+                    "vulnerability_code": "    function transfer(address to, uint tokens) public returns (bool success) {\n\n        balances[msg.sender] = safeSub(balances[msg.sender], tokens);\n\n        balances[to] = safeAdd(balances[to], tokens);\n\n        emit Transfer(msg.sender, to, tokens);\n\n        return true;\n\n    }\n\n\n",
+                    "message": "BURST.transfer (burst.sol#79-86) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 73,
+                    "vulnerability_to_line": 79,
+                    "vulnerability_code": "    function approve(address spender, uint tokens) public returns (bool success) {\n\n        allowed[msg.sender][spender] = tokens;\n\n        emit Approval(msg.sender, spender, tokens);\n\n        return true;\n\n    }\n\n\n",
+                    "message": "BURST.approve (burst.sol#73-79) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": 15,
+                    "vulnerability_code": "    function approve(address spender, uint tokens) public returns (bool success);\n",
+                    "message": "ERC20Interface.approve (burst.sol#14-15) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": 17,
+                    "vulnerability_code": "    function transferFrom(address from, address to, uint tokens) public returns (bool success);\n\n\n",
+                    "message": "ERC20Interface.transferFrom (burst.sol#15-17) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": 93,
+                    "vulnerability_code": "    function transferFrom(address from, address to, uint tokens) public returns (bool success) {\n\n        balances[from] = safeSub(balances[from], tokens);\n\n        allowed[from][msg.sender] = safeSub(allowed[from][msg.sender], tokens);\n\n        balances[to] = safeAdd(balances[to], tokens);\n\n        emit Transfer(from, to, tokens);\n\n        return true;\n\n    }\n",
+                    "message": "BURST.transferFrom (burst.sol#86-93) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(b <= a); c = a - b; } function safeMul(uint a, uint b) public pure returns (uint c) { c = a * b; require(a == 0 || c / a == b); } function safeDiv(uint a, uint b) public pure returns (uint c) { require(b > 0);\n",
+                    "message": "SafeMath.safeMul (burst.sol#30) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": 35,
+                    "vulnerability_code": "        require(b <= a); c = a - b; } function safeMul(uint a, uint b) public pure returns (uint c) { c = a * b; require(a == 0 || c / a == b); } function safeDiv(uint a, uint b) public pure returns (uint c) { require(b > 0);\n\n        c = a / b;\n\n    }\n\n}\n\n\n",
+                    "message": "SafeMath.safeDiv (burst.sol#30-35) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in burst.sol:\n\t- pragma solidity^0.5.0 (burst.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": 43,
+                    "vulnerability_code": "    uint256 public _totalSupply;\n\n\n",
+                    "message": "Variable 'BURST._totalSupply' (burst.sol#41-43) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        return _totalSupply  - balances[address(0)];\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 73,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address spender, uint tokens) public returns (bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(address => uint) balances;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(address => mapping(address => uint)) allowed;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

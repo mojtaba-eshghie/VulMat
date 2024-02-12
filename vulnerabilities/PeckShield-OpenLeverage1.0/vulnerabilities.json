@@ -1,0 +1,1924 @@
+{
+    "openleverage-contracts-e31d971bcb38ec8737cf1942b8fdf6a9452e5834/contracts/DelegatorInterface.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function delegateToViewImplementation(bytes memory data) public view returns (bytes memory) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UNCHECKED_CALL",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        (bool success, bytes memory returnData) = callee.delegatecall(data);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UNCHECKED_CALL",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        (bool success, bytes memory returnData) = address(this).staticcall(abi.encodeWithSignature(\"delegateToImplementation(bytes)\", data));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 59,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    fallback() external payable {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 69,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        _fallback();\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "openleverage-contracts-e31d971bcb38ec8737cf1942b8fdf6a9452e5834/contracts/Migrations.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      msg.sender == owner,\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"This function is restricted to the contract's owner\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      msg.sender == owner,\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"This function is restricted to the contract's owner\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": 20,
+                    "vulnerability_code": "  function setCompleted(uint completed) public restricted {\n\n    last_completed_migration = completed;\n",
+                    "message": "Migrations.setCompleted (Migrations.sol#18-20) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.22 <0.8.0;\n",
+                    "message": "Detected issues with version pragma in Migrations.sol:\n\t- pragma solidity>=0.4.22<0.8.0 (Migrations.sol#4): is has a complex pragma\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint public last_completed_migration;\n",
+                    "message": "Variable 'Migrations.last_completed_migration' (Migrations.sol#8) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.22 <0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.22 <0.8.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "openleverage-contracts-e31d971bcb38ec8737cf1942b8fdf6a9452e5834/contracts/IWETH.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "openleverage-contracts-e31d971bcb38ec8737cf1942b8fdf6a9452e5834/contracts/DelegateInterface.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "openleverage-contracts-e31d971bcb38ec8737cf1942b8fdf6a9452e5834/contracts/Adminable.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.sender == admin, \"caller must be admin\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.sender == admin || msg.sender == developer, \"caller must be admin or developer\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.sender == pendingAdmin, \"only pendingAdmin can accept admin\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.sender == admin || msg.sender == developer, \"caller must be admin or developer\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.sender == pendingAdmin, \"only pendingAdmin can accept admin\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "abstract contract Adminable {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor () {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setPendingAdmin(address payable newPendingAdmin) external virtual onlyAdmin {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setPendingAdmin(address payable newPendingAdmin) external virtual onlyAdmin {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address oldPendingAdmin = pendingAdmin;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        pendingAdmin = newPendingAdmin;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        emit NewPendingAdmin(oldPendingAdmin, newPendingAdmin);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        emit NewPendingAdmin(oldPendingAdmin, newPendingAdmin);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "openleverage-contracts-e31d971bcb38ec8737cf1942b8fdf6a9452e5834/contracts/test/IUniswapV2Router.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external returns (uint amountA, uint amountB, uint liquidity);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function swapExactTokensForTokens(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address[] calldata path,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address to,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint deadline\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) external returns (uint[] memory amounts);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "openleverage-contracts-e31d971bcb38ec8737cf1942b8fdf6a9452e5834/contracts/test/Storage.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address public owner;\n",
+                    "message": "Storage.owner should be constant (Storage.sol#7)\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.22 <0.8.0;\n",
+                    "message": "Detected issues with version pragma in Storage.sol:\n\t- pragma solidity>=0.4.22<0.8.0 (Storage.sol#4): is has a complex pragma\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.22 <0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.22 <0.8.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "openleverage-contracts-e31d971bcb38ec8737cf1942b8fdf6a9452e5834/contracts/test/MockTLAdmin.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor (address _admin) {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        admin = _admin;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.sender == admin, 'sender is not admin');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor (address _admin) {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "openleverage-contracts-e31d971bcb38ec8737cf1942b8fdf6a9452e5834/contracts/lib/SignedSafeMath128.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(!(a == -1 && b == _INT128_MIN), \"SignedSafeMath128: multiplication overflow\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(c / a == b, \"SignedSafeMath128: multiplication overflow\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(b != 0, \"SignedSafeMath128: division by zero\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(!(b == -1 && a == _INT128_MIN), \"SignedSafeMath128: division overflow\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require((b >= 0 && c <= a) || (b < 0 && c > a), \"SignedSafeMath128: subtraction overflow\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require((b >= 0 && c >= a) || (b < 0 && c < a), \"SignedSafeMath128: addition overflow\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(!(a == -1 && b == _INT128_MIN), \"SignedSafeMath128: multiplication overflow\");\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(!(b == -1 && a == _INT128_MIN), \"SignedSafeMath128: division overflow\");\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require((b >= 0 && c <= a) || (b < 0 && c > a), \"SignedSafeMath128: subtraction overflow\");\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require((b >= 0 && c >= a) || (b < 0 && c < a), \"SignedSafeMath128: addition overflow\");\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(!(a == -1 && b == _INT128_MIN), \"SignedSafeMath128: multiplication overflow\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(c / a == b, \"SignedSafeMath128: multiplication overflow\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(b != 0, \"SignedSafeMath128: division by zero\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(!(b == -1 && a == _INT128_MIN), \"SignedSafeMath128: division overflow\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require((b >= 0 && c <= a) || (b < 0 && c > a), \"SignedSafeMath128: subtraction overflow\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require((b >= 0 && c >= a) || (b < 0 && c < a), \"SignedSafeMath128: addition overflow\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    int128 constant private _INT128_MIN = -2**127;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "openleverage-contracts-e31d971bcb38ec8737cf1942b8fdf6a9452e5834/contracts/lib/CarefulMath.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.6.0 <0.8.0;\n",
+                    "message": "Detected issues with version pragma in CarefulMath.sol:\n\t- pragma solidity>=0.6.0<0.8.0 (CarefulMath.sol#4): is has a complex pragma\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.6.0 <0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.6.0 <0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 27,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function mulUInt(uint a, uint b) internal pure returns (MathError, uint) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function divUInt(uint a, uint b) internal pure returns (MathError, uint) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function subUInt(uint a, uint b) internal pure returns (MathError, uint) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 66,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addUInt(uint a, uint b) internal pure returns (MathError, uint) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addThenSubUInt(uint a, uint b, uint c) internal pure returns (MathError, uint) {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "openleverage-contracts-e31d971bcb38ec8737cf1942b8fdf6a9452e5834/contracts/lib/DexData.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 98,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                data = slice(data, NEXT_OFFSET, data.length - NEXT_OFFSET);\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < pathLength; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 95,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < pathLength; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(data.length >= dexNameLength, 'dex error');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(data.length >= dexNameLength + feeLength, 'fee error');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 69,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(data.length >= dexNameLength + feeLength + uniV3QuoteFlagLength, 'v3flag error');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 113,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_start + 3 >= _start, 'toUint24_overflow');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 114,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_bytes.length >= _start + 3, 'toUint24_outOfBounds');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 123,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_start + 20 >= _start, 'toAddress_overflow');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 124,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_bytes.length >= _start + 20, 'toAddress_outOfBounds');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 138,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_length + 31 >= _length, 'slice_overflow');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_start + _length >= _start, 'slice_overflow');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 140,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_bytes.length >= _start + _length, 'slice_outOfBounds');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < pathLength; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 95,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < pathLength; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_30"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": 41,
+                    "vulnerability_code": "    function toDex(bytes memory data) internal pure returns (uint8) {\n\n        require(data.length >= dexNameLength, 'dex error');\n\n        uint8 temp;\n\n        assembly {\n\n            temp := byte(0, mload(add(data, add(0x20, dexNameStart))))\n\n        }\n\n        return temp;\n",
+                    "message": "DexData.toDex (DexData.sol#34-41) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": 50,
+                    "vulnerability_code": "    function toFee(bytes memory data) internal pure returns (uint24) {\n\n        require(data.length >= dexNameLength + feeLength, 'fee error');\n\n        uint temp;\n\n        assembly {\n\n            temp := mload(add(data, add(0x20, feeStart)))\n\n        }\n\n        return uint24(temp >> (256 - (feeLength * 8)));\n",
+                    "message": "DexData.toFee (DexData.sol#43-50) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": 66,
+                    "vulnerability_code": "    function toDexDetail(bytes memory data) internal pure returns (uint32) {\n\n        if (data.length == dexNameLength) {\n\n            uint8 temp;\n\n            assembly {\n\n                temp := byte(0, mload(add(data, add(0x20, dexNameStart))))\n\n            }\n\n            return uint32(temp);\n\n        } else {\n\n            uint temp;\n\n            assembly {\n\n                temp := mload(add(data, add(0x20, dexNameStart)))\n\n            }\n\n            return uint32(temp >> (256 - ((feeLength + dexNameLength) * 8)));\n\n        }\n",
+                    "message": "DexData.toDexDetail (DexData.sol#52-66) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": 75,
+                    "vulnerability_code": "    function toUniV3QuoteFlag(bytes memory data) internal pure returns (bool) {\n\n        require(data.length >= dexNameLength + feeLength + uniV3QuoteFlagLength, 'v3flag error');\n\n        uint8 temp;\n\n        assembly {\n\n            temp := byte(0, mload(add(data, add(0x20, uniV3QuoteFlagStart))))\n\n        }\n\n        return temp > 0;\n",
+                    "message": "DexData.toUniV3QuoteFlag (DexData.sol#68-75) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 112,
+                    "vulnerability_to_line": 120,
+                    "vulnerability_code": "    function toUint24(bytes memory _bytes, uint256 _start) internal pure returns (uint24) {\n\n        require(_start + 3 >= _start, 'toUint24_overflow');\n\n        require(_bytes.length >= _start + 3, 'toUint24_outOfBounds');\n\n        uint24 tempUint;\n\n        assembly {\n\n            tempUint := mload(add(add(_bytes, 0x3), _start))\n\n        }\n\n        return tempUint;\n",
+                    "message": "DexData.toUint24 (DexData.sol#112-120) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 122,
+                    "vulnerability_to_line": 130,
+                    "vulnerability_code": "    function toAddress(bytes memory _bytes, uint256 _start) internal pure returns (address) {\n\n        require(_start + 20 >= _start, 'toAddress_overflow');\n\n        require(_bytes.length >= _start + 20, 'toAddress_outOfBounds');\n\n        address tempAddress;\n\n        assembly {\n\n            tempAddress := div(mload(add(add(_bytes, 0x20), _start)), 0x1000000000000000000000000)\n\n        }\n\n        return tempAddress;\n",
+                    "message": "DexData.toAddress (DexData.sol#122-130) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": 197,
+                    "vulnerability_code": "    function slice(\n\n        bytes memory _bytes,\n\n        uint256 _start,\n\n        uint256 _length\n\n    ) internal pure returns (bytes memory) {\n\n        require(_length + 31 >= _length, 'slice_overflow');\n\n        require(_start + _length >= _start, 'slice_overflow');\n\n        require(_bytes.length >= _start + _length, 'slice_outOfBounds');\n\n\n\n        bytes memory tempBytes;\n\n\n\n        assembly {\n\n            switch iszero(_length)\n\n            case 0 {\n\n            // Get a location of some free memory and store it in tempBytes as\n\n            // Solidity does for memory variables.\n\n                tempBytes := mload(0x40)\n\n\n\n            // The first word of the slice result is potentially a partial\n\n            // word read from the original array. To read it, we calculate\n\n            // the length of that partial word and start copying that many\n\n            // bytes into the array. The first word we copy will start with\n\n            // data we don't care about, but the last `lengthmod` bytes will\n\n            // land at the beginning of the contents of the new array. When\n\n            // we're done copying, we overwrite the full first word with\n\n            // the actual length of the slice.\n\n                let lengthmod := and(_length, 31)\n\n\n\n            // The multiplication in the next line is necessary\n\n            // because when slicing multiples of 32 bytes (lengthmod == 0)\n\n            // the following copy loop was copying the origin's length\n\n            // and then ending prematurely not copying everything it should.\n\n                let mc := add(add(tempBytes, lengthmod), mul(0x20, iszero(lengthmod)))\n\n                let end := add(mc, _length)\n\n\n\n                for {\n\n                // The multiplication in the next line has the same exact purpose\n\n                // as the one above.\n\n                    let cc := add(add(add(_bytes, lengthmod), mul(0x20, iszero(lengthmod))), _start)\n\n                } lt(mc, end) {\n\n                    mc := add(mc, 0x20)\n\n                    cc := add(cc, 0x20)\n\n                } {\n\n                    mstore(mc, mload(cc))\n\n                }\n\n\n\n                mstore(tempBytes, _length)\n\n\n\n            //update free-memory pointer\n\n            //allocating the array padded to 32 bytes like the compiler does now\n\n                mstore(0x40, and(add(mc, 31), not(31)))\n\n            }\n\n            //if we want a zero-length slice let's just return a zero-length array\n\n            default {\n\n                tempBytes := mload(0x40)\n\n            //zero out the 32 bytes slice we are about to return\n\n            //we need to do it because Solidity does not garbage collect\n\n                mstore(tempBytes, 0)\n\n\n\n                mstore(0x40, add(tempBytes, 0x20))\n\n            }\n\n        }\n\n\n\n        return tempBytes;\n",
+                    "message": "DexData.slice (DexData.sol#133-197) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": 41,
+                    "vulnerability_code": "    function toDex(bytes memory data) internal pure returns (uint8) {\n\n        require(data.length >= dexNameLength, 'dex error');\n\n        uint8 temp;\n\n        assembly {\n\n            temp := byte(0, mload(add(data, add(0x20, dexNameStart))))\n\n        }\n\n        return temp;\n",
+                    "message": "DexData.toDex uses assembly (DexData.sol#34-41)\n\t- DexData.sol#37-39\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": 50,
+                    "vulnerability_code": "    function toFee(bytes memory data) internal pure returns (uint24) {\n\n        require(data.length >= dexNameLength + feeLength, 'fee error');\n\n        uint temp;\n\n        assembly {\n\n            temp := mload(add(data, add(0x20, feeStart)))\n\n        }\n\n        return uint24(temp >> (256 - (feeLength * 8)));\n",
+                    "message": "DexData.toFee uses assembly (DexData.sol#43-50)\n\t- DexData.sol#46-48\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": 66,
+                    "vulnerability_code": "    function toDexDetail(bytes memory data) internal pure returns (uint32) {\n\n        if (data.length == dexNameLength) {\n\n            uint8 temp;\n\n            assembly {\n\n                temp := byte(0, mload(add(data, add(0x20, dexNameStart))))\n\n            }\n\n            return uint32(temp);\n\n        } else {\n\n            uint temp;\n\n            assembly {\n\n                temp := mload(add(data, add(0x20, dexNameStart)))\n\n            }\n\n            return uint32(temp >> (256 - ((feeLength + dexNameLength) * 8)));\n\n        }\n",
+                    "message": "DexData.toDexDetail uses assembly (DexData.sol#52-66)\n\t- DexData.sol#55-57\n\t- DexData.sol#61-63\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": 75,
+                    "vulnerability_code": "    function toUniV3QuoteFlag(bytes memory data) internal pure returns (bool) {\n\n        require(data.length >= dexNameLength + feeLength + uniV3QuoteFlagLength, 'v3flag error');\n\n        uint8 temp;\n\n        assembly {\n\n            temp := byte(0, mload(add(data, add(0x20, uniV3QuoteFlagStart))))\n\n        }\n\n        return temp > 0;\n",
+                    "message": "DexData.toUniV3QuoteFlag uses assembly (DexData.sol#68-75)\n\t- DexData.sol#71-73\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 112,
+                    "vulnerability_to_line": 120,
+                    "vulnerability_code": "    function toUint24(bytes memory _bytes, uint256 _start) internal pure returns (uint24) {\n\n        require(_start + 3 >= _start, 'toUint24_overflow');\n\n        require(_bytes.length >= _start + 3, 'toUint24_outOfBounds');\n\n        uint24 tempUint;\n\n        assembly {\n\n            tempUint := mload(add(add(_bytes, 0x3), _start))\n\n        }\n\n        return tempUint;\n",
+                    "message": "DexData.toUint24 uses assembly (DexData.sol#112-120)\n\t- DexData.sol#116-118\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 122,
+                    "vulnerability_to_line": 130,
+                    "vulnerability_code": "    function toAddress(bytes memory _bytes, uint256 _start) internal pure returns (address) {\n\n        require(_start + 20 >= _start, 'toAddress_overflow');\n\n        require(_bytes.length >= _start + 20, 'toAddress_outOfBounds');\n\n        address tempAddress;\n\n        assembly {\n\n            tempAddress := div(mload(add(add(_bytes, 0x20), _start)), 0x1000000000000000000000000)\n\n        }\n\n        return tempAddress;\n",
+                    "message": "DexData.toAddress uses assembly (DexData.sol#122-130)\n\t- DexData.sol#126-128\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": 197,
+                    "vulnerability_code": "    function slice(\n\n        bytes memory _bytes,\n\n        uint256 _start,\n\n        uint256 _length\n\n    ) internal pure returns (bytes memory) {\n\n        require(_length + 31 >= _length, 'slice_overflow');\n\n        require(_start + _length >= _start, 'slice_overflow');\n\n        require(_bytes.length >= _start + _length, 'slice_outOfBounds');\n\n\n\n        bytes memory tempBytes;\n\n\n\n        assembly {\n\n            switch iszero(_length)\n\n            case 0 {\n\n            // Get a location of some free memory and store it in tempBytes as\n\n            // Solidity does for memory variables.\n\n                tempBytes := mload(0x40)\n\n\n\n            // The first word of the slice result is potentially a partial\n\n            // word read from the original array. To read it, we calculate\n\n            // the length of that partial word and start copying that many\n\n            // bytes into the array. The first word we copy will start with\n\n            // data we don't care about, but the last `lengthmod` bytes will\n\n            // land at the beginning of the contents of the new array. When\n\n            // we're done copying, we overwrite the full first word with\n\n            // the actual length of the slice.\n\n                let lengthmod := and(_length, 31)\n\n\n\n            // The multiplication in the next line is necessary\n\n            // because when slicing multiples of 32 bytes (lengthmod == 0)\n\n            // the following copy loop was copying the origin's length\n\n            // and then ending prematurely not copying everything it should.\n\n                let mc := add(add(tempBytes, lengthmod), mul(0x20, iszero(lengthmod)))\n\n                let end := add(mc, _length)\n\n\n\n                for {\n\n                // The multiplication in the next line has the same exact purpose\n\n                // as the one above.\n\n                    let cc := add(add(add(_bytes, lengthmod), mul(0x20, iszero(lengthmod))), _start)\n\n                } lt(mc, end) {\n\n                    mc := add(mc, 0x20)\n\n                    cc := add(cc, 0x20)\n\n                } {\n\n                    mstore(mc, mload(cc))\n\n                }\n\n\n\n                mstore(tempBytes, _length)\n\n\n\n            //update free-memory pointer\n\n            //allocating the array padded to 32 bytes like the compiler does now\n\n                mstore(0x40, and(add(mc, 31), not(31)))\n\n            }\n\n            //if we want a zero-length slice let's just return a zero-length array\n\n            default {\n\n                tempBytes := mload(0x40)\n\n            //zero out the 32 bytes slice we are about to return\n\n            //we need to do it because Solidity does not garbage collect\n\n                mstore(tempBytes, 0)\n\n\n\n                mstore(0x40, add(tempBytes, 0x20))\n\n            }\n\n        }\n\n\n\n        return tempBytes;\n",
+                    "message": "DexData.slice uses assembly (DexData.sol#133-197)\n\t- DexData.sol#144-194\n"
+                },
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.6.0 <0.8.0;\n",
+                    "message": "Different versions of Solidity is used in DexData.sol:\n\t- Version used: ['>=0.6.0<0.8.0', 'ABIEncoderV2']\n\t- DexData.sol#4 declares pragma solidity>=0.6.0<0.8.0\n\t- DexData.sol#5 declares pragma experimentalABIEncoderV2\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.6.0 <0.8.0;\n",
+                    "message": "Detected issues with version pragma in DexData.sol:\n\t- pragma solidity>=0.6.0<0.8.0 (DexData.sol#4): is has a complex pragma\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 112,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function toUint24(bytes memory _bytes, uint256 _start) internal pure returns (uint24) {\n",
+                    "message": "Parameter '_bytes' of DexData.toUint24 (DexData.sol#112) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 112,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function toUint24(bytes memory _bytes, uint256 _start) internal pure returns (uint24) {\n",
+                    "message": "Parameter '_start' of DexData.toUint24 (DexData.sol#112) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 122,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function toAddress(bytes memory _bytes, uint256 _start) internal pure returns (address) {\n",
+                    "message": "Parameter '_bytes' of DexData.toAddress (DexData.sol#122) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 122,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function toAddress(bytes memory _bytes, uint256 _start) internal pure returns (address) {\n",
+                    "message": "Parameter '_start' of DexData.toAddress (DexData.sol#122) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes memory _bytes,\n",
+                    "message": "Parameter '_bytes' of DexData.slice (DexData.sol#134) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 135,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _start,\n",
+                    "message": "Parameter '_start' of DexData.slice (DexData.sol#135) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 136,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _length\n",
+                    "message": "Parameter '_length' of DexData.slice (DexData.sol#136) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant dexNameStart = 0;\n",
+                    "message": "Constant 'DexData.dexNameStart' (DexData.sol#16) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant dexNameLength = 1;\n",
+                    "message": "Constant 'DexData.dexNameLength' (DexData.sol#17) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant feeStart = 1;\n",
+                    "message": "Constant 'DexData.feeStart' (DexData.sol#18) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant feeLength = 3;\n",
+                    "message": "Constant 'DexData.feeLength' (DexData.sol#19) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant uniV3QuoteFlagStart = 4;\n",
+                    "message": "Constant 'DexData.uniV3QuoteFlagStart' (DexData.sol#20) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant uniV3QuoteFlagLength = 1;\n",
+                    "message": "Constant 'DexData.uniV3QuoteFlagLength' (DexData.sol#21) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "unused-state",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 private constant FEE_SIZE = 3;\n",
+                    "message": "DexData.FEE_SIZE (DexData.sol#10) is never used in DexData\nDexData.POP_OFFSET (DexData.sol#12) is never used in DexData\nDexData.MULTIPLE_POOLS_MIN_LENGTH (DexData.sol#13) is never used in DexData\nDexData.dexNameStart (DexData.sol#16) is never used in DexData\nDexData.feeStart (DexData.sol#18) is never used in DexData\nDexData.DEX_UNIV2 (DexData.sol#23) is never used in DexData\nDexData.DEX_UNIV3 (DexData.sol#24) is never used in DexData\nDexData.UNIV2 (DexData.sol#25) is never used in DexData\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.6.0 <0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.6.0 <0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 private constant ADDR_SIZE = 20;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 private constant FEE_SIZE = 3;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 private constant NEXT_OFFSET = ADDR_SIZE + FEE_SIZE;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 private constant POP_OFFSET = NEXT_OFFSET + ADDR_SIZE;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 private constant MULTIPLE_POOLS_MIN_LENGTH = POP_OFFSET + NEXT_OFFSET;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_PURE",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function toDex(bytes memory data) internal pure returns (uint8) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_PURE",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function toFee(bytes memory data) internal pure returns (uint24) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_PURE",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function toDexDetail(bytes memory data) internal pure returns (uint32) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_PURE",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function toUniV3QuoteFlag(bytes memory data) internal pure returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_PURE",
+                    "vulnerability_from_line": 112,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function toUint24(bytes memory _bytes, uint256 _start) internal pure returns (uint24) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_PURE",
+                    "vulnerability_from_line": 122,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function toAddress(bytes memory _bytes, uint256 _start) internal pure returns (address) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_PURE",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function slice(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 126,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 144,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant dexNameStart = 0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant dexNameLength = 1;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant feeStart = 1;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant feeLength = 3;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant uniV3QuoteFlagStart = 4;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant uniV3QuoteFlagLength = 1;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint8 constant DEX_UNIV2 = 1;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint8 constant DEX_UNIV3 = 2;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes constant UNIV2 = hex\"01\";\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "openleverage-contracts-e31d971bcb38ec8737cf1942b8fdf6a9452e5834/contracts/dex/DexAggregatorInterface.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getPrice(address desToken, address quoteToken, bytes memory data) external view returns (uint256 price, uint8 decimals);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getAvgPrice(address desToken, address quoteToken, uint32 secondsAgo, bytes memory data) external view returns (uint256 price, uint8 decimals, uint256 timestamp);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getPriceCAvgPriceHAvgPrice(address desToken, address quoteToken, uint32 secondsAgo, bytes memory dexData) external view returns (uint price, uint cAvgPrice, uint256 hAvgPrice, uint8 decimals, uint256 timestamp);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "openleverage-contracts-e31d971bcb38ec8737cf1942b8fdf6a9452e5834/contracts/liquidity/LPoolInterface.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 173,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "abstract contract LPoolInterface is LPoolStorage {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 208,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getAccountSnapshot(address account) external virtual view returns (uint, uint, uint);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 241,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function reduceReserves(address payable to, uint reduceAmount) external virtual;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 241,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function reduceReserves(address payable to, uint reduceAmount) external virtual;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 241,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function reduceReserves(address payable to, uint reduceAmount) external virtual;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 241,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function reduceReserves(address payable to, uint reduceAmount) external virtual;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "openleverage-contracts-e31d971bcb38ec8737cf1942b8fdf6a9452e5834/contracts/gov/GovernorAlpha.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 188,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < proposal.targets.length; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 206,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < proposal.targets.length; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 137,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address timelock_, address xoleToken_, address guardian_) {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 138,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        timelock = TimelockInterface(timelock_);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        xole = XOLETokenInterface(xoleToken_);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 140,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        guardian = guardian_;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 207,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            timelock.executeTransaction{value : proposal.values[i]}(proposal.targets[i], proposal.values[i], proposal.signatures[i], proposal.calldatas[i], proposal.eta);\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 188,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < proposal.targets.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 206,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < proposal.targets.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(xole.balanceOfAt(msg.sender, previousBlockNumber) > proposalThreshold(previousBlockNumber), \"GovernorAlpha::propose: proposer votes below proposal threshold\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 146,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(targets.length == values.length && targets.length == signatures.length && targets.length == calldatas.length, \"GovernorAlpha::propose: proposal function information arity mismatch\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 147,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(targets.length != 0, \"GovernorAlpha::propose: must provide actions\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 148,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(targets.length <= proposalMaxOperations(), \"GovernorAlpha::propose: too many actions\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(proposersLatestProposalState != ProposalState.Active, \"GovernorAlpha::propose: one live proposal per proposer, found an already active proposal\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 154,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(proposersLatestProposalState != ProposalState.Pending, \"GovernorAlpha::propose: one live proposal per proposer, found an already pending proposal\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 185,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(state(proposalId) == ProposalState.Succeeded, \"GovernorAlpha::queue: proposal can only be queued if it is succeeded\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 198,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(!timelock.queuedTransactions(keccak256(abi.encode(target, value, signature, data, eta))), \"GovernorAlpha::_queueOrRevert: proposal action already queued at eta\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 203,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(state(proposalId) == ProposalState.Queued, \"GovernorAlpha::execute: proposal can only be executed if it is queued\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 223,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(proposalCount >= proposalId && proposalId > 0, \"GovernorAlpha::state: invalid proposal id\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 253,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(signatory != address(0), \"GovernorAlpha::castVoteBySig: invalid signature\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 259,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(state(proposalId) == ProposalState.Active, \"GovernorAlpha::_castVote: voting is closed\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 264,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(!receipt.hasVoted, \"GovernorAlpha::_castVote: voter already voted\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 281,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.sender == guardian, \"GovernorAlpha::__acceptAdmin: sender must be gov guardian\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 286,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.sender == guardian, \"GovernorAlpha::__abdicate: sender must be gov guardian\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 293,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(c >= a, \"addition overflow\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 298,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(b <= a, \"subtraction underflow\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 146,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(targets.length == values.length && targets.length == signatures.length && targets.length == calldatas.length, \"GovernorAlpha::propose: proposal function information arity mismatch\");\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 223,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(proposalCount >= proposalId && proposalId > 0, \"GovernorAlpha::state: invalid proposal id\");\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 160,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        proposalCount++;\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 188,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < proposal.targets.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 206,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < proposal.targets.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(xole.balanceOfAt(msg.sender, previousBlockNumber) > proposalThreshold(previousBlockNumber), \"GovernorAlpha::propose: proposer votes below proposal threshold\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 146,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(targets.length == values.length && targets.length == signatures.length && targets.length == calldatas.length, \"GovernorAlpha::propose: proposal function information arity mismatch\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 147,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(targets.length != 0, \"GovernorAlpha::propose: must provide actions\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 148,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(targets.length <= proposalMaxOperations(), \"GovernorAlpha::propose: too many actions\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(proposersLatestProposalState != ProposalState.Active, \"GovernorAlpha::propose: one live proposal per proposer, found an already active proposal\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 154,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(proposersLatestProposalState != ProposalState.Pending, \"GovernorAlpha::propose: one live proposal per proposer, found an already pending proposal\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 185,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(state(proposalId) == ProposalState.Succeeded, \"GovernorAlpha::queue: proposal can only be queued if it is succeeded\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 198,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(!timelock.queuedTransactions(keccak256(abi.encode(target, value, signature, data, eta))), \"GovernorAlpha::_queueOrRevert: proposal action already queued at eta\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 203,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(state(proposalId) == ProposalState.Queued, \"GovernorAlpha::execute: proposal can only be executed if it is queued\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 223,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(proposalCount >= proposalId && proposalId > 0, \"GovernorAlpha::state: invalid proposal id\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 253,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(signatory != address(0), \"GovernorAlpha::castVoteBySig: invalid signature\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 259,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(state(proposalId) == ProposalState.Active, \"GovernorAlpha::_castVote: voting is closed\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 264,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(!receipt.hasVoted, \"GovernorAlpha::_castVote: voter already voted\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 281,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.sender == guardian, \"GovernorAlpha::__acceptAdmin: sender must be gov guardian\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 286,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.sender == guardian, \"GovernorAlpha::__abdicate: sender must be gov guardian\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 287,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        guardian = address(0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 188,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < proposal.targets.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 206,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < proposal.targets.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 188,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < proposal.targets.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 206,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < proposal.targets.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract GovernorAlpha {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_PURE",
+                    "vulnerability_from_line": 302,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getChainId() internal pure returns (uint) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 213,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getActions(uint proposalId) public view returns (address[] memory targets, uint[] memory values, string[] memory signatures, bytes[] memory calldatas) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 304,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {chainId := chainid()}\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 137,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address timelock_, address xoleToken_, address guardian_) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 318,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function queueTransaction(address target, uint value, string calldata signature, bytes calldata data, uint eta) external returns (bytes32);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 320,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function cancelTransaction(address target, uint value, string calldata signature, bytes calldata data, uint eta) external;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 322,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function executeTransaction(address target, uint value, string calldata signature, bytes calldata data, uint eta) external payable returns (bytes memory);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 318,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function queueTransaction(address target, uint value, string calldata signature, bytes calldata data, uint eta) external returns (bytes32);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 318,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function queueTransaction(address target, uint value, string calldata signature, bytes calldata data, uint eta) external returns (bytes32);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 318,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function queueTransaction(address target, uint value, string calldata signature, bytes calldata data, uint eta) external returns (bytes32);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 318,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function queueTransaction(address target, uint value, string calldata signature, bytes calldata data, uint eta) external returns (bytes32);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 318,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function queueTransaction(address target, uint value, string calldata signature, bytes calldata data, uint eta) external returns (bytes32);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 320,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function cancelTransaction(address target, uint value, string calldata signature, bytes calldata data, uint eta) external;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 320,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function cancelTransaction(address target, uint value, string calldata signature, bytes calldata data, uint eta) external;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 320,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function cancelTransaction(address target, uint value, string calldata signature, bytes calldata data, uint eta) external;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 320,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function cancelTransaction(address target, uint value, string calldata signature, bytes calldata data, uint eta) external;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 322,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function executeTransaction(address target, uint value, string calldata signature, bytes calldata data, uint eta) external payable returns (bytes memory);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 322,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function executeTransaction(address target, uint value, string calldata signature, bytes calldata data, uint eta) external payable returns (bytes memory);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 322,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function executeTransaction(address target, uint value, string calldata signature, bytes calldata data, uint eta) external payable returns (bytes memory);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 322,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function executeTransaction(address target, uint value, string calldata signature, bytes calldata data, uint eta) external payable returns (bytes memory);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 322,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function executeTransaction(address target, uint value, string calldata signature, bytes calldata data, uint eta) external payable returns (bytes memory);\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,289 @@
+{
+    "code.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_30"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "erc20-interface",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": 190,
+                    "vulnerability_code": "contract TokenERC20 {\n\n    // Public variables of the token\n\n    string public name;\n\n    string public symbol;\n\n    uint8 public decimals = 18;\n\n    // 18 decimals is the strongly suggested default, avoid changing it\n\n    uint256 public totalSupply;\n\n\n\n    mapping (address => bool) public blacklist;\n\n    address admin;\n\n\n\n    // This creates an array with all balances\n\n    mapping (address => uint256) public balanceOf;\n\n    mapping (address => mapping (address => uint256)) public allowance;\n\n\n\n    // This generates a public event on the blockchain that will notify clients\n\n    event Transfer(address indexed from, address indexed to, uint256 value);\n\n\n\n    // This notifies clients about the amount burnt\n\n    event Burn(address indexed from, uint256 value);\n\n\n\n    /**\n\n     * Constructor function\n\n     *\n\n     * Initializes contract with initial supply tokens to the creator of the contract\n\n     */\n\n    function TokenERC20(\n\n        uint256 initialSupply,\n\n        string tokenName,\n\n        string tokenSymbol\n\n    ) public {\n\n        totalSupply = initialSupply * 10 ** uint256(decimals);  // Update total supply with the decimal amount\n\n        balanceOf[msg.sender] = totalSupply;                // Give the creator all initial tokens\n\n        name = tokenName;                                   // Set the name for display purposes\n\n        symbol = tokenSymbol;                               // Set the symbol for display purposes\n\n        admin = msg.sender;\n\n    }\n\n\n\n    /**\n\n     * Internal transfer, only can be called by this contract\n\n     */\n\n    function _transfer(address _from, address _to, uint _value) internal {\n\n        // Prevent transfer to 0x0 address. Use burn() instead\n\n        require(_to != 0x0);\n\n        // Check if the sender has enough\n\n        require(balanceOf[_from] >= _value);\n\n        // Check for overflows\n\n        require(balanceOf[_to] + _value > balanceOf[_to]);\n\n        // Save this for an assertion in the future\n\n        uint previousBalances = balanceOf[_from] + balanceOf[_to];\n\n        // Subtract from the sender\n\n        balanceOf[_from] -= _value;\n\n        // Add the same to the recipient\n\n        balanceOf[_to] += _value;\n\n        Transfer(_from, _to, _value);\n\n        // Asserts are used to use static analysis to find bugs in your code. They should never fail\n\n        assert(balanceOf[_from] + balanceOf[_to] == previousBalances);\n\n    }\n\n\n\n    /**\n\n     * Transfer tokens\n\n     *\n\n     * Send `_value` tokens to `_to` from your account\n\n     *\n\n     * @param _to The address of the recipient\n\n     * @param _value the amount to send\n\n     */\n\n// SWC-Unchecked Call Return Value: L76\n\n    function transfer(address _to, uint256 _value) public {\n\n        require(!blacklist[msg.sender]);\n\n        _transfer(msg.sender, _to, _value);\n\n    }\n\n\n\n    /**\n\n     * Ban address\n\n     * \n\n     * @param addr ban addr\n\n     */\n\n    function ban(address addr) public {\n\n        require(msg.sender == admin);\n\n        blacklist[addr] = true;\n\n    }\n\n\n\n    /**\n\n     * Enable address\n\n     * \n\n     *  @param addr enable addr\n\n     */\n\n    function enable(address addr) public {\n\n        require(msg.sender == admin);\n\n        blacklist[addr] = false;\n\n    }\n\n\n\n    /**\n\n     * Transfer tokens from other address\n\n     *\n\n     * Send `_value` tokens to `_to` on behalf of `_from`\n\n     *\n\n     * @param _from The address of the sender\n\n     * @param _to The address of the recipient\n\n     * @param _value the amount to send\n\n     */\n\n    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {\n\n        require(!blacklist[msg.sender]);\n\n        require(_value <= allowance[_from][msg.sender]);     // Check allowance\n\n        allowance[_from][msg.sender] -= _value;\n\n        _transfer(_from, _to, _value);\n\n        return true;\n\n    }\n\n\n\n    /**\n\n     * Set allowance for other address\n\n     *\n\n     * Allows `_spender` to spend no more than `_value` tokens on your behalf\n\n     *\n\n     * @param _spender The address authorized to spend\n\n     * @param _value the max amount they can spend\n\n     */\n\n    function approve(address _spender, uint256 _value) public\n\n    returns (bool success) {\n\n        require(!blacklist[msg.sender]);\n\n        allowance[msg.sender][_spender] = _value;\n\n        return true;\n\n    }\n\n\n\n    /**\n\n     * Set allowance for other address and notify\n\n     *\n\n     * Allows `_spender` to spend no more than `_value` tokens on your behalf, and then ping the contract about it\n\n     *\n\n     * @param _spender The address authorized to spend\n\n     * @param _value the max amount they can spend\n\n     * @param _extraData some extra information to send to the approved contract\n\n     */\n\n    function approveAndCall(address _spender, uint256 _value, bytes _extraData)\n\n    public\n\n    returns (bool success) {\n\n        require(!blacklist[msg.sender]);\n\n        tokenRecipient spender = tokenRecipient(_spender);\n\n        if (approve(_spender, _value)) {\n\n            spender.receiveApproval(msg.sender, _value, this, _extraData);\n\n            return true;\n\n        }\n\n    }\n\n\n\n    /**\n\n     * Destroy tokens\n\n     *\n\n     * Remove `_value` tokens from the system irreversibly\n\n     *\n\n     * @param _value the amount of money to burn\n\n     */\n\n    function burn(uint256 _value) public returns (bool success) {\n\n        require(!blacklist[msg.sender]);\n\n        require(balanceOf[msg.sender] >= _value);   // Check if the sender has enough\n\n        balanceOf[msg.sender] -= _value;            // Subtract from the sender\n\n        totalSupply -= _value;                      // Updates totalSupply\n\n        Burn(msg.sender, _value);\n\n        return true;\n\n    }\n\n\n\n    /**\n\n     * Destroy tokens from other account\n\n     *\n\n     * Remove `_value` tokens from the system irreversibly on behalf of `_from`.\n\n     *\n\n     * @param _from the address of the sender\n\n     * @param _value the amount of money to burn\n\n     */\n\n    function burnFrom(address _from, uint256 _value) public returns (bool success) {\n\n        require(!blacklist[msg.sender]);\n\n        require(balanceOf[_from] >= _value);                // Check if the targeted balance is enough\n\n        require(_value <= allowance[_from][msg.sender]);    // Check allowance\n\n        balanceOf[_from] -= _value;                         // Subtract from the targeted balance\n\n        allowance[_from][msg.sender] -= _value;             // Subtract from the sender's allowance\n\n        totalSupply -= _value;                              // Update totalSupply\n\n        Burn(_from, _value);\n\n        return true;\n\n    }\n",
+                    "message": "TokenERC20 (code.sol#11-190) has incorrect ERC20 function interface(s):\n\t-transfer (code.sol#79-82)\n"
+                },
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint8 public decimals = 18;\n",
+                    "message": "TokenERC20.decimals should be constant (code.sol#15)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "interface tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData) public; }\n",
+                    "message": "tokenRecipient.receiveApproval (code.sol#9) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": 82,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) public {\n\n        require(!blacklist[msg.sender]);\n\n        _transfer(msg.sender, _to, _value);\n",
+                    "message": "TokenERC20.transfer (code.sol#79-82) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": 92,
+                    "vulnerability_code": "    function ban(address addr) public {\n\n        require(msg.sender == admin);\n\n        blacklist[addr] = true;\n",
+                    "message": "TokenERC20.ban (code.sol#89-92) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 99,
+                    "vulnerability_to_line": 102,
+                    "vulnerability_code": "    function enable(address addr) public {\n\n        require(msg.sender == admin);\n\n        blacklist[addr] = false;\n",
+                    "message": "TokenERC20.enable (code.sol#99-102) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 113,
+                    "vulnerability_to_line": 119,
+                    "vulnerability_code": "    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {\n\n        require(!blacklist[msg.sender]);\n\n        require(_value <= allowance[_from][msg.sender]);     // Check allowance\n\n        allowance[_from][msg.sender] -= _value;\n\n        _transfer(_from, _to, _value);\n\n        return true;\n",
+                    "message": "TokenERC20.transferFrom (code.sol#113-119) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": 154,
+                    "vulnerability_code": "    function approveAndCall(address _spender, uint256 _value, bytes _extraData)\n\n    public\n\n    returns (bool success) {\n\n        require(!blacklist[msg.sender]);\n\n        tokenRecipient spender = tokenRecipient(_spender);\n\n        if (approve(_spender, _value)) {\n\n            spender.receiveApproval(msg.sender, _value, this, _extraData);\n\n            return true;\n\n        }\n",
+                    "message": "TokenERC20.approveAndCall (code.sol#145-154) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 163,
+                    "vulnerability_to_line": 170,
+                    "vulnerability_code": "    function burn(uint256 _value) public returns (bool success) {\n\n        require(!blacklist[msg.sender]);\n\n        require(balanceOf[msg.sender] >= _value);   // Check if the sender has enough\n\n        balanceOf[msg.sender] -= _value;            // Subtract from the sender\n\n        totalSupply -= _value;                      // Updates totalSupply\n\n        Burn(msg.sender, _value);\n\n        return true;\n",
+                    "message": "TokenERC20.burn (code.sol#163-170) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 180,
+                    "vulnerability_to_line": 189,
+                    "vulnerability_code": "    function burnFrom(address _from, uint256 _value) public returns (bool success) {\n\n        require(!blacklist[msg.sender]);\n\n        require(balanceOf[_from] >= _value);                // Check if the targeted balance is enough\n\n        require(_value <= allowance[_from][msg.sender]);    // Check allowance\n\n        balanceOf[_from] -= _value;                         // Subtract from the targeted balance\n\n        allowance[_from][msg.sender] -= _value;             // Subtract from the sender's allowance\n\n        totalSupply -= _value;                              // Update totalSupply\n\n        Burn(_from, _value);\n\n        return true;\n",
+                    "message": "TokenERC20.burnFrom (code.sol#180-189) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.16;\n",
+                    "message": "Detected issues with version pragma in code.sol:\n\t- pragma solidity^0.4.16 (code.sol#7): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "interface tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData) public; }\n",
+                    "message": "Contract 'tokenRecipient' (code.sol#9) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": 47,
+                    "vulnerability_code": "    function TokenERC20(\n\n        uint256 initialSupply,\n\n        string tokenName,\n\n        string tokenSymbol\n\n    ) public {\n\n        totalSupply = initialSupply * 10 ** uint256(decimals);  // Update total supply with the decimal amount\n\n        balanceOf[msg.sender] = totalSupply;                // Give the creator all initial tokens\n\n        name = tokenName;                                   // Set the name for display purposes\n\n        symbol = tokenSymbol;                               // Set the symbol for display purposes\n\n        admin = msg.sender;\n",
+                    "message": "Function 'TokenERC20.TokenERC20' (code.sol#37-47) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": 68,
+                    "vulnerability_code": "    function _transfer(address _from, address _to, uint _value) internal {\n\n        // Prevent transfer to 0x0 address. Use burn() instead\n\n        require(_to != 0x0);\n\n        // Check if the sender has enough\n\n        require(balanceOf[_from] >= _value);\n\n        // Check for overflows\n\n        require(balanceOf[_to] + _value > balanceOf[_to]);\n\n        // Save this for an assertion in the future\n\n        uint previousBalances = balanceOf[_from] + balanceOf[_to];\n\n        // Subtract from the sender\n\n        balanceOf[_from] -= _value;\n\n        // Add the same to the recipient\n\n        balanceOf[_to] += _value;\n\n        Transfer(_from, _to, _value);\n\n        // Asserts are used to use static analysis to find bugs in your code. They should never fail\n\n        assert(balanceOf[_from] + balanceOf[_to] == previousBalances);\n",
+                    "message": "Function 'TokenERC20._transfer' (code.sol#52-68) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _transfer(address _from, address _to, uint _value) internal {\n",
+                    "message": "Parameter '_from' of TokenERC20._transfer (code.sol#52) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _transfer(address _from, address _to, uint _value) internal {\n",
+                    "message": "Parameter '_to' of TokenERC20._transfer (code.sol#52) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _transfer(address _from, address _to, uint _value) internal {\n",
+                    "message": "Parameter '_value' of TokenERC20._transfer (code.sol#52) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) public {\n",
+                    "message": "Parameter '_to' of TokenERC20.transfer (code.sol#79) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) public {\n",
+                    "message": "Parameter '_value' of TokenERC20.transfer (code.sol#79) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 113,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {\n",
+                    "message": "Parameter '_from' of TokenERC20.transferFrom (code.sol#113) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 113,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {\n",
+                    "message": "Parameter '_to' of TokenERC20.transferFrom (code.sol#113) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 113,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {\n",
+                    "message": "Parameter '_value' of TokenERC20.transferFrom (code.sol#113) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 129,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _value) public\n",
+                    "message": "Parameter '_spender' of TokenERC20.approve (code.sol#129) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 129,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _value) public\n",
+                    "message": "Parameter '_value' of TokenERC20.approve (code.sol#129) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approveAndCall(address _spender, uint256 _value, bytes _extraData)\n",
+                    "message": "Parameter '_spender' of TokenERC20.approveAndCall (code.sol#145) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approveAndCall(address _spender, uint256 _value, bytes _extraData)\n",
+                    "message": "Parameter '_value' of TokenERC20.approveAndCall (code.sol#145) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approveAndCall(address _spender, uint256 _value, bytes _extraData)\n",
+                    "message": "Parameter '_extraData' of TokenERC20.approveAndCall (code.sol#145) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 163,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function burn(uint256 _value) public returns (bool success) {\n",
+                    "message": "Parameter '_value' of TokenERC20.burn (code.sol#163) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 180,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function burnFrom(address _from, uint256 _value) public returns (bool success) {\n",
+                    "message": "Parameter '_from' of TokenERC20.burnFrom (code.sol#180) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 180,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function burnFrom(address _from, uint256 _value) public returns (bool success) {\n",
+                    "message": "Parameter '_value' of TokenERC20.burnFrom (code.sol#180) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 129,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _value) public\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.16;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "interface tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData) public; }\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string tokenName,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string tokenSymbol\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approveAndCall(address _spender, uint256 _value, bytes _extraData)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "interface tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData) public; }\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address admin;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

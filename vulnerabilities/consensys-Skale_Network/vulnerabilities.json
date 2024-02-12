@@ -1,0 +1,777 @@
+{
+    "skale-manager-cf4a07a5198b387fd128e1863a26bbfc789856c4/contracts/Migrations.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.10;\n",
+                    "message": "Detected issues with version pragma in Migrations.sol:\n\t- pragma solidity0.6.10 (Migrations.sol#24): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgrade(address new_address) external restricted {\n",
+                    "message": "Parameter 'new_address' of Migrations.upgrade (Migrations.sol#43) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint public last_completed_migration;\n",
+                    "message": "Variable 'Migrations.last_completed_migration' (Migrations.sol#29) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "skale-manager-cf4a07a5198b387fd128e1863a26bbfc789856c4/contracts/Decryption.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.10;\n",
+                    "message": "Detected issues with version pragma in Decryption.sol:\n\t- pragma solidity0.6.10 (Decryption.sol#24): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "skale-manager-cf4a07a5198b387fd128e1863a26bbfc789856c4/contracts/utils/MathUtils.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.10;\n",
+                    "message": "Detected issues with version pragma in MathUtils.sol:\n\t- pragma solidity0.6.10 (MathUtils.sol#24): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant private _EPS = 1e6;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "skale-manager-cf4a07a5198b387fd128e1863a26bbfc789856c4/contracts/utils/Precompiled.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(success, \"BigModExp failed\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(success, \"Multiplication failed\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 96,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(success, \"Pairing check failed\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_7"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": 45,
+                    "vulnerability_code": "    function bigModExp(uint base, uint power, uint modulus) internal view returns (uint) {\n\n        uint[6] memory inputToBigModExp;\n\n        inputToBigModExp[0] = 32;\n\n        inputToBigModExp[1] = 32;\n\n        inputToBigModExp[2] = 32;\n\n        inputToBigModExp[3] = base;\n\n        inputToBigModExp[4] = power;\n\n        inputToBigModExp[5] = modulus;\n\n        uint[1] memory out;\n\n        bool success;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            success := staticcall(not(0), 5, inputToBigModExp, mul(6, 0x20), out, 0x20)\n\n        }\n\n        require(success, \"BigModExp failed\");\n\n        return out[0];\n",
+                    "message": "Precompiled.bigModExp (Precompiled.sol#29-45) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": 60,
+                    "vulnerability_code": "    function bn256ScalarMul(uint x, uint y, uint k) internal view returns (uint , uint ) {\n\n        uint[3] memory inputToMul;\n\n        uint[2] memory output;\n\n        inputToMul[0] = x;\n\n        inputToMul[1] = y;\n\n        inputToMul[2] = k;\n\n        bool success;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            success := staticcall(not(0), 7, inputToMul, 0x60, output, 0x40)\n\n        }\n\n        require(success, \"Multiplication failed\");\n\n        return (output[0], output[1]);\n",
+                    "message": "Precompiled.bn256ScalarMul (Precompiled.sol#47-60) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": 98,
+                    "vulnerability_code": "    function bn256Pairing(\n\n        uint x1,\n\n        uint y1,\n\n        uint a1,\n\n        uint b1,\n\n        uint c1,\n\n        uint d1,\n\n        uint x2,\n\n        uint y2,\n\n        uint a2,\n\n        uint b2,\n\n        uint c2,\n\n        uint d2)\n\n        internal view returns (bool)\n\n    {\n\n        bool success;\n\n        uint[12] memory inputToPairing;\n\n        inputToPairing[0] = x1;\n\n        inputToPairing[1] = y1;\n\n        inputToPairing[2] = a1;\n\n        inputToPairing[3] = b1;\n\n        inputToPairing[4] = c1;\n\n        inputToPairing[5] = d1;\n\n        inputToPairing[6] = x2;\n\n        inputToPairing[7] = y2;\n\n        inputToPairing[8] = a2;\n\n        inputToPairing[9] = b2;\n\n        inputToPairing[10] = c2;\n\n        inputToPairing[11] = d2;\n\n        uint[1] memory out;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            success := staticcall(not(0), 8, inputToPairing, mul(12, 0x20), out, 0x20)\n\n        }\n\n        require(success, \"Pairing check failed\");\n\n        return out[0] != 0;\n",
+                    "message": "Precompiled.bn256Pairing (Precompiled.sol#62-98) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": 45,
+                    "vulnerability_code": "    function bigModExp(uint base, uint power, uint modulus) internal view returns (uint) {\n\n        uint[6] memory inputToBigModExp;\n\n        inputToBigModExp[0] = 32;\n\n        inputToBigModExp[1] = 32;\n\n        inputToBigModExp[2] = 32;\n\n        inputToBigModExp[3] = base;\n\n        inputToBigModExp[4] = power;\n\n        inputToBigModExp[5] = modulus;\n\n        uint[1] memory out;\n\n        bool success;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            success := staticcall(not(0), 5, inputToBigModExp, mul(6, 0x20), out, 0x20)\n\n        }\n\n        require(success, \"BigModExp failed\");\n\n        return out[0];\n",
+                    "message": "Precompiled.bigModExp uses assembly (Precompiled.sol#29-45)\n\t- Precompiled.sol#40-42\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": 60,
+                    "vulnerability_code": "    function bn256ScalarMul(uint x, uint y, uint k) internal view returns (uint , uint ) {\n\n        uint[3] memory inputToMul;\n\n        uint[2] memory output;\n\n        inputToMul[0] = x;\n\n        inputToMul[1] = y;\n\n        inputToMul[2] = k;\n\n        bool success;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            success := staticcall(not(0), 7, inputToMul, 0x60, output, 0x40)\n\n        }\n\n        require(success, \"Multiplication failed\");\n\n        return (output[0], output[1]);\n",
+                    "message": "Precompiled.bn256ScalarMul uses assembly (Precompiled.sol#47-60)\n\t- Precompiled.sol#55-57\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": 98,
+                    "vulnerability_code": "    function bn256Pairing(\n\n        uint x1,\n\n        uint y1,\n\n        uint a1,\n\n        uint b1,\n\n        uint c1,\n\n        uint d1,\n\n        uint x2,\n\n        uint y2,\n\n        uint a2,\n\n        uint b2,\n\n        uint c2,\n\n        uint d2)\n\n        internal view returns (bool)\n\n    {\n\n        bool success;\n\n        uint[12] memory inputToPairing;\n\n        inputToPairing[0] = x1;\n\n        inputToPairing[1] = y1;\n\n        inputToPairing[2] = a1;\n\n        inputToPairing[3] = b1;\n\n        inputToPairing[4] = c1;\n\n        inputToPairing[5] = d1;\n\n        inputToPairing[6] = x2;\n\n        inputToPairing[7] = y2;\n\n        inputToPairing[8] = a2;\n\n        inputToPairing[9] = b2;\n\n        inputToPairing[10] = c2;\n\n        inputToPairing[11] = d2;\n\n        uint[1] memory out;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            success := staticcall(not(0), 8, inputToPairing, mul(12, 0x20), out, 0x20)\n\n        }\n\n        require(success, \"Pairing check failed\");\n\n        return out[0] != 0;\n",
+                    "message": "Precompiled.bn256Pairing uses assembly (Precompiled.sol#62-98)\n\t- Precompiled.sol#93-95\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.10;\n",
+                    "message": "Detected issues with version pragma in Precompiled.sol:\n\t- pragma solidity0.6.10 (Precompiled.sol#24): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function bigModExp(uint base, uint power, uint modulus) internal view returns (uint) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function bn256ScalarMul(uint x, uint y, uint k) internal view returns (uint , uint ) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function bn256Pairing(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function bn256ScalarMul(uint x, uint y, uint k) internal view returns (uint , uint ) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 93,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "skale-manager-cf4a07a5198b387fd128e1863a26bbfc789856c4/contracts/thirdparty/BokkyPooBahsDateTimeLibrary.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 129,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (year >= 1970 && month > 0 && month <= 12) {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 130,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            uint daysInMonth = _getDaysInMonth(year, month);\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            if (day > 0 && day <= daysInMonth) {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 132,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                valid = true;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            }\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        }\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            if (day > 0 && day <= daysInMonth) {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 132,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                valid = true;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            }\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 138,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            if (hour < 24 && minute < 60 && second < 60) {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                valid = true;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 140,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            }\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_19"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": "Detected issues with version pragma in BokkyPooBahsDateTimeLibrary.sol:\n\t- pragma solidity^0.6.0 (BokkyPooBahsDateTimeLibrary.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": 72,
+                    "vulnerability_code": "    function _daysFromDate(uint year, uint month, uint day) internal pure returns (uint _days) {\n\n        require(year >= 1970);\n\n        int _year = int(year);\n\n        int _month = int(month);\n\n        int _day = int(day);\n\n\n\n        int __days = _day\n\n          - 32075\n\n          + 1461 * (_year + 4800 + (_month - 14) / 12) / 4\n\n          + 367 * (_month - 2 - (_month - 14) / 12 * 12) / 12\n\n          - 3 * ((_year + 4900 + (_month - 14) / 12) / 100) / 4\n\n          - OFFSET19700101;\n\n\n\n        _days = uint(__days);\n",
+                    "message": "Function 'BokkyPooBahsDateTimeLibrary._daysFromDate' (BokkyPooBahsDateTimeLibrary.sol#58-72) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 91,
+                    "vulnerability_to_line": 108,
+                    "vulnerability_code": "    function _daysToDate(uint _days) internal pure returns (uint year, uint month, uint day) {\n\n        int __days = int(_days);\n\n\n\n        int L = __days + 68569 + OFFSET19700101;\n\n        int N = 4 * L / 146097;\n\n        L = L - (146097 * N + 3) / 4;\n\n        int _year = 4000 * (L + 1) / 1461001;\n\n        L = L - 1461 * _year / 4 + 31;\n\n        int _month = 80 * L / 2447;\n\n        int _day = L - 2447 * _month / 80;\n\n        L = _month / 11;\n\n        _month = _month + 2 - 12 * L;\n\n        _year = 100 * (N - 49) + _year + L;\n\n\n\n        year = uint(_year);\n\n        month = uint(_month);\n\n        day = uint(_day);\n",
+                    "message": "Function 'BokkyPooBahsDateTimeLibrary._daysToDate' (BokkyPooBahsDateTimeLibrary.sol#91-108) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 91,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _daysToDate(uint _days) internal pure returns (uint year, uint month, uint day) {\n",
+                    "message": "Parameter '_days' of BokkyPooBahsDateTimeLibrary._daysToDate (BokkyPooBahsDateTimeLibrary.sol#91) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 150,
+                    "vulnerability_to_line": 152,
+                    "vulnerability_code": "    function _isLeapYear(uint year) internal pure returns (bool leapYear) {\n\n        leapYear = ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);\n",
+                    "message": "Function 'BokkyPooBahsDateTimeLibrary._isLeapYear' (BokkyPooBahsDateTimeLibrary.sol#150-152) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 166,
+                    "vulnerability_to_line": 174,
+                    "vulnerability_code": "    function _getDaysInMonth(uint year, uint month) internal pure returns (uint daysInMonth) {\n\n        if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {\n\n            daysInMonth = 31;\n\n        } else if (month != 2) {\n\n            daysInMonth = 30;\n\n        } else {\n\n            daysInMonth = _isLeapYear(year) ? 29 : 28;\n\n        }\n",
+                    "message": "Function 'BokkyPooBahsDateTimeLibrary._getDaysInMonth' (BokkyPooBahsDateTimeLibrary.sol#166-174) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 208,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addYears(uint timestamp, uint _years) internal pure returns (uint newTimestamp) {\n",
+                    "message": "Parameter '_years' of BokkyPooBahsDateTimeLibrary.addYears (BokkyPooBahsDateTimeLibrary.sol#208) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 221,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addMonths(uint timestamp, uint _months) internal pure returns (uint newTimestamp) {\n",
+                    "message": "Parameter '_months' of BokkyPooBahsDateTimeLibrary.addMonths (BokkyPooBahsDateTimeLibrary.sol#221) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 236,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addDays(uint timestamp, uint _days) internal pure returns (uint newTimestamp) {\n",
+                    "message": "Parameter '_days' of BokkyPooBahsDateTimeLibrary.addDays (BokkyPooBahsDateTimeLibrary.sol#236) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 240,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addHours(uint timestamp, uint _hours) internal pure returns (uint newTimestamp) {\n",
+                    "message": "Parameter '_hours' of BokkyPooBahsDateTimeLibrary.addHours (BokkyPooBahsDateTimeLibrary.sol#240) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 244,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addMinutes(uint timestamp, uint _minutes) internal pure returns (uint newTimestamp) {\n",
+                    "message": "Parameter '_minutes' of BokkyPooBahsDateTimeLibrary.addMinutes (BokkyPooBahsDateTimeLibrary.sol#244) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 248,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addSeconds(uint timestamp, uint _seconds) internal pure returns (uint newTimestamp) {\n",
+                    "message": "Parameter '_seconds' of BokkyPooBahsDateTimeLibrary.addSeconds (BokkyPooBahsDateTimeLibrary.sol#248) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 253,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function subYears(uint timestamp, uint _years) internal pure returns (uint newTimestamp) {\n",
+                    "message": "Parameter '_years' of BokkyPooBahsDateTimeLibrary.subYears (BokkyPooBahsDateTimeLibrary.sol#253) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 266,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function subMonths(uint timestamp, uint _months) internal pure returns (uint newTimestamp) {\n",
+                    "message": "Parameter '_months' of BokkyPooBahsDateTimeLibrary.subMonths (BokkyPooBahsDateTimeLibrary.sol#266) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 281,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function subDays(uint timestamp, uint _days) internal pure returns (uint newTimestamp) {\n",
+                    "message": "Parameter '_days' of BokkyPooBahsDateTimeLibrary.subDays (BokkyPooBahsDateTimeLibrary.sol#281) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 285,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function subHours(uint timestamp, uint _hours) internal pure returns (uint newTimestamp) {\n",
+                    "message": "Parameter '_hours' of BokkyPooBahsDateTimeLibrary.subHours (BokkyPooBahsDateTimeLibrary.sol#285) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 289,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function subMinutes(uint timestamp, uint _minutes) internal pure returns (uint newTimestamp) {\n",
+                    "message": "Parameter '_minutes' of BokkyPooBahsDateTimeLibrary.subMinutes (BokkyPooBahsDateTimeLibrary.sol#289) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 293,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function subSeconds(uint timestamp, uint _seconds) internal pure returns (uint newTimestamp) {\n",
+                    "message": "Parameter '_seconds' of BokkyPooBahsDateTimeLibrary.subSeconds (BokkyPooBahsDateTimeLibrary.sol#293) is not in mixedCase\n"
+                },
+                {
+                    "name": "unused-state",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant DOW_MON = 1;\n",
+                    "message": "BokkyPooBahsDateTimeLibrary.DOW_MON (BokkyPooBahsDateTimeLibrary.sol#37) is never used in BokkyPooBahsDateTimeLibrary\nBokkyPooBahsDateTimeLibrary.DOW_TUE (BokkyPooBahsDateTimeLibrary.sol#38) is never used in BokkyPooBahsDateTimeLibrary\nBokkyPooBahsDateTimeLibrary.DOW_WED (BokkyPooBahsDateTimeLibrary.sol#39) is never used in BokkyPooBahsDateTimeLibrary\nBokkyPooBahsDateTimeLibrary.DOW_THU (BokkyPooBahsDateTimeLibrary.sol#40) is never used in BokkyPooBahsDateTimeLibrary\nBokkyPooBahsDateTimeLibrary.DOW_SUN (BokkyPooBahsDateTimeLibrary.sol#43) is never used in BokkyPooBahsDateTimeLibrary\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DIV_MUL",
+                    "vulnerability_from_line": 66,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "          + 1461 * (_year + 4800 + (_month - 14) / 12) / 4\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DIV_MUL",
+                    "vulnerability_from_line": 67,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "          + 367 * (_month - 2 - (_month - 14) / 12 * 12) / 12\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DIV_MUL",
+                    "vulnerability_from_line": 67,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "          + 367 * (_month - 2 - (_month - 14) / 12 * 12) / 12\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DIV_MUL",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "          - 3 * ((_year + 4900 + (_month - 14) / 12) / 100) / 4\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 91,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _daysToDate(uint _days) internal pure returns (uint year, uint month, uint day) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function timestampToDate(uint timestamp) internal pure returns (uint year, uint month, uint day) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 119,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function timestampToDateTime(uint timestamp) internal pure returns (uint year, uint month, uint day, uint hour, uint minute, uint second) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant SECONDS_PER_DAY = 24 * 60 * 60;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant SECONDS_PER_HOUR = 60 * 60;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant SECONDS_PER_MINUTE = 60;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    int constant OFFSET19700101 = 2440588;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant DOW_MON = 1;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant DOW_TUE = 2;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant DOW_WED = 3;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant DOW_THU = 4;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant DOW_FRI = 5;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant DOW_SAT = 6;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant DOW_SUN = 7;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "skale-manager-cf4a07a5198b387fd128e1863a26bbfc789856c4/contracts/interfaces/ISkaleDKG.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.10;\n",
+                    "message": "Detected issues with version pragma in ISkaleDKG.sol:\n\t- pragma solidity0.6.10 (ISkaleDKG.sol#24): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "skale-manager-cf4a07a5198b387fd128e1863a26bbfc789856c4/contracts/interfaces/IMintableToken.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.10;\n",
+                    "message": "Detected issues with version pragma in IMintableToken.sol:\n\t- pragma solidity0.6.10 (IMintableToken.sol#24): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 27,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function mint(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata userData,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes calldata operatorData\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        returns (bool);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "skale-manager-cf4a07a5198b387fd128e1863a26bbfc789856c4/contracts/interfaces/delegation/IDelegatableToken.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.10;\n",
+                    "message": "Detected issues with version pragma in IDelegatableToken.sol:\n\t- pragma solidity0.6.10 (IDelegatableToken.sol#24): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "skale-manager-cf4a07a5198b387fd128e1863a26bbfc789856c4/contracts/interfaces/delegation/ILocker.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.10;\n",
+                    "message": "Detected issues with version pragma in ILocker.sol:\n\t- pragma solidity0.6.10 (ILocker.sol#24): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    }
+}

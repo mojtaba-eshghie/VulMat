@@ -1,0 +1,71 @@
+{
+    "flexAssets-79ce4e195b077439a627196c1388035a1751c11c/fUSDStorage.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_7"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 internal _totalSupply;\n",
+                    "message": "fUSDStorage._totalSupply should be constant (fUSDStorage.sol#21)\nfUSDStorage.admin should be constant (fUSDStorage.sol#27)\nfUSDStorage.getpause should be constant (fUSDStorage.sol#30)\nfUSDStorage.initialized should be constant (fUSDStorage.sol#13)\nfUSDStorage.multiplier should be constant (fUSDStorage.sol#25)\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity = 0.6.0;\n",
+                    "message": "Detected issues with version pragma in fUSDStorage.sol:\n\t- pragma solidity=0.6.0 (fUSDStorage.sol#5): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": 31,
+                    "vulnerability_code": "contract fUSDStorage {\n\n    /** WARNING: NEVER RE-ORDER VARIABLES! \n\n     *  Always double-check that new variables are added APPEND-ONLY.\n\n     *  Re-ordering variables can permanently BREAK the deployed proxy contract.\n\n     */\n\n\n\n    bool public initialized;\n\n\n\n    mapping(address => uint256) internal _balances;\n\n\n\n    mapping(address => mapping(address => uint256)) internal _allowances;\n\n\n\n    mapping(address => bool) public blacklist;\n\n\n\n    uint256 internal _totalSupply;\n\n\n\n    string public constant name = \"flexUSD\";\n\n    string public constant symbol = \"flexUSD\";\n\n    uint256 public multiplier;\n\n    uint8 public constant decimals = 18;\n\n    address public admin;\n\n    uint256 internal constant deci = 1e18;\n\n\n\n    bool internal getpause;\n",
+                    "message": "Contract 'fUSDStorage' (fUSDStorage.sol#7-31) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(address => uint256) internal _balances;\n",
+                    "message": "Variable 'fUSDStorage._balances' (fUSDStorage.sol#15) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(address => mapping(address => uint256)) internal _allowances;\n",
+                    "message": "Variable 'fUSDStorage._allowances' (fUSDStorage.sol#17) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 internal _totalSupply;\n",
+                    "message": "Variable 'fUSDStorage._totalSupply' (fUSDStorage.sol#21) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 internal constant deci = 1e18;\n",
+                    "message": "Constant 'fUSDStorage.deci' (fUSDStorage.sol#28) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    }
+}

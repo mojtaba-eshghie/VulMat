@@ -1,0 +1,310 @@
+{
+    "ampleforth-contracts-1ca2ae2243b867dd3341ea1e56748ea1a24569f9/contracts/mocks/SafeMathIntMock.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 91,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require((b >= 0 && c <= a) || (b < 0 && c > a));\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 104,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require((b >= 0 && c >= a) || (b < 0 && c < a));\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "unused-state",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    int256 private constant MAX_INT256 = ~(int256(1) << 255);\n",
+                    "message": "SafeMathInt.MAX_INT256 (SafeMathIntMock.sol#49) is never used in SafeMathInt\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 48,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    int256 private constant MIN_INT256 = int256(1) << 255;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    int256 private constant MAX_INT256 = ~(int256(1) << 255);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "ampleforth-contracts-1ca2ae2243b867dd3341ea1e56748ea1a24569f9/contracts/mocks/Mock.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "ampleforth-contracts-1ca2ae2243b867dd3341ea1e56748ea1a24569f9/contracts/mocks/UInt256LibMock.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 private constant MAX_INT256 = ~(uint256(1) << 255);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "ampleforth-contracts-1ca2ae2243b867dd3341ea1e56748ea1a24569f9/contracts/mocks/MockUFragments.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": 25,
+                    "vulnerability_code": "    function storeSupply(uint256 supply)\n\n        public\n\n    {\n\n        _supply = supply;\n",
+                    "message": "MockUFragments.storeSupply (MockUFragments.sol#21-25) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": 39,
+                    "vulnerability_code": "    function rebase(uint256 epoch, int256 supplyDelta)\n\n        public\n\n        returns (uint256)\n\n    {\n\n        emit FunctionCalled(\"UFragments\", \"rebase\", msg.sender);\n\n        uint256[] memory uintVals = new uint256[](1);\n\n        uintVals[0] = epoch;\n\n        int256[] memory intVals = new int256[](1);\n\n        intVals[0] = supplyDelta;\n\n        emit FunctionArguments(uintVals, intVals);\n\n        return uint256(int256(_supply) + int256(supplyDelta));\n",
+                    "message": "MockUFragments.rebase (MockUFragments.sol#28-39) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": 47,
+                    "vulnerability_code": "    function totalSupply()\n\n        public\n\n        view\n\n        returns (uint256)\n\n    {\n\n        return _supply;\n",
+                    "message": "MockUFragments.totalSupply (MockUFragments.sol#41-47) should be declared external\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 private _supply;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "ampleforth-contracts-1ca2ae2243b867dd3341ea1e56748ea1a24569f9/contracts/mocks/MockOracle.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(string name_) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        name = name_;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": 43,
+                    "vulnerability_code": "    function storeData(uint256 data)\n\n        public\n\n    {\n\n        _data = data;\n",
+                    "message": "MockOracle.storeData (MockOracle.sol#39-43) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": 49,
+                    "vulnerability_code": "    function storeValidity(bool validity)\n\n        public\n\n    {\n\n        _validity = validity;\n",
+                    "message": "MockOracle.storeValidity (MockOracle.sol#45-49) should be declared external\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bool private _validity = true;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 private _data;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(string name_) public {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "ampleforth-contracts-1ca2ae2243b867dd3341ea1e56748ea1a24569f9/contracts/lib/SafeMathInt.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require((b >= 0 && c <= a) || (b < 0 && c > a));\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require((b >= 0 && c >= a) || (b < 0 && c < a));\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "unused-state",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    int256 private constant MAX_INT256 = ~(int256(1) << 255);\n",
+                    "message": "SafeMathInt.MAX_INT256 (SafeMathInt.sol#37) is never used in SafeMathInt\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    int256 private constant MIN_INT256 = int256(1) << 255;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    int256 private constant MAX_INT256 = ~(int256(1) << 255);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "ampleforth-contracts-1ca2ae2243b867dd3341ea1e56748ea1a24569f9/contracts/lib/UInt256Lib.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 private constant MAX_INT256 = ~(uint256(1) << 255);\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

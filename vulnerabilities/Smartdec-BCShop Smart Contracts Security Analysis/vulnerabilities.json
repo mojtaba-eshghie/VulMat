@@ -1,0 +1,1780 @@
+{
+    "bcshop.io-3023172e3192b317e291a68bc191840e6b5e462c/contracts/misc/ErrorCashbackUser.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_7"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "locked-ether",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": 29,
+                    "vulnerability_code": "    function() payable public  {\n\n        if(a == 0) {\n\n             a = 1;\n\n             withdrawable.withdrawCashback();\n\n        }\n",
+                    "message": "Contract locking ether found in ErrorCashbackUser.sol:\n\tContract ErrorCashbackUser has payable functions:\n\t - fallback (ErrorCashbackUser.sol#24-29)\n\tBut does not have a function to withdraw the ether\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function withdrawCashback() public;\n",
+                    "message": "IWithdrawCashback.withdrawCashback (ErrorCashbackUser.sol#6) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": 29,
+                    "vulnerability_code": "    function() payable public  {\n\n        if(a == 0) {\n\n             a = 1;\n\n             withdrawable.withdrawCashback();\n\n        }\n",
+                    "message": "ErrorCashbackUser.fallback (ErrorCashbackUser.sol#24-29) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": 33,
+                    "vulnerability_code": "    function withdraw() public {\n\n        withdrawable.withdrawCashback();\n",
+                    "message": "ErrorCashbackUser.withdraw (ErrorCashbackUser.sol#31-33) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in ErrorCashbackUser.sol:\n\t- pragma solidity^0.4.18 (ErrorCashbackUser.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": 22,
+                    "vulnerability_code": "    function ErrorCashbackUser(IWithdrawCashback _withdrawable) public {\n\n        withdrawable = _withdrawable;\n",
+                    "message": "Function 'ErrorCashbackUser.ErrorCashbackUser' (ErrorCashbackUser.sol#20-22) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function ErrorCashbackUser(IWithdrawCashback _withdrawable) public {\n",
+                    "message": "Parameter '_withdrawable' of ErrorCashbackUser.ErrorCashbackUser (ErrorCashbackUser.sol#20) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract ErrorCashbackUser {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function() payable public  {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint8 a;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    IWithdrawCashback withdrawable;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "bcshop.io-3023172e3192b317e291a68bc191840e6b5e462c/contracts/shop/IWallet.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_4"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getBalance() public constant returns (uint256) {}\n",
+                    "message": "IWallet.getBalance (IWallet.sol#12) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function withdraw(uint amount) public;\n",
+                    "message": "IWallet.withdraw (IWallet.sol#15) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function withdrawTo(address to, uint256 amount) public;\n",
+                    "message": "IWallet.withdrawTo (IWallet.sol#18) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in IWallet.sol:\n\t- pragma solidity^0.4.18 (IWallet.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getBalance() public constant returns (uint256) {}\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getBalance() public constant returns (uint256) {}\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "bcshop.io-3023172e3192b317e291a68bc191840e6b5e462c/contracts/product/FeePolicy.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_69"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 434,
+                    "vulnerability_to_line": 443,
+                    "vulnerability_code": "    function calculateFeeAmount(address owner, uint256 productId, uint256 payment) public managerOnly returns(uint256) {\n\n        var (feeAmount, feeDiscount) = getFeeDetails(owner, productId, payment);\n\n        \n\n        if(feeDiscount > 0) {\n\n            uint256 term = now / termDuration;\n\n            totalFeeDiscount[owner][term] = totalFeeDiscount[owner][term].safeAdd(feeDiscount);\n\n        }\n\n        \n\n        return feeAmount;\n",
+                    "message": "Reentrancy in FeePolicy.calculateFeeAmount (FeePolicy.sol#434-443):\n\tExternal calls:\n\t- (feeAmount,feeDiscount) = getFeeDetails(owner,productId,payment) (FeePolicy.sol#435)\n\tState variables written after the call(s):\n\t- totalFeeDiscount (FeePolicy.sol#439)\n"
+                },
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 371,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getFeeDetails(address owner, uint256 productId, uint256 payment) \n",
+                    "message": "FeePolicy.getFeeDetails.owner (local variable @ FeePolicy.sol#371) shadows:\n\t- Owned.owner (state variable @ FeePolicy.sol#174)\n\t- IOwned.owner (function @ FeePolicy.sol#165)\n"
+                },
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 408,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getMaxTotalDiscount(address owner) public constant returns (uint256) {\n",
+                    "message": "FeePolicy.getMaxTotalDiscount.owner (local variable @ FeePolicy.sol#408) shadows:\n\t- Owned.owner (state variable @ FeePolicy.sol#174)\n\t- IOwned.owner (function @ FeePolicy.sol#165)\n"
+                },
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 414,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getRemainingDiscount(address owner) public constant returns(uint256) {\n",
+                    "message": "FeePolicy.getRemainingDiscount.owner (local variable @ FeePolicy.sol#414) shadows:\n\t- Owned.owner (state variable @ FeePolicy.sol#174)\n\t- IOwned.owner (function @ FeePolicy.sol#165)\n"
+                },
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 426,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getRemainingDiscountInfo(address owner) public constant returns(uint256, uint256) {\n",
+                    "message": "FeePolicy.getRemainingDiscountInfo.owner (local variable @ FeePolicy.sol#426) shadows:\n\t- Owned.owner (state variable @ FeePolicy.sol#174)\n\t- IOwned.owner (function @ FeePolicy.sol#165)\n"
+                },
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 434,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function calculateFeeAmount(address owner, uint256 productId, uint256 payment) public managerOnly returns(uint256) {\n",
+                    "message": "FeePolicy.calculateFeeAmount.owner (local variable @ FeePolicy.sol#434) shadows:\n\t- Owned.owner (state variable @ FeePolicy.sol#174)\n\t- IOwned.owner (function @ FeePolicy.sol#165)\n"
+                },
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Different versions of Solidity is used in FeePolicy.sol:\n\t- Version used: ['^0.4.10', '^0.4.18']\n\t- FeePolicy.sol#3 declares pragma solidity^0.4.18\n\t- FeePolicy.sol#146 declares pragma solidity^0.4.18\n\t- FeePolicy.sol#161 declares pragma solidity^0.4.10\n\t- FeePolicy.sol#171 declares pragma solidity^0.4.10\n\t- FeePolicy.sol#195 declares pragma solidity^0.4.10\n\t- FeePolicy.sol#230 declares pragma solidity^0.4.10\n\t- FeePolicy.sol#265 declares pragma solidity^0.4.10\n\t- FeePolicy.sol#292 declares pragma solidity^0.4.18\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function banned(uint256 productId) public constant returns(bool) {}\n",
+                    "message": "IProductStorage.banned (FeePolicy.sol#22) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getTotalProducts() public constant returns(uint256);    \n",
+                    "message": "IProductStorage.getTotalProducts (FeePolicy.sol#24) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getTextData(uint256 productId) public constant returns(string name, string data);    \n",
+                    "message": "IProductStorage.getTextData (FeePolicy.sol#26) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": 33,
+                    "vulnerability_code": "    function getProductData(uint256 productId) public constant returns(\n\n            uint256 price, \n\n            uint256 maxUnits, \n\n            uint256 soldUnits\n",
+                    "message": "IProductStorage.getProductData (FeePolicy.sol#29-33) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": 39,
+                    "vulnerability_code": "    function getProductActivityData(uint256 productId) public constant returns(\n\n            bool active,\n\n            uint256 startTime,\n\n            uint256 endTime\n",
+                    "message": "IProductStorage.getProductActivityData (FeePolicy.sol#35-39) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getProductOwner(uint256 productId) public constant returns(address);    \n",
+                    "message": "IProductStorage.getProductOwner (FeePolicy.sol#42) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getProductPrice(uint256 productId) public constant returns(uint256);    \n",
+                    "message": "IProductStorage.getProductPrice (FeePolicy.sol#45) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isEscrowUsed(uint256 productId) public constant returns(bool);\n",
+                    "message": "IProductStorage.isEscrowUsed (FeePolicy.sol#47) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isFiatPriceUsed(uint256 productId) public constant returns(bool);\n",
+                    "message": "IProductStorage.isFiatPriceUsed (FeePolicy.sol#49) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 51,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isProductActive(uint256 productId) public constant returns(bool);\n",
+                    "message": "IProductStorage.isProductActive (FeePolicy.sol#51) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getTotalPurchases(uint256 productId) public constant returns (uint256);    \n",
+                    "message": "IProductStorage.getTotalPurchases (FeePolicy.sol#54) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getPurchase(uint256 productId, uint256 purchaseId) public constant returns(PurchaseState);    \n",
+                    "message": "IProductStorage.getPurchase (FeePolicy.sol#57) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 60,
+                    "vulnerability_to_line": 63,
+                    "vulnerability_code": "    function getEscrowData(uint256 productId, uint256 purchaseId)\n\n        public\n\n        constant\n",
+                    "message": "IProductStorage.getEscrowData (FeePolicy.sol#60-63) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 66,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getVendorWallet(address vendor) public constant returns(address);    \n",
+                    "message": "IProductStorage.getVendorWallet (FeePolicy.sol#66) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 69,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getVendorFee(address vendor) public constant returns(uint16);    \n",
+                    "message": "IProductStorage.getVendorFee (FeePolicy.sol#69) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setVendorInfo(address vendor, address wallet, uint16 feePermille) public;        \n",
+                    "message": "IProductStorage.setVendorInfo (FeePolicy.sol#71) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": 85,
+                    "vulnerability_code": "    function createProduct(\n\n        address owner,         \n\n        uint256 price, \n\n        uint256 maxUnits,\n\n        bool isActive,\n\n        uint256 startTime, \n\n        uint256 endTime,\n\n        bool useEscrow,\n\n        bool useFiatPrice,\n\n        string name,\n\n        string data\n",
+                    "message": "IProductStorage.createProduct (FeePolicy.sol#74-85) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 88,
+                    "vulnerability_to_line": 99,
+                    "vulnerability_code": "    function editProduct(\n\n        uint256 productId,        \n\n        uint256 price, \n\n        uint256 maxUnits, \n\n        bool isActive,\n\n        uint256 startTime, \n\n        uint256 endTime,\n\n        bool useEscrow,\n\n        bool useFiatPrice,\n\n        string name,\n\n        string data\n",
+                    "message": "IProductStorage.editProduct (FeePolicy.sol#88-99) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 119,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function changeSoldUnits(uint256 productId, uint256 soldUnits) public;\n",
+                    "message": "IProductStorage.changeSoldUnits (FeePolicy.sol#119) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 122,
+                    "vulnerability_to_line": 128,
+                    "vulnerability_code": "    function addPurchase(\n\n        uint256 productId,        \n\n        address buyer,    \n\n        uint256 price,         \n\n        uint256 paidUnits,\n\n        string clientId   \n",
+                    "message": "IProductStorage.addPurchase (FeePolicy.sol#122-128) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function changePurchase(uint256 productId, uint256 purchaseId, PurchaseState state) public;\n",
+                    "message": "IProductStorage.changePurchase (FeePolicy.sol#131) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": 141,
+                    "vulnerability_code": "    function setEscrowData(\n\n        uint256 productId, \n\n        uint256 purchaseId, \n\n        address customer, \n\n        uint256 fee, \n\n        uint256 profit, \n\n        uint256 timestamp\n",
+                    "message": "IProductStorage.setEscrowData (FeePolicy.sol#134-141) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function calculateFeeAmount(address owner, uint256 productId, uint256 payment) public returns(uint256);\n",
+                    "message": "IFeePolicy.calculateFeeAmount (FeePolicy.sol#153) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 156,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function sendFee() public payable;\n",
+                    "message": "IFeePolicy.sendFee (FeePolicy.sol#156) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 165,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function owner() public constant returns (address) {}\n",
+                    "message": "IOwned.owner (FeePolicy.sol#165) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 222,
+                    "vulnerability_to_line": 225,
+                    "vulnerability_code": "    function setManager(address manager, bool state) public ownerOnly {\n\n        managers[manager] = state;\n\n        ManagerSet(manager, state);\n",
+                    "message": "Manageable.setManager (FeePolicy.sol#222-225) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 273,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function name() public constant returns (string _name) { _name; }\n",
+                    "message": "IERC20Token.name (FeePolicy.sol#273) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 274,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function symbol() public constant returns (string _symbol) { _symbol; }\n",
+                    "message": "IERC20Token.symbol (FeePolicy.sol#274) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 275,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function decimals() public constant returns (uint8 _decimals) { _decimals; }\n",
+                    "message": "IERC20Token.decimals (FeePolicy.sol#275) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 277,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function totalSupply() public constant returns (uint total) {total;}\n",
+                    "message": "IERC20Token.totalSupply (FeePolicy.sol#277) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 278,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOf(address _owner) public constant returns (uint balance) {_owner; balance;}    \n",
+                    "message": "IERC20Token.balanceOf (FeePolicy.sol#278) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 279,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allowance(address _owner, address _spender) public constant returns (uint remaining) {_owner; _spender; remaining;}\n",
+                    "message": "IERC20Token.allowance (FeePolicy.sol#279) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 281,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint _value) public returns (bool success);\n",
+                    "message": "IERC20Token.transfer (FeePolicy.sol#281) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 282,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address _from, address _to, uint _value) public returns (bool success);\n",
+                    "message": "IERC20Token.transferFrom (FeePolicy.sol#282) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 283,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint _value) public returns (bool success);\n",
+                    "message": "IERC20Token.approve (FeePolicy.sol#283) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 426,
+                    "vulnerability_to_line": 431,
+                    "vulnerability_code": "    function getRemainingDiscountInfo(address owner) public constant returns(uint256, uint256) {\n\n        return (\n\n            getRemainingDiscount(owner), \n\n            (now / termDuration + 1) * termDuration\n\n        );\n",
+                    "message": "FeePolicy.getRemainingDiscountInfo (FeePolicy.sol#426-431) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 434,
+                    "vulnerability_to_line": 443,
+                    "vulnerability_code": "    function calculateFeeAmount(address owner, uint256 productId, uint256 payment) public managerOnly returns(uint256) {\n\n        var (feeAmount, feeDiscount) = getFeeDetails(owner, productId, payment);\n\n        \n\n        if(feeDiscount > 0) {\n\n            uint256 term = now / termDuration;\n\n            totalFeeDiscount[owner][term] = totalFeeDiscount[owner][term].safeAdd(feeDiscount);\n\n        }\n\n        \n\n        return feeAmount;\n",
+                    "message": "FeePolicy.calculateFeeAmount (FeePolicy.sol#434-443) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 446,
+                    "vulnerability_to_line": 448,
+                    "vulnerability_code": "    function sendFee() public payable {\n\n        feeWallet.transfer(msg.value);\n",
+                    "message": "FeePolicy.sendFee (FeePolicy.sol#446-448) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in FeePolicy.sol:\n\t- pragma solidity^0.4.18 (FeePolicy.sol#3): it allows old versions\n\t- pragma solidity^0.4.18 (FeePolicy.sol#146): it allows old versions\n\t- pragma solidity^0.4.10 (FeePolicy.sol#161): it allows old versions\n\t- pragma solidity^0.4.10 (FeePolicy.sol#171): it allows old versions\n\t- pragma solidity^0.4.10 (FeePolicy.sol#195): it allows old versions\n\t- pragma solidity^0.4.10 (FeePolicy.sol#230): it allows old versions\n\t- pragma solidity^0.4.10 (FeePolicy.sol#265): it allows old versions\n\t- pragma solidity^0.4.18 (FeePolicy.sol#292): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 187,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferOwnership(address _newOwner) public ownerOnly {\n",
+                    "message": "Parameter '_newOwner' of Owned.transferOwnership (FeePolicy.sol#187) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 176,
+                    "vulnerability_to_line": 178,
+                    "vulnerability_code": "    function Owned() public {\n\n        owner = msg.sender;\n",
+                    "message": "Function 'Owned.Owned' (FeePolicy.sol#176-178) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 215,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferOwnership(address _newOwner) public ownerOnly {\n",
+                    "message": "Parameter '_newOwner' of Manageable.transferOwnership (FeePolicy.sol#215) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 205,
+                    "vulnerability_to_line": 207,
+                    "vulnerability_code": "    function Manageable() public Owned() {\n\n        managers[owner] = true;\n",
+                    "message": "Function 'Manageable.Manageable' (FeePolicy.sol#205-207) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 339,
+                    "vulnerability_to_line": 368,
+                    "vulnerability_code": "    function FeePolicy(\n\n        IProductStorage _productStorage,\n\n        uint16 _defaultFeePermille, \n\n        uint16 _escrowFeePermille,        \n\n        uint16 _fiatPriceFeePermille,\n\n        address _feeWallet,        \n\n        IERC20Token _token,\n\n        uint256 _minTokenForDiscount,\n\n        uint256 _termDuration,\n\n        uint256 _maxDiscountPerToken,\n\n        uint16 _discountPermille\n\n    ) \n\n        public \n\n    {        \n\n        require(_termDuration > 0);\n\n        \n\n        productStorage = _productStorage;\n\n        termDuration = _termDuration;\n\n\n\n        setParams(\n\n            _defaultFeePermille,\n\n            _escrowFeePermille,\n\n            _fiatPriceFeePermille,\n\n            _feeWallet,\n\n            _token,\n\n            _minTokenForDiscount,        \n\n            _maxDiscountPerToken,\n\n            _discountPermille\n\n        );\n",
+                    "message": "Function 'FeePolicy.FeePolicy' (FeePolicy.sol#339-368) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 340,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        IProductStorage _productStorage,\n",
+                    "message": "Parameter '_productStorage' of FeePolicy.FeePolicy (FeePolicy.sol#340) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 341,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint16 _defaultFeePermille, \n",
+                    "message": "Parameter '_defaultFeePermille' of FeePolicy.FeePolicy (FeePolicy.sol#341) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 342,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint16 _escrowFeePermille,        \n",
+                    "message": "Parameter '_escrowFeePermille' of FeePolicy.FeePolicy (FeePolicy.sol#342) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 343,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint16 _fiatPriceFeePermille,\n",
+                    "message": "Parameter '_fiatPriceFeePermille' of FeePolicy.FeePolicy (FeePolicy.sol#343) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 344,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _feeWallet,        \n",
+                    "message": "Parameter '_feeWallet' of FeePolicy.FeePolicy (FeePolicy.sol#344) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 345,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        IERC20Token _token,\n",
+                    "message": "Parameter '_token' of FeePolicy.FeePolicy (FeePolicy.sol#345) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 346,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _minTokenForDiscount,\n",
+                    "message": "Parameter '_minTokenForDiscount' of FeePolicy.FeePolicy (FeePolicy.sol#346) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 347,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _termDuration,\n",
+                    "message": "Parameter '_termDuration' of FeePolicy.FeePolicy (FeePolicy.sol#347) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 348,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _maxDiscountPerToken,\n",
+                    "message": "Parameter '_maxDiscountPerToken' of FeePolicy.FeePolicy (FeePolicy.sol#348) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 349,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint16 _discountPermille\n",
+                    "message": "Parameter '_discountPermille' of FeePolicy.FeePolicy (FeePolicy.sol#349) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 452,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint16 _defaultFeePermille, \n",
+                    "message": "Parameter '_defaultFeePermille' of FeePolicy.setParams (FeePolicy.sol#452) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 453,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint16 _escrowFeePermille,\n",
+                    "message": "Parameter '_escrowFeePermille' of FeePolicy.setParams (FeePolicy.sol#453) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 454,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint16 _fiatPriceFeePermille,\n",
+                    "message": "Parameter '_fiatPriceFeePermille' of FeePolicy.setParams (FeePolicy.sol#454) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 455,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _feeWallet,\n",
+                    "message": "Parameter '_feeWallet' of FeePolicy.setParams (FeePolicy.sol#455) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 456,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        IERC20Token _token,\n",
+                    "message": "Parameter '_token' of FeePolicy.setParams (FeePolicy.sol#456) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 457,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _minTokenForDiscount,        \n",
+                    "message": "Parameter '_minTokenForDiscount' of FeePolicy.setParams (FeePolicy.sol#457) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 458,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _maxDiscountPerToken,\n",
+                    "message": "Parameter '_maxDiscountPerToken' of FeePolicy.setParams (FeePolicy.sol#458) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 459,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint16 _discountPermille\n",
+                    "message": "Parameter '_discountPermille' of FeePolicy.setParams (FeePolicy.sol#459) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function banned(uint256 productId) public constant returns(bool) {}\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getTotalProducts() public constant returns(uint256);    \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getTextData(uint256 productId) public constant returns(string name, string data);    \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getProductData(uint256 productId) public constant returns(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getProductActivityData(uint256 productId) public constant returns(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getProductOwner(uint256 productId) public constant returns(address);    \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getProductPrice(uint256 productId) public constant returns(uint256);    \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isEscrowUsed(uint256 productId) public constant returns(bool);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isFiatPriceUsed(uint256 productId) public constant returns(bool);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 51,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isProductActive(uint256 productId) public constant returns(bool);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getTotalPurchases(uint256 productId) public constant returns (uint256);    \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getPurchase(uint256 productId, uint256 purchaseId) public constant returns(PurchaseState);    \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 60,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getEscrowData(uint256 productId, uint256 purchaseId)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 66,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getVendorWallet(address vendor) public constant returns(address);    \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 69,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getVendorFee(address vendor) public constant returns(uint16);    \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 165,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function owner() public constant returns (address) {}\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 273,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function name() public constant returns (string _name) { _name; }\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 274,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function symbol() public constant returns (string _symbol) { _symbol; }\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 275,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function decimals() public constant returns (uint8 _decimals) { _decimals; }\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 277,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function totalSupply() public constant returns (uint total) {total;}\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 278,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOf(address _owner) public constant returns (uint balance) {_owner; balance;}    \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 279,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allowance(address _owner, address _spender) public constant returns (uint remaining) {_owner; _spender; remaining;}\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 371,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getFeeDetails(address owner, uint256 productId, uint256 payment) \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 408,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getMaxTotalDiscount(address owner) public constant returns (uint256) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 414,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getRemainingDiscount(address owner) public constant returns(uint256) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 426,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getRemainingDiscountInfo(address owner) public constant returns(uint256, uint256) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DIV_MUL",
+                    "vulnerability_from_line": 429,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            (now / termDuration + 1) * termDuration\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function banned(uint256 productId) public constant returns(bool) {}\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 165,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function owner() public constant returns (address) {}\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 273,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function name() public constant returns (string _name) { _name; }\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 274,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function symbol() public constant returns (string _symbol) { _symbol; }\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 275,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function decimals() public constant returns (uint8 _decimals) { _decimals; }\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 277,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function totalSupply() public constant returns (uint total) {total;}\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 278,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOf(address _owner) public constant returns (uint balance) {_owner; balance;}    \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 279,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allowance(address _owner, address _spender) public constant returns (uint remaining) {_owner; _spender; remaining;}\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 150,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract IFeePolicy {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 146,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 161,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.10;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 171,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.10;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 195,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.10;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 230,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.10;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 265,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.10;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 292,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getTextData(uint256 productId) public constant returns(string name, string data);    \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getTextData(uint256 productId) public constant returns(string name, string data);    \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string name,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string data\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 97,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string name,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 98,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string data\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 127,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string clientId   \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 273,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function name() public constant returns (string _name) { _name; }\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 274,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function symbol() public constant returns (string _symbol) { _symbol; }\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 307,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint16 constant MAXPERMILLE = 1000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 323,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 denominator;                    //maxDiscountPerToken*tokens/denominator = maxTotalDiscount per term\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "bcshop.io-3023172e3192b317e291a68bc191840e6b5e462c/contracts/product/IBancorConverter.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": 9,
+                    "vulnerability_code": "    function convertFor(address[] _path, uint256 _amount, uint256 _minReturn, address _for)\n\n        public\n\n        payable\n",
+                    "message": "IBancorConverter.convertFor (IBancorConverter.sol#6-9) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in IBancorConverter.sol:\n\t- pragma solidity^0.4.18 (IBancorConverter.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract IBancorConverter {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function convertFor(address[] _path, uint256 _amount, uint256 _minReturn, address _for)\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "bcshop.io-3023172e3192b317e291a68bc191840e6b5e462c/contracts/product/IPurchaseHandler.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function handlePurchase(address buyer, uint256 unitsBought, uint256 price) public {}\n",
+                    "message": "IPurchaseHandler.handlePurchase (IPurchaseHandler.sol#7) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in IPurchaseHandler.sol:\n\t- pragma solidity^0.4.18 (IPurchaseHandler.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "bcshop.io-3023172e3192b317e291a68bc191840e6b5e462c/contracts/product/IFeePolicy.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function calculateFeeAmount(address owner, uint256 productId, uint256 payment) public returns(uint256);\n",
+                    "message": "IFeePolicy.calculateFeeAmount (IFeePolicy.sol#10) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function sendFee() public payable;\n",
+                    "message": "IFeePolicy.sendFee (IFeePolicy.sol#13) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in IFeePolicy.sol:\n\t- pragma solidity^0.4.18 (IFeePolicy.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract IFeePolicy {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "bcshop.io-3023172e3192b317e291a68bc191840e6b5e462c/contracts/product/IProductStorage.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_23"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function banned(uint256 productId) public constant returns(bool) {}\n",
+                    "message": "IProductStorage.banned (IProductStorage.sol#22) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getTotalProducts() public constant returns(uint256);    \n",
+                    "message": "IProductStorage.getTotalProducts (IProductStorage.sol#24) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getTextData(uint256 productId) public constant returns(string name, string data);    \n",
+                    "message": "IProductStorage.getTextData (IProductStorage.sol#26) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": 33,
+                    "vulnerability_code": "    function getProductData(uint256 productId) public constant returns(\n\n            uint256 price, \n\n            uint256 maxUnits, \n\n            uint256 soldUnits\n",
+                    "message": "IProductStorage.getProductData (IProductStorage.sol#29-33) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": 39,
+                    "vulnerability_code": "    function getProductActivityData(uint256 productId) public constant returns(\n\n            bool active,\n\n            uint256 startTime,\n\n            uint256 endTime\n",
+                    "message": "IProductStorage.getProductActivityData (IProductStorage.sol#35-39) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getProductOwner(uint256 productId) public constant returns(address);    \n",
+                    "message": "IProductStorage.getProductOwner (IProductStorage.sol#42) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getProductPrice(uint256 productId) public constant returns(uint256);    \n",
+                    "message": "IProductStorage.getProductPrice (IProductStorage.sol#45) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isEscrowUsed(uint256 productId) public constant returns(bool);\n",
+                    "message": "IProductStorage.isEscrowUsed (IProductStorage.sol#47) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isFiatPriceUsed(uint256 productId) public constant returns(bool);\n",
+                    "message": "IProductStorage.isFiatPriceUsed (IProductStorage.sol#49) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 51,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isProductActive(uint256 productId) public constant returns(bool);\n",
+                    "message": "IProductStorage.isProductActive (IProductStorage.sol#51) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getTotalPurchases(uint256 productId) public constant returns (uint256);    \n",
+                    "message": "IProductStorage.getTotalPurchases (IProductStorage.sol#54) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getPurchase(uint256 productId, uint256 purchaseId) public constant returns(PurchaseState);    \n",
+                    "message": "IProductStorage.getPurchase (IProductStorage.sol#57) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 60,
+                    "vulnerability_to_line": 63,
+                    "vulnerability_code": "    function getEscrowData(uint256 productId, uint256 purchaseId)\n\n        public\n\n        constant\n",
+                    "message": "IProductStorage.getEscrowData (IProductStorage.sol#60-63) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 66,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getVendorWallet(address vendor) public constant returns(address);    \n",
+                    "message": "IProductStorage.getVendorWallet (IProductStorage.sol#66) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 69,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getVendorFee(address vendor) public constant returns(uint16);    \n",
+                    "message": "IProductStorage.getVendorFee (IProductStorage.sol#69) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setVendorInfo(address vendor, address wallet, uint16 feePermille) public;        \n",
+                    "message": "IProductStorage.setVendorInfo (IProductStorage.sol#71) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": 85,
+                    "vulnerability_code": "    function createProduct(\n\n        address owner,         \n\n        uint256 price, \n\n        uint256 maxUnits,\n\n        bool isActive,\n\n        uint256 startTime, \n\n        uint256 endTime,\n\n        bool useEscrow,\n\n        bool useFiatPrice,\n\n        string name,\n\n        string data\n",
+                    "message": "IProductStorage.createProduct (IProductStorage.sol#74-85) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 88,
+                    "vulnerability_to_line": 99,
+                    "vulnerability_code": "    function editProduct(\n\n        uint256 productId,        \n\n        uint256 price, \n\n        uint256 maxUnits, \n\n        bool isActive,\n\n        uint256 startTime, \n\n        uint256 endTime,\n\n        bool useEscrow,\n\n        bool useFiatPrice,\n\n        string name,\n\n        string data\n",
+                    "message": "IProductStorage.editProduct (IProductStorage.sol#88-99) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 119,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function changeSoldUnits(uint256 productId, uint256 soldUnits) public;\n",
+                    "message": "IProductStorage.changeSoldUnits (IProductStorage.sol#119) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 122,
+                    "vulnerability_to_line": 128,
+                    "vulnerability_code": "    function addPurchase(\n\n        uint256 productId,        \n\n        address buyer,    \n\n        uint256 price,         \n\n        uint256 paidUnits,\n\n        string clientId   \n",
+                    "message": "IProductStorage.addPurchase (IProductStorage.sol#122-128) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function changePurchase(uint256 productId, uint256 purchaseId, PurchaseState state) public;\n",
+                    "message": "IProductStorage.changePurchase (IProductStorage.sol#131) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": 141,
+                    "vulnerability_code": "    function setEscrowData(\n\n        uint256 productId, \n\n        uint256 purchaseId, \n\n        address customer, \n\n        uint256 fee, \n\n        uint256 profit, \n\n        uint256 timestamp\n",
+                    "message": "IProductStorage.setEscrowData (IProductStorage.sol#134-141) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in IProductStorage.sol:\n\t- pragma solidity^0.4.18 (IProductStorage.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function banned(uint256 productId) public constant returns(bool) {}\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getTotalProducts() public constant returns(uint256);    \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getTextData(uint256 productId) public constant returns(string name, string data);    \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getProductData(uint256 productId) public constant returns(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getProductActivityData(uint256 productId) public constant returns(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getProductOwner(uint256 productId) public constant returns(address);    \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getProductPrice(uint256 productId) public constant returns(uint256);    \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isEscrowUsed(uint256 productId) public constant returns(bool);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isFiatPriceUsed(uint256 productId) public constant returns(bool);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 51,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isProductActive(uint256 productId) public constant returns(bool);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getTotalPurchases(uint256 productId) public constant returns (uint256);    \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getPurchase(uint256 productId, uint256 purchaseId) public constant returns(PurchaseState);    \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 60,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getEscrowData(uint256 productId, uint256 purchaseId)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 66,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getVendorWallet(address vendor) public constant returns(address);    \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 69,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getVendorFee(address vendor) public constant returns(uint16);    \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function banned(uint256 productId) public constant returns(bool) {}\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getTextData(uint256 productId) public constant returns(string name, string data);    \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getTextData(uint256 productId) public constant returns(string name, string data);    \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string name,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string data\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 97,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string name,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 98,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string data\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 127,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string clientId   \n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "bcshop.io-3023172e3192b317e291a68bc191840e6b5e462c/contracts/product/IEtherPriceProvider.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function rate() public constant returns (uint256);\n",
+                    "message": "IEtherPriceProvider.rate (IEtherPriceProvider.sol#6) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in IEtherPriceProvider.sol:\n\t- pragma solidity^0.4.18 (IEtherPriceProvider.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function rate() public constant returns (uint256);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "bcshop.io-3023172e3192b317e291a68bc191840e6b5e462c/contracts/product/IDiscountPolicy.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getCustomerDiscount(address customer, uint256 amount) public constant returns(uint256) {}    \n",
+                    "message": "IDiscountPolicy.getCustomerDiscount (IDiscountPolicy.sol#8) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function requestCustomerDiscount(address customer, uint256 amount) public returns(uint256);    \n",
+                    "message": "IDiscountPolicy.requestCustomerDiscount (IDiscountPolicy.sol#11) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in IDiscountPolicy.sol:\n\t- pragma solidity^0.4.18 (IDiscountPolicy.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getCustomerDiscount(address customer, uint256 amount) public constant returns(uint256) {}    \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getCustomerDiscount(address customer, uint256 amount) public constant returns(uint256) {}    \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "bcshop.io-3023172e3192b317e291a68bc191840e6b5e462c/contracts/common/Random.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint32 MAX = 0xffffffff;\n",
+                    "message": "Random.MAX should be constant (Random.sol#8)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": 20,
+                    "vulnerability_code": "    function getInt(uint32 min, uint32 max) public returns (uint32) {\n\n        getNextNumber();        \n\n        current = uint32(min + (uint256(state) * (max + 1 - min) / MAX));\n\n        return current;\n",
+                    "message": "Random.getInt (Random.sol#16-20) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in Random.sol:\n\t- pragma solidity^0.4.18 (Random.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": 13,
+                    "vulnerability_code": "    function Random(uint32 seed) {\n\n        state = seed;\n",
+                    "message": "Function 'Random.Random' (Random.sol#11-13) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint32 MAX = 0xffffffff;\n",
+                    "message": "Variable 'Random.MAX' (Random.sol#8) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint32 MAX = 0xffffffff;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function Random(uint32 seed) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint32 state;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint32 MAX = 0xffffffff;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint32 current;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

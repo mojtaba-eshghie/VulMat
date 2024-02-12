@@ -1,0 +1,2811 @@
+{
+    "growthdefi-v1-core-761f0a7af73a082ac64498061749db4466673542/contracts/GrowthToken.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 60,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tconstructor () public\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t{\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tname = \"Growth\";\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tsymbol = \"GRO\";\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tdecimals = 18;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t_totalSupply = 1000000000000000000000000;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 66,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tbalances[msg.sender] = _totalSupply;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 67,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\temit Transfer(address(0), msg.sender, _totalSupply);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t}\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_16"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": 41,
+                    "vulnerability_code": "\tfunction safeMul(uint a, uint b) public pure returns (uint c)\n\n\t{\n\n\t\tc = a * b;\n\n\t\trequire(a == 0 || c / a == b);\n",
+                    "message": "SafeMath_.safeMul (GrowthToken.sol#37-41) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": 46,
+                    "vulnerability_code": "\tfunction safeDiv(uint a, uint b) public pure returns (uint c) {\n\n\t\trequire(b > 0);\n\n\t\tc = a / b;\n",
+                    "message": "SafeMath_.safeDiv (GrowthToken.sol#43-46) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 70,
+                    "vulnerability_to_line": 73,
+                    "vulnerability_code": "\tfunction totalSupply() override public view returns (uint)\n\n\t{\n\n\t\treturn _totalSupply - balances[address(0)];\n",
+                    "message": "GrowthToken.totalSupply (GrowthToken.sol#70-73) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction totalSupply() external view returns (uint);\n",
+                    "message": "ERC20Interface.totalSupply (GrowthToken.sol#12) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction balanceOf(address tokenOwner) external view returns (uint balance);\n",
+                    "message": "ERC20Interface.balanceOf (GrowthToken.sol#13) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 75,
+                    "vulnerability_to_line": 78,
+                    "vulnerability_code": "\tfunction balanceOf(address tokenOwner) override public view returns (uint balance)\n\n\t{\n\n\t\treturn balances[tokenOwner];\n",
+                    "message": "GrowthToken.balanceOf (GrowthToken.sol#75-78) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": 83,
+                    "vulnerability_code": "\tfunction allowance(address tokenOwner, address spender) override public view returns (uint remaining)\n\n\t{\n\n\t\treturn allowed[tokenOwner][spender];\n",
+                    "message": "GrowthToken.allowance (GrowthToken.sol#80-83) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction allowance(address tokenOwner, address spender) external view returns (uint remaining);\n",
+                    "message": "ERC20Interface.allowance (GrowthToken.sol#14) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transfer(address to, uint tokens) external returns (bool success);\n",
+                    "message": "ERC20Interface.transfer (GrowthToken.sol#15) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": 98,
+                    "vulnerability_code": "\tfunction transfer(address to, uint tokens) override public returns (bool success)\n\n\t{\n\n\t\tbalances[msg.sender] = safeSub(balances[msg.sender], tokens);\n\n\t\tbalances[to] = safeAdd(balances[to], tokens);\n\n\t\temit Transfer(msg.sender, to, tokens);\n\n\t\treturn true;\n",
+                    "message": "GrowthToken.transfer (GrowthToken.sol#92-98) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": 90,
+                    "vulnerability_code": "\tfunction approve(address spender, uint tokens) override public returns (bool success)\n\n\t{\n\n\t\tallowed[msg.sender][spender] = tokens;\n\n\t\temit Approval(msg.sender, spender, tokens);\n\n\t\treturn true;\n",
+                    "message": "GrowthToken.approve (GrowthToken.sol#85-90) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction approve(address spender, uint tokens) external returns (bool success);\n",
+                    "message": "ERC20Interface.approve (GrowthToken.sol#16) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transferFrom(address from, address to, uint tokens) external returns (bool success);\n",
+                    "message": "ERC20Interface.transferFrom (GrowthToken.sol#17) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 100,
+                    "vulnerability_to_line": 107,
+                    "vulnerability_code": "\tfunction transferFrom(address from, address to, uint tokens) override public returns (bool success)\n\n\t{\n\n\t\tbalances[from] = safeSub(balances[from], tokens);\n\n\t\tallowed[from][msg.sender] = safeSub(allowed[from][msg.sender], tokens);\n\n\t\tbalances[to] = safeAdd(balances[to], tokens);\n\n\t\temit Transfer(from, to, tokens);\n\n\t\treturn true;\n",
+                    "message": "GrowthToken.transferFrom (GrowthToken.sol#100-107) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": "Detected issues with version pragma in GrowthToken.sol:\n\t- pragma solidity^0.6.0 (GrowthToken.sol#4): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tuint256 public _totalSupply;\n",
+                    "message": "Variable 'GrowthToken._totalSupply' (GrowthToken.sol#55) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\treturn _totalSupply - balances[address(0)];\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction approve(address spender, uint tokens) override public returns (bool success)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tmapping (address => uint) balances;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tmapping (address => mapping (address => uint)) allowed;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "growthdefi-v1-core-761f0a7af73a082ac64498061749db4466673542/contracts/GMining.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": "Detected issues with version pragma in GMining.sol:\n\t- pragma solidity^0.6.0 (GMining.sol#4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction miningGulpRange() external view returns (uint256 _miningMinGulpAmount, uint256 _miningMaxGulpAmount);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction growthGulpRange() external view returns (uint256 _growthMinGulpAmount, uint256 _growthMaxGulpAmount);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "growthdefi-v1-core-761f0a7af73a082ac64498061749db4466673542/contracts/GExchange.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": "Detected issues with version pragma in GExchange.sol:\n\t- pragma solidity^0.6.0 (GExchange.sol#4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "growthdefi-v1-core-761f0a7af73a082ac64498061749db4466673542/contracts/GVoting.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": "Detected issues with version pragma in GVoting.sol:\n\t- pragma solidity^0.6.0 (GVoting.sol#4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "growthdefi-v1-core-761f0a7af73a082ac64498061749db4466673542/contracts/Migrations.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tconstructor() public\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t{\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\towner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t}\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_4"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": 27,
+                    "vulnerability_code": "\tfunction setCompleted(uint256 _completed) public restricted\n\n\t{\n\n\t\tlast_completed_migration = _completed;\n",
+                    "message": "Migrations.setCompleted (Migrations.sol#24-27) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": "Detected issues with version pragma in Migrations.sol:\n\t- pragma solidity^0.6.0 (Migrations.sol#4): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction setCompleted(uint256 _completed) public restricted\n",
+                    "message": "Parameter '_completed' of Migrations.setCompleted (Migrations.sol#24) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tuint256 public last_completed_migration;\n",
+                    "message": "Variable 'Migrations.last_completed_migration' (Migrations.sol#12) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "growthdefi-v1-core-761f0a7af73a082ac64498061749db4466673542/contracts/network/$.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_47"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": "Detected issues with version pragma in $.sol:\n\t- pragma solidity^0.6.0 ($.sol#4): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": 544,
+                    "vulnerability_code": "library $\n\n{\n\n\tenum Network { Mainnet, Ropsten, Rinkeby, Kovan, Goerli }\n\n\n\n\tNetwork constant NETWORK = Network.Mainnet;\n\n\n\n\tbool constant DEBUG = NETWORK != Network.Mainnet;\n\n\n\n\tfunction debug(string memory _message) internal\n\n\t{\n\n\t\taddress _from = msg.sender;\n\n\t\tif (DEBUG) emit Debug(_from, _message);\n\n\t}\n\n\n\n\tfunction debug(string memory _message, uint256 _value) internal\n\n\t{\n\n\t\taddress _from = msg.sender;\n\n\t\tif (DEBUG) emit Debug(_from, _message, _value);\n\n\t}\n\n\n\n\tfunction debug(string memory _message, address _address) internal\n\n\t{\n\n\t\taddress _from = msg.sender;\n\n\t\tif (DEBUG) emit Debug(_from, _message, _address);\n\n\t}\n\n\n\n\tevent Debug(address indexed _from, string _message);\n\n\tevent Debug(address indexed _from, string _message, uint256 _value);\n\n\tevent Debug(address indexed _from, string _message, address _address);\n\n\n\n\taddress constant GRO =\n\n\t\tNETWORK == Network.Mainnet ? 0x09e64c2B61a5f1690Ee6fbeD9baf5D6990F8dFd0 :\n\n\t\tNETWORK == Network.Ropsten ? 0x5BaF82B5Eddd5d64E03509F0a7dBa4Cbf88CF455 :\n\n\t\tNETWORK == Network.Rinkeby ? 0x020e317e70B406E23dF059F3656F6fc419411401 :\n\n\t\tNETWORK == Network.Kovan ? 0xFcB74f30d8949650AA524d8bF496218a20ce2db4 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant DAI =\n\n\t\tNETWORK == Network.Mainnet ? 0x6B175474E89094C44Da98b954EedeAC495271d0F :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant USDC =\n\n\t\tNETWORK == Network.Mainnet ? 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48 :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant USDT =\n\n\t\tNETWORK == Network.Mainnet ? 0xdAC17F958D2ee523a2206206994597C13D831ec7 :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant SUSD =\n\n\t\tNETWORK == Network.Mainnet ? 0x57Ab1ec28D129707052df4dF418D58a2D46d5f51 :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant TUSD =\n\n\t\tNETWORK == Network.Mainnet ? 0x0000000000085d4780B73119b644AE5ecd22b376 :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant BUSD =\n\n\t\tNETWORK == Network.Mainnet ? 0x4Fabb145d64652a948d72533023f6E7A623C7C53 :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant WBTC =\n\n\t\tNETWORK == Network.Mainnet ? 0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599 :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant WETH =\n\n\t\tNETWORK == Network.Mainnet ? 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2 :\n\n\t\tNETWORK == Network.Ropsten ? 0xc778417E063141139Fce010982780140Aa0cD5Ab :\n\n\t\tNETWORK == Network.Rinkeby ? 0xc778417E063141139Fce010982780140Aa0cD5Ab :\n\n\t\tNETWORK == Network.Kovan ? 0xd0A1E359811322d97991E03f863a0C30C2cF029C :\n\n\t\tNETWORK == Network.Goerli ? 0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant BAT =\n\n\t\tNETWORK == Network.Mainnet ? 0x0D8775F648430679A709E98d2b0Cb6250d2887EF :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant ENJ =\n\n\t\tNETWORK == Network.Mainnet ? 0xF629cBd94d3791C9250152BD8dfBDF380E2a3B9c :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant KNC =\n\n\t\tNETWORK == Network.Mainnet ? 0xdd974D5C2e2928deA5F71b9825b8b646686BD200 :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant AAVE =\n\n\t\tNETWORK == Network.Mainnet ? 0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9 :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant LEND =\n\n\t\tNETWORK == Network.Mainnet ? 0x80fB784B7eD66730e8b1DBd9820aFD29931aab03 :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant LINK =\n\n\t\tNETWORK == Network.Mainnet ? 0x514910771AF9Ca656af840dff83E8264EcF986CA :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant MANA =\n\n\t\tNETWORK == Network.Mainnet ? 0x0F5D2fB29fb7d3CFeE444a200298f468908cC942 :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant MKR =\n\n\t\tNETWORK == Network.Mainnet ? 0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2 :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant REN =\n\n\t\tNETWORK == Network.Mainnet ? 0x408e41876cCCDC0F92210600ef50372656052a38 :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant REP =\n\n\t\tNETWORK == Network.Mainnet ? 0x1985365e9f78359a9B6AD760e32412f4a445E862 :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant SNX =\n\n\t\tNETWORK == Network.Mainnet ? 0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant ZRX =\n\n\t\tNETWORK == Network.Mainnet ? 0xE41d2489571d322189246DaFA5ebDe1F4699F498 :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant UNI =\n\n\t\tNETWORK == Network.Mainnet ? 0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984 :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant YFI =\n\n\t\tNETWORK == Network.Mainnet ? 0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant aETH =\n\n\t\tNETWORK == Network.Mainnet ? 0x3a3A65aAb0dd2A17E3F1947bA16138cd37d08c04 :\n\n\t\tNETWORK == Network.Ropsten ? 0x2433A1b6FcF156956599280C3Eb1863247CFE675 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0xD483B49F2d55D2c53D32bE6efF735cB001880F79 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant aDAI =\n\n\t\tNETWORK == Network.Mainnet ? 0xfC1E690f61EFd961294b3e1Ce3313fBD8aa4f85d :\n\n\t\tNETWORK == Network.Ropsten ? 0xcB1Fe6F440c49E9290c3eb7f158534c2dC374201 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0x58AD4cB396411B691A9AAb6F74545b2C5217FE6a :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant aUSDC =\n\n\t\tNETWORK == Network.Mainnet ? 0x9bA00D6856a4eDF4665BcA2C2309936572473B7E :\n\n\t\tNETWORK == Network.Ropsten ? 0x2dB6a31f973Ec26F5e17895f0741BB5965d5Ae15 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0x02F626c6ccb6D2ebC071c068DC1f02Bf5693416a :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant aSUSD =\n\n\t\tNETWORK == Network.Mainnet ? 0x625aE63000f46200499120B906716420bd059240 :\n\n\t\tNETWORK == Network.Ropsten ? 0x5D17e0ea2d886F865E40176D71dbc0b59a54d8c1 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0xb9c1434aB6d5811D1D0E92E8266A37Ae8328e901 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant aTUSD =\n\n\t\tNETWORK == Network.Mainnet ? 0x4DA9b813057D04BAef4e5800E36083717b4a0341 :\n\n\t\tNETWORK == Network.Ropsten ? 0x9265d51F5ABf1E23bE64418827859bc83ae70a57 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0x4c76f1b48316489E8a3304Db21cdAeC271cF6eC3 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant aUSDT =\n\n\t\tNETWORK == Network.Mainnet ? 0x71fc860F7D3A592A4a98740e39dB31d25db65ae8 :\n\n\t\tNETWORK == Network.Ropsten ? 0x790744bC4257B4a0519a3C5649Ac1d16DDaFAE0D :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0xA01bA9fB493b851F4Ac5093A324CB081A909C34B :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant aBUSD =\n\n\t\tNETWORK == Network.Mainnet ? 0x6Ee0f7BB50a54AB5253dA0667B0Dc2ee526C30a8 :\n\n\t\tNETWORK == Network.Ropsten ? 0x81E065164bAC7203c3bFEB1a749F48a64383c6eE :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant aBAT =\n\n\t\tNETWORK == Network.Mainnet ? 0xE1BA0FB44CCb0D11b80F92f4f8Ed94CA3fF51D00 :\n\n\t\tNETWORK == Network.Ropsten ? 0x0D0Ff1C81F2Fbc8cbafA8Df4bF668f5ba963Dab4 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0x5ad67de6Fb697e92a7dE99d991F7CdB77EdF5F74 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant aENJ =\n\n\t\tNETWORK == Network.Mainnet ? 0x712DB54daA836B53Ef1EcBb9c6ba3b9Efb073F40 :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant aKNC =\n\n\t\tNETWORK == Network.Mainnet ? 0x9D91BE44C06d373a8a226E1f3b146956083803eB :\n\n\t\tNETWORK == Network.Ropsten ? 0xCf6efd4528d27Df440fdd585a116D3c1fC5aDdEe :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0xB08EC9EdB6BD7971220FEa04644174f3EbfbDe96 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant aAAVE =\n\n\t\tNETWORK == Network.Mainnet ? 0xba3D9687Cf50fE253cd2e1cFeEdE1d6787344Ed5 :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant aLEND =\n\n\t\t// NETWORK == Network.Mainnet ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Ropsten ? 0x383261d0e287f0A641322AEB15E3da50147Dd36b :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0xcBa131C7FB05fe3c9720375cD86C99773faAbF23 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant aLINK =\n\n\t\tNETWORK == Network.Mainnet ? 0xA64BD6C70Cb9051F6A9ba1F163Fdc07E0DfB5F84 :\n\n\t\tNETWORK == Network.Ropsten ? 0x52fd99c15e6FFf8D4CF1B83b2263a501FDd78973 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0xEC23855Ff01012E1823807CE19a790CeBc4A64dA :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant aMANA =\n\n\t\tNETWORK == Network.Mainnet ? 0x6FCE4A401B6B80ACe52baAefE4421Bd188e76F6f :\n\n\t\tNETWORK == Network.Ropsten ? 0x8e96a4068da80F66ef1CFc7987f0F834c26106fa :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0xe68204D69Cbfaf6124190EFa65ad9C591C0D48e4 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant aMKR =\n\n\t\tNETWORK == Network.Mainnet ? 0x7deB5e830be29F91E298ba5FF1356BB7f8146998 :\n\n\t\tNETWORK == Network.Ropsten ? 0xEd6A5d671f7c55aa029cbAEa2e5E9A18E9d6a1CE :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0xfB762B5BAb463f7F35610Ba65e2534993a1c09C6 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant aREN =\n\n\t\tNETWORK == Network.Mainnet ? 0x69948cC03f478B95283F7dbf1CE764d0fc7EC54C :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant aREP =\n\n\t\tNETWORK == Network.Mainnet ? 0x71010A9D003445aC60C4e6A7017c1E89A477B438 :\n\n\t\tNETWORK == Network.Ropsten ? 0xE4B92BcDB2f972e1ccc069D4dB33d5f6363738dE :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0x0578469469Db1129271f4eb3EB9D97426506c44c :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant aSNX =\n\n\t\tNETWORK == Network.Mainnet ? 0x328C4c80BC7aCa0834Db37e6600A6c49E12Da4DE :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0xb4D480f963f4F685F1D51d2B6159D126658B1dA8 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant aUNI =\n\n\t\tNETWORK == Network.Mainnet ? 0xB124541127A0A657f056D9Dd06188c4F1b0e5aab :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant aWBTC =\n\n\t\tNETWORK == Network.Mainnet ? 0xFC4B8ED459e00e5400be803A9BB3954234FD50e3 :\n\n\t\tNETWORK == Network.Ropsten ? 0xA1c4dB01F8344eCb11219714706C82f0c0c64841 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0xCD5C52C7B30468D16771193C47eAFF43EFc47f5C :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant aYFI =\n\n\t\tNETWORK == Network.Mainnet ? 0x12e51E77DAAA58aA0E9247db7510Ea4B46F9bEAd :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant aZRX =\n\n\t\tNETWORK == Network.Mainnet ? 0x6Fb0855c404E09c47C3fBCA25f08d4E41f9F062f :\n\n\t\tNETWORK == Network.Ropsten ? 0x5BDC773c9D3515a5e3Dd415428F92a90E8e63Ae4 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0x0F456900c6bdFddfA27E1E4E4c84EB823a2eE13c :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant cDAI =\n\n\t\tNETWORK == Network.Mainnet ? 0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643 :\n\n\t\tNETWORK == Network.Ropsten ? 0xdb5Ed4605C11822811a39F94314fDb8F0fb59A2C :\n\n\t\tNETWORK == Network.Rinkeby ? 0x6D7F0754FFeb405d23C51CE938289d4835bE3b14 :\n\n\t\tNETWORK == Network.Kovan ? 0xF0d0EB522cfa50B716B3b1604C4F0fA6f04376AD :\n\n\t\tNETWORK == Network.Goerli ? 0x822397d9a55d0fefd20F5c4bCaB33C5F65bd28Eb :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant cUSDC =\n\n\t\tNETWORK == Network.Mainnet ? 0x39AA39c021dfbaE8faC545936693aC917d5E7563 :\n\n\t\tNETWORK == Network.Ropsten ? 0x8aF93cae804cC220D1A608d4FA54D1b6ca5EB361 :\n\n\t\tNETWORK == Network.Rinkeby ? 0x5B281A6DdA0B271e91ae35DE655Ad301C976edb1 :\n\n\t\tNETWORK == Network.Kovan ? 0x4a92E71227D294F041BD82dd8f78591B75140d63 :\n\n\t\tNETWORK == Network.Goerli ? 0xCEC4a43eBB02f9B80916F1c718338169d6d5C1F0 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant cUSDT =\n\n\t\tNETWORK == Network.Mainnet ? 0xf650C3d88D12dB855b8bf7D11Be6C55A4e07dCC9 :\n\n\t\tNETWORK == Network.Ropsten ? 0x135669c2dcBd63F639582b313883F101a4497F76 :\n\n\t\tNETWORK == Network.Rinkeby ? 0x2fB298BDbeF468638AD6653FF8376575ea41e768 :\n\n\t\tNETWORK == Network.Kovan ? 0x3f0A0EA2f86baE6362CF9799B523BA06647Da018 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant cETH =\n\n\t\tNETWORK == Network.Mainnet ? 0x4Ddc2D193948926D02f9B1fE9e1daa0718270ED5 :\n\n\t\tNETWORK == Network.Ropsten ? 0xBe839b6D93E3eA47eFFcCA1F27841C917a8794f3 :\n\n\t\tNETWORK == Network.Rinkeby ? 0xd6801a1DfFCd0a410336Ef88DeF4320D6DF1883e :\n\n\t\tNETWORK == Network.Kovan ? 0x41B5844f4680a8C38fBb695b7F9CFd1F64474a72 :\n\n\t\tNETWORK == Network.Goerli ? 0x20572e4c090f15667cF7378e16FaD2eA0e2f3EfF :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant cWBTC =\n\n\t\tNETWORK == Network.Mainnet ? 0xC11b1268C1A384e55C48c2391d8d480264A3A7F4 :\n\n\t\tNETWORK == Network.Ropsten ? 0x58145Bc5407D63dAF226e4870beeb744C588f149 :\n\n\t\tNETWORK == Network.Rinkeby ? 0x0014F450B8Ae7708593F4A46F8fa6E5D50620F96 :\n\n\t\tNETWORK == Network.Kovan ? 0xa1fAA15655B0e7b6B6470ED3d096390e6aD93Abb :\n\n\t\tNETWORK == Network.Goerli ? 0x6CE27497A64fFFb5517AA4aeE908b1E7EB63B9fF :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant cBAT =\n\n\t\tNETWORK == Network.Mainnet ? 0x6C8c6b02E7b2BE14d4fA6022Dfd6d75921D90E4E :\n\n\t\tNETWORK == Network.Ropsten ? 0x9E95c0b2412cE50C37a121622308e7a6177F819D :\n\n\t\tNETWORK == Network.Rinkeby ? 0xEBf1A11532b93a529b5bC942B4bAA98647913002 :\n\n\t\tNETWORK == Network.Kovan ? 0x4a77fAeE9650b09849Ff459eA1476eaB01606C7a :\n\n\t\tNETWORK == Network.Goerli ? 0xCCaF265E7492c0d9b7C2f0018bf6382Ba7f0148D :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant cZRX =\n\n\t\tNETWORK == Network.Mainnet ? 0xB3319f5D18Bc0D84dD1b4825Dcde5d5f7266d407 :\n\n\t\tNETWORK == Network.Ropsten ? 0x00e02a5200CE3D5b5743F5369Deb897946C88121 :\n\n\t\tNETWORK == Network.Rinkeby ? 0x52201ff1720134bBbBB2f6BC97Bf3715490EC19B :\n\n\t\tNETWORK == Network.Kovan ? 0xAf45ae737514C8427D373D50Cd979a242eC59e5a :\n\n\t\tNETWORK == Network.Goerli ? 0xA253295eC2157B8b69C44b2cb35360016DAa25b1 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant cUNI =\n\n\t\tNETWORK == Network.Mainnet ? 0x35A18000230DA775CAc24873d00Ff85BccdeD550 :\n\n\t\tNETWORK == Network.Ropsten ? 0x22531F0f3a9c36Bfc3b04c4c60df5168A1cFCec3 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant cCOMP =\n\n\t\tNETWORK == Network.Mainnet ? 0x70e36f6BF80a52b3B46b3aF8e106CC0ed743E8e4 :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant COMP =\n\n\t\tNETWORK == Network.Mainnet ? 0xc00e94Cb662C3520282E6f5717214004A7f26888 :\n\n\t\tNETWORK == Network.Ropsten ? 0x1Fe16De955718CFAb7A44605458AB023838C2793 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0x61460874a7196d6a22D1eE4922473664b3E95270 :\n\n\t\tNETWORK == Network.Goerli ? 0xe16C7165C8FeA64069802aE4c4c9C320783f2b6e :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant Aave_AAVE_LENDING_POOL_ADDRESSES_PROVIDER =\n\n\t\tNETWORK == Network.Mainnet ? 0x24a42fD28C976A61Df5D00D0599C34c4f90748c8 :\n\n\t\tNETWORK == Network.Ropsten ? 0x1c8756FD2B28e9426CDBDcC7E3c4d64fa9A54728 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0x506B0B2CF20FAA8f38a4E2B524EE43e1f4458Cc5 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant Aave_AAVE_LENDING_POOL =\n\n\t\tNETWORK == Network.Mainnet ? 0x398eC7346DcD622eDc5ae82352F02bE94C62d119 :\n\n\t\tNETWORK == Network.Ropsten ? 0x9E5C7835E4b13368fd628196C4f1c6cEc89673Fa :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0x580D4Fdc4BF8f9b5ae2fb9225D584fED4AD5375c :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant Aave_AAVE_LENDING_POOL_CORE =\n\n\t\tNETWORK == Network.Mainnet ? 0x3dfd23A6c5E8BbcFc9581d2E864a68feb6a076d3 :\n\n\t\tNETWORK == Network.Ropsten ? 0x4295Ee704716950A4dE7438086d6f0FBC0BA9472 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0x95D1189Ed88B380E319dF73fF00E479fcc4CFa45 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant Balancer_FACTORY =\n\n\t\tNETWORK == Network.Mainnet ? 0x9424B1412450D0f8Fc2255FAf6046b98213B76Bd :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Rinkeby ? 0x9C84391B443ea3a48788079a5f98e2EaD55c9309 :\n\n\t\tNETWORK == Network.Kovan ? 0x8f7F78080219d4066A8036ccD30D588B416a40DB :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant Compound_COMPTROLLER =\n\n\t\tNETWORK == Network.Mainnet ? 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B :\n\n\t\tNETWORK == Network.Ropsten ? 0x54188bBeDD7b68228fa89CbDDa5e3e930459C6c6 :\n\n\t\tNETWORK == Network.Rinkeby ? 0x2EAa9D77AE4D8f9cdD9FAAcd44016E746485bddb :\n\n\t\tNETWORK == Network.Kovan ? 0x5eAe89DC1C671724A672ff0630122ee834098657 :\n\n\t\tNETWORK == Network.Goerli ? 0x627EA49279FD0dE89186A58b8758aD02B6Be2867 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant Dydx_SOLO_MARGIN =\n\n\t\tNETWORK == Network.Mainnet ? 0x1E0447b19BB6EcFdAe1e4AE1694b0C3659614e4e :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0x4EC3570cADaAEE08Ae384779B0f3A45EF85289DE :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant Sushiswap_ROUTER02 =\n\n\t\tNETWORK == Network.Mainnet ? 0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n\n\t\t0x0000000000000000000000000000000000000000;\n\n\n\n\taddress constant UniswapV2_ROUTER02 =\n\n\t\tNETWORK == Network.Mainnet ? 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D :\n\n\t\tNETWORK == Network.Ropsten ? 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D :\n\n\t\tNETWORK == Network.Rinkeby ? 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D :\n\n\t\tNETWORK == Network.Kovan ? 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D :\n\n\t\tNETWORK == Network.Goerli ? 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D :\n\n\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": "Contract '$' ($.sol#11-544) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction debug(string memory _message) internal\n",
+                    "message": "Parameter '_message' of $.debug ($.sol#19) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction debug(string memory _message, uint256 _value) internal\n",
+                    "message": "Parameter '_message' of $.debug ($.sol#25) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction debug(string memory _message, uint256 _value) internal\n",
+                    "message": "Parameter '_value' of $.debug ($.sol#25) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction debug(string memory _message, address _address) internal\n",
+                    "message": "Parameter '_message' of $.debug ($.sol#31) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction debug(string memory _message, address _address) internal\n",
+                    "message": "Parameter '_address' of $.debug ($.sol#31) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 225,
+                    "vulnerability_to_line": 231,
+                    "vulnerability_code": "\taddress constant aETH =\n\n\t\tNETWORK == Network.Mainnet ? 0x3a3A65aAb0dd2A17E3F1947bA16138cd37d08c04 :\n\n\t\tNETWORK == Network.Ropsten ? 0x2433A1b6FcF156956599280C3Eb1863247CFE675 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0xD483B49F2d55D2c53D32bE6efF735cB001880F79 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.aETH' ($.sol#225-231) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 233,
+                    "vulnerability_to_line": 239,
+                    "vulnerability_code": "\taddress constant aDAI =\n\n\t\tNETWORK == Network.Mainnet ? 0xfC1E690f61EFd961294b3e1Ce3313fBD8aa4f85d :\n\n\t\tNETWORK == Network.Ropsten ? 0xcB1Fe6F440c49E9290c3eb7f158534c2dC374201 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0x58AD4cB396411B691A9AAb6F74545b2C5217FE6a :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.aDAI' ($.sol#233-239) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 241,
+                    "vulnerability_to_line": 247,
+                    "vulnerability_code": "\taddress constant aUSDC =\n\n\t\tNETWORK == Network.Mainnet ? 0x9bA00D6856a4eDF4665BcA2C2309936572473B7E :\n\n\t\tNETWORK == Network.Ropsten ? 0x2dB6a31f973Ec26F5e17895f0741BB5965d5Ae15 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0x02F626c6ccb6D2ebC071c068DC1f02Bf5693416a :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.aUSDC' ($.sol#241-247) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 249,
+                    "vulnerability_to_line": 255,
+                    "vulnerability_code": "\taddress constant aSUSD =\n\n\t\tNETWORK == Network.Mainnet ? 0x625aE63000f46200499120B906716420bd059240 :\n\n\t\tNETWORK == Network.Ropsten ? 0x5D17e0ea2d886F865E40176D71dbc0b59a54d8c1 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0xb9c1434aB6d5811D1D0E92E8266A37Ae8328e901 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.aSUSD' ($.sol#249-255) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 257,
+                    "vulnerability_to_line": 263,
+                    "vulnerability_code": "\taddress constant aTUSD =\n\n\t\tNETWORK == Network.Mainnet ? 0x4DA9b813057D04BAef4e5800E36083717b4a0341 :\n\n\t\tNETWORK == Network.Ropsten ? 0x9265d51F5ABf1E23bE64418827859bc83ae70a57 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0x4c76f1b48316489E8a3304Db21cdAeC271cF6eC3 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.aTUSD' ($.sol#257-263) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 265,
+                    "vulnerability_to_line": 271,
+                    "vulnerability_code": "\taddress constant aUSDT =\n\n\t\tNETWORK == Network.Mainnet ? 0x71fc860F7D3A592A4a98740e39dB31d25db65ae8 :\n\n\t\tNETWORK == Network.Ropsten ? 0x790744bC4257B4a0519a3C5649Ac1d16DDaFAE0D :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0xA01bA9fB493b851F4Ac5093A324CB081A909C34B :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.aUSDT' ($.sol#265-271) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 273,
+                    "vulnerability_to_line": 279,
+                    "vulnerability_code": "\taddress constant aBUSD =\n\n\t\tNETWORK == Network.Mainnet ? 0x6Ee0f7BB50a54AB5253dA0667B0Dc2ee526C30a8 :\n\n\t\tNETWORK == Network.Ropsten ? 0x81E065164bAC7203c3bFEB1a749F48a64383c6eE :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.aBUSD' ($.sol#273-279) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 281,
+                    "vulnerability_to_line": 287,
+                    "vulnerability_code": "\taddress constant aBAT =\n\n\t\tNETWORK == Network.Mainnet ? 0xE1BA0FB44CCb0D11b80F92f4f8Ed94CA3fF51D00 :\n\n\t\tNETWORK == Network.Ropsten ? 0x0D0Ff1C81F2Fbc8cbafA8Df4bF668f5ba963Dab4 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0x5ad67de6Fb697e92a7dE99d991F7CdB77EdF5F74 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.aBAT' ($.sol#281-287) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 289,
+                    "vulnerability_to_line": 295,
+                    "vulnerability_code": "\taddress constant aENJ =\n\n\t\tNETWORK == Network.Mainnet ? 0x712DB54daA836B53Ef1EcBb9c6ba3b9Efb073F40 :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.aENJ' ($.sol#289-295) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 297,
+                    "vulnerability_to_line": 303,
+                    "vulnerability_code": "\taddress constant aKNC =\n\n\t\tNETWORK == Network.Mainnet ? 0x9D91BE44C06d373a8a226E1f3b146956083803eB :\n\n\t\tNETWORK == Network.Ropsten ? 0xCf6efd4528d27Df440fdd585a116D3c1fC5aDdEe :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0xB08EC9EdB6BD7971220FEa04644174f3EbfbDe96 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.aKNC' ($.sol#297-303) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 305,
+                    "vulnerability_to_line": 311,
+                    "vulnerability_code": "\taddress constant aAAVE =\n\n\t\tNETWORK == Network.Mainnet ? 0xba3D9687Cf50fE253cd2e1cFeEdE1d6787344Ed5 :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.aAAVE' ($.sol#305-311) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 313,
+                    "vulnerability_to_line": 319,
+                    "vulnerability_code": "\taddress constant aLEND =\n\n\t\t// NETWORK == Network.Mainnet ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Ropsten ? 0x383261d0e287f0A641322AEB15E3da50147Dd36b :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0xcBa131C7FB05fe3c9720375cD86C99773faAbF23 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.aLEND' ($.sol#313-319) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 321,
+                    "vulnerability_to_line": 327,
+                    "vulnerability_code": "\taddress constant aLINK =\n\n\t\tNETWORK == Network.Mainnet ? 0xA64BD6C70Cb9051F6A9ba1F163Fdc07E0DfB5F84 :\n\n\t\tNETWORK == Network.Ropsten ? 0x52fd99c15e6FFf8D4CF1B83b2263a501FDd78973 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0xEC23855Ff01012E1823807CE19a790CeBc4A64dA :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.aLINK' ($.sol#321-327) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 329,
+                    "vulnerability_to_line": 335,
+                    "vulnerability_code": "\taddress constant aMANA =\n\n\t\tNETWORK == Network.Mainnet ? 0x6FCE4A401B6B80ACe52baAefE4421Bd188e76F6f :\n\n\t\tNETWORK == Network.Ropsten ? 0x8e96a4068da80F66ef1CFc7987f0F834c26106fa :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0xe68204D69Cbfaf6124190EFa65ad9C591C0D48e4 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.aMANA' ($.sol#329-335) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 337,
+                    "vulnerability_to_line": 343,
+                    "vulnerability_code": "\taddress constant aMKR =\n\n\t\tNETWORK == Network.Mainnet ? 0x7deB5e830be29F91E298ba5FF1356BB7f8146998 :\n\n\t\tNETWORK == Network.Ropsten ? 0xEd6A5d671f7c55aa029cbAEa2e5E9A18E9d6a1CE :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0xfB762B5BAb463f7F35610Ba65e2534993a1c09C6 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.aMKR' ($.sol#337-343) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 345,
+                    "vulnerability_to_line": 351,
+                    "vulnerability_code": "\taddress constant aREN =\n\n\t\tNETWORK == Network.Mainnet ? 0x69948cC03f478B95283F7dbf1CE764d0fc7EC54C :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.aREN' ($.sol#345-351) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 353,
+                    "vulnerability_to_line": 359,
+                    "vulnerability_code": "\taddress constant aREP =\n\n\t\tNETWORK == Network.Mainnet ? 0x71010A9D003445aC60C4e6A7017c1E89A477B438 :\n\n\t\tNETWORK == Network.Ropsten ? 0xE4B92BcDB2f972e1ccc069D4dB33d5f6363738dE :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0x0578469469Db1129271f4eb3EB9D97426506c44c :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.aREP' ($.sol#353-359) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 361,
+                    "vulnerability_to_line": 367,
+                    "vulnerability_code": "\taddress constant aSNX =\n\n\t\tNETWORK == Network.Mainnet ? 0x328C4c80BC7aCa0834Db37e6600A6c49E12Da4DE :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0xb4D480f963f4F685F1D51d2B6159D126658B1dA8 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.aSNX' ($.sol#361-367) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 369,
+                    "vulnerability_to_line": 375,
+                    "vulnerability_code": "\taddress constant aUNI =\n\n\t\tNETWORK == Network.Mainnet ? 0xB124541127A0A657f056D9Dd06188c4F1b0e5aab :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.aUNI' ($.sol#369-375) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 377,
+                    "vulnerability_to_line": 383,
+                    "vulnerability_code": "\taddress constant aWBTC =\n\n\t\tNETWORK == Network.Mainnet ? 0xFC4B8ED459e00e5400be803A9BB3954234FD50e3 :\n\n\t\tNETWORK == Network.Ropsten ? 0xA1c4dB01F8344eCb11219714706C82f0c0c64841 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0xCD5C52C7B30468D16771193C47eAFF43EFc47f5C :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.aWBTC' ($.sol#377-383) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 385,
+                    "vulnerability_to_line": 391,
+                    "vulnerability_code": "\taddress constant aYFI =\n\n\t\tNETWORK == Network.Mainnet ? 0x12e51E77DAAA58aA0E9247db7510Ea4B46F9bEAd :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.aYFI' ($.sol#385-391) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 393,
+                    "vulnerability_to_line": 399,
+                    "vulnerability_code": "\taddress constant aZRX =\n\n\t\tNETWORK == Network.Mainnet ? 0x6Fb0855c404E09c47C3fBCA25f08d4E41f9F062f :\n\n\t\tNETWORK == Network.Ropsten ? 0x5BDC773c9D3515a5e3Dd415428F92a90E8e63Ae4 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0x0F456900c6bdFddfA27E1E4E4c84EB823a2eE13c :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.aZRX' ($.sol#393-399) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 401,
+                    "vulnerability_to_line": 407,
+                    "vulnerability_code": "\taddress constant cDAI =\n\n\t\tNETWORK == Network.Mainnet ? 0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643 :\n\n\t\tNETWORK == Network.Ropsten ? 0xdb5Ed4605C11822811a39F94314fDb8F0fb59A2C :\n\n\t\tNETWORK == Network.Rinkeby ? 0x6D7F0754FFeb405d23C51CE938289d4835bE3b14 :\n\n\t\tNETWORK == Network.Kovan ? 0xF0d0EB522cfa50B716B3b1604C4F0fA6f04376AD :\n\n\t\tNETWORK == Network.Goerli ? 0x822397d9a55d0fefd20F5c4bCaB33C5F65bd28Eb :\n",
+                    "message": "Constant '$.cDAI' ($.sol#401-407) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 409,
+                    "vulnerability_to_line": 415,
+                    "vulnerability_code": "\taddress constant cUSDC =\n\n\t\tNETWORK == Network.Mainnet ? 0x39AA39c021dfbaE8faC545936693aC917d5E7563 :\n\n\t\tNETWORK == Network.Ropsten ? 0x8aF93cae804cC220D1A608d4FA54D1b6ca5EB361 :\n\n\t\tNETWORK == Network.Rinkeby ? 0x5B281A6DdA0B271e91ae35DE655Ad301C976edb1 :\n\n\t\tNETWORK == Network.Kovan ? 0x4a92E71227D294F041BD82dd8f78591B75140d63 :\n\n\t\tNETWORK == Network.Goerli ? 0xCEC4a43eBB02f9B80916F1c718338169d6d5C1F0 :\n",
+                    "message": "Constant '$.cUSDC' ($.sol#409-415) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 417,
+                    "vulnerability_to_line": 423,
+                    "vulnerability_code": "\taddress constant cUSDT =\n\n\t\tNETWORK == Network.Mainnet ? 0xf650C3d88D12dB855b8bf7D11Be6C55A4e07dCC9 :\n\n\t\tNETWORK == Network.Ropsten ? 0x135669c2dcBd63F639582b313883F101a4497F76 :\n\n\t\tNETWORK == Network.Rinkeby ? 0x2fB298BDbeF468638AD6653FF8376575ea41e768 :\n\n\t\tNETWORK == Network.Kovan ? 0x3f0A0EA2f86baE6362CF9799B523BA06647Da018 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.cUSDT' ($.sol#417-423) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 425,
+                    "vulnerability_to_line": 431,
+                    "vulnerability_code": "\taddress constant cETH =\n\n\t\tNETWORK == Network.Mainnet ? 0x4Ddc2D193948926D02f9B1fE9e1daa0718270ED5 :\n\n\t\tNETWORK == Network.Ropsten ? 0xBe839b6D93E3eA47eFFcCA1F27841C917a8794f3 :\n\n\t\tNETWORK == Network.Rinkeby ? 0xd6801a1DfFCd0a410336Ef88DeF4320D6DF1883e :\n\n\t\tNETWORK == Network.Kovan ? 0x41B5844f4680a8C38fBb695b7F9CFd1F64474a72 :\n\n\t\tNETWORK == Network.Goerli ? 0x20572e4c090f15667cF7378e16FaD2eA0e2f3EfF :\n",
+                    "message": "Constant '$.cETH' ($.sol#425-431) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 433,
+                    "vulnerability_to_line": 439,
+                    "vulnerability_code": "\taddress constant cWBTC =\n\n\t\tNETWORK == Network.Mainnet ? 0xC11b1268C1A384e55C48c2391d8d480264A3A7F4 :\n\n\t\tNETWORK == Network.Ropsten ? 0x58145Bc5407D63dAF226e4870beeb744C588f149 :\n\n\t\tNETWORK == Network.Rinkeby ? 0x0014F450B8Ae7708593F4A46F8fa6E5D50620F96 :\n\n\t\tNETWORK == Network.Kovan ? 0xa1fAA15655B0e7b6B6470ED3d096390e6aD93Abb :\n\n\t\tNETWORK == Network.Goerli ? 0x6CE27497A64fFFb5517AA4aeE908b1E7EB63B9fF :\n",
+                    "message": "Constant '$.cWBTC' ($.sol#433-439) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 441,
+                    "vulnerability_to_line": 447,
+                    "vulnerability_code": "\taddress constant cBAT =\n\n\t\tNETWORK == Network.Mainnet ? 0x6C8c6b02E7b2BE14d4fA6022Dfd6d75921D90E4E :\n\n\t\tNETWORK == Network.Ropsten ? 0x9E95c0b2412cE50C37a121622308e7a6177F819D :\n\n\t\tNETWORK == Network.Rinkeby ? 0xEBf1A11532b93a529b5bC942B4bAA98647913002 :\n\n\t\tNETWORK == Network.Kovan ? 0x4a77fAeE9650b09849Ff459eA1476eaB01606C7a :\n\n\t\tNETWORK == Network.Goerli ? 0xCCaF265E7492c0d9b7C2f0018bf6382Ba7f0148D :\n",
+                    "message": "Constant '$.cBAT' ($.sol#441-447) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 449,
+                    "vulnerability_to_line": 455,
+                    "vulnerability_code": "\taddress constant cZRX =\n\n\t\tNETWORK == Network.Mainnet ? 0xB3319f5D18Bc0D84dD1b4825Dcde5d5f7266d407 :\n\n\t\tNETWORK == Network.Ropsten ? 0x00e02a5200CE3D5b5743F5369Deb897946C88121 :\n\n\t\tNETWORK == Network.Rinkeby ? 0x52201ff1720134bBbBB2f6BC97Bf3715490EC19B :\n\n\t\tNETWORK == Network.Kovan ? 0xAf45ae737514C8427D373D50Cd979a242eC59e5a :\n\n\t\tNETWORK == Network.Goerli ? 0xA253295eC2157B8b69C44b2cb35360016DAa25b1 :\n",
+                    "message": "Constant '$.cZRX' ($.sol#449-455) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 457,
+                    "vulnerability_to_line": 463,
+                    "vulnerability_code": "\taddress constant cUNI =\n\n\t\tNETWORK == Network.Mainnet ? 0x35A18000230DA775CAc24873d00Ff85BccdeD550 :\n\n\t\tNETWORK == Network.Ropsten ? 0x22531F0f3a9c36Bfc3b04c4c60df5168A1cFCec3 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.cUNI' ($.sol#457-463) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 465,
+                    "vulnerability_to_line": 471,
+                    "vulnerability_code": "\taddress constant cCOMP =\n\n\t\tNETWORK == Network.Mainnet ? 0x70e36f6BF80a52b3B46b3aF8e106CC0ed743E8e4 :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.cCOMP' ($.sol#465-471) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 481,
+                    "vulnerability_to_line": 487,
+                    "vulnerability_code": "\taddress constant Aave_AAVE_LENDING_POOL_ADDRESSES_PROVIDER =\n\n\t\tNETWORK == Network.Mainnet ? 0x24a42fD28C976A61Df5D00D0599C34c4f90748c8 :\n\n\t\tNETWORK == Network.Ropsten ? 0x1c8756FD2B28e9426CDBDcC7E3c4d64fa9A54728 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0x506B0B2CF20FAA8f38a4E2B524EE43e1f4458Cc5 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.Aave_AAVE_LENDING_POOL_ADDRESSES_PROVIDER' ($.sol#481-487) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 489,
+                    "vulnerability_to_line": 495,
+                    "vulnerability_code": "\taddress constant Aave_AAVE_LENDING_POOL =\n\n\t\tNETWORK == Network.Mainnet ? 0x398eC7346DcD622eDc5ae82352F02bE94C62d119 :\n\n\t\tNETWORK == Network.Ropsten ? 0x9E5C7835E4b13368fd628196C4f1c6cEc89673Fa :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0x580D4Fdc4BF8f9b5ae2fb9225D584fED4AD5375c :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.Aave_AAVE_LENDING_POOL' ($.sol#489-495) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 497,
+                    "vulnerability_to_line": 503,
+                    "vulnerability_code": "\taddress constant Aave_AAVE_LENDING_POOL_CORE =\n\n\t\tNETWORK == Network.Mainnet ? 0x3dfd23A6c5E8BbcFc9581d2E864a68feb6a076d3 :\n\n\t\tNETWORK == Network.Ropsten ? 0x4295Ee704716950A4dE7438086d6f0FBC0BA9472 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0x95D1189Ed88B380E319dF73fF00E479fcc4CFa45 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.Aave_AAVE_LENDING_POOL_CORE' ($.sol#497-503) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 505,
+                    "vulnerability_to_line": 511,
+                    "vulnerability_code": "\taddress constant Balancer_FACTORY =\n\n\t\tNETWORK == Network.Mainnet ? 0x9424B1412450D0f8Fc2255FAf6046b98213B76Bd :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Rinkeby ? 0x9C84391B443ea3a48788079a5f98e2EaD55c9309 :\n\n\t\tNETWORK == Network.Kovan ? 0x8f7F78080219d4066A8036ccD30D588B416a40DB :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.Balancer_FACTORY' ($.sol#505-511) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 513,
+                    "vulnerability_to_line": 519,
+                    "vulnerability_code": "\taddress constant Compound_COMPTROLLER =\n\n\t\tNETWORK == Network.Mainnet ? 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B :\n\n\t\tNETWORK == Network.Ropsten ? 0x54188bBeDD7b68228fa89CbDDa5e3e930459C6c6 :\n\n\t\tNETWORK == Network.Rinkeby ? 0x2EAa9D77AE4D8f9cdD9FAAcd44016E746485bddb :\n\n\t\tNETWORK == Network.Kovan ? 0x5eAe89DC1C671724A672ff0630122ee834098657 :\n\n\t\tNETWORK == Network.Goerli ? 0x627EA49279FD0dE89186A58b8758aD02B6Be2867 :\n",
+                    "message": "Constant '$.Compound_COMPTROLLER' ($.sol#513-519) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 521,
+                    "vulnerability_to_line": 527,
+                    "vulnerability_code": "\taddress constant Dydx_SOLO_MARGIN =\n\n\t\tNETWORK == Network.Mainnet ? 0x1E0447b19BB6EcFdAe1e4AE1694b0C3659614e4e :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\tNETWORK == Network.Kovan ? 0x4EC3570cADaAEE08Ae384779B0f3A45EF85289DE :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.Dydx_SOLO_MARGIN' ($.sol#521-527) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 529,
+                    "vulnerability_to_line": 535,
+                    "vulnerability_code": "\taddress constant Sushiswap_ROUTER02 =\n\n\t\tNETWORK == Network.Mainnet ? 0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F :\n\n\t\t// NETWORK == Network.Ropsten ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Rinkeby ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Kovan ? 0x0000000000000000000000000000000000000000 :\n\n\t\t// NETWORK == Network.Goerli ? 0x0000000000000000000000000000000000000000 :\n",
+                    "message": "Constant '$.Sushiswap_ROUTER02' ($.sol#529-535) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 537,
+                    "vulnerability_to_line": 543,
+                    "vulnerability_code": "\taddress constant UniswapV2_ROUTER02 =\n\n\t\tNETWORK == Network.Mainnet ? 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D :\n\n\t\tNETWORK == Network.Ropsten ? 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D :\n\n\t\tNETWORK == Network.Rinkeby ? 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D :\n\n\t\tNETWORK == Network.Kovan ? 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D :\n\n\t\tNETWORK == Network.Goerli ? 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D :\n",
+                    "message": "Constant '$.UniswapV2_ROUTER02' ($.sol#537-543) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "unused-state",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tNetwork constant NETWORK = Network.Mainnet;\n",
+                    "message": "$.NETWORK ($.sol#15) is never used in $\n$.GRO ($.sol#41-47) is never used in $\n$.DAI ($.sol#49-55) is never used in $\n$.USDC ($.sol#57-63) is never used in $\n$.USDT ($.sol#65-71) is never used in $\n$.SUSD ($.sol#73-79) is never used in $\n$.TUSD ($.sol#81-87) is never used in $\n$.BUSD ($.sol#89-95) is never used in $\n$.WBTC ($.sol#97-103) is never used in $\n$.WETH ($.sol#105-111) is never used in $\n$.BAT ($.sol#113-119) is never used in $\n$.ENJ ($.sol#121-127) is never used in $\n$.KNC ($.sol#129-135) is never used in $\n$.AAVE ($.sol#137-143) is never used in $\n$.LEND ($.sol#145-151) is never used in $\n$.LINK ($.sol#153-159) is never used in $\n$.MANA ($.sol#161-167) is never used in $\n$.MKR ($.sol#169-175) is never used in $\n$.REN ($.sol#177-183) is never used in $\n$.REP ($.sol#185-191) is never used in $\n$.SNX ($.sol#193-199) is never used in $\n$.ZRX ($.sol#201-207) is never used in $\n$.UNI ($.sol#209-215) is never used in $\n$.YFI ($.sol#217-223) is never used in $\n$.aETH ($.sol#225-231) is never used in $\n$.aDAI ($.sol#233-239) is never used in $\n$.aUSDC ($.sol#241-247) is never used in $\n$.aSUSD ($.sol#249-255) is never used in $\n$.aTUSD ($.sol#257-263) is never used in $\n$.aUSDT ($.sol#265-271) is never used in $\n$.aBUSD ($.sol#273-279) is never used in $\n$.aBAT ($.sol#281-287) is never used in $\n$.aENJ ($.sol#289-295) is never used in $\n$.aKNC ($.sol#297-303) is never used in $\n$.aAAVE ($.sol#305-311) is never used in $\n$.aLEND ($.sol#313-319) is never used in $\n$.aLINK ($.sol#321-327) is never used in $\n$.aMANA ($.sol#329-335) is never used in $\n$.aMKR ($.sol#337-343) is never used in $\n$.aREN ($.sol#345-351) is never used in $\n$.aREP ($.sol#353-359) is never used in $\n$.aSNX ($.sol#361-367) is never used in $\n$.aUNI ($.sol#369-375) is never used in $\n$.aWBTC ($.sol#377-383) is never used in $\n$.aYFI ($.sol#385-391) is never used in $\n$.aZRX ($.sol#393-399) is never used in $\n$.cDAI ($.sol#401-407) is never used in $\n$.cUSDC ($.sol#409-415) is never used in $\n$.cUSDT ($.sol#417-423) is never used in $\n$.cETH ($.sol#425-431) is never used in $\n$.cWBTC ($.sol#433-439) is never used in $\n$.cBAT ($.sol#441-447) is never used in $\n$.cZRX ($.sol#449-455) is never used in $\n$.cUNI ($.sol#457-463) is never used in $\n$.cCOMP ($.sol#465-471) is never used in $\n$.COMP ($.sol#473-479) is never used in $\n$.Aave_AAVE_LENDING_POOL_ADDRESSES_PROVIDER ($.sol#481-487) is never used in $\n$.Aave_AAVE_LENDING_POOL ($.sol#489-495) is never used in $\n$.Aave_AAVE_LENDING_POOL_CORE ($.sol#497-503) is never used in $\n$.Balancer_FACTORY ($.sol#505-511) is never used in $\n$.Compound_COMPTROLLER ($.sol#513-519) is never used in $\n$.Dydx_SOLO_MARGIN ($.sol#521-527) is never used in $\n$.Sushiswap_ROUTER02 ($.sol#529-535) is never used in $\n$.UniswapV2_ROUTER02 ($.sol#537-543) is never used in $\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x09e64c2B61a5f1690Ee6fbeD9baf5D6990F8dFd0 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0x5BaF82B5Eddd5d64E03509F0a7dBa4Cbf88CF455 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Rinkeby ? 0x020e317e70B406E23dF059F3656F6fc419411401 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0xFcB74f30d8949650AA524d8bF496218a20ce2db4 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 50,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x6B175474E89094C44Da98b954EedeAC495271d0F :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 66,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0xdAC17F958D2ee523a2206206994597C13D831ec7 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x57Ab1ec28D129707052df4dF418D58a2D46d5f51 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 82,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x0000000000085d4780B73119b644AE5ecd22b376 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 87,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 90,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x4Fabb145d64652a948d72533023f6E7A623C7C53 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 95,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 98,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 103,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 106,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 107,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0xc778417E063141139Fce010982780140Aa0cD5Ab :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 108,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Rinkeby ? 0xc778417E063141139Fce010982780140Aa0cD5Ab :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 109,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0xd0A1E359811322d97991E03f863a0C30C2cF029C :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 110,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Goerli ? 0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 111,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 114,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x0D8775F648430679A709E98d2b0Cb6250d2887EF :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 119,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 122,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0xF629cBd94d3791C9250152BD8dfBDF380E2a3B9c :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 127,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 130,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0xdd974D5C2e2928deA5F71b9825b8b646686BD200 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 135,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 138,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 143,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 146,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x80fB784B7eD66730e8b1DBd9820aFD29931aab03 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 154,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x514910771AF9Ca656af840dff83E8264EcF986CA :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 159,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 162,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x0F5D2fB29fb7d3CFeE444a200298f468908cC942 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 167,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 170,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 175,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 178,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x408e41876cCCDC0F92210600ef50372656052a38 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 183,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 186,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x1985365e9f78359a9B6AD760e32412f4a445E862 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 191,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 194,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 199,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 202,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0xE41d2489571d322189246DaFA5ebDe1F4699F498 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 207,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 210,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 215,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 218,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 223,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 226,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x3a3A65aAb0dd2A17E3F1947bA16138cd37d08c04 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 227,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0x2433A1b6FcF156956599280C3Eb1863247CFE675 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 229,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0xD483B49F2d55D2c53D32bE6efF735cB001880F79 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 231,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 234,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0xfC1E690f61EFd961294b3e1Ce3313fBD8aa4f85d :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 235,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0xcB1Fe6F440c49E9290c3eb7f158534c2dC374201 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 237,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0x58AD4cB396411B691A9AAb6F74545b2C5217FE6a :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 239,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 242,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x9bA00D6856a4eDF4665BcA2C2309936572473B7E :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 243,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0x2dB6a31f973Ec26F5e17895f0741BB5965d5Ae15 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 245,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0x02F626c6ccb6D2ebC071c068DC1f02Bf5693416a :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 247,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 250,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x625aE63000f46200499120B906716420bd059240 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 251,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0x5D17e0ea2d886F865E40176D71dbc0b59a54d8c1 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 253,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0xb9c1434aB6d5811D1D0E92E8266A37Ae8328e901 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 255,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 258,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x4DA9b813057D04BAef4e5800E36083717b4a0341 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 259,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0x9265d51F5ABf1E23bE64418827859bc83ae70a57 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 261,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0x4c76f1b48316489E8a3304Db21cdAeC271cF6eC3 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 263,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 266,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x71fc860F7D3A592A4a98740e39dB31d25db65ae8 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 267,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0x790744bC4257B4a0519a3C5649Ac1d16DDaFAE0D :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 269,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0xA01bA9fB493b851F4Ac5093A324CB081A909C34B :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 271,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 274,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x6Ee0f7BB50a54AB5253dA0667B0Dc2ee526C30a8 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 275,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0x81E065164bAC7203c3bFEB1a749F48a64383c6eE :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 279,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 282,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0xE1BA0FB44CCb0D11b80F92f4f8Ed94CA3fF51D00 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 283,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0x0D0Ff1C81F2Fbc8cbafA8Df4bF668f5ba963Dab4 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 285,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0x5ad67de6Fb697e92a7dE99d991F7CdB77EdF5F74 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 287,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 290,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x712DB54daA836B53Ef1EcBb9c6ba3b9Efb073F40 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 295,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 298,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x9D91BE44C06d373a8a226E1f3b146956083803eB :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 299,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0xCf6efd4528d27Df440fdd585a116D3c1fC5aDdEe :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 301,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0xB08EC9EdB6BD7971220FEa04644174f3EbfbDe96 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 303,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 306,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0xba3D9687Cf50fE253cd2e1cFeEdE1d6787344Ed5 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 311,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 315,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0x383261d0e287f0A641322AEB15E3da50147Dd36b :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 317,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0xcBa131C7FB05fe3c9720375cD86C99773faAbF23 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 319,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 322,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0xA64BD6C70Cb9051F6A9ba1F163Fdc07E0DfB5F84 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 323,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0x52fd99c15e6FFf8D4CF1B83b2263a501FDd78973 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 325,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0xEC23855Ff01012E1823807CE19a790CeBc4A64dA :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 327,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 330,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x6FCE4A401B6B80ACe52baAefE4421Bd188e76F6f :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 331,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0x8e96a4068da80F66ef1CFc7987f0F834c26106fa :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 333,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0xe68204D69Cbfaf6124190EFa65ad9C591C0D48e4 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 335,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 338,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x7deB5e830be29F91E298ba5FF1356BB7f8146998 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 339,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0xEd6A5d671f7c55aa029cbAEa2e5E9A18E9d6a1CE :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 341,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0xfB762B5BAb463f7F35610Ba65e2534993a1c09C6 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 343,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 346,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x69948cC03f478B95283F7dbf1CE764d0fc7EC54C :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 351,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 354,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x71010A9D003445aC60C4e6A7017c1E89A477B438 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 355,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0xE4B92BcDB2f972e1ccc069D4dB33d5f6363738dE :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 357,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0x0578469469Db1129271f4eb3EB9D97426506c44c :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 359,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 362,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x328C4c80BC7aCa0834Db37e6600A6c49E12Da4DE :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 365,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0xb4D480f963f4F685F1D51d2B6159D126658B1dA8 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 367,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 370,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0xB124541127A0A657f056D9Dd06188c4F1b0e5aab :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 375,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 378,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0xFC4B8ED459e00e5400be803A9BB3954234FD50e3 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 379,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0xA1c4dB01F8344eCb11219714706C82f0c0c64841 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 381,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0xCD5C52C7B30468D16771193C47eAFF43EFc47f5C :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 383,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 386,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x12e51E77DAAA58aA0E9247db7510Ea4B46F9bEAd :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 391,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 394,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x6Fb0855c404E09c47C3fBCA25f08d4E41f9F062f :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 395,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0x5BDC773c9D3515a5e3Dd415428F92a90E8e63Ae4 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 397,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0x0F456900c6bdFddfA27E1E4E4c84EB823a2eE13c :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 399,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 402,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 403,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0xdb5Ed4605C11822811a39F94314fDb8F0fb59A2C :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 404,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Rinkeby ? 0x6D7F0754FFeb405d23C51CE938289d4835bE3b14 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 405,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0xF0d0EB522cfa50B716B3b1604C4F0fA6f04376AD :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 406,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Goerli ? 0x822397d9a55d0fefd20F5c4bCaB33C5F65bd28Eb :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 407,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 410,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x39AA39c021dfbaE8faC545936693aC917d5E7563 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 411,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0x8aF93cae804cC220D1A608d4FA54D1b6ca5EB361 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 412,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Rinkeby ? 0x5B281A6DdA0B271e91ae35DE655Ad301C976edb1 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 413,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0x4a92E71227D294F041BD82dd8f78591B75140d63 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 414,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Goerli ? 0xCEC4a43eBB02f9B80916F1c718338169d6d5C1F0 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 415,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 418,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0xf650C3d88D12dB855b8bf7D11Be6C55A4e07dCC9 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 419,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0x135669c2dcBd63F639582b313883F101a4497F76 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 420,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Rinkeby ? 0x2fB298BDbeF468638AD6653FF8376575ea41e768 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 421,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0x3f0A0EA2f86baE6362CF9799B523BA06647Da018 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 423,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 426,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x4Ddc2D193948926D02f9B1fE9e1daa0718270ED5 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 427,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0xBe839b6D93E3eA47eFFcCA1F27841C917a8794f3 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 428,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Rinkeby ? 0xd6801a1DfFCd0a410336Ef88DeF4320D6DF1883e :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 429,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0x41B5844f4680a8C38fBb695b7F9CFd1F64474a72 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 430,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Goerli ? 0x20572e4c090f15667cF7378e16FaD2eA0e2f3EfF :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 431,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 434,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0xC11b1268C1A384e55C48c2391d8d480264A3A7F4 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 435,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0x58145Bc5407D63dAF226e4870beeb744C588f149 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 436,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Rinkeby ? 0x0014F450B8Ae7708593F4A46F8fa6E5D50620F96 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 437,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0xa1fAA15655B0e7b6B6470ED3d096390e6aD93Abb :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 438,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Goerli ? 0x6CE27497A64fFFb5517AA4aeE908b1E7EB63B9fF :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 439,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 442,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x6C8c6b02E7b2BE14d4fA6022Dfd6d75921D90E4E :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 443,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0x9E95c0b2412cE50C37a121622308e7a6177F819D :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 444,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Rinkeby ? 0xEBf1A11532b93a529b5bC942B4bAA98647913002 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 445,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0x4a77fAeE9650b09849Ff459eA1476eaB01606C7a :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 446,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Goerli ? 0xCCaF265E7492c0d9b7C2f0018bf6382Ba7f0148D :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 447,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 450,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0xB3319f5D18Bc0D84dD1b4825Dcde5d5f7266d407 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 451,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0x00e02a5200CE3D5b5743F5369Deb897946C88121 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 452,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Rinkeby ? 0x52201ff1720134bBbBB2f6BC97Bf3715490EC19B :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 453,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0xAf45ae737514C8427D373D50Cd979a242eC59e5a :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 454,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Goerli ? 0xA253295eC2157B8b69C44b2cb35360016DAa25b1 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 455,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 458,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x35A18000230DA775CAc24873d00Ff85BccdeD550 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 459,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0x22531F0f3a9c36Bfc3b04c4c60df5168A1cFCec3 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 463,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 466,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x70e36f6BF80a52b3B46b3aF8e106CC0ed743E8e4 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 471,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 474,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0xc00e94Cb662C3520282E6f5717214004A7f26888 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 475,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0x1Fe16De955718CFAb7A44605458AB023838C2793 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 477,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0x61460874a7196d6a22D1eE4922473664b3E95270 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 478,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Goerli ? 0xe16C7165C8FeA64069802aE4c4c9C320783f2b6e :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 479,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 482,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x24a42fD28C976A61Df5D00D0599C34c4f90748c8 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 483,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0x1c8756FD2B28e9426CDBDcC7E3c4d64fa9A54728 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 485,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0x506B0B2CF20FAA8f38a4E2B524EE43e1f4458Cc5 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 487,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 490,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x398eC7346DcD622eDc5ae82352F02bE94C62d119 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 491,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0x9E5C7835E4b13368fd628196C4f1c6cEc89673Fa :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 493,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0x580D4Fdc4BF8f9b5ae2fb9225D584fED4AD5375c :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 495,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 498,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x3dfd23A6c5E8BbcFc9581d2E864a68feb6a076d3 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 499,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0x4295Ee704716950A4dE7438086d6f0FBC0BA9472 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 501,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0x95D1189Ed88B380E319dF73fF00E479fcc4CFa45 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 503,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 506,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x9424B1412450D0f8Fc2255FAf6046b98213B76Bd :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 508,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Rinkeby ? 0x9C84391B443ea3a48788079a5f98e2EaD55c9309 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 509,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0x8f7F78080219d4066A8036ccD30D588B416a40DB :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 511,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 514,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 515,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0x54188bBeDD7b68228fa89CbDDa5e3e930459C6c6 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 516,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Rinkeby ? 0x2EAa9D77AE4D8f9cdD9FAAcd44016E746485bddb :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 517,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0x5eAe89DC1C671724A672ff0630122ee834098657 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 518,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Goerli ? 0x627EA49279FD0dE89186A58b8758aD02B6Be2867 :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 519,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 522,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x1E0447b19BB6EcFdAe1e4AE1694b0C3659614e4e :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 525,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0x4EC3570cADaAEE08Ae384779B0f3A45EF85289DE :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 527,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 530,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 535,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 538,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Mainnet ? 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 539,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Ropsten ? 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 540,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Rinkeby ? 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 541,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Kovan ? 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 542,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tNETWORK == Network.Goerli ? 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D :\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 543,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t0x0000000000000000000000000000000000000000;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tNetwork constant NETWORK = Network.Mainnet;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tbool constant DEBUG = NETWORK != Network.Mainnet;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant GRO =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant DAI =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant USDC =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant USDT =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 73,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant SUSD =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 81,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant TUSD =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant BUSD =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 97,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant WBTC =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 105,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant WETH =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 113,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant BAT =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 121,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant ENJ =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 129,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant KNC =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 137,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant AAVE =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant LEND =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant LINK =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 161,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant MANA =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 169,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant MKR =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 177,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant REN =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 185,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant REP =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 193,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant SNX =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 201,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant ZRX =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 209,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant UNI =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 217,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant YFI =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 225,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant aETH =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 233,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant aDAI =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 241,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant aUSDC =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 249,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant aSUSD =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 257,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant aTUSD =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 265,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant aUSDT =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 273,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant aBUSD =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 281,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant aBAT =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 289,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant aENJ =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 297,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant aKNC =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 305,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant aAAVE =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 313,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant aLEND =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 321,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant aLINK =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 329,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant aMANA =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 337,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant aMKR =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 345,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant aREN =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 353,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant aREP =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 361,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant aSNX =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 369,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant aUNI =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 377,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant aWBTC =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 385,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant aYFI =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 393,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant aZRX =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 401,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant cDAI =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 409,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant cUSDC =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 417,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant cUSDT =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 425,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant cETH =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 433,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant cWBTC =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 441,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant cBAT =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 449,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant cZRX =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 457,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant cUNI =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 465,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant cCOMP =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 473,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant COMP =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 481,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant Aave_AAVE_LENDING_POOL_ADDRESSES_PROVIDER =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 489,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant Aave_AAVE_LENDING_POOL =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 497,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant Aave_AAVE_LENDING_POOL_CORE =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 505,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant Balancer_FACTORY =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 513,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant Compound_COMPTROLLER =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 521,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant Dydx_SOLO_MARGIN =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 529,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant Sushiswap_ROUTER02 =\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 537,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress constant UniswapV2_ROUTER02 =\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "growthdefi-v1-core-761f0a7af73a082ac64498061749db4466673542/contracts/modules/Math.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_7"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": "Detected issues with version pragma in Math.sol:\n\t- pragma solidity^0.6.0 (Math.sol#4): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": 14,
+                    "vulnerability_code": "\tfunction _min(uint256 _amount1, uint256 _amount2) internal pure returns (uint256 _minAmount)\n\n\t{\n\n\t\treturn _amount1 < _amount2 ? _amount1 : _amount2;\n",
+                    "message": "Function 'Math._min' (Math.sol#11-14) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction _min(uint256 _amount1, uint256 _amount2) internal pure returns (uint256 _minAmount)\n",
+                    "message": "Parameter '_amount1' of Math._min (Math.sol#11) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction _min(uint256 _amount1, uint256 _amount2) internal pure returns (uint256 _minAmount)\n",
+                    "message": "Parameter '_amount2' of Math._min (Math.sol#11) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": 19,
+                    "vulnerability_code": "\tfunction _max(uint256 _amount1, uint256 _amount2) internal pure returns (uint256 _maxAmount)\n\n\t{\n\n\t\treturn _amount1 > _amount2 ? _amount1 : _amount2;\n",
+                    "message": "Function 'Math._max' (Math.sol#16-19) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction _max(uint256 _amount1, uint256 _amount2) internal pure returns (uint256 _maxAmount)\n",
+                    "message": "Parameter '_amount1' of Math._max (Math.sol#16) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction _max(uint256 _amount1, uint256 _amount2) internal pure returns (uint256 _maxAmount)\n",
+                    "message": "Parameter '_amount2' of Math._max (Math.sol#16) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

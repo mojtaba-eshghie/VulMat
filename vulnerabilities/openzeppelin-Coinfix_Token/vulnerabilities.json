@@ -1,0 +1,178 @@
+{
+    "coinfix.io-smart-contracts-75edd659ce96c88fe2784f3e767d6617787e8b7c/merchant_subscription/MerchantSubscription.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tuint public amount = 0;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(!status.isClosed && !status.isPaused && status.isActive);\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_13"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tstring public version = '1.0.3';\n",
+                    "message": "MerchantSubscription.version should be constant (MerchantSubscription.sol#42)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 93,
+                    "vulnerability_to_line": 97,
+                    "vulnerability_code": "\tfunction() allowDeposit payable {\n\n\t\tamount = SafeMath.add(amount, msg.value);\n\n\n\n\t\tSubscriptionPaymentMade(msg.sender, msg.value);\n",
+                    "message": "MerchantSubscription.fallback (MerchantSubscription.sol#93-97) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 99,
+                    "vulnerability_to_line": 107,
+                    "vulnerability_code": "\tfunction withdrawal(uint withdrawalAmount) onlyOwner public {\n\n\t\trequire(withdrawalAmount <= amount);\n\n\n\n\t\tamount = SafeMath.sub(amount, withdrawalAmount);\n\n\n\n\t\tmerchant.transfer(withdrawalAmount);\n\n\n\n\t\tWithdrawalMade(merchant, owner, withdrawalAmount);\n",
+                    "message": "MerchantSubscription.withdrawal (MerchantSubscription.sol#99-107) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 109,
+                    "vulnerability_to_line": 115,
+                    "vulnerability_code": "\tfunction activate() onlyMerchant public {\n\n\t\trequire(!status.isActive);\n\n\n\n\t\tstatus.isActive = true;\n\n\n\n\t\tSubscriptionActivated();\n",
+                    "message": "MerchantSubscription.activate (MerchantSubscription.sol#109-115) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 117,
+                    "vulnerability_to_line": 123,
+                    "vulnerability_code": "\tfunction pause() onlyOwner public {\n\n\t\trequire(!status.isPaused);\n\n\n\n\t\tstatus.isPaused = true;\n\n\n\n\t\tSubscriptionPaused();\n",
+                    "message": "MerchantSubscription.pause (MerchantSubscription.sol#117-123) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 125,
+                    "vulnerability_to_line": 131,
+                    "vulnerability_code": "\tfunction resume() onlyOwner public {\n\n\t\trequire(status.isPaused);\n\n\n\n\t\tstatus.isPaused = false;\n\n\n\n\t\tSubscriptionResumed();\n",
+                    "message": "MerchantSubscription.resume (MerchantSubscription.sol#125-131) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": 139,
+                    "vulnerability_code": "\tfunction close() onlyOwner public {\n\n\t\trequire(!status.isClosed);\n\n\n\n\t\tstatus.isClosed = true;\n\n\n\n\t\tSubscriptionClosed();\n",
+                    "message": "MerchantSubscription.close (MerchantSubscription.sol#133-139) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": 145,
+                    "vulnerability_code": "\tfunction transferOwnership(address newOwner) onlyOwner public {\n\n\t\trequire(newOwner != owner);\n\n\n\n\t\tpendingOwner = newOwner;\n",
+                    "message": "MerchantSubscription.transferOwnership (MerchantSubscription.sol#141-145) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 147,
+                    "vulnerability_to_line": 152,
+                    "vulnerability_code": "\tfunction claimOwnership() onlyPendingOwner {\n\n\t\towner = pendingOwner;\n\n\t\tpendingOwner = 0x0;\n\n\n\n\t\tOwnerChanged(owner);\n",
+                    "message": "MerchantSubscription.claimOwnership (MerchantSubscription.sol#147-152) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.11;\n",
+                    "message": "Detected issues with version pragma in MerchantSubscription.sol:\n\t- pragma solidity^0.4.11 (MerchantSubscription.sol#4): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": 90,
+                    "vulnerability_code": "\tfunction MerchantSubscription(address _merchant, string _name) {\n\n\t\tmerchant = _merchant;\n\n\t\towner = msg.sender;\n\n\t\tname = _name;\n",
+                    "message": "Function 'MerchantSubscription.MerchantSubscription' (MerchantSubscription.sol#86-90) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction MerchantSubscription(address _merchant, string _name) {\n",
+                    "message": "Parameter '_merchant' of MerchantSubscription.MerchantSubscription (MerchantSubscription.sol#86) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction MerchantSubscription(address _merchant, string _name) {\n",
+                    "message": "Parameter '_name' of MerchantSubscription.MerchantSubscription (MerchantSubscription.sol#86) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 149,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tpendingOwner = 0x0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction add(uint256 a, uint256 b) internal constant returns (uint256) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction sub(uint256 a, uint256 b) internal constant returns (uint256) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.11;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction MerchantSubscription(address _merchant, string _name) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 93,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction() allowDeposit payable {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 147,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction claimOwnership() onlyPendingOwner {\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

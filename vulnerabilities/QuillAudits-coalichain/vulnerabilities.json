@@ -1,0 +1,465 @@
+{
+    "CoaliSC-3f0920d650467279f7ceee08776bd74ecadd3237/CoalichainToken.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 75,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Pausable is Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 310,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract CoalichainToken is StandardToken, BurnableToken, Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  bool public paused = false;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 325,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bool    public transferEnabled = false; // indicates if transferring tokens is enabled or not\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_37"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 101,
+                    "vulnerability_to_line": 104,
+                    "vulnerability_code": "  function pause() onlyOwner whenNotPaused public {\n\n    paused = true;\n\n    Pause();\n",
+                    "message": "Pausable.pause (CoalichainToken.sol#101-104) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 109,
+                    "vulnerability_to_line": 112,
+                    "vulnerability_code": "  function unpause() onlyOwner whenPaused public {\n\n    paused = false;\n\n    Unpause();\n",
+                    "message": "Pausable.unpause (CoalichainToken.sol#109-112) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 124,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address who) public constant returns (uint256);\n",
+                    "message": "ERC20Basic.balanceOf (CoalichainToken.sol#124) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 179,
+                    "vulnerability_to_line": 181,
+                    "vulnerability_code": "  function balanceOf(address _owner) public constant returns (uint256 balance) {\n\n    return balances[_owner];\n",
+                    "message": "BasicToken.balanceOf (CoalichainToken.sol#179-181) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 138,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address owner, address spender) public constant returns (uint256);\n",
+                    "message": "ERC20.allowance (CoalichainToken.sol#138) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 245,
+                    "vulnerability_to_line": 247,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public constant returns (uint256 remaining) {\n\n    return allowed[_owner][_spender];\n",
+                    "message": "StandardToken.allowance (CoalichainToken.sol#245-247) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 255,
+                    "vulnerability_to_line": 260,
+                    "vulnerability_code": "  function increaseApproval (address _spender, uint _addedValue)\n\n    returns (bool success) {\n\n    allowed[msg.sender][_spender] = allowed[msg.sender][_spender].add(_addedValue);\n\n    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n\n    return true;\n",
+                    "message": "StandardToken.increaseApproval (CoalichainToken.sol#255-260) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 262,
+                    "vulnerability_to_line": 272,
+                    "vulnerability_code": "  function decreaseApproval (address _spender, uint _subtractedValue)\n\n    returns (bool success) {\n\n    uint oldValue = allowed[msg.sender][_spender];\n\n    if (_subtractedValue > oldValue) {\n\n      allowed[msg.sender][_spender] = 0;\n\n    } else {\n\n      allowed[msg.sender][_spender] = oldValue.sub(_subtractedValue);\n\n    }\n\n    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n\n    return true;\n",
+                    "message": "StandardToken.decreaseApproval (CoalichainToken.sol#262-272) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 377,
+                    "vulnerability_to_line": 379,
+                    "vulnerability_code": "\t function transferToContract(address _from, uint256 _value) returns (bool) {\n\n        return super.transferFrom(_from, address(this), _value);\n",
+                    "message": "CoalichainToken.transferToContract (CoalichainToken.sol#377-379) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 381,
+                    "vulnerability_to_line": 383,
+                    "vulnerability_code": "\t function transferFromContract(address _to, uint256 _value) returns (bool) {\n\n        return super.transferFrom(address(this), _to, _value);\n",
+                    "message": "CoalichainToken.transferFromContract (CoalichainToken.sol#381-383) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.21;\n",
+                    "message": "Detected issues with version pragma in CoalichainToken.sol:\n\t- pragma solidity^0.4.21 (CoalichainToken.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": 55,
+                    "vulnerability_code": "  function Ownable() {\n\n    owner = msg.sender;\n",
+                    "message": "Function 'Ownable.Ownable' (CoalichainToken.sol#53-55) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 179,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address _owner) public constant returns (uint256 balance) {\n",
+                    "message": "Parameter '_owner' of BasicToken.balanceOf (CoalichainToken.sol#179) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 164,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_to' of BasicToken.transfer (CoalichainToken.sol#164) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 164,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of BasicToken.transfer (CoalichainToken.sol#164) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 245,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public constant returns (uint256 remaining) {\n",
+                    "message": "Parameter '_owner' of StandardToken.allowance (CoalichainToken.sol#245) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 245,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public constant returns (uint256 remaining) {\n",
+                    "message": "Parameter '_spender' of StandardToken.allowance (CoalichainToken.sol#245) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 203,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_from' of StandardToken.transferFrom (CoalichainToken.sol#203) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 203,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_to' of StandardToken.transferFrom (CoalichainToken.sol#203) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 203,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of StandardToken.transferFrom (CoalichainToken.sol#203) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 233,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of StandardToken.approve (CoalichainToken.sol#233) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 233,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of StandardToken.approve (CoalichainToken.sol#233) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 255,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function increaseApproval (address _spender, uint _addedValue)\n",
+                    "message": "Parameter '_spender' of StandardToken.increaseApproval (CoalichainToken.sol#255) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 255,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function increaseApproval (address _spender, uint _addedValue)\n",
+                    "message": "Parameter '_addedValue' of StandardToken.increaseApproval (CoalichainToken.sol#255) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 262,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function decreaseApproval (address _spender, uint _subtractedValue)\n",
+                    "message": "Parameter '_spender' of StandardToken.decreaseApproval (CoalichainToken.sol#262) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 262,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function decreaseApproval (address _spender, uint _subtractedValue)\n",
+                    "message": "Parameter '_subtractedValue' of StandardToken.decreaseApproval (CoalichainToken.sol#262) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 290,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function burn(uint256 _value) public {\n",
+                    "message": "Parameter '_value' of BurnableToken.burn (CoalichainToken.sol#290) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 428,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) public onlyWhenTransferEnabled validDestination(_to) returns (bool) {\n",
+                    "message": "Parameter '_to' of CoalichainToken.transfer (CoalichainToken.sol#428) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 428,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) public onlyWhenTransferEnabled validDestination(_to) returns (bool) {\n",
+                    "message": "Parameter '_value' of CoalichainToken.transfer (CoalichainToken.sol#428) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 453,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function burn(uint256 _value) public {\n",
+                    "message": "Parameter '_value' of CoalichainToken.burn (CoalichainToken.sol#453) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 357,
+                    "vulnerability_to_line": 375,
+                    "vulnerability_code": "    function CoalichainToken() {\n\n        // the owner is a custodian of tokens that can\n\n        // give an allowance of tokens for crowdsales\n\n        // or to the admin, but cannot itself transfer\n\n        // tokens; hence, this requirement\n\n        //require(msg.sender != _admin);\n\n\n\n        totalSupply = INITIAL_SUPPLY;\n\n        crowdSaleAllowance = CROWDSALE_ALLOWANCE;\n\n        adminAllowance = ADMIN_ALLOWANCE;\n\n        adminAddr = msg.sender;\n\n\n\n        // mint all tokens\n\n        balances[msg.sender] = totalSupply;\n\n        Transfer(address(0x0), msg.sender, totalSupply);\n\n\n\n        //adminAddr = owner;\n\n        approve(adminAddr, adminAllowance);\n",
+                    "message": "Function 'CoalichainToken.CoalichainToken' (CoalichainToken.sol#357-375) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 377,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t function transferToContract(address _from, uint256 _value) returns (bool) {\n",
+                    "message": "Parameter '_from' of CoalichainToken.transferToContract (CoalichainToken.sol#377) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 377,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t function transferToContract(address _from, uint256 _value) returns (bool) {\n",
+                    "message": "Parameter '_value' of CoalichainToken.transferToContract (CoalichainToken.sol#377) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 381,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t function transferFromContract(address _to, uint256 _value) returns (bool) {\n",
+                    "message": "Parameter '_to' of CoalichainToken.transferFromContract (CoalichainToken.sol#381) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 381,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t function transferFromContract(address _to, uint256 _value) returns (bool) {\n",
+                    "message": "Parameter '_value' of CoalichainToken.transferFromContract (CoalichainToken.sol#381) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 397,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setCrowdsale(address _crowdSaleAddr, uint256 _amountForSale) external onlyOwner {\n",
+                    "message": "Parameter '_crowdSaleAddr' of CoalichainToken.setCrowdsale (CoalichainToken.sol#397) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 397,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setCrowdsale(address _crowdSaleAddr, uint256 _amountForSale) external onlyOwner {\n",
+                    "message": "Parameter '_amountForSale' of CoalichainToken.setCrowdsale (CoalichainToken.sol#397) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 323,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address public crowdSaleAddr = 0xd742955953f5c510f21a65c90ab87823d0b12683;     // the address of a crowdsale contract set to sale ZUZ\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 345,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_to != address(0x0));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function mul(uint256 a, uint256 b) internal constant returns (uint256) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function div(uint256 a, uint256 b) internal constant returns (uint256) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function sub(uint256 a, uint256 b) internal constant returns (uint256) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function add(uint256 a, uint256 b) internal constant returns (uint256) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 124,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address who) public constant returns (uint256);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 138,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address owner, address spender) public constant returns (uint256);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 179,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address _owner) public constant returns (uint256 balance) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 245,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public constant returns (uint256 remaining) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 233,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 397,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setCrowdsale(address _crowdSaleAddr, uint256 _amountForSale) external onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.21;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function Ownable() {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 255,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function increaseApproval (address _spender, uint _addedValue)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 262,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function decreaseApproval (address _spender, uint _subtractedValue)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 357,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function CoalichainToken() {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 377,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t function transferToContract(address _from, uint256 _value) returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 381,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t function transferFromContract(address _to, uint256 _value) returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 155,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping(address => uint256) balances;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 194,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping (address => mapping (address => uint256)) allowed;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

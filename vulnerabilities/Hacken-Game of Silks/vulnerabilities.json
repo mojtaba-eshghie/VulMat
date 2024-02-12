@@ -1,0 +1,1239 @@
+{
+    "ERC721A.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 1478,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 public nextOwnerToExplicitlySet = 0;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 1097,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor(\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 1098,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    string memory name_,\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 1099,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    string memory symbol_,\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 1100,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 maxBatchSize_\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 1101,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  ) {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 1102,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(maxBatchSize_ > 0, \"ERC721A: max batch size must be nonzero\");\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 1103,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    _name = name_;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 1104,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    _symbol = symbol_;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 1105,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    maxBatchSize = maxBatchSize_;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 1106,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 1140,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      TokenOwnership memory ownership = _ownerships[i];\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 1201,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      TokenOwnership memory ownership = _ownerships[curr];\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 1494,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if (_ownerships[i].addr == address(0)) {\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 1496,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        _ownerships[i] = TokenOwnership(\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 1139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint256 i = 0; i < numMintedSoFar; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 1394,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint256 i = 0; i < quantity; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 1493,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint256 i = oldNextOwnerToSet; i <= endIndex; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 316,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(address(this).balance >= amount, \"Address: insufficient balance\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 319,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(success, \"Address: unable to send value, recipient may have reverted\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 385,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(address(this).balance >= value, \"Address: insufficient balance for call\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 456,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                require(isContract(target), \"Address: call to non-contract\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 602,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(denominator > prod1, \"Math: mulDiv overflow\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 979,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(value == 0, \"Strings: hex length insufficient\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1102,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(maxBatchSize_ > 0, \"ERC721A: max batch size must be nonzero\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1119,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(index < totalSupply(), \"ERC721A: global index out of bounds\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1135,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(index < balanceOf(owner), \"ERC721A: owner index out of bounds\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    revert(\"ERC721A: unable to get token of owner by index\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1175,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(owner != address(0), \"ERC721A: balance query for the zero address\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1181,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1182,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      owner != address(0),\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1183,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"ERC721A: number minted query for the zero address\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1184,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1193,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(_exists(tokenId), \"ERC721A: owner query for nonexistent token\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1207,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    revert(\"ERC721A: unable to determine the owner of token\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1241,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1242,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      _exists(tokenId),\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1243,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"ERC721Metadata: URI query for nonexistent token\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1244,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1267,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(to != owner, \"ERC721A: approval to current owner\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1269,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1270,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      _msgSender() == owner || isApprovedForAll(owner, _msgSender()),\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1271,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"ERC721A: approve caller is not owner nor approved for all\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1272,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1281,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(_exists(tokenId), \"ERC721A: approved query for nonexistent token\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1290,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(operator != _msgSender(), \"ERC721A: approve to caller\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1341,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1342,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      _checkOnERC721Received(from, to, tokenId, _data),\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1343,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"ERC721A: transfer to non ERC721Receiver implementer\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1344,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1378,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(to != address(0), \"ERC721A: mint to the zero address\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1380,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(!_exists(startTokenId), \"ERC721A: token already minted\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1381,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(quantity <= maxBatchSize, \"ERC721A: quantity to mint too high\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1396,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1397,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        _checkOnERC721Received(address(0), to, updatedIndex, _data),\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1398,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        \"ERC721A: transfer to non ERC721Receiver implementer\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1399,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1428,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1429,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      isApprovedOrOwner,\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1430,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"ERC721A: transfer caller is not owner nor approved\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1431,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1433,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1434,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      prevOwnership.addr == from,\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1435,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"ERC721A: transfer from incorrect owner\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1436,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1437,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(to != address(0), \"ERC721A: transfer to the zero address\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1486,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(quantity > 0, \"quantity must be nonzero\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1492,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(_exists(endIndex), \"not enough minted yet for this cleanup\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 1528,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "          revert(\"ERC721A: transfer to non ERC721Receiver implementer\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 666,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (rounding == Rounding.Up && mulmod(x, y, denominator) > 0) {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 667,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            result += 1;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 668,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        }\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-prefix-decrement-not-postfix",
+                    "vulnerability_from_line": 940,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                ptr--;\n",
+                    "message": "Consider using the prefix decrement expression whenever the return value is not needed. The prefix decrement expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-decrement-not-postfix",
+                    "vulnerability_from_line": 1200,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint256 curr = tokenId; curr >= lowestTokenToCheck; curr--) {\n",
+                    "message": "Consider using the prefix decrement expression whenever the return value is not needed. The prefix decrement expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 1139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint256 i = 0; i < numMintedSoFar; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 1148,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        tokenIdsIdx++;\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 1394,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint256 i = 0; i < quantity; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 1400,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      updatedIndex++;\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 1493,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint256 i = oldNextOwnerToSet; i <= endIndex; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 319,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(success, \"Address: unable to send value, recipient may have reverted\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 385,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(address(this).balance >= value, \"Address: insufficient balance for call\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1102,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(maxBatchSize_ > 0, \"ERC721A: max batch size must be nonzero\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1119,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(index < totalSupply(), \"ERC721A: global index out of bounds\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1135,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(index < balanceOf(owner), \"ERC721A: owner index out of bounds\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    revert(\"ERC721A: unable to get token of owner by index\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1175,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(owner != address(0), \"ERC721A: balance query for the zero address\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1181,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1182,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      owner != address(0),\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1183,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"ERC721A: number minted query for the zero address\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1184,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1193,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(_exists(tokenId), \"ERC721A: owner query for nonexistent token\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1207,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    revert(\"ERC721A: unable to determine the owner of token\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1241,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1242,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      _exists(tokenId),\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1243,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"ERC721Metadata: URI query for nonexistent token\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1244,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1267,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(to != owner, \"ERC721A: approval to current owner\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1269,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1270,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      _msgSender() == owner || isApprovedForAll(owner, _msgSender()),\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1271,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"ERC721A: approve caller is not owner nor approved for all\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1272,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1281,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(_exists(tokenId), \"ERC721A: approved query for nonexistent token\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1341,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1342,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      _checkOnERC721Received(from, to, tokenId, _data),\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1343,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"ERC721A: transfer to non ERC721Receiver implementer\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1344,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1378,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(to != address(0), \"ERC721A: mint to the zero address\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1381,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(quantity <= maxBatchSize, \"ERC721A: quantity to mint too high\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1396,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1397,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        _checkOnERC721Received(address(0), to, updatedIndex, _data),\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1398,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        \"ERC721A: transfer to non ERC721Receiver implementer\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1399,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1428,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1429,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      isApprovedOrOwner,\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1430,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"ERC721A: transfer caller is not owner nor approved\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1431,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1433,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1434,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      prevOwnership.addr == from,\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1435,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \"ERC721A: transfer from incorrect owner\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1436,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    );\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1437,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(to != address(0), \"ERC721A: transfer to the zero address\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1492,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(_exists(endIndex), \"not enough minted yet for this cleanup\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 1528,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "          revert(\"ERC721A: transfer to non ERC721Receiver implementer\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "erc721-reentrancy",
+                    "vulnerability_from_line": 1342,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      _checkOnERC721Received(from, to, tokenId, _data),\n",
+                    "message": "ERC721 onERC721Received() reentrancy"
+                },
+                {
+                    "name": "erc721-reentrancy",
+                    "vulnerability_from_line": 1397,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        _checkOnERC721Received(address(0), to, updatedIndex, _data),\n",
+                    "message": "ERC721 onERC721Received() reentrancy"
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 976,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            buffer[i] = _SYMBOLS[value & 0xf];\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 1138,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address currOwnershipAddr = address(0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 1383,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    _beforeTokenTransfers(address(0), to, startTokenId, quantity);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 1397,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        _checkOnERC721Received(address(0), to, updatedIndex, _data),\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 1404,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    _afterTokenTransfers(address(0), to, startTokenId, quantity);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 1442,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    _approve(address(0), tokenId, prevOwnership.addr);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 939,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            while (true) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 167,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 197,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 225,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 255,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.1;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 502,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 529,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 871,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 917,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 1003,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 1033,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 924,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes16 private constant _SYMBOLS = \"0123456789abcdef\";\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 925,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint8 private constant _ADDRESS_LENGTH = 20;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 1070,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 private currentIndex = 1;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 1075,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  string private _name;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 1078,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  string private _symbol;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 1082,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping(uint256 => TokenOwnership) private _ownerships;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 1085,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping(address => AddressData) private _addressData;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 1088,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping(uint256 => address) private _tokenApprovals;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 1091,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping(address => mapping(address => bool)) private _operatorApprovals;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 1527,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (reason.length == 0) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_PURE",
+                    "vulnerability_from_line": 580,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function mulDiv(uint256 x, uint256 y, uint256 denominator) internal pure returns (uint256 result) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_PURE",
+                    "vulnerability_from_line": 930,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function toString(uint256 value) internal pure returns (string memory) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 519,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _msgData() internal view virtual returns (bytes calldata) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 587,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 610,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 624,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 936,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 942,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 1530,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "          assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 315,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function sendValue(address payable recipient, uint256 amount) internal {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 1097,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 315,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function sendValue(address payable recipient, uint256 amount) internal {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 315,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function sendValue(address payable recipient, uint256 amount) internal {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 316,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(address(this).balance >= amount, \"Address: insufficient balance\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 316,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(address(this).balance >= amount, \"Address: insufficient balance\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 316,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(address(this).balance >= amount, \"Address: insufficient balance\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 316,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(address(this).balance >= amount, \"Address: insufficient balance\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 318,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        (bool success, ) = recipient.call{value: amount}(\"\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 318,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        (bool success, ) = recipient.call{value: amount}(\"\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 318,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        (bool success, ) = recipient.call{value: amount}(\"\");\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

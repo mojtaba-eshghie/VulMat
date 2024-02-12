@@ -1,0 +1,703 @@
+{
+    "recoverable-wallet-2207f5a7cc3b2607f7f97a769fbca7fe9235952b/contracts/source/recoverable-wallet.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract RecoverableWallet is Ownable, Erc777TokensRecipient {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tconstructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tErc1820Registry(0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24).setInterfaceImplementer(address(this), keccak256(abi.encodePacked(\"ERC777TokensRecipient\")), address(this));\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t}\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tconstructor(address _owner) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(_owner != address(0), \"Contract must have an owner.\");\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 27,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\towner = _owner;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t}\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tconstructor(address _initial_owner) Ownable(_initial_owner) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t//swc-Code With No Effects: L83\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\treset_recovery();\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t}\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(_owner != address(0), \"Contract must have an owner.\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(msg.sender == owner, \"Only the owner may call this method.\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(msg.sender == pending_owner, \"Only the pending owner can call this method.\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(_pending_owner != address(0), \"Contract must have an owner.\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(active_recovery_address != address(0), \"This method can only be called during a recovery.\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(active_recovery_address == address(0), \"This method cannot be called during a recovery.\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 93,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(_recovery_delay_in_days > 0, \"Recovery delay must be at least 1 day.\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 105,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(_proposed_recovery_delay != 0, \"Only designated recovery addresseses can initiate the recovery process.\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 111,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\trequire(_proposed_recovery_delay < _active_recovery_delay, \"Recovery is already under way and new recovery doesn't have a higher priority.\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 126,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(active_recovery_address != address(0), \"No recovery in progress.\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 127,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(block.timestamp > active_recovery_end_time, \"You must wait until the recovery delay is over before finishing the recovery.\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(new_contract != address(0), \"Contract creation failed.\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 147,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(_success, \"Contract execution failed.\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(msg.sender == owner, \"Only the owner may call this method.\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(msg.sender == pending_owner, \"Only the pending owner can call this method.\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(active_recovery_address != address(0), \"This method can only be called during a recovery.\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(active_recovery_address == address(0), \"This method cannot be called during a recovery.\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 93,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(_recovery_delay_in_days > 0, \"Recovery delay must be at least 1 day.\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 105,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(_proposed_recovery_delay != 0, \"Only designated recovery addresseses can initiate the recovery process.\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 111,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\trequire(_proposed_recovery_delay < _active_recovery_delay, \"Recovery is already under way and new recovery doesn't have a higher priority.\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 127,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(block.timestamp > active_recovery_end_time, \"You must wait until the recovery delay is over before finishing the recovery.\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_49"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "timestamp",
+                    "vulnerability_from_line": 124,
+                    "vulnerability_to_line": 132,
+                    "vulnerability_code": "\tfunction finish_recovery() external only_during_recovery {\n\n\t\t//SWC-Code With No Effects: L124\n\n\t\trequire(active_recovery_address != address(0), \"No recovery in progress.\");\n\n\t\trequire(block.timestamp > active_recovery_end_time, \"You must wait until the recovery delay is over before finishing the recovery.\");\n\n\n\n\t\tpending_owner = active_recovery_address;\n\n\t\treset_recovery();\n\n\t\temit recovery_finished(pending_owner);\n",
+                    "message": "RecoverableWallet.finish_recovery (recoverable-wallet.sol#124-132) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- require(bool,string)(block.timestamp > active_recovery_end_time,You must wait until the recovery delay is over before finishing the recovery.) (recoverable-wallet.sol#127)\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": 143,
+                    "vulnerability_code": "\tfunction deploy(uint256 _value, bytes calldata _data, uint256 _salt) external payable only_owner only_outside_recovery returns (address) {\n\n\t\tbytes memory _data2 = _data;\n\n\t\taddress new_contract;\n\n\t\t/* solium-disable-next-line */\n\n\t\tassembly {\n\n\t\t\tnew_contract := create2(_value, add(_data2, 32), mload(_data2), _salt)\n\n\t\t}\n\n\t\trequire(new_contract != address(0), \"Contract creation failed.\");\n\n\t\treturn new_contract;\n",
+                    "message": "RecoverableWallet.deploy uses assembly (recoverable-wallet.sol#134-143)\n\t- recoverable-wallet.sol#138-140\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.8;\n",
+                    "message": "Detected issues with version pragma in recoverable-wallet.sol:\n\t- pragma solidity0.5.8 (recoverable-wallet.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "low-level-calls",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": 149,
+                    "vulnerability_code": "\tfunction execute(address payable _to, uint256 _value, bytes calldata _data) external payable only_owner only_outside_recovery returns (bytes memory) {\n\n\t\t(bool _success, bytes memory _result) = _to.call.value(_value)(_data);\n\n\t\trequire(_success, \"Contract execution failed.\");\n\n\t\treturn _result;\n",
+                    "message": "Low level call in RecoverableWallet.execute (recoverable-wallet.sol#145-149):\n\t-(_success,_result) = _to.call.value(_value)(_data) recoverable-wallet.sol#146\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction tokensReceived(address, address, address, uint256, bytes calldata, bytes calldata) external { }\n",
+                    "message": "Parameter '' of Erc777TokensRecipient.tokensReceived (recoverable-wallet.sol#13) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction tokensReceived(address, address, address, uint256, bytes calldata, bytes calldata) external { }\n",
+                    "message": "Parameter '_scope_0' of Erc777TokensRecipient.tokensReceived (recoverable-wallet.sol#13) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction tokensReceived(address, address, address, uint256, bytes calldata, bytes calldata) external { }\n",
+                    "message": "Parameter '_scope_1' of Erc777TokensRecipient.tokensReceived (recoverable-wallet.sol#13) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction tokensReceived(address, address, address, uint256, bytes calldata, bytes calldata) external { }\n",
+                    "message": "Parameter '_scope_2' of Erc777TokensRecipient.tokensReceived (recoverable-wallet.sol#13) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction tokensReceived(address, address, address, uint256, bytes calldata, bytes calldata) external { }\n",
+                    "message": "Parameter '_scope_3' of Erc777TokensRecipient.tokensReceived (recoverable-wallet.sol#13) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction tokensReceived(address, address, address, uint256, bytes calldata, bytes calldata) external { }\n",
+                    "message": "Parameter '_scope_4' of Erc777TokensRecipient.tokensReceived (recoverable-wallet.sol#13) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction canImplementInterfaceForAddress(address, bytes32) external pure returns(bytes32) { return keccak256(abi.encodePacked(\"ERC1820_ACCEPT_MAGIC\")); }\n",
+                    "message": "Parameter '' of Erc777TokensRecipient.canImplementInterfaceForAddress (recoverable-wallet.sol#14) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction canImplementInterfaceForAddress(address, bytes32) external pure returns(bytes32) { return keccak256(abi.encodePacked(\"ERC1820_ACCEPT_MAGIC\")); }\n",
+                    "message": "Parameter '_scope_0' of Erc777TokensRecipient.canImplementInterfaceForAddress (recoverable-wallet.sol#14) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tevent ownership_transfer_started(address indexed owner, address indexed pending_owner);\n",
+                    "message": "Event 'Ownable.ownership_transfer_started' (recoverable-wallet.sol#18) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tevent ownership_transfer_cancelled(address indexed owner, address indexed pending_owner);\n",
+                    "message": "Event 'Ownable.ownership_transfer_cancelled' (recoverable-wallet.sol#19) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tevent ownership_transfer_finished(address indexed old_owner, address indexed new_owner);\n",
+                    "message": "Event 'Ownable.ownership_transfer_finished' (recoverable-wallet.sol#20) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tconstructor(address _owner) public {\n",
+                    "message": "Parameter '_owner' of Ownable. (recoverable-wallet.sol#25) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": 45,
+                    "vulnerability_code": "\tfunction start_ownership_transfer(address _pending_owner) external only_owner {\n\n\t\trequire(_pending_owner != address(0), \"Contract must have an owner.\");\n\n\t\tpending_owner = _pending_owner;\n\n\t\temit ownership_transfer_started(owner, pending_owner);\n",
+                    "message": "Function 'Ownable.start_ownership_transfer' (recoverable-wallet.sol#41-45) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction start_ownership_transfer(address _pending_owner) external only_owner {\n",
+                    "message": "Parameter '_pending_owner' of Ownable.start_ownership_transfer (recoverable-wallet.sol#41) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": 51,
+                    "vulnerability_code": "\tfunction cancel_ownership_transfer() external only_owner {\n\n\t\taddress _pending_owner = pending_owner;\n\n\t\tpending_owner = address(0);\n\n\t\temit ownership_transfer_cancelled(owner, _pending_owner);\n",
+                    "message": "Function 'Ownable.cancel_ownership_transfer' (recoverable-wallet.sol#47-51) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": 58,
+                    "vulnerability_code": "\tfunction accept_ownership() external only_pending_owner {\n\n\t\taddress _old_owner = owner;\n\n\t\towner = pending_owner;\n\n\t\tpending_owner = address(0);\n\n\t\temit ownership_transfer_finished(_old_owner, owner);\n",
+                    "message": "Function 'Ownable.accept_ownership' (recoverable-wallet.sol#53-58) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress public pending_owner;\n",
+                    "message": "Variable 'Ownable.pending_owner' (recoverable-wallet.sol#23) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": 33,
+                    "vulnerability_code": "\tmodifier only_owner() {\n\n\t\trequire(msg.sender == owner, \"Only the owner may call this method.\");\n\n\t\t_;\n",
+                    "message": "Modifier 'Ownable.only_owner' (recoverable-wallet.sol#30-33) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": 38,
+                    "vulnerability_code": "\tmodifier only_pending_owner() {\n\n\t\trequire(msg.sender == pending_owner, \"Only the pending owner can call this method.\");\n\n\t\t_;\n",
+                    "message": "Modifier 'Ownable.only_pending_owner' (recoverable-wallet.sol#35-38) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tevent recovery_address_added(address indexed new_recoverer, uint256 recovery_delay_in_days);\n",
+                    "message": "Event 'RecoverableWallet.recovery_address_added' (recoverable-wallet.sol#62) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tevent recovery_address_removed(address indexed old_recoverer);\n",
+                    "message": "Event 'RecoverableWallet.recovery_address_removed' (recoverable-wallet.sol#63) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tevent recovery_started(address indexed new_owner);\n",
+                    "message": "Event 'RecoverableWallet.recovery_started' (recoverable-wallet.sol#64) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tevent recovery_cancelled();\n",
+                    "message": "Event 'RecoverableWallet.recovery_cancelled' (recoverable-wallet.sol#65) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 66,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tevent recovery_finished(address indexed new_pending_owner);\n",
+                    "message": "Event 'RecoverableWallet.recovery_finished' (recoverable-wallet.sol#66) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tconstructor(address _initial_owner) Ownable(_initial_owner) public {\n",
+                    "message": "Parameter '_initial_owner' of RecoverableWallet. (recoverable-wallet.sol#83) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": 96,
+                    "vulnerability_code": "\tfunction add_recovery_address(address _new_recovery_address, uint16 _recovery_delay_in_days) external only_owner only_outside_recovery {\n\n\t\trequire(_recovery_delay_in_days > 0, \"Recovery delay must be at least 1 day.\");\n\n\t\trecovery_delays[_new_recovery_address] = _recovery_delay_in_days;\n\n\t\temit recovery_address_added(_new_recovery_address, _recovery_delay_in_days);\n",
+                    "message": "Function 'RecoverableWallet.add_recovery_address' (recoverable-wallet.sol#92-96) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction add_recovery_address(address _new_recovery_address, uint16 _recovery_delay_in_days) external only_owner only_outside_recovery {\n",
+                    "message": "Parameter '_new_recovery_address' of RecoverableWallet.add_recovery_address (recoverable-wallet.sol#92) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction add_recovery_address(address _new_recovery_address, uint16 _recovery_delay_in_days) external only_owner only_outside_recovery {\n",
+                    "message": "Parameter '_recovery_delay_in_days' of RecoverableWallet.add_recovery_address (recoverable-wallet.sol#92) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 98,
+                    "vulnerability_to_line": 101,
+                    "vulnerability_code": "\tfunction remove_recovery_address(address _old_recovery_address) external only_owner only_outside_recovery {\n\n\t\trecovery_delays[_old_recovery_address] = 0;\n\n\t\temit recovery_address_removed(_old_recovery_address);\n",
+                    "message": "Function 'RecoverableWallet.remove_recovery_address' (recoverable-wallet.sol#98-101) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 98,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction remove_recovery_address(address _old_recovery_address) external only_owner only_outside_recovery {\n",
+                    "message": "Parameter '_old_recovery_address' of RecoverableWallet.remove_recovery_address (recoverable-wallet.sol#98) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 103,
+                    "vulnerability_to_line": 117,
+                    "vulnerability_code": "\tfunction start_recovery() external {\n\n\t\tuint16 _proposed_recovery_delay = recovery_delays[msg.sender];\n\n\t\trequire(_proposed_recovery_delay != 0, \"Only designated recovery addresseses can initiate the recovery process.\");\n\n\n\n\t\tbool _in_recovery = active_recovery_address != address(0);\n\n\t\tif (_in_recovery) {\n\n\t\t\t// NOTE: the recovery address cannot change during recovery, so we can rely on this being != 0\n\n\t\t\tuint16 _active_recovery_delay = recovery_delays[active_recovery_address];\n\n\t\t\trequire(_proposed_recovery_delay < _active_recovery_delay, \"Recovery is already under way and new recovery doesn't have a higher priority.\");\n\n\t\t}\n\n\n\n\t\tactive_recovery_address = msg.sender;\n\n\t\tactive_recovery_end_time = block.timestamp + _proposed_recovery_delay * 1 days;\n\n\t\temit recovery_started(msg.sender);\n",
+                    "message": "Function 'RecoverableWallet.start_recovery' (recoverable-wallet.sol#103-117) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 119,
+                    "vulnerability_to_line": 122,
+                    "vulnerability_code": "\tfunction cancel_recovery() external only_owner only_during_recovery {\n\n\t\treset_recovery();\n\n\t\temit recovery_cancelled();\n",
+                    "message": "Function 'RecoverableWallet.cancel_recovery' (recoverable-wallet.sol#119-122) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 124,
+                    "vulnerability_to_line": 132,
+                    "vulnerability_code": "\tfunction finish_recovery() external only_during_recovery {\n\n\t\t//SWC-Code With No Effects: L124\n\n\t\trequire(active_recovery_address != address(0), \"No recovery in progress.\");\n\n\t\trequire(block.timestamp > active_recovery_end_time, \"You must wait until the recovery delay is over before finishing the recovery.\");\n\n\n\n\t\tpending_owner = active_recovery_address;\n\n\t\treset_recovery();\n\n\t\temit recovery_finished(pending_owner);\n",
+                    "message": "Function 'RecoverableWallet.finish_recovery' (recoverable-wallet.sol#124-132) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction deploy(uint256 _value, bytes calldata _data, uint256 _salt) external payable only_owner only_outside_recovery returns (address) {\n",
+                    "message": "Parameter '_data' of RecoverableWallet.deploy (recoverable-wallet.sol#134) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction execute(address payable _to, uint256 _value, bytes calldata _data) external payable only_owner only_outside_recovery returns (bytes memory) {\n",
+                    "message": "Parameter '_to' of RecoverableWallet.execute (recoverable-wallet.sol#145) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction execute(address payable _to, uint256 _value, bytes calldata _data) external payable only_owner only_outside_recovery returns (bytes memory) {\n",
+                    "message": "Parameter '_value' of RecoverableWallet.execute (recoverable-wallet.sol#145) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction execute(address payable _to, uint256 _value, bytes calldata _data) external payable only_owner only_outside_recovery returns (bytes memory) {\n",
+                    "message": "Parameter '_data' of RecoverableWallet.execute (recoverable-wallet.sol#145) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": 155,
+                    "vulnerability_code": "\tfunction reset_recovery() private {\n\n\t\t//SWC-Presence of unused variables: L146\n\n\t\tactive_recovery_address = address(0);\n\n\t\tactive_recovery_end_time = uint256(-1);\n",
+                    "message": "Function 'RecoverableWallet.reset_recovery' (recoverable-wallet.sol#151-155) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tmapping(address => uint16) public recovery_delays;\n",
+                    "message": "Variable 'RecoverableWallet.recovery_delays' (recoverable-wallet.sol#68) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 69,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress public active_recovery_address;\n",
+                    "message": "Variable 'RecoverableWallet.active_recovery_address' (recoverable-wallet.sol#69) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tuint256 public active_recovery_end_time = uint256(-1);\n",
+                    "message": "Variable 'RecoverableWallet.active_recovery_end_time' (recoverable-wallet.sol#71) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 73,
+                    "vulnerability_to_line": 76,
+                    "vulnerability_code": "\tmodifier only_during_recovery() {\n\n\t\trequire(active_recovery_address != address(0), \"This method can only be called during a recovery.\");\n\n\t\t_;\n",
+                    "message": "Modifier 'RecoverableWallet.only_during_recovery' (recoverable-wallet.sol#73-76) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 78,
+                    "vulnerability_to_line": 81,
+                    "vulnerability_code": "\tmodifier only_outside_recovery() {\n\n\t\trequire(active_recovery_address == address(0), \"This method cannot be called during a recovery.\");\n\n\t\t_;\n",
+                    "message": "Modifier 'RecoverableWallet.only_outside_recovery' (recoverable-wallet.sol#78-81) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 159,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tevent wallet_created(address indexed owner, RecoverableWallet indexed wallet);\n",
+                    "message": "Event 'RecoverableWalletFactory.wallet_created' (recoverable-wallet.sol#159) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 161,
+                    "vulnerability_to_line": 165,
+                    "vulnerability_code": "\tfunction create_wallet() external returns (RecoverableWallet) {\n\n\t\tRecoverableWallet wallet = new RecoverableWallet(msg.sender);\n\n\t\temit wallet_created(msg.sender, wallet);\n\n\t\treturn wallet;\n",
+                    "message": "Function 'RecoverableWalletFactory.create_wallet' (recoverable-wallet.sol#161-165) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tErc1820Registry(0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24).setInterfaceImplementer(address(this), keccak256(abi.encodePacked(\"ERC777TokensRecipient\")), address(this));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tpending_owner = address(0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 56,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tpending_owner = address(0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract RecoverableWallet is Ownable, Erc777TokensRecipient {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction deploy(uint256 _value, bytes calldata _data, uint256 _salt) external payable only_owner only_outside_recovery returns (address) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction deploy(uint256 _value, bytes calldata _data, uint256 _salt) external payable only_owner only_outside_recovery returns (address) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction deploy(uint256 _value, bytes calldata _data, uint256 _salt) external payable only_owner only_outside_recovery returns (address) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction deploy(uint256 _value, bytes calldata _data, uint256 _salt) external payable only_owner only_outside_recovery returns (address) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction deploy(uint256 _value, bytes calldata _data, uint256 _salt) external payable only_owner only_outside_recovery returns (address) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 135,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tbytes memory _data2 = _data;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 136,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\taddress new_contract;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\tnew_contract := create2(_value, add(_data2, 32), mload(_data2), _salt)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\tnew_contract := create2(_value, add(_data2, 32), mload(_data2), _salt)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\tnew_contract := create2(_value, add(_data2, 32), mload(_data2), _salt)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\tnew_contract := create2(_value, add(_data2, 32), mload(_data2), _salt)\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

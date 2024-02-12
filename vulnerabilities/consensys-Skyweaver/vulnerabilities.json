@@ -1,0 +1,916 @@
+{
+    "Skyweaver-contracts-bde0c184db6168bf86656a48b12d5747950b54d9/contracts/mocks/FactoryMock.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 140,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor(address _factoryManagerAddr) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    factoryManager = ISWSupplyManager(_factoryManagerAddr);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 142,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_13"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.16;\n",
+                    "message": "Different versions of Solidity is used in FactoryMock.sol:\n\t- Version used: ['ABIEncoderV2', '^0.5.16']\n\t- FactoryMock.sol#3 declares pragma solidity^0.5.16\n\t- FactoryMock.sol#4 declares pragma experimentalABIEncoderV2\n\t- FactoryMock.sol#134 declares pragma solidity^0.5.16\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 144,
+                    "vulnerability_to_line": 151,
+                    "vulnerability_code": "  function batchMint(\n\n    address _to,\n\n    uint256[] memory _ids,\n\n    uint256[] memory _amounts,\n\n    bytes memory _data) public\n\n  {\n\n    factoryManager.batchMint(_to, _ids, _amounts, _data);\n",
+                    "message": "FactoryMock.batchMint (FactoryMock.sol#144-151) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": 160,
+                    "vulnerability_code": "  function mint(\n\n    address _to,\n\n    uint256 _id,\n\n    uint256 _amount,\n\n    bytes memory _data) public\n\n  {\n\n    factoryManager.mint(_to, _id, _amount, _data);\n",
+                    "message": "FactoryMock.mint (FactoryMock.sol#153-160) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.16;\n",
+                    "message": "Detected issues with version pragma in FactoryMock.sol:\n\t- pragma solidity^0.5.16 (FactoryMock.sol#3): it allows old versions\n\t- pragma solidity^0.5.16 (FactoryMock.sol#134): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 140,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor(address _factoryManagerAddr) public {\n",
+                    "message": "Parameter '_factoryManagerAddr' of FactoryMock. (FactoryMock.sol#140) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address _to,\n",
+                    "message": "Parameter '_to' of FactoryMock.batchMint (FactoryMock.sol#145) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 146,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256[] memory _ids,\n",
+                    "message": "Parameter '_ids' of FactoryMock.batchMint (FactoryMock.sol#146) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 147,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256[] memory _amounts,\n",
+                    "message": "Parameter '_amounts' of FactoryMock.batchMint (FactoryMock.sol#147) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 148,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes memory _data) public\n",
+                    "message": "Parameter '_data' of FactoryMock.batchMint (FactoryMock.sol#148) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 154,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address _to,\n",
+                    "message": "Parameter '_to' of FactoryMock.mint (FactoryMock.sol#154) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 155,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 _id,\n",
+                    "message": "Parameter '_id' of FactoryMock.mint (FactoryMock.sol#155) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 156,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 _amount,\n",
+                    "message": "Parameter '_amount' of FactoryMock.mint (FactoryMock.sol#156) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 157,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes memory _data) public\n",
+                    "message": "Parameter '_data' of FactoryMock.mint (FactoryMock.sol#157) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.16;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.16;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function batchMint(address _to, uint256[] calldata _ids, uint256[] calldata _amounts, bytes calldata _data) external;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function batchMint(address _to, uint256[] calldata _ids, uint256[] calldata _amounts, bytes calldata _data) external;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function batchMint(address _to, uint256[] calldata _ids, uint256[] calldata _amounts, bytes calldata _data) external;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function batchMint(address _to, uint256[] calldata _ids, uint256[] calldata _amounts, bytes calldata _data) external;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function batchMint(address _to, uint256[] calldata _ids, uint256[] calldata _amounts, bytes calldata _data) external;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Skyweaver-contracts-bde0c184db6168bf86656a48b12d5747950b54d9/contracts/abstract/AbstractERC1155MintBurn.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_19"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.16;\n",
+                    "message": "Detected issues with version pragma in AbstractERC1155MintBurn.sol:\n\t- pragma solidity^0.5.16 (AbstractERC1155MintBurn.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _mint(address, uint256, uint256, bytes memory) internal;\n",
+                    "message": "Function 'AbstractERC1155MintBurn._mint' (AbstractERC1155MintBurn.sol#7) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _mint(address, uint256, uint256, bytes memory) internal;\n",
+                    "message": "Parameter '' of AbstractERC1155MintBurn._mint (AbstractERC1155MintBurn.sol#7) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _mint(address, uint256, uint256, bytes memory) internal;\n",
+                    "message": "Parameter '_scope_0' of AbstractERC1155MintBurn._mint (AbstractERC1155MintBurn.sol#7) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _mint(address, uint256, uint256, bytes memory) internal;\n",
+                    "message": "Parameter '_scope_1' of AbstractERC1155MintBurn._mint (AbstractERC1155MintBurn.sol#7) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _mint(address, uint256, uint256, bytes memory) internal;\n",
+                    "message": "Parameter '_scope_2' of AbstractERC1155MintBurn._mint (AbstractERC1155MintBurn.sol#7) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _batchMint(address, uint256[] memory, uint256[] memory, bytes memory) internal;\n",
+                    "message": "Function 'AbstractERC1155MintBurn._batchMint' (AbstractERC1155MintBurn.sol#8) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _batchMint(address, uint256[] memory, uint256[] memory, bytes memory) internal;\n",
+                    "message": "Parameter '' of AbstractERC1155MintBurn._batchMint (AbstractERC1155MintBurn.sol#8) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _batchMint(address, uint256[] memory, uint256[] memory, bytes memory) internal;\n",
+                    "message": "Parameter '_scope_0' of AbstractERC1155MintBurn._batchMint (AbstractERC1155MintBurn.sol#8) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _batchMint(address, uint256[] memory, uint256[] memory, bytes memory) internal;\n",
+                    "message": "Parameter '_scope_1' of AbstractERC1155MintBurn._batchMint (AbstractERC1155MintBurn.sol#8) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _batchMint(address, uint256[] memory, uint256[] memory, bytes memory) internal;\n",
+                    "message": "Parameter '_scope_2' of AbstractERC1155MintBurn._batchMint (AbstractERC1155MintBurn.sol#8) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _burn(address, uint256, uint256) internal;\n",
+                    "message": "Function 'AbstractERC1155MintBurn._burn' (AbstractERC1155MintBurn.sol#9) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _burn(address, uint256, uint256) internal;\n",
+                    "message": "Parameter '' of AbstractERC1155MintBurn._burn (AbstractERC1155MintBurn.sol#9) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _burn(address, uint256, uint256) internal;\n",
+                    "message": "Parameter '_scope_0' of AbstractERC1155MintBurn._burn (AbstractERC1155MintBurn.sol#9) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _burn(address, uint256, uint256) internal;\n",
+                    "message": "Parameter '_scope_1' of AbstractERC1155MintBurn._burn (AbstractERC1155MintBurn.sol#9) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _batchBurn(address, uint256[] memory, uint256[] memory) internal;\n",
+                    "message": "Function 'AbstractERC1155MintBurn._batchBurn' (AbstractERC1155MintBurn.sol#10) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _batchBurn(address, uint256[] memory, uint256[] memory) internal;\n",
+                    "message": "Parameter '' of AbstractERC1155MintBurn._batchBurn (AbstractERC1155MintBurn.sol#10) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _batchBurn(address, uint256[] memory, uint256[] memory) internal;\n",
+                    "message": "Parameter '_scope_0' of AbstractERC1155MintBurn._batchBurn (AbstractERC1155MintBurn.sol#10) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _batchBurn(address, uint256[] memory, uint256[] memory) internal;\n",
+                    "message": "Parameter '_scope_1' of AbstractERC1155MintBurn._batchBurn (AbstractERC1155MintBurn.sol#10) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.16;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Skyweaver-contracts-bde0c184db6168bf86656a48b12d5747950b54d9/contracts/migrations/Migrations.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": 21,
+                    "vulnerability_code": "  function setCompleted(uint completed) public restricted {\n\n    last_completed_migration = completed;\n",
+                    "message": "Migrations.setCompleted (Migrations.sol#19-21) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": 26,
+                    "vulnerability_code": "  function upgrade(address new_address) public restricted {\n\n    Migrations upgraded = Migrations(new_address);\n\n    upgraded.setCompleted(last_completed_migration);\n",
+                    "message": "Migrations.upgrade (Migrations.sol#23-26) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.16;\n",
+                    "message": "Detected issues with version pragma in Migrations.sol:\n\t- pragma solidity^0.5.16 (Migrations.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function upgrade(address new_address) public restricted {\n",
+                    "message": "Parameter 'new_address' of Migrations.upgrade (Migrations.sol#23) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint public last_completed_migration;\n",
+                    "message": "Variable 'Migrations.last_completed_migration' (Migrations.sol#8) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.16;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Skyweaver-contracts-bde0c184db6168bf86656a48b12d5747950b54d9/contracts/utils/Ownable.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  constructor () internal {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    emit OwnershipTransferred(address(0), owner);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(msg.sender == owner, \"Ownable#onlyOwner: SENDER_IS_NOT_OWNER\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(_newOwner != address(0), \"Ownable#transferOwnership: INVALID_ADDRESS\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(msg.sender == owner, \"Ownable#onlyOwner: SENDER_IS_NOT_OWNER\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    require(_newOwner != address(0), \"Ownable#transferOwnership: INVALID_ADDRESS\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.16;\n",
+                    "message": "Different versions of Solidity is used in Ownable.sol:\n\t- Version used: ['ABIEncoderV2', '^0.5.16']\n\t- Ownable.sol#3 declares pragma solidity^0.5.16\n\t- Ownable.sol#4 declares pragma experimentalABIEncoderV2\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": 41,
+                    "vulnerability_code": "  function transferOwnership(address _newOwner) public onlyOwner {\n\n    require(_newOwner != address(0), \"Ownable#transferOwnership: INVALID_ADDRESS\");\n\n    owner = _newOwner;\n\n    emit OwnershipTransferred(owner, _newOwner);\n",
+                    "message": "Ownable.transferOwnership (Ownable.sol#37-41) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": 48,
+                    "vulnerability_code": "  function getOwner() public view returns (address) {\n\n    return owner;\n",
+                    "message": "Ownable.getOwner (Ownable.sol#46-48) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.16;\n",
+                    "message": "Detected issues with version pragma in Ownable.sol:\n\t- pragma solidity^0.5.16 (Ownable.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferOwnership(address _newOwner) public onlyOwner {\n",
+                    "message": "Parameter '_newOwner' of Ownable.transferOwnership (Ownable.sol#37) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.16;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Skyweaver-contracts-bde0c184db6168bf86656a48b12d5747950b54d9/contracts/utils/TxnAggregator.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint256 i = 0; i < _txns.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 56,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint256 i = 0; i < _txns.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint256 i = 0; i < n_txns; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint256 i = 0; i < _txns.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 56,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint256 i = 0; i < _txns.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint256 i = 0; i < n_txns; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_15"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "calls-loop",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      (bool success, bytes memory resp) = _txns[i].dest.call(_txns[i].data);\n",
+                    "message": "TxnAggregator.executeTxns has external calls inside a loop:\n\t- (success,resp) = _txns[i].dest.call(_txns[i].data) (TxnAggregator.sol#36)\n"
+                },
+                {
+                    "name": "calls-loop",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      (bool success, bytes memory resp) = _contract.call(_txns[i]);\n",
+                    "message": "TxnAggregator.singleContract_executeTxns has external calls inside a loop:\n\t- (success,resp) = _contract.call(_txns[i]) (TxnAggregator.sol#57)\n"
+                },
+                {
+                    "name": "calls-loop",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      (success, responses[i]) = _txns[i].dest.staticcall(_txns[i].data);\n",
+                    "message": "TxnAggregator.viewTxns has external calls inside a loop:\n\t- (success,responses[i]) = _txns[i].dest.staticcall(_txns[i].data) (TxnAggregator.sol#85)\n"
+                },
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.16;\n",
+                    "message": "Different versions of Solidity is used in TxnAggregator.sol:\n\t- Version used: ['ABIEncoderV2', '^0.5.16']\n\t- TxnAggregator.sol#3 declares pragma solidity^0.5.16\n\t- TxnAggregator.sol#4 declares pragma experimentalABIEncoderV2\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.16;\n",
+                    "message": "Detected issues with version pragma in TxnAggregator.sol:\n\t- pragma solidity^0.5.16 (TxnAggregator.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "low-level-calls",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": 46,
+                    "vulnerability_code": "  function executeTxns(ContractCall[] calldata _txns, bool _revert) external {\n\n    // Execute all txns\n\n    for (uint256 i = 0; i < _txns.length; i++) {\n\n      (bool success, bytes memory resp) = _txns[i].dest.call(_txns[i].data);\n\n      if (!success) {\n\n        // Will either revert on error or log it\n\n        if (_revert) {\n\n          revert(string(resp));\n\n        } else {\n\n          emit Error(i, resp);\n\n        }\n\n      }\n\n    }\n",
+                    "message": "Low level call in TxnAggregator.executeTxns (TxnAggregator.sol#33-46):\n\t-(success,resp) = _txns[i].dest.call(_txns[i].data) TxnAggregator.sol#36\n"
+                },
+                {
+                    "name": "low-level-calls",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": 67,
+                    "vulnerability_code": "  function singleContract_executeTxns(address _contract, bytes[] calldata _txns, bool _revert) external {\n\n    // Execute all txns\n\n    for (uint256 i = 0; i < _txns.length; i++) {\n\n      (bool success, bytes memory resp) = _contract.call(_txns[i]);\n\n      if (!success) {\n\n        // Will either revert on error or log it\n\n        if (_revert) {\n\n          revert(string(resp));\n\n        } else {\n\n          emit Error(i, resp);\n\n        }\n\n      }\n\n    }\n",
+                    "message": "Low level call in TxnAggregator.singleContract_executeTxns (TxnAggregator.sol#54-67):\n\t-(success,resp) = _contract.call(_txns[i]) TxnAggregator.sol#57\n"
+                },
+                {
+                    "name": "low-level-calls",
+                    "vulnerability_from_line": 77,
+                    "vulnerability_to_line": 87,
+                    "vulnerability_code": "  function viewTxns(ContractCall[] calldata _txns) external view returns (bytes[] memory) {\n\n    // Declaration\n\n    bool success;\n\n    uint256 n_txns = _txns.length;\n\n    bytes[] memory responses = new bytes[](n_txns);\n\n\n\n    // Execute all txns\n\n    for (uint256 i = 0; i < n_txns; i++) {\n\n      (success, responses[i]) = _txns[i].dest.staticcall(_txns[i].data);\n\n    }\n",
+                    "message": "Low level call in TxnAggregator.viewTxns (TxnAggregator.sol#77-87):\n\t-(success,responses[i]) = _txns[i].dest.staticcall(_txns[i].data) TxnAggregator.sol#85\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function executeTxns(ContractCall[] calldata _txns, bool _revert) external {\n",
+                    "message": "Parameter '_txns' of TxnAggregator.executeTxns (TxnAggregator.sol#33) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function executeTxns(ContractCall[] calldata _txns, bool _revert) external {\n",
+                    "message": "Parameter '_revert' of TxnAggregator.executeTxns (TxnAggregator.sol#33) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": 67,
+                    "vulnerability_code": "  function singleContract_executeTxns(address _contract, bytes[] calldata _txns, bool _revert) external {\n\n    // Execute all txns\n\n    for (uint256 i = 0; i < _txns.length; i++) {\n\n      (bool success, bytes memory resp) = _contract.call(_txns[i]);\n\n      if (!success) {\n\n        // Will either revert on error or log it\n\n        if (_revert) {\n\n          revert(string(resp));\n\n        } else {\n\n          emit Error(i, resp);\n\n        }\n\n      }\n\n    }\n",
+                    "message": "Function 'TxnAggregator.singleContract_executeTxns' (TxnAggregator.sol#54-67) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function singleContract_executeTxns(address _contract, bytes[] calldata _txns, bool _revert) external {\n",
+                    "message": "Parameter '_contract' of TxnAggregator.singleContract_executeTxns (TxnAggregator.sol#54) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function singleContract_executeTxns(address _contract, bytes[] calldata _txns, bool _revert) external {\n",
+                    "message": "Parameter '_txns' of TxnAggregator.singleContract_executeTxns (TxnAggregator.sol#54) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function singleContract_executeTxns(address _contract, bytes[] calldata _txns, bool _revert) external {\n",
+                    "message": "Parameter '_revert' of TxnAggregator.singleContract_executeTxns (TxnAggregator.sol#54) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 77,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function viewTxns(ContractCall[] calldata _txns) external view returns (bytes[] memory) {\n",
+                    "message": "Parameter '_txns' of TxnAggregator.viewTxns (TxnAggregator.sol#77) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint256 i = 0; i < _txns.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint256 i = 0; i < _txns.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.16;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UNCHECKED_CALL",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      (bool success, bytes memory resp) = _txns[i].dest.call(_txns[i].data);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UNCHECKED_CALL",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      (bool success, bytes memory resp) = _contract.call(_txns[i]);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function singleContract_executeTxns(address _contract, bytes[] calldata _txns, bool _revert) external {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function singleContract_executeTxns(address _contract, bytes[] calldata _txns, bool _revert) external {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function singleContract_executeTxns(address _contract, bytes[] calldata _txns, bool _revert) external {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 56,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint256 i = 0; i < _txns.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 56,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint256 i = 0; i < _txns.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 56,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint256 i = 0; i < _txns.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      (bool success, bytes memory resp) = _contract.call(_txns[i]);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      (bool success, bytes memory resp) = _contract.call(_txns[i]);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      if (!success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 60,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (_revert) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "          revert(string(resp));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "          revert(string(resp));\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "Skyweaver-contracts-bde0c184db6168bf86656a48b12d5747950b54d9/contracts/interfaces/ISWSupplyManager.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.16;\n",
+                    "message": "Different versions of Solidity is used in ISWSupplyManager.sol:\n\t- Version used: ['ABIEncoderV2', '^0.5.16']\n\t- ISWSupplyManager.sol#3 declares pragma solidity^0.5.16\n\t- ISWSupplyManager.sol#4 declares pragma experimentalABIEncoderV2\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.16;\n",
+                    "message": "Detected issues with version pragma in ISWSupplyManager.sol:\n\t- pragma solidity^0.5.16 (ISWSupplyManager.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.16;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function batchMint(address _to, uint256[] calldata _ids, uint256[] calldata _amounts, bytes calldata _data) external;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function batchMint(address _to, uint256[] calldata _ids, uint256[] calldata _amounts, bytes calldata _data) external;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function batchMint(address _to, uint256[] calldata _ids, uint256[] calldata _amounts, bytes calldata _data) external;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function batchMint(address _to, uint256[] calldata _ids, uint256[] calldata _amounts, bytes calldata _data) external;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function batchMint(address _to, uint256[] calldata _ids, uint256[] calldata _amounts, bytes calldata _data) external;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

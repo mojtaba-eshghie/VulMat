@@ -1,0 +1,512 @@
+{
+    "contracts-33725cd8d7aa018022a54aaa0e7fa29a89a4c2a4/staking/RewardsDistributionRecipient.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.sender == rewardsDistribution, \"Caller is not RewardsDistribution contract\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.sender == rewardsDistribution, \"Caller is not RewardsDistribution contract\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "uninitialized-state",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address public rewardsDistribution;\n",
+                    "message": "RewardsDistributionRecipient.rewardsDistribution (RewardsDistributionRecipient.sol#6) is never initialized. It is used in:\n"
+                },
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address public rewardsDistribution;\n",
+                    "message": "RewardsDistributionRecipient.rewardsDistribution should be constant (RewardsDistributionRecipient.sol#6)\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.16;\n",
+                    "message": "Detected issues with version pragma in RewardsDistributionRecipient.sol:\n\t- pragma solidity^0.5.16 (RewardsDistributionRecipient.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.16;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "contracts-33725cd8d7aa018022a54aaa0e7fa29a89a4c2a4/staking/interfaces/IStakingRewards.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.24;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "contracts-33725cd8d7aa018022a54aaa0e7fa29a89a4c2a4/dex/Mutlicall.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for(uint256 i = 0; i < calls.length; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for(uint256 i = 0; i < calls.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for(uint256 i = 0; i < calls.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_12"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "calls-loop",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            (bool success, bytes memory ret) = calls[i].target.call(calls[i].callData);\n",
+                    "message": "Multicall.aggregate has external calls inside a loop:\n\t- (success,ret) = calls[i].target.call(calls[i].callData) (Mutlicall.sol#20)\n"
+                },
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": "Different versions of Solidity is used in Mutlicall.sol:\n\t- Version used: ['>=0.5.0', 'ABIEncoderV2']\n\t- Mutlicall.sol#3 declares pragma solidity>=0.5.0\n\t- Mutlicall.sol#4 declares pragma experimentalABIEncoderV2\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": 24,
+                    "vulnerability_code": "    function aggregate(Call[] memory calls) public returns (uint256 blockNumber, bytes[] memory returnData) {\n\n        blockNumber = block.number;\n\n        returnData = new bytes[](calls.length);\n\n        for(uint256 i = 0; i < calls.length; i++) {\n\n            (bool success, bytes memory ret) = calls[i].target.call(calls[i].callData);\n\n            require(success);\n\n            returnData[i] = ret;\n\n        }\n",
+                    "message": "Multicall.aggregate (Mutlicall.sol#16-24) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": 28,
+                    "vulnerability_code": "    function getEthBalance(address addr) public view returns (uint256 balance) {\n\n        balance = addr.balance;\n",
+                    "message": "Multicall.getEthBalance (Mutlicall.sol#26-28) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": 31,
+                    "vulnerability_code": "    function getBlockHash(uint256 blockNumber) public view returns (bytes32 blockHash) {\n\n        blockHash = blockhash(blockNumber);\n",
+                    "message": "Multicall.getBlockHash (Mutlicall.sol#29-31) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": 34,
+                    "vulnerability_code": "    function getLastBlockHash() public view returns (bytes32 blockHash) {\n\n        blockHash = blockhash(block.number - 1);\n",
+                    "message": "Multicall.getLastBlockHash (Mutlicall.sol#32-34) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": 37,
+                    "vulnerability_code": "    function getCurrentBlockTimestamp() public view returns (uint256 timestamp) {\n\n        timestamp = block.timestamp;\n",
+                    "message": "Multicall.getCurrentBlockTimestamp (Mutlicall.sol#35-37) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": 40,
+                    "vulnerability_code": "    function getCurrentBlockDifficulty() public view returns (uint256 difficulty) {\n\n        difficulty = block.difficulty;\n",
+                    "message": "Multicall.getCurrentBlockDifficulty (Mutlicall.sol#38-40) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": 43,
+                    "vulnerability_code": "    function getCurrentBlockGasLimit() public view returns (uint256 gaslimit) {\n\n        gaslimit = block.gaslimit;\n",
+                    "message": "Multicall.getCurrentBlockGasLimit (Mutlicall.sol#41-43) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": 46,
+                    "vulnerability_code": "    function getCurrentBlockCoinbase() public view returns (address coinbase) {\n\n        coinbase = block.coinbase;\n",
+                    "message": "Multicall.getCurrentBlockCoinbase (Mutlicall.sol#44-46) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": "Detected issues with version pragma in Mutlicall.sol:\n\t- pragma solidity>=0.5.0 (Mutlicall.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "low-level-calls",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": 24,
+                    "vulnerability_code": "    function aggregate(Call[] memory calls) public returns (uint256 blockNumber, bytes[] memory returnData) {\n\n        blockNumber = block.number;\n\n        returnData = new bytes[](calls.length);\n\n        for(uint256 i = 0; i < calls.length; i++) {\n\n            (bool success, bytes memory ret) = calls[i].target.call(calls[i].callData);\n\n            require(success);\n\n            returnData[i] = ret;\n\n        }\n",
+                    "message": "Low level call in Multicall.aggregate (Mutlicall.sol#16-24):\n\t-(success,ret) = calls[i].target.call(calls[i].callData) Mutlicall.sol#20\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for(uint256 i = 0; i < calls.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for(uint256 i = 0; i < calls.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function aggregate(Call[] memory calls) public returns (uint256 blockNumber, bytes[] memory returnData) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UNCHECKED_CALL",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            (bool success, bytes memory ret) = calls[i].target.call(calls[i].callData);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "contracts-33725cd8d7aa018022a54aaa0e7fa29a89a4c2a4/dex/interfaces/IERC20.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": "Detected issues with version pragma in IERC20.sol:\n\t- pragma solidity>=0.5.0 (IERC20.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "contracts-33725cd8d7aa018022a54aaa0e7fa29a89a4c2a4/dex/interfaces/IUniswapV2ERC20.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": "Detected issues with version pragma in IUniswapV2ERC20.sol:\n\t- pragma solidity>=0.5.0 (IUniswapV2ERC20.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function DOMAIN_SEPARATOR() external view returns (bytes32);\n",
+                    "message": "Function 'IUniswapV2ERC20.DOMAIN_SEPARATOR' (IUniswapV2ERC20.sol#20) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function PERMIT_TYPEHASH() external pure returns (bytes32);\n",
+                    "message": "Function 'IUniswapV2ERC20.PERMIT_TYPEHASH' (IUniswapV2ERC20.sol#21) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "contracts-33725cd8d7aa018022a54aaa0e7fa29a89a4c2a4/dex/interfaces/IUniswapV2Factory.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_4"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": "Detected issues with version pragma in IUniswapV2Factory.sol:\n\t- pragma solidity>=0.5.0 (IUniswapV2Factory.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allPairs(uint) external view returns (address pair);\n",
+                    "message": "Parameter '' of IUniswapV2Factory.allPairs (IUniswapV2Factory.sol#12) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setFeeTo(address) external;\n",
+                    "message": "Parameter '' of IUniswapV2Factory.setFeeTo (IUniswapV2Factory.sol#17) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setFeeToSetter(address) external;\n",
+                    "message": "Parameter '' of IUniswapV2Factory.setFeeToSetter (IUniswapV2Factory.sol#18) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "contracts-33725cd8d7aa018022a54aaa0e7fa29a89a4c2a4/dex/interfaces/IUniswapV2Pair.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": "Detected issues with version pragma in IUniswapV2Pair.sol:\n\t- pragma solidity>=0.5.0 (IUniswapV2Pair.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function DOMAIN_SEPARATOR() external view returns (bytes32);\n",
+                    "message": "Function 'IUniswapV2Pair.DOMAIN_SEPARATOR' (IUniswapV2Pair.sol#20) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function PERMIT_TYPEHASH() external pure returns (bytes32);\n",
+                    "message": "Function 'IUniswapV2Pair.PERMIT_TYPEHASH' (IUniswapV2Pair.sol#21) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function MINIMUM_LIQUIDITY() external pure returns (uint);\n",
+                    "message": "Function 'IUniswapV2Pair.MINIMUM_LIQUIDITY' (IUniswapV2Pair.sol#38) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function initialize(address, address) external;\n",
+                    "message": "Parameter '' of IUniswapV2Pair.initialize (IUniswapV2Pair.sol#53) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function initialize(address, address) external;\n",
+                    "message": "Parameter '_scope_0' of IUniswapV2Pair.initialize (IUniswapV2Pair.sol#53) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getReserves() external view returns (uint112 reserve0, uint112 reserve1, uint32 blockTimestampLast);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 48,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function burn(address to) external returns (uint amount0, uint amount1);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "contracts-33725cd8d7aa018022a54aaa0e7fa29a89a4c2a4/dex/interfaces/IUniswapV2Callee.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": "Detected issues with version pragma in IUniswapV2Callee.sol:\n\t- pragma solidity>=0.5.0 (IUniswapV2Callee.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.5.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

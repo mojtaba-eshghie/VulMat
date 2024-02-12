@@ -1,0 +1,395 @@
+{
+    "Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t    for(uint256 i = 0; i < _to.length; i++){\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 73,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t        if(balances[_to[i]] > 0){\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t    for(uint256 i = 0; i < _to.length; i++){\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 122,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(balances[_from] >= _value\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 123,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\t&& allowed[_from][msg.sender] >= _value);\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t    for(uint256 i = 0; i < _to.length; i++){\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_35"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "shadowing-abstract",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tuint256 public constant totalSupply = 1000000000000000000000000000;\n",
+                    "message": "FLUX.totalSupply (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#44) shadows:\n\t- ERC20Interface.totalSupply (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#30)\n"
+                },
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tuint256 public totalSupply;\n",
+                    "message": "ERC20Interface.totalSupply should be constant (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#30)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": 25,
+                    "vulnerability_code": "    function transferOwnership(address _new) onlyOwner public {\n\n        address oldaddr = owner;\n\n        owner = _new;\n\n        emit TransferOwnership(oldaddr, owner);\n",
+                    "message": "Owned.transferOwnership (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#21-25) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction balanceOf(address _owner) public constant returns (uint256 balance);\n",
+                    "message": "ERC20Interface.balanceOf (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#31) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 101,
+                    "vulnerability_to_line": 103,
+                    "vulnerability_code": "\tfunction balanceOf(address _owner) public constant returns (uint256 balance){\n\n\t\treturn balances[_owner];\n",
+                    "message": "FLUX.balanceOf (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#101-103) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 121,
+                    "vulnerability_to_line": 139,
+                    "vulnerability_code": "\tfunction transferFrom(address _from, address _to, uint256 _value) notStopped public returns (bool success){\n\n\t\trequire(balances[_from] >= _value\n\n\t\t\t&& allowed[_from][msg.sender] >= _value);\n\n\n\n\t\tif(blackList[_from] > 0){\n\n\t\t\temit RejectedPaymentFromBlacklistedAddr(_from, _to, _value);\n\n\t\t\treturn false;\n\n\t\t}\n\n\t\tif(blackList[_to] > 0){\n\n\t\t\temit RejectedPaymentToBlacklistedAddr(_from, _to, _value);\n\n\t\t\treturn false;\n\n\t\t}\n\n\n\n\t\tbalances[_from] -= _value;\n\n\t\tallowed[_from][msg.sender] -= _value;\n\n\t\tbalances[_to] += _value;\n\n\t\temit Transfer(_from, _to, _value);\n\n\t\treturn true;\n",
+                    "message": "FLUX.transferFrom (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#121-139) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transferFrom(address _from, address _to, uint256 _value) public returns (bool success);\n",
+                    "message": "ERC20Interface.transferFrom (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#33) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction approve(address _spender, uint256 _value) public returns (bool success);\n",
+                    "message": "ERC20Interface.approve (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#34) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 140,
+                    "vulnerability_to_line": 144,
+                    "vulnerability_code": "\tfunction approve(address _spender, uint256 _value) notStopped public returns (bool success){\n\n\t\tallowed[msg.sender][_spender] = _value;\n\n\t\temit Approval(msg.sender, _spender, _value);\n\n\t\treturn true;\n",
+                    "message": "FLUX.approve (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#140-144) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": 147,
+                    "vulnerability_code": "\tfunction allowance(address _owner, address _spender) public constant returns (uint256 remaining){\n\n\t\treturn allowed[_owner][_spender];\n",
+                    "message": "FLUX.allowance (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#145-147) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction allowance(address _owner, address _spender) public constant returns (uint256 remaining);\n",
+                    "message": "ERC20Interface.allowance (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#35) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": 78,
+                    "vulnerability_code": "\tfunction airdrop(address[] _to, uint256[] _value) onlyOwner notStopped public {\n\n\t    for(uint256 i = 0; i < _to.length; i++){\n\n\t        if(balances[_to[i]] > 0){\n\n\t            continue;\n\n\t        }\n\n\t        transfer(_to[i], _value[i]);\n\n\t    }\n",
+                    "message": "FLUX.airdrop (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#71-78) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 81,
+                    "vulnerability_to_line": 84,
+                    "vulnerability_code": "    function blacklisting(address _addr) onlyOwner public {\n\n        blackList[_addr] = 1;\n\n        emit Blacklisted(_addr);\n",
+                    "message": "FLUX.blacklisting (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#81-84) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": 88,
+                    "vulnerability_code": "    function deleteFromBlacklist(address _addr) onlyOwner public {\n\n        blackList[_addr] = -1;\n\n        emit DeleteFromBlacklist(_addr);\n",
+                    "message": "FLUX.deleteFromBlacklist (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#85-88) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": 94,
+                    "vulnerability_code": "\tfunction stop() onlyOwner {\n\n        stopped = true;\n",
+                    "message": "FLUX.stop (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#92-94) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 96,
+                    "vulnerability_to_line": 98,
+                    "vulnerability_code": "    function start() onlyOwner {\n\n        stopped = false;\n",
+                    "message": "FLUX.start (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#96-98) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.21;\n",
+                    "message": "Detected issues with version pragma in Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol:\n\t- pragma solidity^0.4.21 (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#7): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": 19,
+                    "vulnerability_code": "    function Owned() public {\n\n        owner = msg.sender;\n",
+                    "message": "Function 'Owned.Owned' (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#17-19) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferOwnership(address _new) onlyOwner public {\n",
+                    "message": "Parameter '_new' of Owned.transferOwnership (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#21) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 101,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction balanceOf(address _owner) public constant returns (uint256 balance){\n",
+                    "message": "Parameter '_owner' of FLUX.balanceOf (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#101) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 104,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transfer(address _to, uint256 _value) notStopped public returns (bool success){\n",
+                    "message": "Parameter '_to' of FLUX.transfer (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#104) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 104,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transfer(address _to, uint256 _value) notStopped public returns (bool success){\n",
+                    "message": "Parameter '_value' of FLUX.transfer (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#104) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 121,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transferFrom(address _from, address _to, uint256 _value) notStopped public returns (bool success){\n",
+                    "message": "Parameter '_from' of FLUX.transferFrom (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#121) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 121,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transferFrom(address _from, address _to, uint256 _value) notStopped public returns (bool success){\n",
+                    "message": "Parameter '_to' of FLUX.transferFrom (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#121) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 121,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transferFrom(address _from, address _to, uint256 _value) notStopped public returns (bool success){\n",
+                    "message": "Parameter '_value' of FLUX.transferFrom (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#121) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 140,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction approve(address _spender, uint256 _value) notStopped public returns (bool success){\n",
+                    "message": "Parameter '_spender' of FLUX.approve (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#140) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 140,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction approve(address _spender, uint256 _value) notStopped public returns (bool success){\n",
+                    "message": "Parameter '_value' of FLUX.approve (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#140) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction allowance(address _owner, address _spender) public constant returns (uint256 remaining){\n",
+                    "message": "Parameter '_owner' of FLUX.allowance (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#145) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction allowance(address _owner, address _spender) public constant returns (uint256 remaining){\n",
+                    "message": "Parameter '_spender' of FLUX.allowance (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#145) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 66,
+                    "vulnerability_to_line": 68,
+                    "vulnerability_code": "\tfunction FLUX() public {\n\n\t\tbalances[msg.sender] = totalSupply;\n",
+                    "message": "Function 'FLUX.FLUX' (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#66-68) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction airdrop(address[] _to, uint256[] _value) onlyOwner notStopped public {\n",
+                    "message": "Parameter '_to' of FLUX.airdrop (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#71) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction airdrop(address[] _to, uint256[] _value) onlyOwner notStopped public {\n",
+                    "message": "Parameter '_value' of FLUX.airdrop (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#71) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 81,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function blacklisting(address _addr) onlyOwner public {\n",
+                    "message": "Parameter '_addr' of FLUX.blacklisting (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#81) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function deleteFromBlacklist(address _addr) onlyOwner public {\n",
+                    "message": "Parameter '_addr' of FLUX.deleteFromBlacklist (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#85) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tuint256 public constant totalSupply = 1000000000000000000000000000;\n",
+                    "message": "Constant 'FLUX.totalSupply' (Etherscan-0x54735d716995071585A4f6ba341a6Ded79756F09.sol#44) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction balanceOf(address _owner) public constant returns (uint256 balance);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction allowance(address _owner, address _spender) public constant returns (uint256 remaining);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 101,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction balanceOf(address _owner) public constant returns (uint256 balance){\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction allowance(address _owner, address _spender) public constant returns (uint256 remaining){\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 140,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction approve(address _spender, uint256 _value) notStopped public returns (bool success){\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t    for(uint256 i = 0; i < _to.length; i++){\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t    for(uint256 i = 0; i < _to.length; i++){\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.21;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction airdrop(address[] _to, uint256[] _value) onlyOwner notStopped public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction airdrop(address[] _to, uint256[] _value) onlyOwner notStopped public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction stop() onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 96,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function start() onlyOwner {\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

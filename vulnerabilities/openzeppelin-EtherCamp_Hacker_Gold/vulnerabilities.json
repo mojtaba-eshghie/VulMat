@@ -1,0 +1,1123 @@
+{
+    "virtual-accelerator-2529ffe5efd5294b44f1bc89dc9a4721a7b16409 2/test/hacker-gold-sale/contracts/Exception.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_4"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "locked-ether",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": 8,
+                    "vulnerability_code": "    function() payable {\n\n        if(true) throw;\n",
+                    "message": "Contract locking ether found in Exception.sol:\n\tContract Exception has payable functions:\n\t - fallback (Exception.sol#6-8)\n\tBut does not have a function to withdraw the ether\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if(true) throw;\n",
+                    "message": "Deprecated standard detected @ Exception.sol#7:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": 8,
+                    "vulnerability_code": "    function() payable {\n\n        if(true) throw;\n",
+                    "message": "Exception.fallback (Exception.sol#6-8) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.0;\n",
+                    "message": "Detected issues with version pragma in Exception.sol:\n\t- pragma solidity^0.4.0 (Exception.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if(true) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Exception {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if(true) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function() payable {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "virtual-accelerator-2529ffe5efd5294b44f1bc89dc9a4721a7b16409 2/contracts/wallet.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < _owners.length; ++i)\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "inefficient-state-variable-increment",
+                    "vulnerability_from_line": 272,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            m_spentToday += _value;\n",
+                    "message": "<x> += <y> costs more gas than <x> = <x> + <y> for state variables."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            m_owners[2 + i] = uint(_owners[i]);\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            m_ownerIndex[uint(_owners[i])] = 2 + i;\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 192,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        while (free < m_numOwners)\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 194,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            while (free < m_numOwners && m_owners[free] != 0) free++;\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 194,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            while (free < m_numOwners && m_owners[free] != 0) free++;\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 195,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            while (m_numOwners > 1 && m_owners[m_numOwners] == 0) m_numOwners--;\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 195,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            while (m_numOwners > 1 && m_owners[m_numOwners] == 0) m_numOwners--;\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 195,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            while (m_numOwners > 1 && m_owners[m_numOwners] == 0) m_numOwners--;\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 195,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            while (m_numOwners > 1 && m_owners[m_numOwners] == 0) m_numOwners--;\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 196,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            if (free < m_numOwners && m_owners[m_numOwners] != 0 && m_owners[free] == 0)\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 196,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            if (free < m_numOwners && m_owners[m_numOwners] != 0 && m_owners[free] == 0)\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 196,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            if (free < m_numOwners && m_owners[m_numOwners] != 0 && m_owners[free] == 0)\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 196,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            if (free < m_numOwners && m_owners[m_numOwners] != 0 && m_owners[free] == 0)\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 198,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                m_owners[free] = m_owners[m_numOwners];\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 198,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                m_owners[free] = m_owners[m_numOwners];\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 198,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                m_owners[free] = m_owners[m_numOwners];\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 199,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                m_ownerIndex[m_owners[free]] = free;\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 199,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                m_ownerIndex[m_owners[free]] = free;\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 200,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                m_owners[m_numOwners] = 0;\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 200,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                m_owners[m_numOwners] = 0;\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < _owners.length; ++i)\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 196,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            if (free < m_numOwners && m_owners[m_numOwners] != 0 && m_owners[free] == 0)\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 197,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 198,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                m_owners[free] = m_owners[m_numOwners];\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 199,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                m_ownerIndex[m_owners[free]] = free;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 200,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                m_owners[m_numOwners] = 0;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 201,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            }\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 271,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (m_spentToday + _value >= m_spentToday && m_spentToday + _value <= m_dailyLimit) {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 272,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            m_spentToday += _value;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 273,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            return true;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 274,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        }\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 358,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (!confirm(_r) && m_txs[_r].to == 0) {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 359,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            m_txs[_r].to = _to;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 360,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            m_txs[_r].value = _value;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 361,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            m_txs[_r].data = _data;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 362,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            ConfirmationNeeded(_r, msg.sender, _value, _to, _data);\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 363,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        }\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-prefix-decrement-not-postfix",
+                    "vulnerability_from_line": 184,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                pending.yetNeeded--;\n",
+                    "message": "Consider using the prefix decrement expression whenever the return value is not needed. The prefix decrement expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-decrement-not-postfix",
+                    "vulnerability_from_line": 195,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            while (m_numOwners > 1 && m_owners[m_numOwners] == 0) m_numOwners--;\n",
+                    "message": "Consider using the prefix decrement expression whenever the return value is not needed. The prefix decrement expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 78,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            pending.yetNeeded++;\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 105,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        m_numOwners++;\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 194,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            while (free < m_numOwners && m_owners[free] != 0) free++;\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_44"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "reentrancy-eth",
+                    "vulnerability_from_line": 368,
+                    "vulnerability_to_line": 375,
+                    "vulnerability_code": "    function confirm(bytes32 _h) onlymanyowners(_h) returns (bool) {\n\n        if (m_txs[_h].to != 0) {\n\n            m_txs[_h].to.call.value(m_txs[_h].value)(m_txs[_h].data);\n\n            MultiTransact(msg.sender, _h, m_txs[_h].value, m_txs[_h].to, m_txs[_h].data);\n\n            delete m_txs[_h];\n\n            return true;\n\n        }\n",
+                    "message": "Reentrancy in Wallet.confirm (wallet.sol#368-375):\n\tExternal calls:\n\t- m_txs[_h].to.call.value(m_txs[_h].value)(m_txs[_h].data) (wallet.sol#370)\n\tState variables written after the call(s):\n\t- m_txs (wallet.sol#372)\n"
+                },
+                {
+                    "name": "reentrancy-eth",
+                    "vulnerability_from_line": 348,
+                    "vulnerability_to_line": 364,
+                    "vulnerability_code": "    function execute(address _to, uint _value, bytes _data) external onlyowner returns (bytes32 _r) {\n\n        // first, take the opportunity to check that we're under the daily limit.\n\n        if (underLimit(_value)) {\n\n            SingleTransact(msg.sender, _value, _to, _data);\n\n            // yes - just execute the call.\n\n            _to.call.value(_value)(_data);\n\n            return 0;\n\n        }\n\n        // determine our operation hash.\n\n        _r = sha3(msg.data, block.number);\n\n        if (!confirm(_r) && m_txs[_r].to == 0) {\n\n            m_txs[_r].to = _to;\n\n            m_txs[_r].value = _value;\n\n            m_txs[_r].data = _data;\n\n            ConfirmationNeeded(_r, msg.sender, _value, _to, _data);\n\n        }\n",
+                    "message": "Reentrancy in Wallet.execute (wallet.sol#348-364):\n\tExternal calls:\n\t- ! confirm(_r) && m_txs[_r].to == 0 (wallet.sol#358-363)\n\tState variables written after the call(s):\n\t- m_txs (wallet.sol#359)\n\t- m_txs (wallet.sol#360)\n\t- m_txs (wallet.sol#361)\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 357,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        _r = sha3(msg.data, block.number);\n",
+                    "message": "Deprecated standard detected @ wallet.sol#357:\n\t- Usage of \"sha3()\" should be replaced with \"keccak256()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 334,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        suicide(_to);\n",
+                    "message": "Deprecated standard detected @ wallet.sol#334:\n\t- Usage of \"suicide()\" should be replaced with \"selfdestruct()\"\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": 149,
+                    "vulnerability_code": "    function hasConfirmed(bytes32 _operation, address _owner) constant returns (bool) {\n\n        var pending = m_pending[_operation];\n\n        uint ownerIndex = m_ownerIndex[uint(_owner)];\n\n\n\n        // make sure they're an owner\n\n        if (ownerIndex == 0) return false;\n\n\n\n        // determine the bit to set for this owner.\n\n        uint ownerIndexBit = 2**ownerIndex;\n\n        return !(pending.ownersDone & ownerIndexBit == 0);\n",
+                    "message": "multiowned.hasConfirmed (wallet.sol#139-149) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 338,
+                    "vulnerability_to_line": 342,
+                    "vulnerability_code": "    function() payable {\n\n        // just being sent some cash?\n\n        if (msg.value > 0)\n\n            Deposit(msg.sender, msg.value);\n",
+                    "message": "Wallet.fallback (wallet.sol#338-342) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.0;\n",
+                    "message": "Detected issues with version pragma in wallet.sol:\n\t- pragma solidity^0.4.0 (wallet.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "low-level-calls",
+                    "vulnerability_from_line": 348,
+                    "vulnerability_to_line": 364,
+                    "vulnerability_code": "    function execute(address _to, uint _value, bytes _data) external onlyowner returns (bytes32 _r) {\n\n        // first, take the opportunity to check that we're under the daily limit.\n\n        if (underLimit(_value)) {\n\n            SingleTransact(msg.sender, _value, _to, _data);\n\n            // yes - just execute the call.\n\n            _to.call.value(_value)(_data);\n\n            return 0;\n\n        }\n\n        // determine our operation hash.\n\n        _r = sha3(msg.data, block.number);\n\n        if (!confirm(_r) && m_txs[_r].to == 0) {\n\n            m_txs[_r].to = _to;\n\n            m_txs[_r].value = _value;\n\n            m_txs[_r].data = _data;\n\n            ConfirmationNeeded(_r, msg.sender, _value, _to, _data);\n\n        }\n",
+                    "message": "Low level call in Wallet.execute (wallet.sol#348-364):\n\t-_to.call.value(_value)(_data) wallet.sol#353\n"
+                },
+                {
+                    "name": "low-level-calls",
+                    "vulnerability_from_line": 368,
+                    "vulnerability_to_line": 375,
+                    "vulnerability_code": "    function confirm(bytes32 _h) onlymanyowners(_h) returns (bool) {\n\n        if (m_txs[_h].to != 0) {\n\n            m_txs[_h].to.call.value(m_txs[_h].value)(m_txs[_h].data);\n\n            MultiTransact(msg.sender, _h, m_txs[_h].value, m_txs[_h].to, m_txs[_h].data);\n\n            delete m_txs[_h];\n\n            return true;\n\n        }\n",
+                    "message": "Low level call in Wallet.confirm (wallet.sol#368-375):\n\t-m_txs[_h].to.call.value(m_txs[_h].value)(m_txs[_h].data) wallet.sol#370\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": 228,
+                    "vulnerability_code": "contract multiowned {\n\n\n\n    // TYPES\n\n\n\n    // struct for the status of a pending operation.\n\n    struct PendingState {\n\n        uint yetNeeded;\n\n        uint ownersDone;\n\n        uint index;\n\n    }\n\n\n\n    // EVENTS\n\n\n\n    // this contract only has six types of events: it can accept a confirmation, in which case\n\n    // we record owner and operation (hash) alongside it.\n\n    event Confirmation(address owner, bytes32 operation);\n\n    event Revoke(address owner, bytes32 operation);\n\n    // some others are in the case of an owner changing.\n\n    event OwnerChanged(address oldOwner, address newOwner);\n\n    event OwnerAdded(address newOwner);\n\n    event OwnerRemoved(address oldOwner);\n\n    // the last one is emitted if the required signatures change\n\n    event RequirementChanged(uint newRequirement);\n\n\n\n    // MODIFIERS\n\n\n\n    // simple single-sig function modifier.\n\n    modifier onlyowner {\n\n        if (isOwner(msg.sender))\n\n            _;\n\n    }\n\n    // multi-sig function modifier: the operation must have an intrinsic hash in order\n\n    // that later attempts can be realised as the same underlying operation and\n\n    // thus count as confirmations.\n\n    modifier onlymanyowners(bytes32 _operation) {\n\n        if (confirmAndCheck(_operation))\n\n            _;\n\n    }\n\n\n\n    // METHODS\n\n\n\n    // constructor is given number of sigs required to do protected \"onlymanyowners\" transactions\n\n    // as well as the selection of addresses capable of confirming them.\n\n    function multiowned(address[] _owners, uint _required) {\n\n        m_numOwners = _owners.length + 1;\n\n        m_owners[1] = uint(msg.sender);\n\n        m_ownerIndex[uint(msg.sender)] = 1;\n\n        for (uint i = 0; i < _owners.length; ++i)\n\n        {\n\n            m_owners[2 + i] = uint(_owners[i]);\n\n            m_ownerIndex[uint(_owners[i])] = 2 + i;\n\n        }\n\n        m_required = _required;\n\n    }\n\n    \n\n    // Revokes a prior confirmation of the given operation\n\n    function revoke(bytes32 _operation) external {\n\n        uint ownerIndex = m_ownerIndex[uint(msg.sender)];\n\n        // make sure they're an owner\n\n        if (ownerIndex == 0) return;\n\n        uint ownerIndexBit = 2**ownerIndex;\n\n        var pending = m_pending[_operation];\n\n        if (pending.ownersDone & ownerIndexBit > 0) {\n\n            pending.yetNeeded++;\n\n            pending.ownersDone -= ownerIndexBit;\n\n            Revoke(msg.sender, _operation);\n\n        }\n\n    }\n\n    \n\n    // Replaces an owner `_from` with another `_to`.\n\n    function changeOwner(address _from, address _to) onlymanyowners(sha3(msg.data)) external {\n\n        if (isOwner(_to)) return;\n\n        uint ownerIndex = m_ownerIndex[uint(_from)];\n\n        if (ownerIndex == 0) return;\n\n\n\n        clearPending();\n\n        m_owners[ownerIndex] = uint(_to);\n\n        m_ownerIndex[uint(_from)] = 0;\n\n        m_ownerIndex[uint(_to)] = ownerIndex;\n\n        OwnerChanged(_from, _to);\n\n    }\n\n    \n\n    function addOwner(address _owner) onlymanyowners(sha3(msg.data)) external {\n\n        if (isOwner(_owner)) return;\n\n\n\n        clearPending();\n\n        if (m_numOwners >= c_maxOwners)\n\n            reorganizeOwners();\n\n        if (m_numOwners >= c_maxOwners)\n\n            return;\n\n        m_numOwners++;\n\n        m_owners[m_numOwners] = uint(_owner);\n\n        m_ownerIndex[uint(_owner)] = m_numOwners;\n\n        OwnerAdded(_owner);\n\n    }\n\n    \n\n    function removeOwner(address _owner) onlymanyowners(sha3(msg.data)) external {\n\n        uint ownerIndex = m_ownerIndex[uint(_owner)];\n\n        if (ownerIndex == 0) return;\n\n        if (m_required > m_numOwners - 1) return;\n\n\n\n        m_owners[ownerIndex] = 0;\n\n        m_ownerIndex[uint(_owner)] = 0;\n\n        clearPending();\n\n        reorganizeOwners(); //make sure m_numOwner is equal to the number of owners and always points to the optimal free slot\n\n        OwnerRemoved(_owner);\n\n    }\n\n    \n\n    function changeRequirement(uint _newRequired) onlymanyowners(sha3(msg.data)) external {\n\n        if (_newRequired > m_numOwners) return;\n\n        m_required = _newRequired;\n\n        clearPending();\n\n        RequirementChanged(_newRequired);\n\n    }\n\n\n\n    // Gets an owner by 0-indexed position (using numOwners as the count)\n\n    function getOwner(uint ownerIndex) external constant returns (address) {\n\n        return address(m_owners[ownerIndex + 1]);\n\n    }\n\n\n\n    function isOwner(address _addr) returns (bool) {\n\n        return m_ownerIndex[uint(_addr)] > 0;\n\n    }\n\n    \n\n    function hasConfirmed(bytes32 _operation, address _owner) constant returns (bool) {\n\n        var pending = m_pending[_operation];\n\n        uint ownerIndex = m_ownerIndex[uint(_owner)];\n\n\n\n        // make sure they're an owner\n\n        if (ownerIndex == 0) return false;\n\n\n\n        // determine the bit to set for this owner.\n\n        uint ownerIndexBit = 2**ownerIndex;\n\n        return !(pending.ownersDone & ownerIndexBit == 0);\n\n    }\n\n    \n\n    // INTERNAL METHODS\n\n\n\n    function confirmAndCheck(bytes32 _operation) internal returns (bool) {\n\n        // determine what index the present sender is:\n\n        uint ownerIndex = m_ownerIndex[uint(msg.sender)];\n\n        // make sure they're an owner\n\n        if (ownerIndex == 0) return;\n\n\n\n        var pending = m_pending[_operation];\n\n        // if we're not yet working on this operation, switch over and reset the confirmation status.\n\n        if (pending.yetNeeded == 0) {\n\n            // reset count of confirmations needed.\n\n            pending.yetNeeded = m_required;\n\n            // reset which owners have confirmed (none) - set our bitmap to 0.\n\n            pending.ownersDone = 0;\n\n            pending.index = m_pendingIndex.length++;\n\n            m_pendingIndex[pending.index] = _operation;\n\n        }\n\n        // determine the bit to set for this owner.\n\n        uint ownerIndexBit = 2**ownerIndex;\n\n        // make sure we (the message sender) haven't confirmed this operation previously.\n\n        if (pending.ownersDone & ownerIndexBit == 0) {\n\n            Confirmation(msg.sender, _operation);\n\n            // ok - check if count is enough to go ahead.\n\n            if (pending.yetNeeded <= 1) {\n\n                // enough confirmations: reset and run interior.\n\n                delete m_pendingIndex[m_pending[_operation].index];\n\n                delete m_pending[_operation];\n\n                return true;\n\n            }\n\n            else\n\n            {\n\n                // not enough: record that this owner in particular confirmed.\n\n                pending.yetNeeded--;\n\n                pending.ownersDone |= ownerIndexBit;\n\n            }\n\n        }\n\n    }\n\n\n\n    function reorganizeOwners() private {\n\n        uint free = 1;\n\n        while (free < m_numOwners)\n\n        {\n\n            while (free < m_numOwners && m_owners[free] != 0) free++;\n\n            while (m_numOwners > 1 && m_owners[m_numOwners] == 0) m_numOwners--;\n\n            if (free < m_numOwners && m_owners[m_numOwners] != 0 && m_owners[free] == 0)\n\n            {\n\n                m_owners[free] = m_owners[m_numOwners];\n\n                m_ownerIndex[m_owners[free]] = free;\n\n                m_owners[m_numOwners] = 0;\n\n            }\n\n        }\n\n    }\n\n    \n\n    function clearPending() internal {\n\n        uint length = m_pendingIndex.length;\n\n        for (uint i = 0; i < length; ++i)\n\n            if (m_pendingIndex[i] != 0)\n\n                delete m_pending[m_pendingIndex[i]];\n\n        delete m_pendingIndex;\n\n    }\n\n        \n\n    // FIELDS\n\n\n\n    // the number of owners that must confirm the same operation before it is run.\n\n    uint public m_required;\n\n    // pointer used to find a free slot in m_owners\n\n    uint public m_numOwners;\n\n    \n\n    // list of owners\n\n    uint[256] m_owners;\n\n    uint constant c_maxOwners = 250;\n\n    // index on the list of owners to allow reverse lookup\n\n    mapping(uint => uint) m_ownerIndex;\n\n    // the ongoing operations.\n\n    mapping(bytes32 => PendingState) m_pending;\n\n    bytes32[] m_pendingIndex;\n",
+                    "message": "Contract 'multiowned' (wallet.sol#15-228) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function multiowned(address[] _owners, uint _required) {\n",
+                    "message": "Parameter '_owners' of multiowned.multiowned (wallet.sol#58) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function multiowned(address[] _owners, uint _required) {\n",
+                    "message": "Parameter '_required' of multiowned.multiowned (wallet.sol#58) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function revoke(bytes32 _operation) external {\n",
+                    "message": "Parameter '_operation' of multiowned.revoke (wallet.sol#71) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function changeOwner(address _from, address _to) onlymanyowners(sha3(msg.data)) external {\n",
+                    "message": "Parameter '_from' of multiowned.changeOwner (wallet.sol#85) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function changeOwner(address _from, address _to) onlymanyowners(sha3(msg.data)) external {\n",
+                    "message": "Parameter '_to' of multiowned.changeOwner (wallet.sol#85) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 97,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addOwner(address _owner) onlymanyowners(sha3(msg.data)) external {\n",
+                    "message": "Parameter '_owner' of multiowned.addOwner (wallet.sol#97) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 111,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function removeOwner(address _owner) onlymanyowners(sha3(msg.data)) external {\n",
+                    "message": "Parameter '_owner' of multiowned.removeOwner (wallet.sol#111) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 123,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function changeRequirement(uint _newRequired) onlymanyowners(sha3(msg.data)) external {\n",
+                    "message": "Parameter '_newRequired' of multiowned.changeRequirement (wallet.sol#123) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 135,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isOwner(address _addr) returns (bool) {\n",
+                    "message": "Parameter '_addr' of multiowned.isOwner (wallet.sol#135) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function hasConfirmed(bytes32 _operation, address _owner) constant returns (bool) {\n",
+                    "message": "Parameter '_operation' of multiowned.hasConfirmed (wallet.sol#139) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function hasConfirmed(bytes32 _operation, address _owner) constant returns (bool) {\n",
+                    "message": "Parameter '_owner' of multiowned.hasConfirmed (wallet.sol#139) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function confirmAndCheck(bytes32 _operation) internal returns (bool) {\n",
+                    "message": "Parameter '_operation' of multiowned.confirmAndCheck (wallet.sol#153) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 216,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint public m_required;\n",
+                    "message": "Variable 'multiowned.m_required' (wallet.sol#216) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 218,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint public m_numOwners;\n",
+                    "message": "Variable 'multiowned.m_numOwners' (wallet.sol#218) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 221,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint[256] m_owners;\n",
+                    "message": "Variable 'multiowned.m_owners' (wallet.sol#221) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 222,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant c_maxOwners = 250;\n",
+                    "message": "Constant 'multiowned.c_maxOwners' (wallet.sol#222) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 224,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(uint => uint) m_ownerIndex;\n",
+                    "message": "Variable 'multiowned.m_ownerIndex' (wallet.sol#224) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 226,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(bytes32 => PendingState) m_pending;\n",
+                    "message": "Variable 'multiowned.m_pending' (wallet.sol#226) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 227,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes32[] m_pendingIndex;\n",
+                    "message": "Variable 'multiowned.m_pendingIndex' (wallet.sol#227) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 233,
+                    "vulnerability_to_line": 285,
+                    "vulnerability_code": "contract daylimit is multiowned {\n\n\n\n    // MODIFIERS\n\n\n\n    // simple modifier for daily limit.\n\n    modifier limitedDaily(uint _value) {\n\n        if (underLimit(_value))\n\n            _;\n\n    }\n\n\n\n    // METHODS\n\n\n\n    // constructor - stores initial daily limit and records the present day's index.\n\n    function daylimit(uint _limit) {\n\n        m_dailyLimit = _limit;\n\n        m_lastDay = today();\n\n    }\n\n    // (re)sets the daily limit. needs many of the owners to confirm. doesn't alter the amount already spent today.\n\n    function setDailyLimit(uint _newLimit) onlymanyowners(sha3(msg.data)) external {\n\n        m_dailyLimit = _newLimit;\n\n    }\n\n    // resets the amount already spent today. needs many of the owners to confirm. \n\n    function resetSpentToday() onlymanyowners(sha3(msg.data)) external {\n\n        m_spentToday = 0;\n\n    }\n\n    \n\n    // INTERNAL METHODS\n\n    \n\n    // checks to see if there is at least `_value` left from the daily limit today. if there is, subtracts it and\n\n    // returns true. otherwise just returns false.\n\n    function underLimit(uint _value) internal onlyowner returns (bool) {\n\n        // reset the spend limit if we're on a different day to last time.\n\n        if (today() > m_lastDay) {\n\n            m_spentToday = 0;\n\n            m_lastDay = today();\n\n        }\n\n        // check to see if there's enough left - if so, subtract and return true.\n\n        // overflow protection                    // dailyLimit check  \n\n        if (m_spentToday + _value >= m_spentToday && m_spentToday + _value <= m_dailyLimit) {\n\n            m_spentToday += _value;\n\n            return true;\n\n        }\n\n        return false;\n\n    }\n\n    // determines today's index.\n\n    function today() private constant returns (uint) { return now / 1 days; }\n\n\n\n    // FIELDS\n\n\n\n    uint public m_dailyLimit;\n\n    uint public m_spentToday;\n\n    uint public m_lastDay;\n",
+                    "message": "Contract 'daylimit' (wallet.sol#233-285) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 246,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function daylimit(uint _limit) {\n",
+                    "message": "Parameter '_limit' of daylimit.daylimit (wallet.sol#246) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 251,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setDailyLimit(uint _newLimit) onlymanyowners(sha3(msg.data)) external {\n",
+                    "message": "Parameter '_newLimit' of daylimit.setDailyLimit (wallet.sol#251) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 263,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function underLimit(uint _value) internal onlyowner returns (bool) {\n",
+                    "message": "Parameter '_value' of daylimit.underLimit (wallet.sol#263) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 282,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint public m_dailyLimit;\n",
+                    "message": "Variable 'daylimit.m_dailyLimit' (wallet.sol#282) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 283,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint public m_spentToday;\n",
+                    "message": "Variable 'daylimit.m_spentToday' (wallet.sol#283) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 284,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint public m_lastDay;\n",
+                    "message": "Variable 'daylimit.m_lastDay' (wallet.sol#284) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 288,
+                    "vulnerability_to_line": 308,
+                    "vulnerability_code": "contract multisig {\n\n\n\n    // EVENTS\n\n\n\n    // logged events:\n\n    // Funds has arrived into the wallet (record how much).\n\n    event Deposit(address _from, uint value);\n\n    // Single transaction going out of the wallet (record who signed for it, how much, and to whom it's going).\n\n    event SingleTransact(address owner, uint value, address to, bytes data);\n\n    // Multi-sig transaction going out of the wallet (record who signed for it last, the operation hash, how much, and to whom it's going).\n\n    event MultiTransact(address owner, bytes32 operation, uint value, address to, bytes data);\n\n    // Confirmation still needed for a transaction.\n\n    event ConfirmationNeeded(bytes32 operation, address initiator, uint value, address to, bytes data);\n\n    \n\n    // FUNCTIONS\n\n    \n\n    // TODO: document\n\n    function changeOwner(address _from, address _to) external;\n\n    function execute(address _to, uint _value, bytes _data) external returns (bytes32);\n\n    function confirm(bytes32 _h) returns (bool);\n",
+                    "message": "Contract 'multisig' (wallet.sol#288-308) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 348,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function execute(address _to, uint _value, bytes _data) external onlyowner returns (bytes32 _r) {\n",
+                    "message": "Parameter '_to' of Wallet.execute (wallet.sol#348) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 348,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function execute(address _to, uint _value, bytes _data) external onlyowner returns (bytes32 _r) {\n",
+                    "message": "Parameter '_value' of Wallet.execute (wallet.sol#348) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 348,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function execute(address _to, uint _value, bytes _data) external onlyowner returns (bytes32 _r) {\n",
+                    "message": "Parameter '_data' of Wallet.execute (wallet.sol#348) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 368,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function confirm(bytes32 _h) onlymanyowners(_h) returns (bool) {\n",
+                    "message": "Parameter '_h' of Wallet.confirm (wallet.sol#368) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 328,
+                    "vulnerability_to_line": 330,
+                    "vulnerability_code": "    function Wallet(address[] _owners, uint _required, uint _daylimit)\n\n            multiowned(_owners, _required) daylimit(_daylimit) {\n",
+                    "message": "Function 'Wallet.Wallet' (wallet.sol#328-330) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 333,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function kill(address _to) onlymanyowners(sha3(msg.data)) external {\n",
+                    "message": "Parameter '_to' of Wallet.kill (wallet.sol#333) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 389,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping (bytes32 => Transaction) m_txs;\n",
+                    "message": "Variable 'Wallet.m_txs' (wallet.sol#389) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ARRAY_LENGTH_MANIPULATION",
+                    "vulnerability_from_line": 166,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            pending.index = m_pendingIndex.length++;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 334,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        suicide(_to);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function changeOwner(address _from, address _to) onlymanyowners(sha3(msg.data)) external {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 97,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addOwner(address _owner) onlymanyowners(sha3(msg.data)) external {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 111,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function removeOwner(address _owner) onlymanyowners(sha3(msg.data)) external {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 123,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function changeRequirement(uint _newRequired) onlymanyowners(sha3(msg.data)) external {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 251,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setDailyLimit(uint _newLimit) onlymanyowners(sha3(msg.data)) external {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 255,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function resetSpentToday() onlymanyowners(sha3(msg.data)) external {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 333,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function kill(address _to) onlymanyowners(sha3(msg.data)) external {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 357,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        _r = sha3(msg.data, block.number);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getOwner(uint ownerIndex) external constant returns (address) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function hasConfirmed(bytes32 _operation, address _owner) constant returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 278,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function today() private constant returns (uint) { return now / 1 days; }\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < _owners.length; ++i)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 192,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        while (free < m_numOwners)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 194,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            while (free < m_numOwners && m_owners[free] != 0) free++;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 195,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            while (m_numOwners > 1 && m_owners[m_numOwners] == 0) m_numOwners--;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < _owners.length; ++i)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 207,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < length; ++i)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 381,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < length; ++i)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 192,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        while (free < m_numOwners)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 194,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            while (free < m_numOwners && m_owners[free] != 0) free++;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 195,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            while (m_numOwners > 1 && m_owners[m_numOwners] == 0) m_numOwners--;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function multiowned(address[] _owners, uint _required) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 135,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isOwner(address _addr) returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function hasConfirmed(bytes32 _operation, address _owner) constant returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 246,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function daylimit(uint _limit) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 307,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function confirm(bytes32 _h) returns (bool);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 328,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function Wallet(address[] _owners, uint _required, uint _daylimit)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 338,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function() payable {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 368,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function confirm(bytes32 _h) onlymanyowners(_h) returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 221,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint[256] m_owners;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 222,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint constant c_maxOwners = 250;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 224,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(uint => uint) m_ownerIndex;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 226,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(bytes32 => PendingState) m_pending;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 227,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes32[] m_pendingIndex;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 389,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping (bytes32 => Transaction) m_txs;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "virtual-accelerator-2529ffe5efd5294b44f1bc89dc9a4721a7b16409 2/contracts/TokenInterface.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_7"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint totalSupply;\n",
+                    "message": "TokenInterface.totalSupply should be constant (TokenInterface.sol#16)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 27,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOf(address owner) constant returns (uint256 balance);\n",
+                    "message": "TokenInterface.balanceOf (TokenInterface.sol#27) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address to, uint256 value) returns (bool success);\n",
+                    "message": "TokenInterface.transfer (TokenInterface.sol#29) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address from, address to, uint256 value) returns (bool success);\n",
+                    "message": "TokenInterface.transferFrom (TokenInterface.sol#31) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address spender, uint256 value) returns (bool success);\n",
+                    "message": "TokenInterface.approve (TokenInterface.sol#44) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allowance(address owner, address spender) constant returns (uint256 remaining);\n",
+                    "message": "TokenInterface.allowance (TokenInterface.sol#57) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.0;\n",
+                    "message": "Detected issues with version pragma in TokenInterface.sol:\n\t- pragma solidity^0.4.0 (TokenInterface.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 27,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOf(address owner) constant returns (uint256 balance);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allowance(address owner, address spender) constant returns (uint256 remaining);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 27,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOf(address owner) constant returns (uint256 balance);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address to, uint256 value) returns (bool success);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address from, address to, uint256 value) returns (bool success);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address spender, uint256 value) returns (bool success);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allowance(address owner, address spender) constant returns (uint256 remaining);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint totalSupply;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

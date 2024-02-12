@@ -1,0 +1,1376 @@
+{
+    "RealityCards-Contracts-8c0b05b25a7deef25f98532ae2f8afd4f9a84360/contracts/Migrations.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": 19,
+                    "vulnerability_code": "    function setCompleted(uint completed) public restricted {\n\n        last_completed_migration = completed;\n",
+                    "message": "Migrations.setCompleted (Migrations.sol#17-19) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": 24,
+                    "vulnerability_code": "    function upgrade(address new_address) public restricted {\n\n        Migrations upgraded = Migrations(new_address);\n\n        upgraded.setCompleted(last_completed_migration);\n",
+                    "message": "Migrations.upgrade (Migrations.sol#21-24) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.13;\n",
+                    "message": "Detected issues with version pragma in Migrations.sol:\n\t- pragma solidity0.5.13 (Migrations.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgrade(address new_address) public restricted {\n",
+                    "message": "Parameter 'new_address' of Migrations.upgrade (Migrations.sol#21) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint public last_completed_migration;\n",
+                    "message": "Variable 'Migrations.last_completed_migration' (Migrations.sol#7) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "RealityCards-Contracts-8c0b05b25a7deef25f98532ae2f8afd4f9a84360/contracts/lib/CloneFactory.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_4"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": 56,
+                    "vulnerability_code": "  function isClone(address target, address query) internal view returns (bool result) {\n\n    bytes20 targetBytes = bytes20(target);\n\n    assembly {\n\n      let clone := mload(0x40)\n\n      mstore(clone, 0x363d3d373d3d3d363d7300000000000000000000000000000000000000000000)\n\n      mstore(add(clone, 0xa), targetBytes)\n\n      mstore(add(clone, 0x1e), 0x5af43d82803e903d91602b57fd5bf30000000000000000000000000000000000)\n\n\n\n      let other := add(clone, 0x40)\n\n      extcodecopy(query, other, 0, 0x2d)\n\n      result := and(\n\n        eq(mload(clone), mload(other)),\n\n        eq(mload(add(clone, 0xd)), mload(add(other, 0xd)))\n\n      )\n\n    }\n",
+                    "message": "CloneFactory.isClone (CloneFactory.sol#41-56) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": 39,
+                    "vulnerability_code": "  function createClone(address target) internal returns (address result) {\n\n    bytes20 targetBytes = bytes20(target);\n\n    assembly {\n\n      let clone := mload(0x40)\n\n      mstore(clone, 0x3d602d80600a3d3981f3363d3d373d3d3d363d73000000000000000000000000)\n\n      mstore(add(clone, 0x14), targetBytes)\n\n      mstore(add(clone, 0x28), 0x5af43d82803e903d91602b57fd5bf30000000000000000000000000000000000)\n\n      result := create(0, clone, 0x37)\n\n    }\n",
+                    "message": "CloneFactory.createClone uses assembly (CloneFactory.sol#30-39)\n\t- CloneFactory.sol#32-38\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": 56,
+                    "vulnerability_code": "  function isClone(address target, address query) internal view returns (bool result) {\n\n    bytes20 targetBytes = bytes20(target);\n\n    assembly {\n\n      let clone := mload(0x40)\n\n      mstore(clone, 0x363d3d373d3d3d363d7300000000000000000000000000000000000000000000)\n\n      mstore(add(clone, 0xa), targetBytes)\n\n      mstore(add(clone, 0x1e), 0x5af43d82803e903d91602b57fd5bf30000000000000000000000000000000000)\n\n\n\n      let other := add(clone, 0x40)\n\n      extcodecopy(query, other, 0, 0x2d)\n\n      result := and(\n\n        eq(mload(clone), mload(other)),\n\n        eq(mload(add(clone, 0xd)), mload(add(other, 0xd)))\n\n      )\n\n    }\n",
+                    "message": "CloneFactory.isClone uses assembly (CloneFactory.sol#41-56)\n\t- CloneFactory.sol#43-55\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.13;\n",
+                    "message": "Detected issues with version pragma in CloneFactory.sol:\n\t- pragma solidity0.5.13 (CloneFactory.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function createClone(address target) internal returns (address result) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function isClone(address target, address query) internal view returns (bool result) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function isClone(address target, address query) internal view returns (bool result) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    assembly {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "RealityCards-Contracts-8c0b05b25a7deef25f98532ae2f8afd4f9a84360/contracts/interfaces/ITreasury.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_23"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.13;\n",
+                    "message": "Detected issues with version pragma in ITreasury.sol:\n\t- pragma solidity0.5.13 (ITreasury.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function payout(address,uint256) external returns (bool);\n",
+                    "message": "Parameter '' of ITreasury.payout (ITreasury.sol#7) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function payout(address,uint256) external returns (bool);\n",
+                    "message": "Parameter '_scope_0' of ITreasury.payout (ITreasury.sol#7) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function payRent(address,uint256) external returns (bool);\n",
+                    "message": "Parameter '' of ITreasury.payRent (ITreasury.sol#8) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function payRent(address,uint256) external returns (bool);\n",
+                    "message": "Parameter '_scope_0' of ITreasury.payRent (ITreasury.sol#8) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addMarket(address) external returns (bool);\n",
+                    "message": "Parameter '' of ITreasury.addMarket (ITreasury.sol#9) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function deposits(address) external returns (uint256);\n",
+                    "message": "Parameter '' of ITreasury.deposits (ITreasury.sol#10) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allocateCardSpecificDeposit(address,address,uint256,uint256) external returns (bool);\n",
+                    "message": "Parameter '' of ITreasury.allocateCardSpecificDeposit (ITreasury.sol#12) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allocateCardSpecificDeposit(address,address,uint256,uint256) external returns (bool);\n",
+                    "message": "Parameter '_scope_0' of ITreasury.allocateCardSpecificDeposit (ITreasury.sol#12) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allocateCardSpecificDeposit(address,address,uint256,uint256) external returns (bool);\n",
+                    "message": "Parameter '_scope_1' of ITreasury.allocateCardSpecificDeposit (ITreasury.sol#12) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allocateCardSpecificDeposit(address,address,uint256,uint256) external returns (bool);\n",
+                    "message": "Parameter '_scope_2' of ITreasury.allocateCardSpecificDeposit (ITreasury.sol#12) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function processHarbergerPayment(address,address,uint256) external returns (bool);\n",
+                    "message": "Parameter '' of ITreasury.processHarbergerPayment (ITreasury.sol#13) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function processHarbergerPayment(address,address,uint256) external returns (bool);\n",
+                    "message": "Parameter '_scope_0' of ITreasury.processHarbergerPayment (ITreasury.sol#13) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function processHarbergerPayment(address,address,uint256) external returns (bool);\n",
+                    "message": "Parameter '_scope_1' of ITreasury.processHarbergerPayment (ITreasury.sol#13) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function cardSpecificDeposits(address,address,uint256) external returns(uint256);\n",
+                    "message": "Parameter '' of ITreasury.cardSpecificDeposits (ITreasury.sol#14) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function cardSpecificDeposits(address,address,uint256) external returns(uint256);\n",
+                    "message": "Parameter '_scope_0' of ITreasury.cardSpecificDeposits (ITreasury.sol#14) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function cardSpecificDeposits(address,address,uint256) external returns(uint256);\n",
+                    "message": "Parameter '_scope_1' of ITreasury.cardSpecificDeposits (ITreasury.sol#14) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function deposit(address) external payable returns (bool);\n",
+                    "message": "Parameter '' of ITreasury.deposit (ITreasury.sol#15) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function updateTotalRental(address,uint256,bool) external returns (bool);\n",
+                    "message": "Parameter '' of ITreasury.updateTotalRental (ITreasury.sol#18) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function updateTotalRental(address,uint256,bool) external returns (bool);\n",
+                    "message": "Parameter '_scope_0' of ITreasury.updateTotalRental (ITreasury.sol#18) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function updateTotalRental(address,uint256,bool) external returns (bool);\n",
+                    "message": "Parameter '_scope_1' of ITreasury.updateTotalRental (ITreasury.sol#18) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function userTotalRentals(address) external returns (uint256);\n",
+                    "message": "Parameter '' of ITreasury.userTotalRentals (ITreasury.sol#19) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function updateLastRentalTime(address) external returns (bool);\n",
+                    "message": "Parameter '' of ITreasury.updateLastRentalTime (ITreasury.sol#20) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "RealityCards-Contracts-8c0b05b25a7deef25f98532ae2f8afd4f9a84360/contracts/interfaces/IRCProxyMainnet.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_4"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.13;\n",
+                    "message": "Detected issues with version pragma in IRCProxyMainnet.sol:\n\t- pragma solidity0.5.13 (IRCProxyMainnet.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgradeCard(uint256,string calldata, address) external;\n",
+                    "message": "Parameter '' of IRCProxyMainnet.upgradeCard (IRCProxyMainnet.sol#8) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgradeCard(uint256,string calldata, address) external;\n",
+                    "message": "Parameter '_scope_0' of IRCProxyMainnet.upgradeCard (IRCProxyMainnet.sol#8) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgradeCard(uint256,string calldata, address) external;\n",
+                    "message": "Parameter '_scope_1' of IRCProxyMainnet.upgradeCard (IRCProxyMainnet.sol#8) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function postQuestionToOracle(address _marketAddress, string calldata _question, uint32 _oracleResolutionTime) external;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function postQuestionToOracle(address _marketAddress, string calldata _question, uint32 _oracleResolutionTime) external;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function postQuestionToOracle(address _marketAddress, string calldata _question, uint32 _oracleResolutionTime) external;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "RealityCards-Contracts-8c0b05b25a7deef25f98532ae2f8afd4f9a84360/contracts/interfaces/IRCMarket.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_4"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.13;\n",
+                    "message": "Different versions of Solidity is used in IRCMarket.sol:\n\t- Version used: ['0.5.13', 'ABIEncoderV2']\n\t- IRCMarket.sol#3 declares pragma solidity0.5.13\n\t- IRCMarket.sol#4 declares pragma experimentalABIEncoderV2\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.13;\n",
+                    "message": "Detected issues with version pragma in IRCMarket.sol:\n\t- pragma solidity0.5.13 (IRCMarket.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function tokenURI(uint256) external view returns (string memory);  \n",
+                    "message": "Parameter '' of IRCMarket.tokenURI (IRCMarket.sol#22) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setWinner(uint256) external;\n",
+                    "message": "Parameter '' of IRCMarket.setWinner (IRCMarket.sol#25) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function initialize(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint32[] calldata _timestamps,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _numberOfTokens,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _totalNftMintCount,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _artistAddress,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _affiliateAddress,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address[] calldata _cardAffiliateAddresses,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address[] calldata _cardAffiliateAddresses,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _marketCreatorAddress\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "RealityCards-Contracts-8c0b05b25a7deef25f98532ae2f8afd4f9a84360/contracts/interfaces/IERC20Dai.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in IERC20Dai.sol:\n\t- pragma solidity^0.5.0 (IERC20Dai.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "RealityCards-Contracts-8c0b05b25a7deef25f98532ae2f8afd4f9a84360/contracts/interfaces/IFactory.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_44"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.13;\n",
+                    "message": "Detected issues with version pragma in IFactory.sol:\n\t- pragma solidity0.5.13 (IFactory.sol#3): it allows old versions\n\t- pragma solidity0.5.13 (IFactory.sol#16): it allows old versions\n\t- pragma solidity0.5.13 (IFactory.sol#40): it allows old versions\n\t- pragma solidity0.5.13 (IFactory.sol#54): it allows old versions\n\t- pragma solidity0.5.13 (IFactory.sol#67): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function askQuestion(uint256 template_id, string calldata question, address arbitrator, uint32 timeout, uint32 opening_ts, uint256 nonce) external payable returns (bytes32);\n",
+                    "message": "Parameter 'template_id' of IRealitio.askQuestion (IFactory.sol#8) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function askQuestion(uint256 template_id, string calldata question, address arbitrator, uint32 timeout, uint32 opening_ts, uint256 nonce) external payable returns (bytes32);\n",
+                    "message": "Parameter 'opening_ts' of IRealitio.askQuestion (IFactory.sol#8) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function resultFor(bytes32 question_id) external view returns (bytes32);\n",
+                    "message": "Parameter 'question_id' of IRealitio.resultFor (IFactory.sol#9) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isFinalized(bytes32 question_id) external view returns (bool);\n",
+                    "message": "Parameter 'question_id' of IRealitio.isFinalized (IFactory.sol#10) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getContentHash(bytes32 question_id) external view returns (bytes32);\n",
+                    "message": "Parameter 'question_id' of IRealitio.getContentHash (IFactory.sol#11) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function payout(address,uint256) external returns (bool);\n",
+                    "message": "Parameter '' of ITreasury.payout (IFactory.sol#20) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function payout(address,uint256) external returns (bool);\n",
+                    "message": "Parameter '_scope_0' of ITreasury.payout (IFactory.sol#20) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function payRent(address,uint256) external returns (bool);\n",
+                    "message": "Parameter '' of ITreasury.payRent (IFactory.sol#21) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function payRent(address,uint256) external returns (bool);\n",
+                    "message": "Parameter '_scope_0' of ITreasury.payRent (IFactory.sol#21) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addMarket(address) external returns (bool);\n",
+                    "message": "Parameter '' of ITreasury.addMarket (IFactory.sol#22) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function deposits(address) external returns (uint256);\n",
+                    "message": "Parameter '' of ITreasury.deposits (IFactory.sol#23) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allocateCardSpecificDeposit(address,address,uint256,uint256) external returns (bool);\n",
+                    "message": "Parameter '' of ITreasury.allocateCardSpecificDeposit (IFactory.sol#25) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allocateCardSpecificDeposit(address,address,uint256,uint256) external returns (bool);\n",
+                    "message": "Parameter '_scope_0' of ITreasury.allocateCardSpecificDeposit (IFactory.sol#25) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allocateCardSpecificDeposit(address,address,uint256,uint256) external returns (bool);\n",
+                    "message": "Parameter '_scope_1' of ITreasury.allocateCardSpecificDeposit (IFactory.sol#25) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allocateCardSpecificDeposit(address,address,uint256,uint256) external returns (bool);\n",
+                    "message": "Parameter '_scope_2' of ITreasury.allocateCardSpecificDeposit (IFactory.sol#25) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function processHarbergerPayment(address,address,uint256) external returns (bool);\n",
+                    "message": "Parameter '' of ITreasury.processHarbergerPayment (IFactory.sol#26) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function processHarbergerPayment(address,address,uint256) external returns (bool);\n",
+                    "message": "Parameter '_scope_0' of ITreasury.processHarbergerPayment (IFactory.sol#26) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function processHarbergerPayment(address,address,uint256) external returns (bool);\n",
+                    "message": "Parameter '_scope_1' of ITreasury.processHarbergerPayment (IFactory.sol#26) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 27,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function cardSpecificDeposits(address,address,uint256) external returns(uint256);\n",
+                    "message": "Parameter '' of ITreasury.cardSpecificDeposits (IFactory.sol#27) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 27,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function cardSpecificDeposits(address,address,uint256) external returns(uint256);\n",
+                    "message": "Parameter '_scope_0' of ITreasury.cardSpecificDeposits (IFactory.sol#27) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 27,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function cardSpecificDeposits(address,address,uint256) external returns(uint256);\n",
+                    "message": "Parameter '_scope_1' of ITreasury.cardSpecificDeposits (IFactory.sol#27) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function deposit(address) external payable returns (bool);\n",
+                    "message": "Parameter '' of ITreasury.deposit (IFactory.sol#28) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function updateTotalRental(address,uint256,bool) external returns (bool);\n",
+                    "message": "Parameter '' of ITreasury.updateTotalRental (IFactory.sol#31) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function updateTotalRental(address,uint256,bool) external returns (bool);\n",
+                    "message": "Parameter '_scope_0' of ITreasury.updateTotalRental (IFactory.sol#31) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function updateTotalRental(address,uint256,bool) external returns (bool);\n",
+                    "message": "Parameter '_scope_1' of ITreasury.updateTotalRental (IFactory.sol#31) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function userTotalRentals(address) external returns (uint256);\n",
+                    "message": "Parameter '' of ITreasury.userTotalRentals (IFactory.sol#32) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function updateLastRentalTime(address) external returns (bool);\n",
+                    "message": "Parameter '' of ITreasury.updateLastRentalTime (IFactory.sol#33) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function saveCardToUpgrade(uint256, string calldata, address) external;\n",
+                    "message": "Parameter '' of IRCProxyXdai.saveCardToUpgrade (IFactory.sol#47) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function saveCardToUpgrade(uint256, string calldata, address) external;\n",
+                    "message": "Parameter '_scope_0' of IRCProxyXdai.saveCardToUpgrade (IFactory.sol#47) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function saveCardToUpgrade(uint256, string calldata, address) external;\n",
+                    "message": "Parameter '_scope_1' of IRCProxyXdai.saveCardToUpgrade (IFactory.sol#47) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 48,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addMarket(address) external returns (bool);\n",
+                    "message": "Parameter '' of IRCProxyXdai.addMarket (IFactory.sol#48) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function ownerOf(uint256) external view returns (address);\n",
+                    "message": "Parameter '' of IRCNftHubXdai.ownerOf (IFactory.sol#57) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function tokenURI(uint256) external view returns (string memory);\n",
+                    "message": "Parameter '' of IRCNftHubXdai.tokenURI (IFactory.sol#58) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 59,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addMarket(address) external returns (bool);\n",
+                    "message": "Parameter '' of IRCNftHubXdai.addMarket (IFactory.sol#59) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 60,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function mintNft(address,uint256,string calldata) external returns (bool);\n",
+                    "message": "Parameter '' of IRCNftHubXdai.mintNft (IFactory.sol#60) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 60,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function mintNft(address,uint256,string calldata) external returns (bool);\n",
+                    "message": "Parameter '_scope_0' of IRCNftHubXdai.mintNft (IFactory.sol#60) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 60,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function mintNft(address,uint256,string calldata) external returns (bool);\n",
+                    "message": "Parameter '_scope_1' of IRCNftHubXdai.mintNft (IFactory.sol#60) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferNft(address,address,uint256) external returns (bool);\n",
+                    "message": "Parameter '' of IRCNftHubXdai.transferNft (IFactory.sol#61) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferNft(address,address,uint256) external returns (bool);\n",
+                    "message": "Parameter '_scope_0' of IRCNftHubXdai.transferNft (IFactory.sol#61) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferNft(address,address,uint256) external returns (bool);\n",
+                    "message": "Parameter '_scope_1' of IRCNftHubXdai.transferNft (IFactory.sol#61) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgradeCard(address,uint256) external returns (bool);\n",
+                    "message": "Parameter '' of IRCNftHubXdai.upgradeCard (IFactory.sol#62) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgradeCard(address,uint256) external returns (bool);\n",
+                    "message": "Parameter '_scope_0' of IRCNftHubXdai.upgradeCard (IFactory.sol#62) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isMarketApproved(address) external returns(bool);\n",
+                    "message": "Parameter '' of IFactory.isMarketApproved (IFactory.sol#84) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function askQuestion(uint256 template_id, string calldata question, address arbitrator, uint32 timeout, uint32 opening_ts, uint256 nonce) external payable returns (bytes32);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function saveQuestion(address _marketAddress, string calldata _question, uint32 _oracleResolutionTime) external;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function askQuestion(uint256 template_id, string calldata question, address arbitrator, uint32 timeout, uint32 opening_ts, uint256 nonce) external payable returns (bytes32);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function askQuestion(uint256 template_id, string calldata question, address arbitrator, uint32 timeout, uint32 opening_ts, uint256 nonce) external payable returns (bytes32);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function askQuestion(uint256 template_id, string calldata question, address arbitrator, uint32 timeout, uint32 opening_ts, uint256 nonce) external payable returns (bytes32);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function askQuestion(uint256 template_id, string calldata question, address arbitrator, uint32 timeout, uint32 opening_ts, uint256 nonce) external payable returns (bytes32);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function askQuestion(uint256 template_id, string calldata question, address arbitrator, uint32 timeout, uint32 opening_ts, uint256 nonce) external payable returns (bytes32);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function askQuestion(uint256 template_id, string calldata question, address arbitrator, uint32 timeout, uint32 opening_ts, uint256 nonce) external payable returns (bytes32);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function saveQuestion(address _marketAddress, string calldata _question, uint32 _oracleResolutionTime) external;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function saveQuestion(address _marketAddress, string calldata _question, uint32 _oracleResolutionTime) external;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "RealityCards-Contracts-8c0b05b25a7deef25f98532ae2f8afd4f9a84360/contracts/interfaces/IERC721.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_4"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.13;\n",
+                    "message": "Detected issues with version pragma in IERC721.sol:\n\t- pragma solidity0.5.13 (IERC721.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function mintNft(uint256,string calldata,address) external;\n",
+                    "message": "Parameter '' of IERC721.mintNft (IERC721.sol#7) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function mintNft(uint256,string calldata,address) external;\n",
+                    "message": "Parameter '_scope_0' of IERC721.mintNft (IERC721.sol#7) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function mintNft(uint256,string calldata,address) external;\n",
+                    "message": "Parameter '_scope_1' of IERC721.mintNft (IERC721.sol#7) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "RealityCards-Contracts-8c0b05b25a7deef25f98532ae2f8afd4f9a84360/contracts/interfaces/IBridge.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_4"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.13;\n",
+                    "message": "Detected issues with version pragma in IBridge.sol:\n\t- pragma solidity0.5.13 (IBridge.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function requireToPassMessage(address,bytes calldata,uint256) external;\n",
+                    "message": "Parameter '' of IBridge.requireToPassMessage (IBridge.sol#6) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function requireToPassMessage(address,bytes calldata,uint256) external;\n",
+                    "message": "Parameter '_scope_0' of IBridge.requireToPassMessage (IBridge.sol#6) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function requireToPassMessage(address,bytes calldata,uint256) external;\n",
+                    "message": "Parameter '_scope_1' of IBridge.requireToPassMessage (IBridge.sol#6) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "RealityCards-Contracts-8c0b05b25a7deef25f98532ae2f8afd4f9a84360/contracts/interfaces/IAlternateReceiverBridge.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.13;\n",
+                    "message": "Detected issues with version pragma in IAlternateReceiverBridge.sol:\n\t- pragma solidity0.5.13 (IAlternateReceiverBridge.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "RealityCards-Contracts-8c0b05b25a7deef25f98532ae2f8afd4f9a84360/contracts/interfaces/IRCNftHubXdai.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_12"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.13;\n",
+                    "message": "Detected issues with version pragma in IRCNftHubXdai.sol:\n\t- pragma solidity0.5.13 (IRCNftHubXdai.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function ownerOf(uint256) external view returns (address);\n",
+                    "message": "Parameter '' of IRCNftHubXdai.ownerOf (IRCNftHubXdai.sol#6) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function tokenURI(uint256) external view returns (string memory);\n",
+                    "message": "Parameter '' of IRCNftHubXdai.tokenURI (IRCNftHubXdai.sol#7) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addMarket(address) external returns (bool);\n",
+                    "message": "Parameter '' of IRCNftHubXdai.addMarket (IRCNftHubXdai.sol#8) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function mintNft(address,uint256,string calldata) external returns (bool);\n",
+                    "message": "Parameter '' of IRCNftHubXdai.mintNft (IRCNftHubXdai.sol#9) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function mintNft(address,uint256,string calldata) external returns (bool);\n",
+                    "message": "Parameter '_scope_0' of IRCNftHubXdai.mintNft (IRCNftHubXdai.sol#9) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function mintNft(address,uint256,string calldata) external returns (bool);\n",
+                    "message": "Parameter '_scope_1' of IRCNftHubXdai.mintNft (IRCNftHubXdai.sol#9) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferNft(address,address,uint256) external returns (bool);\n",
+                    "message": "Parameter '' of IRCNftHubXdai.transferNft (IRCNftHubXdai.sol#10) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferNft(address,address,uint256) external returns (bool);\n",
+                    "message": "Parameter '_scope_0' of IRCNftHubXdai.transferNft (IRCNftHubXdai.sol#10) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferNft(address,address,uint256) external returns (bool);\n",
+                    "message": "Parameter '_scope_1' of IRCNftHubXdai.transferNft (IRCNftHubXdai.sol#10) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgradeCard(address,uint256) external returns (bool);\n",
+                    "message": "Parameter '' of IRCNftHubXdai.upgradeCard (IRCNftHubXdai.sol#11) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgradeCard(address,uint256) external returns (bool);\n",
+                    "message": "Parameter '_scope_0' of IRCNftHubXdai.upgradeCard (IRCNftHubXdai.sol#11) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "RealityCards-Contracts-8c0b05b25a7deef25f98532ae2f8afd4f9a84360/contracts/interfaces/IRCProxyXdai.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.13;\n",
+                    "message": "Detected issues with version pragma in IRCProxyXdai.sol:\n\t- pragma solidity0.5.13 (IRCProxyXdai.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function saveCardToUpgrade(uint256, string calldata, address) external;\n",
+                    "message": "Parameter '' of IRCProxyXdai.saveCardToUpgrade (IRCProxyXdai.sol#10) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function saveCardToUpgrade(uint256, string calldata, address) external;\n",
+                    "message": "Parameter '_scope_0' of IRCProxyXdai.saveCardToUpgrade (IRCProxyXdai.sol#10) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function saveCardToUpgrade(uint256, string calldata, address) external;\n",
+                    "message": "Parameter '_scope_1' of IRCProxyXdai.saveCardToUpgrade (IRCProxyXdai.sol#10) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addMarket(address) external returns (bool);\n",
+                    "message": "Parameter '' of IRCProxyXdai.addMarket (IRCProxyXdai.sol#11) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function saveQuestion(address _marketAddress, string calldata _question, uint32 _oracleResolutionTime) external;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function saveQuestion(address _marketAddress, string calldata _question, uint32 _oracleResolutionTime) external;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function saveQuestion(address _marketAddress, string calldata _question, uint32 _oracleResolutionTime) external;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "RealityCards-Contracts-8c0b05b25a7deef25f98532ae2f8afd4f9a84360/contracts/interfaces/IRealitio.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.5.13;\n",
+                    "message": "Detected issues with version pragma in IRealitio.sol:\n\t- pragma solidity0.5.13 (IRealitio.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function askQuestion(uint256 template_id, string calldata question, address arbitrator, uint32 timeout, uint32 opening_ts, uint256 nonce) external payable returns (bytes32);\n",
+                    "message": "Parameter 'template_id' of IRealitio.askQuestion (IRealitio.sol#8) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function askQuestion(uint256 template_id, string calldata question, address arbitrator, uint32 timeout, uint32 opening_ts, uint256 nonce) external payable returns (bytes32);\n",
+                    "message": "Parameter 'opening_ts' of IRealitio.askQuestion (IRealitio.sol#8) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function resultFor(bytes32 question_id) external view returns (bytes32);\n",
+                    "message": "Parameter 'question_id' of IRealitio.resultFor (IRealitio.sol#9) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isFinalized(bytes32 question_id) external view returns (bool);\n",
+                    "message": "Parameter 'question_id' of IRealitio.isFinalized (IRealitio.sol#10) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getContentHash(bytes32 question_id) external view returns (bytes32);\n",
+                    "message": "Parameter 'question_id' of IRealitio.getContentHash (IRealitio.sol#11) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function askQuestion(uint256 template_id, string calldata question, address arbitrator, uint32 timeout, uint32 opening_ts, uint256 nonce) external payable returns (bytes32);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function askQuestion(uint256 template_id, string calldata question, address arbitrator, uint32 timeout, uint32 opening_ts, uint256 nonce) external payable returns (bytes32);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function askQuestion(uint256 template_id, string calldata question, address arbitrator, uint32 timeout, uint32 opening_ts, uint256 nonce) external payable returns (bytes32);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function askQuestion(uint256 template_id, string calldata question, address arbitrator, uint32 timeout, uint32 opening_ts, uint256 nonce) external payable returns (bytes32);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function askQuestion(uint256 template_id, string calldata question, address arbitrator, uint32 timeout, uint32 opening_ts, uint256 nonce) external payable returns (bytes32);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function askQuestion(uint256 template_id, string calldata question, address arbitrator, uint32 timeout, uint32 opening_ts, uint256 nonce) external payable returns (bytes32);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function askQuestion(uint256 template_id, string calldata question, address arbitrator, uint32 timeout, uint32 opening_ts, uint256 nonce) external payable returns (bytes32);\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

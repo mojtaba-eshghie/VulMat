@@ -1,0 +1,984 @@
+{
+    "forbitspaceX-bep20-19fc2b037b743e9f795709c72f004efe1109aaaf/contracts-merged/forbitspaceX.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-abi-encodecall-instead-of-encodewithselector",
+                    "vulnerability_from_line": 334,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t_callOptionalReturn(token, abi.encodeWithSelector(token.transfer.selector, to, value));\n",
+                    "message": "To guarantee arguments type safety it is recommended to use `abi.encodeCall` instead of `abi.encodeWithSelector`."
+                },
+                {
+                    "name": "use-abi-encodecall-instead-of-encodewithselector",
+                    "vulnerability_from_line": 343,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t_callOptionalReturn(token, abi.encodeWithSelector(token.transferFrom.selector, from, to, value));\n",
+                    "message": "To guarantee arguments type safety it is recommended to use `abi.encodeCall` instead of `abi.encodeWithSelector`."
+                },
+                {
+                    "name": "use-abi-encodecall-instead-of-encodewithselector",
+                    "vulnerability_from_line": 365,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t_callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, value));\n",
+                    "message": "To guarantee arguments type safety it is recommended to use `abi.encodeCall` instead of `abi.encodeWithSelector`."
+                },
+                {
+                    "name": "use-abi-encodecall-instead-of-encodewithselector",
+                    "vulnerability_from_line": 374,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t_callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));\n",
+                    "message": "To guarantee arguments type safety it is recommended to use `abi.encodeCall` instead of `abi.encodeWithSelector`."
+                },
+                {
+                    "name": "use-abi-encodecall-instead-of-encodewithselector",
+                    "vulnerability_from_line": 386,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\t_callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));\n",
+                    "message": "To guarantee arguments type safety it is recommended to use `abi.encodeCall` instead of `abi.encodeWithSelector`."
+                },
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 705,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "abstract contract Payment is IPayment, Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 850,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tconstructor(address _WBNB, address _admin) Payment(_WBNB, _admin) {}\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 898,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tfor (uint i = 0; i < params.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 163,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(address(this).balance >= amount, \"Address: insufficient balance\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 166,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(success, \"Address: unable to send value, recipient may have reverted\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 236,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(address(this).balance >= value, \"Address: insufficient balance for call\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 237,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(isContract(target), \"Address: call to non-contract\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 264,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(isContract(target), \"Address: static call to non-contract\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 291,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(isContract(target), \"Address: delegate call to non-contract\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 361,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 362,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\t(value == 0) || (token.allowance(address(this), spender) == 0),\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 363,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\t\"SafeBEP20: approve from non-zero to non-zero allowance\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 364,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t);\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 384,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\trequire(oldAllowance >= value, \"SafeBEP20: decreased allowance below zero\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 404,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\trequire(abi.decode(returndata, (bool)), \"SafeBEP20: BEP20 operation did not succeed\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 666,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(owner() == _msgSender(), \"Ownable: caller is not the owner\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 686,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(newOwner != address(0), \"Ownable: new owner is the zero address\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 780,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(newAdmin != admin, \"A_I_E\"); // Admin is exist\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 832,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_status != _ENTERED, \"ReentrancyGuard: reentrant call\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 860,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(!(tokenIn == tokenOut), \"I_T_A\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 861,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(!(tokenIn == BNB_ADDRESS && tokenOut == WBNB_ADDRESS), \"I_T_A\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 862,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(!(tokenIn == WBNB_ADDRESS && tokenOut == BNB_ADDRESS), \"I_T_A\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 868,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\trequire(msg.value == 0, \"I_V\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 870,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(amountInTotal > 0, \"I_V\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 886,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire((amountInActual > 0) && (amountOutActual > 0), \"I_A_T_A\"); // incorrect actual total amounts\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 921,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\trequire(success, \"I_A_A\"); // incorrect actual amounts\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 861,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(!(tokenIn == BNB_ADDRESS && tokenOut == WBNB_ADDRESS), \"I_T_A\");\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 862,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(!(tokenIn == WBNB_ADDRESS && tokenOut == BNB_ADDRESS), \"I_T_A\");\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 886,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire((amountInActual > 0) && (amountOutActual > 0), \"I_A_T_A\"); // incorrect actual total amounts\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 898,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tfor (uint i = 0; i < params.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 166,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(success, \"Address: unable to send value, recipient may have reverted\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 236,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(address(this).balance >= value, \"Address: insufficient balance for call\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 264,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(isContract(target), \"Address: static call to non-contract\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 291,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(isContract(target), \"Address: delegate call to non-contract\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 361,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 362,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\t(value == 0) || (token.allowance(address(this), spender) == 0),\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 363,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\t\"SafeBEP20: approve from non-zero to non-zero allowance\"\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 364,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t);\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 384,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\trequire(oldAllowance >= value, \"SafeBEP20: decreased allowance below zero\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 404,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\trequire(abi.decode(returndata, (bool)), \"SafeBEP20: BEP20 operation did not succeed\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 686,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(newOwner != address(0), \"Ownable: new owner is the zero address\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 709,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress public constant BNB_ADDRESS = address(0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 678,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t_setOwner(address(0));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 898,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tfor (uint i = 0; i < params.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 898,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tfor (uint i = 0; i < params.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 846,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract forbitspaceX is IforbitspaceX, Payment, ReentrancyGuard {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_MSGVALUE_EQUALS_ZERO",
+                    "vulnerability_from_line": 868,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\trequire(msg.value == 0, \"I_V\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 644,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\taddress private _owner;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 814,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 private constant _NOT_ENTERED = 1;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 815,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 private constant _ENTERED = 2;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 817,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 private _status;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 706,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tusing SafeMath for uint;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 847,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tusing SafeMath for uint;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction isContract(address account) internal view returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t) external payable returns (uint amountInAcutual, uint amountOutAcutual);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 415,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction tryAdd(uint a, uint b) internal pure returns (bool, uint) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 428,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction trySub(uint a, uint b) internal pure returns (bool, uint) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 440,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction tryMul(uint a, uint b) internal pure returns (bool, uint) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 457,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction tryDiv(uint a, uint b) internal pure returns (bool, uint) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 469,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction tryMod(uint a, uint b) internal pure returns (bool, uint) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 858,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t) public payable override nonReentrant returns (uint amountInActual, uint amountOutActual) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UNCHECKED_CALL",
+                    "vulnerability_from_line": 334,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t_callOptionalReturn(token, abi.encodeWithSelector(token.transfer.selector, to, value));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UNCHECKED_CALL",
+                    "vulnerability_from_line": 343,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t_callOptionalReturn(token, abi.encodeWithSelector(token.transferFrom.selector, from, to, value));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UNCHECKED_CALL",
+                    "vulnerability_from_line": 365,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t_callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, value));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UNCHECKED_CALL",
+                    "vulnerability_from_line": 374,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t_callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UNCHECKED_CALL",
+                    "vulnerability_from_line": 386,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\t_callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 638,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction _msgData() internal view virtual returns (bytes calldata) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 857,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tSwapParam[] calldata params\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 897,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction _swap(SwapParam[] calldata params) private {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 905,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\t\tbytes calldata swapData\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 162,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction sendValue(address payable recipient, uint amount) internal {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 651,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tconstructor() {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 819,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 850,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tconstructor(address _WBNB, address _admin) Payment(_WBNB, _admin) {}\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 162,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction sendValue(address payable recipient, uint amount) internal {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 162,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction sendValue(address payable recipient, uint amount) internal {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 163,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(address(this).balance >= amount, \"Address: insufficient balance\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 163,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(address(this).balance >= amount, \"Address: insufficient balance\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 163,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(address(this).balance >= amount, \"Address: insufficient balance\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 163,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(address(this).balance >= amount, \"Address: insufficient balance\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 165,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t(bool success, ) = recipient.call{ value: amount }(\"\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 165,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t(bool success, ) = recipient.call{ value: amount }(\"\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 165,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t(bool success, ) = recipient.call{ value: amount }(\"\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 713,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\treceive() external payable {}\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "forbitspaceX-bep20-19fc2b037b743e9f795709c72f004efe1109aaaf/contracts/libraries/SafeMath.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction tryAdd(uint a, uint b) internal pure returns (bool, uint) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction trySub(uint a, uint b) internal pure returns (bool, uint) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 48,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction tryMul(uint a, uint b) internal pure returns (bool, uint) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction tryDiv(uint a, uint b) internal pure returns (bool, uint) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 77,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction tryMod(uint a, uint b) internal pure returns (bool, uint) {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "forbitspaceX-bep20-19fc2b037b743e9f795709c72f004efe1109aaaf/contracts/libraries/Address.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(address(this).balance >= amount, \"Address: insufficient balance\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 60,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(success, \"Address: unable to send value, recipient may have reverted\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 130,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(address(this).balance >= value, \"Address: insufficient balance for call\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(isContract(target), \"Address: call to non-contract\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 158,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(isContract(target), \"Address: static call to non-contract\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 185,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(isContract(target), \"Address: delegate call to non-contract\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 60,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(success, \"Address: unable to send value, recipient may have reverted\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 130,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(address(this).balance >= value, \"Address: insufficient balance for call\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 158,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(isContract(target), \"Address: static call to non-contract\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 185,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(isContract(target), \"Address: delegate call to non-contract\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction isContract(address account) internal view returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 56,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction sendValue(address payable recipient, uint amount) internal {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 56,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction sendValue(address payable recipient, uint amount) internal {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 56,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction sendValue(address payable recipient, uint amount) internal {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(address(this).balance >= amount, \"Address: insufficient balance\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(address(this).balance >= amount, \"Address: insufficient balance\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(address(this).balance >= amount, \"Address: insufficient balance\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(address(this).balance >= amount, \"Address: insufficient balance\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 59,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t(bool success, ) = recipient.call{ value: amount }(\"\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 59,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t(bool success, ) = recipient.call{ value: amount }(\"\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 59,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t(bool success, ) = recipient.call{ value: amount }(\"\");\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "forbitspaceX-bep20-19fc2b037b743e9f795709c72f004efe1109aaaf/contracts/libraries/Context.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction _msgData() internal view virtual returns (bytes calldata) {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "forbitspaceX-bep20-19fc2b037b743e9f795709c72f004efe1109aaaf/contracts/interfaces/IPayment.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "forbitspaceX-bep20-19fc2b037b743e9f795709c72f004efe1109aaaf/contracts/interfaces/IBEP20.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.8.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

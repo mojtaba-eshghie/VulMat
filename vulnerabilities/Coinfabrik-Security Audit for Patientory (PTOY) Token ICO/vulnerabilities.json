@@ -1,0 +1,595 @@
+{
+    "smart-contracts-master/contracts/test/GasStipendTester.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in GasStipendTester.sol:\n\t- pragma solidity^0.4.18 (GasStipendTester.sol#9): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "smart-contracts-master/contracts/security-token/KYCInterface.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.24;\n",
+                    "message": "Different versions of Solidity is used in KYCInterface.sol:\n\t- Version used: ['^0.4.18', '^0.4.24']\n\t- KYCInterface.sol#3 declares pragma solidity^0.4.24\n\t- KYCInterface.sol#24 declares pragma solidity^0.4.18\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in KYCInterface.sol:\n\t- pragma solidity^0.4.18 (KYCInterface.sol#24): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.24;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "smart-contracts-master/contracts/security-token/UnrestrictedTransferAgent.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in UnrestrictedTransferAgent.sol:\n\t- pragma solidity^0.4.18 (UnrestrictedTransferAgent.sol#3): it allows old versions\n\t- pragma solidity^0.4.18 (UnrestrictedTransferAgent.sol#11): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": 17,
+                    "vulnerability_code": "  function UnrestrictedTransferAgent() {\n",
+                    "message": "Function 'UnrestrictedTransferAgent.UnrestrictedTransferAgent' (UnrestrictedTransferAgent.sol#16-17) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function UnrestrictedTransferAgent() {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "smart-contracts-master/contracts/security-token/RestrictedTransferAgent.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      revert(\"Token transaction not permitted\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 66,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (KYC.getAttribute(to, KYCAttribute.KYCCleared) && KYC.getAttribute(from, KYCAttribute.KYCCleared)) {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 67,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      return value;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    } else if (KYC.getAttribute(from, KYCAttribute.CanPushTokens)) {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 69,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      return value;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 70,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    } else {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      revert(\"Token transaction not permitted\");\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_7"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.24;\n",
+                    "message": "Different versions of Solidity is used in RestrictedTransferAgent.sol:\n\t- Version used: ['^0.4.18', '^0.4.24']\n\t- RestrictedTransferAgent.sol#3 declares pragma solidity^0.4.24\n\t- RestrictedTransferAgent.sol#24 declares pragma solidity^0.4.18\n\t- RestrictedTransferAgent.sol#34 declares pragma solidity^0.4.18\n\t- RestrictedTransferAgent.sol#42 declares pragma solidity^0.4.18\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function verify(address from, address to, uint256 value) external view returns (uint256 newValue);\n",
+                    "message": "SecurityTransferAgent.verify (RestrictedTransferAgent.sol#37) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": 73,
+                    "vulnerability_code": "  function verify(address from, address to, uint256 value) public view returns (uint256 newValue) {\n\n    if (address(KYC) == address(0)) {\n\n      return value;\n\n    }\n\n\n\n    if (KYC.getAttribute(to, KYCAttribute.KYCCleared) && KYC.getAttribute(from, KYCAttribute.KYCCleared)) {\n\n      return value;\n\n    } else if (KYC.getAttribute(from, KYCAttribute.CanPushTokens)) {\n\n      return value;\n\n    } else {\n\n      revert(\"Token transaction not permitted\");\n\n    }\n",
+                    "message": "RestrictedTransferAgent.verify (RestrictedTransferAgent.sol#61-73) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in RestrictedTransferAgent.sol:\n\t- pragma solidity^0.4.18 (RestrictedTransferAgent.sol#24): it allows old versions\n\t- pragma solidity^0.4.18 (RestrictedTransferAgent.sol#34): it allows old versions\n\t- pragma solidity^0.4.18 (RestrictedTransferAgent.sol#42): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": 51,
+                    "vulnerability_code": "  function RestrictedTransferAgent(KYCInterface _KYC) {\n\n    KYC = _KYC;\n",
+                    "message": "Function 'RestrictedTransferAgent.RestrictedTransferAgent' (RestrictedTransferAgent.sol#49-51) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function RestrictedTransferAgent(KYCInterface _KYC) {\n",
+                    "message": "Parameter '_KYC' of RestrictedTransferAgent.RestrictedTransferAgent (RestrictedTransferAgent.sol#49) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  KYCInterface KYC;\n",
+                    "message": "Variable 'RestrictedTransferAgent.KYC' (RestrictedTransferAgent.sol#47) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.24;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    } else if (KYC.getAttribute(from, KYCAttribute.CanPushTokens)) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function RestrictedTransferAgent(KYCInterface _KYC) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  KYCInterface KYC;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "smart-contracts-master/contracts/security-token/KYCAttributes.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.24;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "smart-contracts-master/contracts/security-token/ERC677.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function tokenFallback(address from, uint256 amount, bytes data) returns (bool success);\n",
+                    "message": "ERC677Receiver.tokenFallback (ERC677.sol#6) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferAndCall(ERC677Receiver receiver, uint amount, bytes data) returns (bool success);\n",
+                    "message": "ERC677.transferAndCall (ERC677.sol#14) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in ERC677.sol:\n\t- pragma solidity^0.4.18 (ERC677.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function tokenFallback(address from, uint256 amount, bytes data) returns (bool success);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferAndCall(ERC677Receiver receiver, uint amount, bytes data) returns (bool success);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "smart-contracts-master/contracts/security-token/SecurityTransferAgentInterface.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in SecurityTransferAgentInterface.sol:\n\t- pragma solidity^0.4.18 (SecurityTransferAgentInterface.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "smart-contracts-master/contracts/security-token/tests/BogusAnnouncement.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in BogusAnnouncement.sol:\n\t- pragma solidity^0.4.18 (BogusAnnouncement.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": 16,
+                    "vulnerability_code": "  function BogusAnnouncement(bytes32 _announcementName, bytes32 _announcementURI, uint256 _announcementType, uint256 _announcementHash) public {\n\n    announcementName = _announcementName;\n\n    announcementURI = _announcementURI;\n\n    announcementType = _announcementType;\n\n    announcementHash = _announcementHash;\n",
+                    "message": "Function 'BogusAnnouncement.BogusAnnouncement' (BogusAnnouncement.sol#11-16) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function BogusAnnouncement(bytes32 _announcementName, bytes32 _announcementURI, uint256 _announcementType, uint256 _announcementHash) public {\n",
+                    "message": "Parameter '_announcementName' of BogusAnnouncement.BogusAnnouncement (BogusAnnouncement.sol#11) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function BogusAnnouncement(bytes32 _announcementName, bytes32 _announcementURI, uint256 _announcementType, uint256 _announcementHash) public {\n",
+                    "message": "Parameter '_announcementURI' of BogusAnnouncement.BogusAnnouncement (BogusAnnouncement.sol#11) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function BogusAnnouncement(bytes32 _announcementName, bytes32 _announcementURI, uint256 _announcementType, uint256 _announcementHash) public {\n",
+                    "message": "Parameter '_announcementType' of BogusAnnouncement.BogusAnnouncement (BogusAnnouncement.sol#11) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function BogusAnnouncement(bytes32 _announcementName, bytes32 _announcementURI, uint256 _announcementType, uint256 _announcementHash) public {\n",
+                    "message": "Parameter '_announcementHash' of BogusAnnouncement.BogusAnnouncement (BogusAnnouncement.sol#11) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "smart-contracts-master/contracts/security-token/tests/MockERC677Receiver.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_4"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function tokenFallback(address from, uint256 amount, bytes data) returns (bool success);\n",
+                    "message": "ERC677Receiver.tokenFallback (MockERC677Receiver.sol#6) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": 24,
+                    "vulnerability_code": "  function tokenFallback(address from, uint256 amount, bytes data) returns (bool success) {\n\n    return true;\n",
+                    "message": "MockERC677Receiver.tokenFallback (MockERC677Receiver.sol#22-24) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferAndCall(ERC677Receiver receiver, uint amount, bytes data) returns (bool success);\n",
+                    "message": "ERC677.transferAndCall (MockERC677Receiver.sol#14) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in MockERC677Receiver.sol:\n\t- pragma solidity^0.4.18 (MockERC677Receiver.sol#3): it allows old versions\n\t- pragma solidity^0.4.18 (MockERC677Receiver.sol#19): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function tokenFallback(address from, uint256 amount, bytes data) returns (bool success);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferAndCall(ERC677Receiver receiver, uint amount, bytes data) returns (bool success);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function tokenFallback(address from, uint256 amount, bytes data) returns (bool success) {\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

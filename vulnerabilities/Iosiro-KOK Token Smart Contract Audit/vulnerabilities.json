@@ -1,0 +1,409 @@
+{
+    "ERC-20-55a501fde12e782b99fe9d5756388c0de82f45ba/contract.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t    for(uint256 i = 0; i < _to.length; i++){\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t        if(balances[_to[i]] > 0){\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t    for(uint256 i = 0; i < _to.length; i++){\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 121,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(balances[_from] >= _value\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 122,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\t&& allowed[_from][msg.sender] >= _value);\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t    for(uint256 i = 0; i < _to.length; i++){\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_37"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "shadowing-abstract",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tuint256 public constant totalSupply = 5000000000000000000000000000;\n",
+                    "message": "KOK_Contract.totalSupply (contract.sol#42) shadows:\n\t- ERC20Interface.totalSupply (contract.sol#28)\n"
+                },
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tuint256 public totalSupply;\n",
+                    "message": "ERC20Interface.totalSupply should be constant (contract.sol#28)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": 23,
+                    "vulnerability_code": "    function transferOwnership(address _new) onlyOwner public {\n\n        address oldaddr = owner;\n\n        owner = _new;\n\n        emit TransferOwnership(oldaddr, owner);\n",
+                    "message": "Owned.transferOwnership (contract.sol#19-23) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 100,
+                    "vulnerability_to_line": 102,
+                    "vulnerability_code": "\tfunction balanceOf(address _owner) public constant returns (uint256 balance){\n\n\t\treturn balances[_owner];\n",
+                    "message": "KOK_Contract.balanceOf (contract.sol#100-102) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction balanceOf(address _owner) public constant returns (uint256 balance);\n",
+                    "message": "ERC20Interface.balanceOf (contract.sol#29) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transferFrom(address _from, address _to, uint256 _value) public returns (bool success);\n",
+                    "message": "ERC20Interface.transferFrom (contract.sol#31) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 120,
+                    "vulnerability_to_line": 138,
+                    "vulnerability_code": "\tfunction transferFrom(address _from, address _to, uint256 _value) notStopped public returns (bool success){\n\n\t\trequire(balances[_from] >= _value\n\n\t\t\t&& allowed[_from][msg.sender] >= _value);\n\n\n\n\t\tif(blackList[_from] > 0){\n\n\t\t\temit RejectedPaymentFromBlacklistedAddr(_from, _to, _value);\n\n\t\t\treturn false;\n\n\t\t}\n\n\t\tif(blackList[_to] > 0){\n\n\t\t\temit RejectedPaymentToBlacklistedAddr(_from, _to, _value);\n\n\t\t\treturn false;\n\n\t\t}\n\n\n\n\t\tbalances[_from] -= _value;\n\n\t\tallowed[_from][msg.sender] -= _value;\n\n\t\tbalances[_to] += _value;\n\n\t\temit Transfer(_from, _to, _value);\n\n\t\treturn true;\n",
+                    "message": "KOK_Contract.transferFrom (contract.sol#120-138) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction approve(address _spender, uint256 _value) public returns (bool success);\n",
+                    "message": "ERC20Interface.approve (contract.sol#32) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": 143,
+                    "vulnerability_code": "\tfunction approve(address _spender, uint256 _value) notStopped public returns (bool success){\n\n\t\tallowed[msg.sender][_spender] = _value;\n\n\t\temit Approval(msg.sender, _spender, _value);\n\n\t\treturn true;\n",
+                    "message": "KOK_Contract.approve (contract.sol#139-143) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction allowance(address _owner, address _spender) public constant returns (uint256 remaining);\n",
+                    "message": "ERC20Interface.allowance (contract.sol#33) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 144,
+                    "vulnerability_to_line": 146,
+                    "vulnerability_code": "\tfunction allowance(address _owner, address _spender) public constant returns (uint256 remaining){\n\n\t\treturn allowed[_owner][_spender];\n",
+                    "message": "KOK_Contract.allowance (contract.sol#144-146) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": 67,
+                    "vulnerability_code": "\tfunction KOKContract() public {\n\n\t\tbalances[msg.sender] = totalSupply;\n",
+                    "message": "KOK_Contract.KOKContract (contract.sol#65-67) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 70,
+                    "vulnerability_to_line": 77,
+                    "vulnerability_code": "\tfunction airdrop(address[] _to, uint256[] _value) onlyOwner notStopped public {\n\n\t    for(uint256 i = 0; i < _to.length; i++){\n\n\t        if(balances[_to[i]] > 0){\n\n\t            continue;\n\n\t        }\n\n\t        transfer(_to[i], _value[i]);\n\n\t    }\n",
+                    "message": "KOK_Contract.airdrop (contract.sol#70-77) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": 83,
+                    "vulnerability_code": "    function blacklisting(address _addr) onlyOwner public {\n\n        blackList[_addr] = 1;\n\n        emit Blacklisted(_addr);\n",
+                    "message": "KOK_Contract.blacklisting (contract.sol#80-83) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": 87,
+                    "vulnerability_code": "    function deleteFromBlacklist(address _addr) onlyOwner public {\n\n        blackList[_addr] = -1;\n\n        emit DeleteFromBlacklist(_addr);\n",
+                    "message": "KOK_Contract.deleteFromBlacklist (contract.sol#84-87) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 91,
+                    "vulnerability_to_line": 93,
+                    "vulnerability_code": "\tfunction stop() onlyOwner {\n\n        stopped = true;\n",
+                    "message": "KOK_Contract.stop (contract.sol#91-93) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 95,
+                    "vulnerability_to_line": 97,
+                    "vulnerability_code": "    function start() onlyOwner {\n\n        stopped = false;\n",
+                    "message": "KOK_Contract.start (contract.sol#95-97) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.21;\n",
+                    "message": "Detected issues with version pragma in contract.sol:\n\t- pragma solidity^0.4.21 (contract.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": 17,
+                    "vulnerability_code": "    function Owned() public {\n\n        owner = msg.sender;\n",
+                    "message": "Function 'Owned.Owned' (contract.sol#15-17) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferOwnership(address _new) onlyOwner public {\n",
+                    "message": "Parameter '_new' of Owned.transferOwnership (contract.sol#19) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": 147,
+                    "vulnerability_code": "contract KOK_Contract is ERC20Interface, Owned {\n\n\tstring public constant symbol = \"KOK\";\n\n\tstring public constant name = \"KOK Coin\";\n\n\tuint8 public constant decimals = 18;\n\n\tuint256 public constant totalSupply = 5000000000000000000000000000;\n\n\n\n\tbool public stopped;\n\n\n\n\tmapping (address => int8) public blackList;\n\n\n\n\tmapping (address => uint256) public balances;\n\n\tmapping (address => mapping (address => uint256)) public allowed;\n\n\n\n\n\n    event Blacklisted(address indexed target);\n\n    event DeleteFromBlacklist(address indexed target);\n\n    event RejectedPaymentToBlacklistedAddr(address indexed from, address indexed to, uint256 value);\n\n    event RejectedPaymentFromBlacklistedAddr(address indexed from, address indexed to, uint256 value);\n\n\n\n\n\n\tmodifier notStopped {\n\n        require(!stopped);\n\n        _;\n\n    }\n\n\n\n// constructor\n\n// SWC-Incorrect Constructor Name: L63\n\n\tfunction KOKContract() public {\n\n\t\tbalances[msg.sender] = totalSupply;\n\n\t}\n\n\t\n\n// function made for airdrop\n\n\tfunction airdrop(address[] _to, uint256[] _value) onlyOwner notStopped public {\n\n\t    for(uint256 i = 0; i < _to.length; i++){\n\n\t        if(balances[_to[i]] > 0){\n\n\t            continue;\n\n\t        }\n\n\t        transfer(_to[i], _value[i]);\n\n\t    }\n\n\t}\n\n\n\n// blacklist management\n\n    function blacklisting(address _addr) onlyOwner public {\n\n        blackList[_addr] = 1;\n\n        emit Blacklisted(_addr);\n\n    }\n\n    function deleteFromBlacklist(address _addr) onlyOwner public {\n\n        blackList[_addr] = -1;\n\n        emit DeleteFromBlacklist(_addr);\n\n    }\n\n\n\n// stop the contract\n\n// SWC-Function Default Visibility: L88\n\n\tfunction stop() onlyOwner {\n\n        stopped = true;\n\n    }\n\n// SWC-Function Default Visibility: L92\n\n    function start() onlyOwner {\n\n        stopped = false;\n\n    }\n\n\t\n\n// ERC20 functions\n\n\tfunction balanceOf(address _owner) public constant returns (uint256 balance){\n\n\t\treturn balances[_owner];\n\n\t}\n\n\tfunction transfer(address _to, uint256 _value) notStopped public returns (bool success){\n\n\t\trequire(balances[msg.sender] >= _value);\n\n\n\n\t\tif(blackList[msg.sender] > 0){\n\n\t\t\temit RejectedPaymentFromBlacklistedAddr(msg.sender, _to, _value);\n\n\t\t\treturn false;\n\n\t\t}\n\n\t\tif(blackList[_to] > 0){\n\n\t\t\temit RejectedPaymentToBlacklistedAddr(msg.sender, _to, _value);\n\n\t\t\treturn false;\n\n\t\t}\n\n\n\n\t\tbalances[msg.sender] -= _value;\n\n\t\tbalances[_to] += _value;\n\n\t\temit Transfer(msg.sender, _to, _value);\n\n\t\treturn true;\n\n\t}\n\n\tfunction transferFrom(address _from, address _to, uint256 _value) notStopped public returns (bool success){\n\n\t\trequire(balances[_from] >= _value\n\n\t\t\t&& allowed[_from][msg.sender] >= _value);\n\n\n\n\t\tif(blackList[_from] > 0){\n\n\t\t\temit RejectedPaymentFromBlacklistedAddr(_from, _to, _value);\n\n\t\t\treturn false;\n\n\t\t}\n\n\t\tif(blackList[_to] > 0){\n\n\t\t\temit RejectedPaymentToBlacklistedAddr(_from, _to, _value);\n\n\t\t\treturn false;\n\n\t\t}\n\n\n\n\t\tbalances[_from] -= _value;\n\n\t\tallowed[_from][msg.sender] -= _value;\n\n\t\tbalances[_to] += _value;\n\n\t\temit Transfer(_from, _to, _value);\n\n\t\treturn true;\n\n\t}\n\n\tfunction approve(address _spender, uint256 _value) notStopped public returns (bool success){\n\n\t\tallowed[msg.sender][_spender] = _value;\n\n\t\temit Approval(msg.sender, _spender, _value);\n\n\t\treturn true;\n\n\t}\n\n\tfunction allowance(address _owner, address _spender) public constant returns (uint256 remaining){\n\n\t\treturn allowed[_owner][_spender];\n\n\t}\n",
+                    "message": "Contract 'KOK_Contract' (contract.sol#38-147) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 100,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction balanceOf(address _owner) public constant returns (uint256 balance){\n",
+                    "message": "Parameter '_owner' of KOK_Contract.balanceOf (contract.sol#100) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 103,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transfer(address _to, uint256 _value) notStopped public returns (bool success){\n",
+                    "message": "Parameter '_to' of KOK_Contract.transfer (contract.sol#103) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 103,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transfer(address _to, uint256 _value) notStopped public returns (bool success){\n",
+                    "message": "Parameter '_value' of KOK_Contract.transfer (contract.sol#103) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 120,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transferFrom(address _from, address _to, uint256 _value) notStopped public returns (bool success){\n",
+                    "message": "Parameter '_from' of KOK_Contract.transferFrom (contract.sol#120) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 120,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transferFrom(address _from, address _to, uint256 _value) notStopped public returns (bool success){\n",
+                    "message": "Parameter '_to' of KOK_Contract.transferFrom (contract.sol#120) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 120,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transferFrom(address _from, address _to, uint256 _value) notStopped public returns (bool success){\n",
+                    "message": "Parameter '_value' of KOK_Contract.transferFrom (contract.sol#120) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction approve(address _spender, uint256 _value) notStopped public returns (bool success){\n",
+                    "message": "Parameter '_spender' of KOK_Contract.approve (contract.sol#139) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction approve(address _spender, uint256 _value) notStopped public returns (bool success){\n",
+                    "message": "Parameter '_value' of KOK_Contract.approve (contract.sol#139) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 144,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction allowance(address _owner, address _spender) public constant returns (uint256 remaining){\n",
+                    "message": "Parameter '_owner' of KOK_Contract.allowance (contract.sol#144) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 144,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction allowance(address _owner, address _spender) public constant returns (uint256 remaining){\n",
+                    "message": "Parameter '_spender' of KOK_Contract.allowance (contract.sol#144) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": 67,
+                    "vulnerability_code": "\tfunction KOKContract() public {\n\n\t\tbalances[msg.sender] = totalSupply;\n",
+                    "message": "Function 'KOK_Contract.KOKContract' (contract.sol#65-67) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 70,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction airdrop(address[] _to, uint256[] _value) onlyOwner notStopped public {\n",
+                    "message": "Parameter '_to' of KOK_Contract.airdrop (contract.sol#70) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 70,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction airdrop(address[] _to, uint256[] _value) onlyOwner notStopped public {\n",
+                    "message": "Parameter '_value' of KOK_Contract.airdrop (contract.sol#70) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function blacklisting(address _addr) onlyOwner public {\n",
+                    "message": "Parameter '_addr' of KOK_Contract.blacklisting (contract.sol#80) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function deleteFromBlacklist(address _addr) onlyOwner public {\n",
+                    "message": "Parameter '_addr' of KOK_Contract.deleteFromBlacklist (contract.sol#84) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tuint256 public constant totalSupply = 5000000000000000000000000000;\n",
+                    "message": "Constant 'KOK_Contract.totalSupply' (contract.sol#42) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction balanceOf(address _owner) public constant returns (uint256 balance);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction allowance(address _owner, address _spender) public constant returns (uint256 remaining);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 100,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction balanceOf(address _owner) public constant returns (uint256 balance){\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 144,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction allowance(address _owner, address _spender) public constant returns (uint256 remaining){\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction approve(address _spender, uint256 _value) notStopped public returns (bool success){\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t    for(uint256 i = 0; i < _to.length; i++){\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t    for(uint256 i = 0; i < _to.length; i++){\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.21;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 70,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction airdrop(address[] _to, uint256[] _value) onlyOwner notStopped public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 70,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction airdrop(address[] _to, uint256[] _value) onlyOwner notStopped public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 91,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction stop() onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 95,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function start() onlyOwner {\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

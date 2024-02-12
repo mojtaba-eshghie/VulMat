@@ -1,0 +1,234 @@
+{
+    "lockdrop-ui-e6d8357ebfb7c3ed5125b3c9e79fd1e41a9885ed/contracts/Lock.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_4"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "locked-ether",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": 13,
+                    "vulnerability_code": "    constructor (address owner, uint256 unlockTime) public payable {\n\n        assembly {\n\n            sstore(0x00, owner)\n\n            sstore(0x01, unlockTime)\n\n        }\n",
+                    "message": "Contract locking ether found in Lock.sol:\n\tContract Lock has payable functions:\n\t - constructor (Lock.sol#8-13)\n\t - fallback (Lock.sol#18-27)\n\tBut does not have a function to withdraw the ether\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": 13,
+                    "vulnerability_code": "    constructor (address owner, uint256 unlockTime) public payable {\n\n        assembly {\n\n            sstore(0x00, owner)\n\n            sstore(0x01, unlockTime)\n\n        }\n",
+                    "message": "Lock.constructor uses assembly (Lock.sol#8-13)\n\t- Lock.sol#9-12\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": 27,
+                    "vulnerability_code": "    function () external payable { // payable so solidity doesn't add unnecessary logic\n\n        assembly {\n\n            switch gt(timestamp, sload(0x01))\n\n            case 0 { revert(0, 0) }\n\n            case 1 {\n\n                switch call(gas, sload(0x00), balance(address), 0, 0, 0, 0)\n\n                case 0 { revert(0, 0) }\n\n            }\n\n        }\n",
+                    "message": "Lock.fallback uses assembly (Lock.sol#18-27)\n\t- Lock.sol#19-26\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in Lock.sol:\n\t- pragma solidity^0.5.0 (Lock.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Lock {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "lockdrop-ui-e6d8357ebfb7c3ed5125b3c9e79fd1e41a9885ed/contracts/Lockdrop.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(uint startTime) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        LOCK_START_TIME = startTime;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        LOCK_END_TIME = startTime + LOCK_DROP_PERIOD;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_9"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "incorrect-equality",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": 79,
+                    "vulnerability_code": "    function lock(uint256 _days, address _introducer)\n\n        external\n\n        payable\n\n        didStart\n\n        didNotEnd\n\n    {\n\n        // Accept External Owned Accounts only\n\n        require(msg.sender == tx.origin);\n\n\n\n        // Accept only fixed set of durations\n\n        require(_days == 30 || _days == 100 || _days == 300 || _days == 1000); \n\n        uint256 unlockTime = now + _days * 1 days;\n\n\n\n        // Accept non-zero payments only\n\n        require(msg.value > 0);\n\n        uint256 eth = msg.value;\n\n\n\n        // Create ETH lock contract\n\n        Lock lockAddr = (new Lock).value(eth)(msg.sender, unlockTime);\n\n\n\n        // ensure lock contract has all ETH, or fail\n\n        //SWC-DoS with Failed Call: L47\n\n        assert(address(lockAddr).balance == eth);\n\n\n\n        emit Locked(eth, _days, address(lockAddr), _introducer);\n",
+                    "message": "Lockdrop.lock (Lockdrop.sol#54-79) uses a dangerous strict equality:\n\t- assert(bool)(address(lockAddr).balance == eth)\n"
+                },
+                {
+                    "name": "locked-ether",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": 13,
+                    "vulnerability_code": "    constructor (address owner, uint256 unlockTime) public payable {\n\n        assembly {\n\n            sstore(0x00, owner)\n\n            sstore(0x01, unlockTime)\n\n        }\n",
+                    "message": "Contract locking ether found in Lockdrop.sol:\n\tContract Lock has payable functions:\n\t - constructor (Lockdrop.sol#8-13)\n\t - fallback (Lockdrop.sol#18-27)\n\tBut does not have a function to withdraw the ether\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": 13,
+                    "vulnerability_code": "    constructor (address owner, uint256 unlockTime) public payable {\n\n        assembly {\n\n            sstore(0x00, owner)\n\n            sstore(0x01, unlockTime)\n\n        }\n",
+                    "message": "Lock.constructor uses assembly (Lockdrop.sol#8-13)\n\t- Lockdrop.sol#9-12\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": 27,
+                    "vulnerability_code": "    function () external payable { // payable so solidity doesn't add unnecessary logic\n\n        assembly {\n\n            switch gt(timestamp, sload(0x01))\n\n            case 0 { revert(0, 0) }\n\n            case 1 {\n\n                switch call(gas, sload(0x00), balance(address), 0, 0, 0, 0)\n\n                case 0 { revert(0, 0) }\n\n            }\n\n        }\n",
+                    "message": "Lock.fallback uses assembly (Lockdrop.sol#18-27)\n\t- Lockdrop.sol#19-26\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": "Detected issues with version pragma in Lockdrop.sol:\n\t- pragma solidity^0.5.0 (Lockdrop.sol#3): it allows old versions\n\t- pragma solidity^0.5.0 (Lockdrop.sol#33): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function lock(uint256 _days, address _introducer)\n",
+                    "message": "Parameter '_days' of Lockdrop.lock (Lockdrop.sol#54) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function lock(uint256 _days, address _introducer)\n",
+                    "message": "Parameter '_introducer' of Lockdrop.lock (Lockdrop.sol#54) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public LOCK_START_TIME;\n",
+                    "message": "Variable 'Lockdrop.LOCK_START_TIME' (Lockdrop.sol#38) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public LOCK_END_TIME;\n",
+                    "message": "Variable 'Lockdrop.LOCK_END_TIME' (Lockdrop.sol#39) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_BALANCE_EQUALITY",
+                    "vulnerability_from_line": 76,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assert(address(lockAddr).balance == eth);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Lock {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

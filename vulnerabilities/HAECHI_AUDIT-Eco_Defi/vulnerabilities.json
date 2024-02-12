@@ -1,0 +1,374 @@
+{
+    "ECOPToken/ECOPToken.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 220,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 221,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 222,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 257,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "   constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 258,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t//ERC20\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 259,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    \ttotalSupply_ =  49000000 * 10 ** uint256(decimals);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 260,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t//BEP20\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 261,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    \t//totalSupply_ =  51000000 * 10 ** uint256(decimals);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 262,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    \tbalances[msg.sender] = totalSupply_;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 263,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "   }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(c >= a, \"SafeMath: addition overflow\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 95,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(c / a == b, \"SafeMath: multiplication overflow\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 208,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      for (uint256 i = 1; i < y; i++)\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 95,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(c / a == b, \"SafeMath: multiplication overflow\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_25"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 287,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "   function allowance(address owner, address delegate) public view returns (uint) {\n",
+                    "message": "ECOPToken.allowance.owner (local variable @ ECOPToken.sol#287) shadows:\n\t- owned.owner (state variable @ ECOPToken.sol#218)\n"
+                },
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 291,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "   function transferFrom(address owner, address buyer, uint256 numTokens) public returns (bool) {\n",
+                    "message": "ECOPToken.transferFrom.owner (local variable @ ECOPToken.sol#291) shadows:\n\t- owned.owner (state variable @ ECOPToken.sol#218)\n"
+                },
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity  >=0.5.0 <0.7.0;\n",
+                    "message": "Different versions of Solidity is used in ECOPToken.sol:\n\t- Version used: ['>=0.5.0<0.7.0', '^0.5.10']\n\t- ECOPToken.sol#7 declares pragma solidity>=0.5.0<0.7.0\n\t- ECOPToken.sol#25 declares pragma solidity>=0.5.0<0.7.0\n\t- ECOPToken.sol#215 declares pragma solidity^0.5.10\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 229,
+                    "vulnerability_to_line": 233,
+                    "vulnerability_code": "    function transferOwnership(address newOwner) onlyOwner public {\n\n        if (newOwner != address(0)) {\n\n        owner = newOwner;\n\n      }\n",
+                    "message": "owned.transferOwnership (ECOPToken.sol#229-233) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function totalSupply() external view returns (uint256);\n",
+                    "message": "IERC20.totalSupply (ECOPToken.sol#10) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 265,
+                    "vulnerability_to_line": 267,
+                    "vulnerability_code": "   function totalSupply() public view returns (uint256) {\n\n    \treturn totalSupply_;\n",
+                    "message": "ECOPToken.totalSupply (ECOPToken.sol#265-267) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOf(address account) external view returns (uint256);\n",
+                    "message": "IERC20.balanceOf (ECOPToken.sol#11) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 269,
+                    "vulnerability_to_line": 271,
+                    "vulnerability_code": "   function balanceOf(address tokenOwner) public view returns (uint256) {\n\n        return balances[tokenOwner];\n",
+                    "message": "ECOPToken.balanceOf (ECOPToken.sol#269-271) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 287,
+                    "vulnerability_to_line": 289,
+                    "vulnerability_code": "   function allowance(address owner, address delegate) public view returns (uint) {\n\n        return allowed[owner][delegate];\n",
+                    "message": "ECOPToken.allowance (ECOPToken.sol#287-289) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allowance(address owner, address spender) external view returns (uint256);\n",
+                    "message": "IERC20.allowance (ECOPToken.sol#12) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 273,
+                    "vulnerability_to_line": 279,
+                    "vulnerability_code": "   function transfer(address receiver, uint256 numTokens) public returns (bool) {\n\n        require(numTokens <= balances[msg.sender]);\n\n        balances[msg.sender] = balances[msg.sender].sub(numTokens);\n\n        balances[receiver] = balances[receiver].add(numTokens);\n\n        emit Transfer(msg.sender, receiver, numTokens);\n\n        return true;\n",
+                    "message": "ECOPToken.transfer (ECOPToken.sol#273-279) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address recipient, uint256 amount) external returns (bool);\n",
+                    "message": "IERC20.transfer (ECOPToken.sol#15) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 281,
+                    "vulnerability_to_line": 285,
+                    "vulnerability_code": "   function approve(address delegate, uint256 numTokens) public returns (bool) {\n\n        allowed[msg.sender][delegate] = numTokens;\n\n        emit Approval(msg.sender, delegate, numTokens);\n\n        return true;\n",
+                    "message": "ECOPToken.approve (ECOPToken.sol#281-285) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address spender, uint256 amount) external returns (bool);\n",
+                    "message": "IERC20.approve (ECOPToken.sol#16) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);\n",
+                    "message": "IERC20.transferFrom (ECOPToken.sol#17) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 291,
+                    "vulnerability_to_line": 300,
+                    "vulnerability_code": "   function transferFrom(address owner, address buyer, uint256 numTokens) public returns (bool) {\n\n        require(numTokens <= balances[owner]);\n\n        require(numTokens <= allowed[owner][msg.sender]);\n\n\n\n        balances[owner] = balances[owner].sub(numTokens);\n\n        allowed[owner][msg.sender] = allowed[owner][msg.sender].sub(numTokens);\n\n        balances[buyer] = balances[buyer].add(numTokens);\n\n        emit Transfer(owner, buyer, numTokens);\n\n        return true;\n",
+                    "message": "ECOPToken.transferFrom (ECOPToken.sol#291-300) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 301,
+                    "vulnerability_to_line": 307,
+                    "vulnerability_code": "  function burn(uint256 _value) public returns (bool success) {\n\n        require(balances[msg.sender] >= _value);\n\n        balances[msg.sender] = balances[msg.sender].sub(_value);\n\n        totalSupply_ = totalSupply_.sub(_value);\n\n        emit Burn(msg.sender, _value);\n\n        return true;\n",
+                    "message": "ECOPToken.burn (ECOPToken.sol#301-307) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function burn(uint256 _value) external returns (bool success);\n",
+                    "message": "IERC20.burn (ECOPToken.sol#18) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function burnFrom(address _from, uint256 _value) external returns (bool success);\n",
+                    "message": "IERC20.burnFrom (ECOPToken.sol#19) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 308,
+                    "vulnerability_to_line": 316,
+                    "vulnerability_code": "  function burnFrom(address _from, uint256 _value) public returns (bool success) {\n\n        require(balances[_from] >= _value);\n\n        require(_value <= allowed[_from][msg.sender]);\n\n        balances[_from] = balances[_from].sub(_value);\n\n        allowed[_from][msg.sender] = allowed[_from][msg.sender].sub(_value);\n\n        totalSupply_ = totalSupply_.sub(_value);\n\n        emit Burn(_from, _value);\n\n        return true;\n",
+                    "message": "ECOPToken.burnFrom (ECOPToken.sol#308-316) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity  >=0.5.0 <0.7.0;\n",
+                    "message": "Detected issues with version pragma in ECOPToken.sol:\n\t- pragma solidity>=0.5.0<0.7.0 (ECOPToken.sol#7): is has a complex pragma\n\t- pragma solidity>=0.5.0<0.7.0 (ECOPToken.sol#25): is has a complex pragma\n\t- pragma solidity^0.5.10 (ECOPToken.sol#215): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 217,
+                    "vulnerability_to_line": 234,
+                    "vulnerability_code": "contract owned {\n\n    address public owner;\n\n \n\n    constructor() public {\n\n        owner = msg.sender;\n\n    }\n\n \n\n    modifier onlyOwner {\n\n        require (msg.sender == owner);\n\n        _;\n\n    }\n\n \n\n    function transferOwnership(address newOwner) onlyOwner public {\n\n        if (newOwner != address(0)) {\n\n        owner = newOwner;\n\n      }\n\n    }\n",
+                    "message": "Contract 'owned' (ECOPToken.sol#217-234) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 301,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function burn(uint256 _value) public returns (bool success) {\n",
+                    "message": "Parameter '_value' of ECOPToken.burn (ECOPToken.sol#301) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 308,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function burnFrom(address _from, uint256 _value) public returns (bool success) {\n",
+                    "message": "Parameter '_from' of ECOPToken.burnFrom (ECOPToken.sol#308) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 308,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function burnFrom(address _from, uint256 _value) public returns (bool success) {\n",
+                    "message": "Parameter '_value' of ECOPToken.burnFrom (ECOPToken.sol#308) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 281,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "   function approve(address delegate, uint256 numTokens) public returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 178,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    while (z < y) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity  >=0.5.0 <0.7.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity  >=0.5.0 <0.7.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity  >=0.5.0 <0.7.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity  >=0.5.0 <0.7.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 215,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.10;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 254,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 248,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(address => uint256) balances;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 250,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(address => mapping (address => uint256)) allowed;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 252,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 totalSupply_;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,2096 @@
+{
+    "idex-4a05eb28e570e9820066474ff2adc924ce7a27bd/MyToken.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_26"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "erc20-interface",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": 78,
+                    "vulnerability_code": "contract MyToken {\n\n    /* Public variables of the token */\n\n    string public standard = 'Token 0.1';\n\n    string public name;\n\n    string public symbol;\n\n    uint8 public decimals;\n\n    uint256 public totalSupply;\n\n\n\n    /* This creates an array with all balances */\n\n    mapping (address => uint256) public balanceOf;\n\n    mapping (address => mapping (address => uint256)) public allowance;\n\n\n\n    /* This generates a public event on the blockchain that will notify clients */\n\n    event Transfer(address indexed from, address indexed to, uint256 value);\n\n\n\n    /* Initializes contract with initial supply tokens to the creator of the contract */\n\n    function MyToken(\n\n        uint256 initialSupply,\n\n        string tokenName,\n\n        uint8 decimalUnits,\n\n        string tokenSymbol\n\n        ) {\n\n        balanceOf[msg.sender] = initialSupply;              // Give the creator all initial tokens\n\n        totalSupply = initialSupply;                        // Update total supply\n\n        name = tokenName;                                   // Set the name for display purposes\n\n        symbol = tokenSymbol;                               // Set the symbol for display purposes\n\n        decimals = decimalUnits;                            // Amount of decimals for display purposes\n\n    }\n\n\n\n    /* Send coins */\n\n    function transfer(address _to, uint256 _value) {\n\n        if (balanceOf[msg.sender] < _value) throw;           // Check if the sender has enough\n\n        if (balanceOf[_to] + _value < balanceOf[_to]) throw; // Check for overflows\n\n        balanceOf[msg.sender] -= _value;                     // Subtract from the sender\n\n        balanceOf[_to] += _value;                            // Add the same to the recipient\n\n        Transfer(msg.sender, _to, _value);                   // Notify anyone listening that this transfer took place\n\n    }\n\n\n\n    /* Allow another contract to spend some tokens in your behalf */\n\n    function approve(address _spender, uint256 _value)\n\n        returns (bool success) {\n\n        allowance[msg.sender][_spender] = _value;\n\n        return true;\n\n    }\n\n\n\n    /* Approve and then comunicate the approved contract in a single tx */\n\n    function approveAndCall(address _spender, uint256 _value, bytes _extraData)\n\n        returns (bool success) {\n\n        tokenRecipient spender = tokenRecipient(_spender);\n\n        if (approve(_spender, _value)) {\n\n            spender.receiveApproval(msg.sender, _value, this, _extraData);\n\n            return true;\n\n        }\n\n    }        \n\n\n\n    /* A contract attempts to get the coins */\n\n    function transferFrom(address _from, address _to, uint256 _value) returns (bool success) {\n\n        if (balanceOf[_from] < _value) throw;                 // Check if the sender has enough\n\n        if (balanceOf[_to] + _value < balanceOf[_to]) throw;  // Check for overflows\n\n        if (_value > allowance[_from][msg.sender]) throw;   // Check allowance\n\n        balanceOf[_from] -= _value;                          // Subtract from the sender\n\n        balanceOf[_to] += _value;                            // Add the same to the recipient\n\n        allowance[_from][msg.sender] -= _value;\n\n        Transfer(_from, _to, _value);\n\n        return true;\n\n    }\n\n\n\n    /* This unnamed function is called whenever someone tries to send ether to it */\n\n    // SWC-Code With No Effects: L73 - L75\n\n    function () {\n\n        throw;     // Prevents accidental sending of ether\n\n    }\n",
+                    "message": "MyToken (MyToken.sol#6-78) has incorrect ERC20 function interface(s):\n\t-transfer (MyToken.sol#36-42)\n"
+                },
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    string public standard = 'Token 0.1';\n",
+                    "message": "MyToken.standard should be constant (MyToken.sol#8)\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (balanceOf[msg.sender] < _value) throw;           // Check if the sender has enough\n",
+                    "message": "Deprecated standard detected @ MyToken.sol#37:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (balanceOf[_to] + _value < balanceOf[_to]) throw; // Check for overflows\n",
+                    "message": "Deprecated standard detected @ MyToken.sol#38:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (balanceOf[_from] < _value) throw;                 // Check if the sender has enough\n",
+                    "message": "Deprecated standard detected @ MyToken.sol#63:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (balanceOf[_to] + _value < balanceOf[_to]) throw;  // Check for overflows\n",
+                    "message": "Deprecated standard detected @ MyToken.sol#64:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (_value > allowance[_from][msg.sender]) throw;   // Check allowance\n",
+                    "message": "Deprecated standard detected @ MyToken.sol#65:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 76,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        throw;     // Prevents accidental sending of ether\n",
+                    "message": "Deprecated standard detected @ MyToken.sol#76:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData); }\n",
+                    "message": "tokenRecipient.receiveApproval (MyToken.sol#4) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": 42,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) {\n\n        if (balanceOf[msg.sender] < _value) throw;           // Check if the sender has enough\n\n        if (balanceOf[_to] + _value < balanceOf[_to]) throw; // Check for overflows\n\n        balanceOf[msg.sender] -= _value;                     // Subtract from the sender\n\n        balanceOf[_to] += _value;                            // Add the same to the recipient\n\n        Transfer(msg.sender, _to, _value);                   // Notify anyone listening that this transfer took place\n",
+                    "message": "MyToken.transfer (MyToken.sol#36-42) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": 59,
+                    "vulnerability_code": "    function approveAndCall(address _spender, uint256 _value, bytes _extraData)\n\n        returns (bool success) {\n\n        tokenRecipient spender = tokenRecipient(_spender);\n\n        if (approve(_spender, _value)) {\n\n            spender.receiveApproval(msg.sender, _value, this, _extraData);\n\n            return true;\n\n        }\n",
+                    "message": "MyToken.approveAndCall (MyToken.sol#52-59) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": 71,
+                    "vulnerability_code": "    function transferFrom(address _from, address _to, uint256 _value) returns (bool success) {\n\n        if (balanceOf[_from] < _value) throw;                 // Check if the sender has enough\n\n        if (balanceOf[_to] + _value < balanceOf[_to]) throw;  // Check for overflows\n\n        if (_value > allowance[_from][msg.sender]) throw;   // Check allowance\n\n        balanceOf[_from] -= _value;                          // Subtract from the sender\n\n        balanceOf[_to] += _value;                            // Add the same to the recipient\n\n        allowance[_from][msg.sender] -= _value;\n\n        Transfer(_from, _to, _value);\n\n        return true;\n",
+                    "message": "MyToken.transferFrom (MyToken.sol#62-71) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 75,
+                    "vulnerability_to_line": 77,
+                    "vulnerability_code": "    function () {\n\n        throw;     // Prevents accidental sending of ether\n",
+                    "message": "MyToken.fallback (MyToken.sol#75-77) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": "Detected issues with version pragma in MyToken.sol:\n\t- pragma solidity^0.4.6 (MyToken.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData); }\n",
+                    "message": "Contract 'tokenRecipient' (MyToken.sol#4) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": 33,
+                    "vulnerability_code": "    function MyToken(\n\n        uint256 initialSupply,\n\n        string tokenName,\n\n        uint8 decimalUnits,\n\n        string tokenSymbol\n\n        ) {\n\n        balanceOf[msg.sender] = initialSupply;              // Give the creator all initial tokens\n\n        totalSupply = initialSupply;                        // Update total supply\n\n        name = tokenName;                                   // Set the name for display purposes\n\n        symbol = tokenSymbol;                               // Set the symbol for display purposes\n\n        decimals = decimalUnits;                            // Amount of decimals for display purposes\n",
+                    "message": "Function 'MyToken.MyToken' (MyToken.sol#22-33) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) {\n",
+                    "message": "Parameter '_to' of MyToken.transfer (MyToken.sol#36) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) {\n",
+                    "message": "Parameter '_value' of MyToken.transfer (MyToken.sol#36) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _value)\n",
+                    "message": "Parameter '_spender' of MyToken.approve (MyToken.sol#45) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _value)\n",
+                    "message": "Parameter '_value' of MyToken.approve (MyToken.sol#45) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approveAndCall(address _spender, uint256 _value, bytes _extraData)\n",
+                    "message": "Parameter '_spender' of MyToken.approveAndCall (MyToken.sol#52) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approveAndCall(address _spender, uint256 _value, bytes _extraData)\n",
+                    "message": "Parameter '_value' of MyToken.approveAndCall (MyToken.sol#52) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approveAndCall(address _spender, uint256 _value, bytes _extraData)\n",
+                    "message": "Parameter '_extraData' of MyToken.approveAndCall (MyToken.sol#52) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address _from, address _to, uint256 _value) returns (bool success) {\n",
+                    "message": "Parameter '_from' of MyToken.transferFrom (MyToken.sol#62) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address _from, address _to, uint256 _value) returns (bool success) {\n",
+                    "message": "Parameter '_to' of MyToken.transferFrom (MyToken.sol#62) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address _from, address _to, uint256 _value) returns (bool success) {\n",
+                    "message": "Parameter '_value' of MyToken.transferFrom (MyToken.sol#62) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (balanceOf[msg.sender] < _value) throw;           // Check if the sender has enough\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (balanceOf[_to] + _value < balanceOf[_to]) throw; // Check for overflows\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (balanceOf[_from] < _value) throw;                 // Check if the sender has enough\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (balanceOf[_to] + _value < balanceOf[_to]) throw;  // Check for overflows\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (_value > allowance[_from][msg.sender]) throw;   // Check allowance\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 76,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        throw;     // Prevents accidental sending of ether\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _value)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REDUNDANT_FALLBACK_REJECT",
+                    "vulnerability_from_line": 75,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function () {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (balanceOf[msg.sender] < _value) throw;           // Check if the sender has enough\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (balanceOf[_to] + _value < balanceOf[_to]) throw; // Check for overflows\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (balanceOf[_from] < _value) throw;                 // Check if the sender has enough\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (balanceOf[_to] + _value < balanceOf[_to]) throw;  // Check for overflows\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (_value > allowance[_from][msg.sender]) throw;   // Check allowance\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData); }\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function MyToken(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _value)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approveAndCall(address _spender, uint256 _value, bytes _extraData)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address _from, address _to, uint256 _value) returns (bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 75,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function () {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "idex-4a05eb28e570e9820066474ff2adc924ce7a27bd/DVIP.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.7;\n",
+                    "message": "Detected issues with version pragma in DVIP.sol:\n\t- pragma solidity^0.4.7 (DVIP.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function feeFor(address from, address to, uint256 amount) constant external returns (uint256 value);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.7;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "idex-4a05eb28e570e9820066474ff2adc924ce7a27bd/interface/Token.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bool public allowTransactions;\n",
+                    "message": "Token.allowTransactions should be constant (Token.sol#10)\nToken.decimals should be constant (Token.sol#9)\nToken.name should be constant (Token.sol#6)\nToken.standard should be constant (Token.sol#5)\nToken.symbol should be constant (Token.sol#7)\nToken.totalSupply should be constant (Token.sol#8)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) returns (bool success);\n",
+                    "message": "Token.transfer (Token.sol#13) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approveAndCall(address _spender, uint256 _value, bytes _extraData) returns (bool success);\n",
+                    "message": "Token.approveAndCall (Token.sol#14) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _value) returns (bool success);\n",
+                    "message": "Token.approve (Token.sol#15) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address _from, address _to, uint256 _value) returns (bool success);\n",
+                    "message": "Token.transferFrom (Token.sol#16) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": "Detected issues with version pragma in Token.sol:\n\t- pragma solidity^0.4.6 (Token.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) returns (bool success);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approveAndCall(address _spender, uint256 _value, bytes _extraData) returns (bool success);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _value) returns (bool success);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 16,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address _from, address _to, uint256 _value) returns (bool success);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "idex-4a05eb28e570e9820066474ff2adc924ce7a27bd/interface/TokenRecipient.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData);\n",
+                    "message": "TokenRecipient.receiveApproval (TokenRecipient.sol#6) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.7;\n",
+                    "message": "Detected issues with version pragma in TokenRecipient.sol:\n\t- pragma solidity^0.4.7 (TokenRecipient.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.7;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "idex-4a05eb28e570e9820066474ff2adc924ce7a27bd/lib/Token.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_15"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "shadowing-builtin",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": 7,
+                    "vulnerability_code": "  function assert(bool assertion) {\n\n    if (!assertion) throw;\n",
+                    "message": "Assertive.assert (function @ Token.sol#5-7) shadows built-in symbol \"assert\"\n"
+                },
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 77,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint8 public decimals;\n",
+                    "message": "Precision.decimals should be constant (Token.sol#77)\nTokenBase.allowTransactions should be constant (Token.sol#52)\nTokenBase.name should be constant (Token.sol#50)\nTokenBase.standard should be constant (Token.sol#49)\nTokenBase.symbol should be constant (Token.sol#51)\nTokenBase.totalSupply should be constant (Token.sol#53)\n"
+                },
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": "Different versions of Solidity is used in Token.sol:\n\t- Version used: ['^0.4.6', '^0.4.7']\n\t- Token.sol#3 declares pragma solidity^0.4.6\n\t- Token.sol#12 declares pragma solidity^0.4.6\n\t- Token.sol#37 declares pragma solidity^0.4.7\n\t- Token.sol#45 declares pragma solidity^0.4.7\n\t- Token.sol#74 declares pragma solidity^0.4.7\n\t- Token.sol#82 declares pragma solidity^0.4.7\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (!assertion) throw;\n",
+                    "message": "Deprecated standard detected @ Token.sol#6:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        throw;\n",
+                    "message": "Deprecated standard detected @ Token.sol#68:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": 29,
+                    "vulnerability_code": "  function setOwner(address newOwner) onlyOwner {\n\n    SetOwner(owner, newOwner);\n\n    owner = newOwner;\n",
+                    "message": "Owned.setOwner (Token.sol#26-29) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": 32,
+                    "vulnerability_code": "  function getOwner() returns (address out) {\n\n    return owner;\n",
+                    "message": "Owned.getOwner (Token.sol#30-32) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData);\n",
+                    "message": "TokenRecipient.receiveApproval (Token.sol#40) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) returns (bool success);\n",
+                    "message": "TokenBase.transfer (Token.sol#62) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approveAndCall(address _spender, uint256 _value, bytes _extraData) returns (bool success);\n",
+                    "message": "TokenBase.approveAndCall (Token.sol#63) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _value) returns (bool success);\n",
+                    "message": "TokenBase.approve (Token.sol#64) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address _from, address _to, uint256 _value) returns (bool success);\n",
+                    "message": "TokenBase.transferFrom (Token.sol#65) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 67,
+                    "vulnerability_to_line": 69,
+                    "vulnerability_code": "    function () {\n\n        throw;\n",
+                    "message": "TokenBase.fallback (Token.sol#67-69) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": "Detected issues with version pragma in Token.sol:\n\t- pragma solidity^0.4.6 (Token.sol#3): it allows old versions\n\t- pragma solidity^0.4.6 (Token.sol#12): it allows old versions\n\t- pragma solidity^0.4.7 (Token.sol#37): it allows old versions\n\t- pragma solidity^0.4.7 (Token.sol#45): it allows old versions\n\t- pragma solidity^0.4.7 (Token.sol#74): it allows old versions\n\t- pragma solidity^0.4.7 (Token.sol#82): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": 21,
+                    "vulnerability_code": "  function Owned () {\n\n    owner = msg.sender;\n",
+                    "message": "Function 'Owned.Owned' (Token.sol#19-21) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (!assertion) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setOwner(address newOwner) onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.7;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.7;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.7;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 82,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.7;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REDUNDANT_FALLBACK_REJECT",
+                    "vulnerability_from_line": 67,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function () {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (!assertion) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function assert(bool assertion) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function Owned () {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setOwner(address newOwner) onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function getOwner() returns (address out) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) returns (bool success);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approveAndCall(address _spender, uint256 _value, bytes _extraData) returns (bool success);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _value) returns (bool success);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address _from, address _to, uint256 _value) returns (bool success);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 67,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function () {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "idex-4a05eb28e570e9820066474ff2adc924ce7a27bd/lib/Relay.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_4"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function relayTransferFrom(address token, address from, address to, uint256 value) returns (bool success);\n",
+                    "message": "Relay.relayTransferFrom (Relay.sol#5) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function relayTransfer(address token, uint256 amount) returns (bool success);\n",
+                    "message": "Relay.relayTransfer (Relay.sol#6) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function relaySendEther(address target, uint256 amount) returns (bool success);\n",
+                    "message": "Relay.relaySendEther (Relay.sol#7) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": "Detected issues with version pragma in Relay.sol:\n\t- pragma solidity^0.4.6 (Relay.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function relayTransferFrom(address token, address from, address to, uint256 value) returns (bool success);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function relayTransfer(address token, uint256 amount) returns (bool success);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function relaySendEther(address target, uint256 amount) returns (bool success);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "idex-4a05eb28e570e9820066474ff2adc924ce7a27bd/lib/StateTransferrable.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_8"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "shadowing-builtin",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": 7,
+                    "vulnerability_code": "  function assert(bool assertion) {\n\n    if (!assertion) throw;\n",
+                    "message": "Assertive.assert (function @ StateTransferrable.sol#5-7) shadows built-in symbol \"assert\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (!assertion) throw;\n",
+                    "message": "Deprecated standard detected @ StateTransferrable.sol#6:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": 29,
+                    "vulnerability_code": "  function setOwner(address newOwner) onlyOwner {\n\n    SetOwner(owner, newOwner);\n\n    owner = newOwner;\n",
+                    "message": "Owned.setOwner (StateTransferrable.sol#26-29) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": 32,
+                    "vulnerability_code": "  function getOwner() returns (address out) {\n\n    return owner;\n",
+                    "message": "Owned.getOwner (StateTransferrable.sol#30-32) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": 58,
+                    "vulnerability_code": "  function lock() onlyOwner onlyIfUnlocked {\n\n    locked = true;\n\n    Locked(msg.sender);\n",
+                    "message": "StateTransferrable.lock (StateTransferrable.sol#55-58) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 59,
+                    "vulnerability_to_line": 61,
+                    "vulnerability_code": "  function isLocked() returns (bool status) {\n\n    return locked;\n",
+                    "message": "StateTransferrable.isLocked (StateTransferrable.sol#59-61) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": "Detected issues with version pragma in StateTransferrable.sol:\n\t- pragma solidity^0.4.6 (StateTransferrable.sol#3): it allows old versions\n\t- pragma solidity^0.4.6 (StateTransferrable.sol#12): it allows old versions\n\t- pragma solidity^0.4.6 (StateTransferrable.sol#37): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": 21,
+                    "vulnerability_code": "  function Owned () {\n\n    owner = msg.sender;\n",
+                    "message": "Function 'Owned.Owned' (StateTransferrable.sol#19-21) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (!assertion) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setOwner(address newOwner) onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (!assertion) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function assert(bool assertion) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function Owned () {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setOwner(address newOwner) onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function getOwner() returns (address out) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function lock() onlyOwner onlyIfUnlocked {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 59,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function isLocked() returns (bool status) {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "idex-4a05eb28e570e9820066474ff2adc924ce7a27bd/lib/Owned.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "shadowing-builtin",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": 7,
+                    "vulnerability_code": "  function assert(bool assertion) {\n\n    if (!assertion) throw;\n",
+                    "message": "Assertive.assert (function @ Owned.sol#5-7) shadows built-in symbol \"assert\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (!assertion) throw;\n",
+                    "message": "Deprecated standard detected @ Owned.sol#6:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": 29,
+                    "vulnerability_code": "  function setOwner(address newOwner) onlyOwner {\n\n    SetOwner(owner, newOwner);\n\n    owner = newOwner;\n",
+                    "message": "Owned.setOwner (Owned.sol#26-29) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": 32,
+                    "vulnerability_code": "  function getOwner() returns (address out) {\n\n    return owner;\n",
+                    "message": "Owned.getOwner (Owned.sol#30-32) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": "Detected issues with version pragma in Owned.sol:\n\t- pragma solidity^0.4.6 (Owned.sol#3): it allows old versions\n\t- pragma solidity^0.4.6 (Owned.sol#12): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": 21,
+                    "vulnerability_code": "  function Owned () {\n\n    owner = msg.sender;\n",
+                    "message": "Function 'Owned.Owned' (Owned.sol#19-21) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (!assertion) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setOwner(address newOwner) onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (!assertion) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function assert(bool assertion) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function Owned () {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setOwner(address newOwner) onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function getOwner() returns (address out) {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "idex-4a05eb28e570e9820066474ff2adc924ce7a27bd/lib/TrustEvents.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": "Detected issues with version pragma in TrustEvents.sol:\n\t- pragma solidity^0.4.6 (TrustEvents.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "idex-4a05eb28e570e9820066474ff2adc924ce7a27bd/lib/Namereg.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_23"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "uninitialized-state",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping (address => bytes32) public lookupTable;\n",
+                    "message": "Namereg.lookupTable (Namereg.sol#83) is never initialized. It is used in:\n\t- unregisterAddr (Namereg.sol#141-144)\n\t- getName (Namereg.sol#162-164)\n"
+                },
+                {
+                    "name": "shadowing-builtin",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": 7,
+                    "vulnerability_code": "  function assert(bool assertion) {\n\n    if (!assertion) throw;\n",
+                    "message": "Assertive.assert (function @ Namereg.sol#5-7) shadows built-in symbol \"assert\"\n"
+                },
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 89,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function registerImpl(bytes32 name, address addr, address owner) internal returns (bool success) {\n",
+                    "message": "Namereg.registerImpl.owner (local variable @ Namereg.sol#89) shadows:\n\t- Owned.owner (state variable @ Namereg.sol#17)\n"
+                },
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 99,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function registerImplChecked(bytes32 name, address addr, address owner) internal returns (bool success) {\n",
+                    "message": "Namereg.registerImplChecked.owner (local variable @ Namereg.sol#99) shadows:\n\t- Owned.owner (state variable @ Namereg.sol#17)\n"
+                },
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 183,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function extractRegistryOwner(bytes32 key) returns (address owner) {\n",
+                    "message": "Namereg.extractRegistryOwner.owner (local variable @ Namereg.sol#183) shadows:\n\t- Owned.owner (state variable @ Namereg.sol#17)\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (!assertion) throw;\n",
+                    "message": "Deprecated standard detected @ Namereg.sol#6:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": 29,
+                    "vulnerability_code": "  function setOwner(address newOwner) onlyOwner {\n\n    SetOwner(owner, newOwner);\n\n    owner = newOwner;\n",
+                    "message": "Owned.setOwner (Namereg.sol#26-29) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": 32,
+                    "vulnerability_code": "  function getOwner() returns (address out) {\n\n    return owner;\n",
+                    "message": "Owned.getOwner (Namereg.sol#30-32) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": 58,
+                    "vulnerability_code": "  function lock() onlyOwner onlyIfUnlocked {\n\n    locked = true;\n\n    Locked(msg.sender);\n",
+                    "message": "StateTransferrable.lock (Namereg.sol#55-58) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 59,
+                    "vulnerability_to_line": 61,
+                    "vulnerability_code": "  function isLocked() returns (bool status) {\n\n    return locked;\n",
+                    "message": "StateTransferrable.isLocked (Namereg.sol#59-61) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 120,
+                    "vulnerability_to_line": 122,
+                    "vulnerability_code": "  function register(bytes32 name, address addr) returns (bool success) {\n\n    return registerImplChecked(name, addr, msg.sender);\n",
+                    "message": "Namereg.register (Namereg.sol#120-122) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 130,
+                    "vulnerability_to_line": 132,
+                    "vulnerability_code": "  function unregister(bytes32 name) returns (bool success) {\n\n    return unregisterImpl(name, msg.sender);\n",
+                    "message": "Namereg.unregister (Namereg.sol#130-132) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": 144,
+                    "vulnerability_code": "  function unregisterAddr(address addr) onlyOwner returns (bool success) {\n\n    bytes32 name = lookupTable[addr];\n\n    return unregisterImpl(name, msg.sender);\n",
+                    "message": "Namereg.unregisterAddr (Namereg.sol#141-144) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 152,
+                    "vulnerability_to_line": 154,
+                    "vulnerability_code": "  function resolve(bytes32 name) constant returns (address result) {\n\n    return registry[name].record;\n",
+                    "message": "Namereg.resolve (Namereg.sol#152-154) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 162,
+                    "vulnerability_to_line": 164,
+                    "vulnerability_code": "  function getName(address addr) returns (bytes32 result) {\n\n    return lookupTable[addr];\n",
+                    "message": "Namereg.getName (Namereg.sol#162-164) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 166,
+                    "vulnerability_to_line": 169,
+                    "vulnerability_code": "  function registerSelf(bytes32 name) returns (bool success) {\n\n    assert(!registry[name].initialized || registry[name].owner == msg.sender);\n\n    return registerImpl(name, msg.sender, msg.sender);\n",
+                    "message": "Namereg.registerSelf (Namereg.sol#166-169) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 171,
+                    "vulnerability_to_line": 173,
+                    "vulnerability_code": "  function extractRegistryIndexLength() returns (uint256 len) {\n\n    return registryIndex.length;\n",
+                    "message": "Namereg.extractRegistryIndexLength (Namereg.sol#171-173) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 175,
+                    "vulnerability_to_line": 177,
+                    "vulnerability_code": "  function extractLookupIndexLength() returns (uint256 len) {\n\n    return lookupIndex.length;\n",
+                    "message": "Namereg.extractLookupIndexLength (Namereg.sol#175-177) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 179,
+                    "vulnerability_to_line": 181,
+                    "vulnerability_code": "  function extractRegistryRecord(bytes32 key) returns (address record) {\n\n    return registry[key].record;\n",
+                    "message": "Namereg.extractRegistryRecord (Namereg.sol#179-181) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 183,
+                    "vulnerability_to_line": 185,
+                    "vulnerability_code": "  function extractRegistryOwner(bytes32 key) returns (address owner) {\n\n    return registry[key].owner;\n",
+                    "message": "Namereg.extractRegistryOwner (Namereg.sol#183-185) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 187,
+                    "vulnerability_to_line": 189,
+                    "vulnerability_code": "  function extractRegistryInitialized(bytes32 key) returns (bool initialized) {\n\n    return registry[key].initialized;\n",
+                    "message": "Namereg.extractRegistryInitialized (Namereg.sol#187-189) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": "Detected issues with version pragma in Namereg.sol:\n\t- pragma solidity^0.4.6 (Namereg.sol#3): it allows old versions\n\t- pragma solidity^0.4.6 (Namereg.sol#12): it allows old versions\n\t- pragma solidity^0.4.6 (Namereg.sol#37): it allows old versions\n\t- pragma solidity^0.4.6 (Namereg.sol#66): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": 21,
+                    "vulnerability_code": "  function Owned () {\n\n    owner = msg.sender;\n",
+                    "message": "Function 'Owned.Owned' (Namereg.sol#19-21) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 100,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    assert(registry[name].initialized && registry[name].record == address(0x0) || registry[name].owner == owner);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (!assertion) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 152,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function resolve(bytes32 name) constant returns (address result) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setOwner(address newOwner) onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 66,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (!assertion) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function assert(bool assertion) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function Owned () {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setOwner(address newOwner) onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function getOwner() returns (address out) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function lock() onlyOwner onlyIfUnlocked {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 59,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function isLocked() returns (bool status) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 120,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function register(bytes32 name, address addr) returns (bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 130,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function unregister(bytes32 name) returns (bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function unregisterAddr(address addr) onlyOwner returns (bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 152,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function resolve(bytes32 name) constant returns (address result) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 162,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function getName(address addr) returns (bytes32 result) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 166,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function registerSelf(bytes32 name) returns (bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 171,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function extractRegistryIndexLength() returns (uint256 len) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 175,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function extractLookupIndexLength() returns (uint256 len) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 179,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function extractRegistryRecord(bytes32 key) returns (address record) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 183,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function extractRegistryOwner(bytes32 key) returns (address owner) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 187,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function extractRegistryInitialized(bytes32 key) returns (bool initialized) {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "idex-4a05eb28e570e9820066474ff2adc924ce7a27bd/lib/Precision.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint8 public decimals;\n",
+                    "message": "Precision.decimals should be constant (Precision.sol#6)\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.7;\n",
+                    "message": "Detected issues with version pragma in Precision.sol:\n\t- pragma solidity^0.4.7 (Precision.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.7;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "idex-4a05eb28e570e9820066474ff2adc924ce7a27bd/lib/Math.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_3"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "shadowing-builtin",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": 7,
+                    "vulnerability_code": "  function assert(bool assertion) {\n\n    if (!assertion) throw;\n",
+                    "message": "Assertive.assert (function @ Math.sol#5-7) shadows built-in symbol \"assert\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (!assertion) throw;\n",
+                    "message": "Deprecated standard detected @ Math.sol#6:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": "Detected issues with version pragma in Math.sol:\n\t- pragma solidity^0.4.6 (Math.sol#3): it allows old versions\n\t- pragma solidity^0.4.6 (Math.sol#12): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (!assertion) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (!assertion) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function assert(bool assertion) {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "idex-4a05eb28e570e9820066474ff2adc924ce7a27bd/lib/TokenBase.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_15"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "shadowing-builtin",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": 7,
+                    "vulnerability_code": "  function assert(bool assertion) {\n\n    if (!assertion) throw;\n",
+                    "message": "Assertive.assert (function @ TokenBase.sol#5-7) shadows built-in symbol \"assert\"\n"
+                },
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bool public allowTransactions;\n",
+                    "message": "TokenBase.allowTransactions should be constant (TokenBase.sol#52)\nTokenBase.name should be constant (TokenBase.sol#50)\nTokenBase.standard should be constant (TokenBase.sol#49)\nTokenBase.symbol should be constant (TokenBase.sol#51)\nTokenBase.totalSupply should be constant (TokenBase.sol#53)\n"
+                },
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": "Different versions of Solidity is used in TokenBase.sol:\n\t- Version used: ['^0.4.6', '^0.4.7']\n\t- TokenBase.sol#3 declares pragma solidity^0.4.6\n\t- TokenBase.sol#12 declares pragma solidity^0.4.6\n\t- TokenBase.sol#37 declares pragma solidity^0.4.7\n\t- TokenBase.sol#45 declares pragma solidity^0.4.7\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (!assertion) throw;\n",
+                    "message": "Deprecated standard detected @ TokenBase.sol#6:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        throw;\n",
+                    "message": "Deprecated standard detected @ TokenBase.sol#68:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": 29,
+                    "vulnerability_code": "  function setOwner(address newOwner) onlyOwner {\n\n    SetOwner(owner, newOwner);\n\n    owner = newOwner;\n",
+                    "message": "Owned.setOwner (TokenBase.sol#26-29) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": 32,
+                    "vulnerability_code": "  function getOwner() returns (address out) {\n\n    return owner;\n",
+                    "message": "Owned.getOwner (TokenBase.sol#30-32) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData);\n",
+                    "message": "TokenRecipient.receiveApproval (TokenBase.sol#40) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) returns (bool success);\n",
+                    "message": "TokenBase.transfer (TokenBase.sol#62) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approveAndCall(address _spender, uint256 _value, bytes _extraData) returns (bool success);\n",
+                    "message": "TokenBase.approveAndCall (TokenBase.sol#63) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _value) returns (bool success);\n",
+                    "message": "TokenBase.approve (TokenBase.sol#64) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address _from, address _to, uint256 _value) returns (bool success);\n",
+                    "message": "TokenBase.transferFrom (TokenBase.sol#65) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 67,
+                    "vulnerability_to_line": 69,
+                    "vulnerability_code": "    function () {\n\n        throw;\n",
+                    "message": "TokenBase.fallback (TokenBase.sol#67-69) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": "Detected issues with version pragma in TokenBase.sol:\n\t- pragma solidity^0.4.6 (TokenBase.sol#3): it allows old versions\n\t- pragma solidity^0.4.6 (TokenBase.sol#12): it allows old versions\n\t- pragma solidity^0.4.7 (TokenBase.sol#37): it allows old versions\n\t- pragma solidity^0.4.7 (TokenBase.sol#45): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": 21,
+                    "vulnerability_code": "  function Owned () {\n\n    owner = msg.sender;\n",
+                    "message": "Function 'Owned.Owned' (TokenBase.sol#19-21) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (!assertion) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setOwner(address newOwner) onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.7;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.7;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REDUNDANT_FALLBACK_REJECT",
+                    "vulnerability_from_line": 67,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function () {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (!assertion) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function assert(bool assertion) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function Owned () {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function setOwner(address newOwner) onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function getOwner() returns (address out) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) returns (bool success);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approveAndCall(address _spender, uint256 _value, bytes _extraData) returns (bool success);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _value) returns (bool success);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address _from, address _to, uint256 _value) returns (bool success);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 67,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function () {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "idex-4a05eb28e570e9820066474ff2adc924ce7a27bd/lib/Assertive.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_4"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "shadowing-builtin",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": 7,
+                    "vulnerability_code": "  function assert(bool assertion) {\n\n    if (!assertion) throw;\n",
+                    "message": "Assertive.assert (function @ Assertive.sol#5-7) shadows built-in symbol \"assert\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (!assertion) throw;\n",
+                    "message": "Deprecated standard detected @ Assertive.sol#6:\n\t- Usage of \"throw\" should be replaced with \"revert()\"\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": 7,
+                    "vulnerability_code": "  function assert(bool assertion) {\n\n    if (!assertion) throw;\n",
+                    "message": "Assertive.assert (Assertive.sol#5-7) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": "Detected issues with version pragma in Assertive.sol:\n\t- pragma solidity^0.4.6 (Assertive.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (!assertion) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.6;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    if (!assertion) throw;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function assert(bool assertion) {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "idex-4a05eb28e570e9820066474ff2adc924ce7a27bd/lib/Util.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint8 i = 0; i < b; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint8 i = 0; i < b; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint8 i = 0; i < b; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    for (uint8 i = 0; i < b; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.7;\n",
+                    "message": "Detected issues with version pragma in Util.sol:\n\t- pragma solidity^0.4.7 (Util.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.7;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

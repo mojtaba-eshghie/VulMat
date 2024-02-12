@@ -1,0 +1,332 @@
+{
+    "ZortCoin/ZortCoin.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 initialSupply,\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string memory tokenName,\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        string memory tokenSymbol\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        totalSupply = initialSupply * 10 ** uint256(decimals);  // Update total supply with the decimal amount\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        balanceOf[msg.sender] = totalSupply;                // Give the creator all initial tokens\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 48,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        name = tokenName;                                   // Set the name for display purposes\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        symbol = tokenSymbol;                               // Set the symbol for display purposes\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 50,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 173,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor () public TokenERC20(1000000000,\"Zort Coin\", \"ZORT\") {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 174,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      \n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 175,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_26"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint8 public decimals = 18;\n",
+                    "message": "TokenERC20.decimals should be constant (ZortCoin.sol#19)\n"
+                },
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.17;\n",
+                    "message": "Different versions of Solidity is used in ZortCoin.sol:\n\t- Version used: ['>=0.4.22<0.6.0', '^0.5.17']\n\t- ZortCoin.sol#7 declares pragma solidity^0.5.17\n\t- ZortCoin.sol#9 declares pragma solidity>=0.4.22<0.6.0\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 81,
+                    "vulnerability_to_line": 84,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) public returns (bool success) {\n\n        _transfer(msg.sender, _to, _value);\n\n        return true;\n",
+                    "message": "TokenERC20.transfer (ZortCoin.sol#81-84) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 95,
+                    "vulnerability_to_line": 100,
+                    "vulnerability_code": "    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {\n\n        require(_value <= allowance[_from][msg.sender]);     // Check allowance\n\n        allowance[_from][msg.sender] -= _value;\n\n        _transfer(_from, _to, _value);\n\n        return true;\n",
+                    "message": "TokenERC20.transferFrom (ZortCoin.sol#95-100) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 126,
+                    "vulnerability_to_line": 135,
+                    "vulnerability_code": "    function approveAndCall(address _spender, uint256 _value, bytes memory _extraData)\n\n        public\n\n        returns (bool success) {\n\n        tokenRecipient spender = tokenRecipient(_spender);\n\n        if (approve(_spender, _value)) {\n\n            // SWC-Requirement Violation: L130\n\n            spender.receiveApproval(msg.sender, _value, address(this), _extraData);\n\n            return true;\n\n        }\n",
+                    "message": "TokenERC20.approveAndCall (ZortCoin.sol#126-135) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 144,
+                    "vulnerability_to_line": 150,
+                    "vulnerability_code": "    function burn(uint256 _value) public returns (bool success) {\n\n        require(balanceOf[msg.sender] >= _value);   // Check if the sender has enough\n\n        balanceOf[msg.sender] -= _value;            // Subtract from the sender\n\n        totalSupply -= _value;                      // Updates totalSupply\n\n        emit Burn(msg.sender, _value);\n\n        return true;\n",
+                    "message": "TokenERC20.burn (ZortCoin.sol#144-150) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 160,
+                    "vulnerability_to_line": 168,
+                    "vulnerability_code": "    function burnFrom(address _from, uint256 _value) public returns (bool success) {\n\n        require(balanceOf[_from] >= _value);                // Check if the targeted balance is enough\n\n        require(_value <= allowance[_from][msg.sender]);    // Check allowance\n\n        balanceOf[_from] -= _value;                         // Subtract from the targeted balance\n\n        allowance[_from][msg.sender] -= _value;             // Subtract from the sender's allowance\n\n        totalSupply -= _value;                              // Update totalSupply\n\n        emit Burn(_from, _value);\n\n        return true;\n",
+                    "message": "TokenERC20.burnFrom (ZortCoin.sol#160-168) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.17;\n",
+                    "message": "Detected issues with version pragma in ZortCoin.sol:\n\t- pragma solidity^0.5.17 (ZortCoin.sol#7): it allows old versions\n\t- pragma solidity>=0.4.22<0.6.0 (ZortCoin.sol#9): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": 13,
+                    "vulnerability_code": "interface tokenRecipient { \n\n    function receiveApproval(address _from, uint256 _value, address _token, bytes calldata _extraData) external; \n",
+                    "message": "Contract 'tokenRecipient' (ZortCoin.sol#11-13) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": 71,
+                    "vulnerability_code": "    function _transfer(address _from, address _to, uint _value) internal {\n\n        // Prevent transfer to 0x0 address. Use burn() instead\n\n        require(_to != address(0x0));\n\n        // Check if the sender has enough\n\n        require(balanceOf[_from] >= _value);\n\n        // Check for overflows\n\n        require(balanceOf[_to] + _value >= balanceOf[_to]);\n\n        // Save this for an assertion in the future\n\n        uint previousBalances = balanceOf[_from] + balanceOf[_to];\n\n        // Subtract from the sender\n\n        balanceOf[_from] -= _value;\n\n        // Add the same to the recipient\n\n        balanceOf[_to] += _value;\n\n        emit Transfer(_from, _to, _value);\n\n        // Asserts are used to use static analysis to find bugs in your code. They should never fail\n\n        assert(balanceOf[_from] + balanceOf[_to] == previousBalances);\n",
+                    "message": "Function 'TokenERC20._transfer' (ZortCoin.sol#55-71) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _transfer(address _from, address _to, uint _value) internal {\n",
+                    "message": "Parameter '_from' of TokenERC20._transfer (ZortCoin.sol#55) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _transfer(address _from, address _to, uint _value) internal {\n",
+                    "message": "Parameter '_to' of TokenERC20._transfer (ZortCoin.sol#55) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _transfer(address _from, address _to, uint _value) internal {\n",
+                    "message": "Parameter '_value' of TokenERC20._transfer (ZortCoin.sol#55) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 81,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) public returns (bool success) {\n",
+                    "message": "Parameter '_to' of TokenERC20.transfer (ZortCoin.sol#81) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 81,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) public returns (bool success) {\n",
+                    "message": "Parameter '_value' of TokenERC20.transfer (ZortCoin.sol#81) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 95,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {\n",
+                    "message": "Parameter '_from' of TokenERC20.transferFrom (ZortCoin.sol#95) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 95,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {\n",
+                    "message": "Parameter '_to' of TokenERC20.transferFrom (ZortCoin.sol#95) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 95,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {\n",
+                    "message": "Parameter '_value' of TokenERC20.transferFrom (ZortCoin.sol#95) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 110,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _value) public\n",
+                    "message": "Parameter '_spender' of TokenERC20.approve (ZortCoin.sol#110) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 110,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _value) public\n",
+                    "message": "Parameter '_value' of TokenERC20.approve (ZortCoin.sol#110) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 126,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approveAndCall(address _spender, uint256 _value, bytes memory _extraData)\n",
+                    "message": "Parameter '_spender' of TokenERC20.approveAndCall (ZortCoin.sol#126) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 126,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approveAndCall(address _spender, uint256 _value, bytes memory _extraData)\n",
+                    "message": "Parameter '_value' of TokenERC20.approveAndCall (ZortCoin.sol#126) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 126,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approveAndCall(address _spender, uint256 _value, bytes memory _extraData)\n",
+                    "message": "Parameter '_extraData' of TokenERC20.approveAndCall (ZortCoin.sol#126) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 144,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function burn(uint256 _value) public returns (bool success) {\n",
+                    "message": "Parameter '_value' of TokenERC20.burn (ZortCoin.sol#144) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 160,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function burnFrom(address _from, uint256 _value) public returns (bool success) {\n",
+                    "message": "Parameter '_from' of TokenERC20.burnFrom (ZortCoin.sol#160) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 160,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function burnFrom(address _from, uint256 _value) public returns (bool success) {\n",
+                    "message": "Parameter '_value' of TokenERC20.burnFrom (ZortCoin.sol#160) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_to != address(0x0));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 110,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _value) public\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.17;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.22 <0.6.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity >=0.4.22 <0.6.0;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

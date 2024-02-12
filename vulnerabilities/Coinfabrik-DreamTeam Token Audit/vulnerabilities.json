@@ -1,0 +1,2623 @@
+{
+    "smart-contracts-master/contracts/Migrations.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_6"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": 19,
+                    "vulnerability_code": "  function setCompleted(uint completed) public restricted {\n\n    last_completed_migration = completed;\n",
+                    "message": "Migrations.setCompleted (Migrations.sol#17-19) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": 24,
+                    "vulnerability_code": "  function upgrade(address new_address) public restricted {\n\n    Migrations upgraded = Migrations(new_address);\n\n    upgraded.setCompleted(last_completed_migration);\n",
+                    "message": "Migrations.upgrade (Migrations.sol#21-24) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in Migrations.sol:\n\t- pragma solidity^0.4.18 (Migrations.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": 15,
+                    "vulnerability_code": "  function Migrations() public {\n\n    owner = msg.sender;\n",
+                    "message": "Function 'Migrations.Migrations' (Migrations.sol#13-15) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function upgrade(address new_address) public restricted {\n",
+                    "message": "Parameter 'new_address' of Migrations.upgrade (Migrations.sol#21) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint public last_completed_migration;\n",
+                    "message": "Variable 'Migrations.last_completed_migration' (Migrations.sol#7) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "smart-contracts-master/contracts/token/DreamTeamToken.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 458,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < recipients.length; ++i) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 127,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor (string tokenName, string tokenSymbol) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 128,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        name = tokenName;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 129,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        symbol = tokenSymbol;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 130,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        rescueAccount = tokenDistributor = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    } \t\t   \t  \t\t\t\t  \t  \t      \t\t \t\t\t  \t\t \t  \t \t\t \t \t\t \t\t \t  \t \t\t\t \t   \t\t    \t  \t \t\t\t  \t\t\t \t   \t\t \t \t\t\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 459,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            balanceOf[recipients[i]] = balanceOf[recipients[i]].add(amounts[i]);\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 459,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            balanceOf[recipients[i]] = balanceOf[recipients[i]].add(amounts[i]);\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 241,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint8 i = 0; i < 32; ++i) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 458,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < recipients.length; ++i) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 157,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(to1 != 0x0 && to2 != 0x0); // Prevent people from accidentally burning their tokens\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 202,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(block.timestamp <= deadline && !usedSigIds[signer][sigId]); // solium-disable-line security/no-block-members\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_16"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 497,
+                    "vulnerability_to_line": 499,
+                    "vulnerability_code": "    function rescueLostTokens (ERC20CompatibleToken tokenContract, uint256 value) external rescueAccountOnly {\n\n        tokenContract.transfer(rescueAccount, value);\n",
+                    "message": "DreamTeamToken.rescueLostTokens (DreamTeamToken.sol#497-499) does not use the value returned by external calls:\n\t-tokenContract.transfer(rescueAccount,value) (DreamTeamToken.sol#498)\n"
+                },
+                {
+                    "name": "reentrancy-benign",
+                    "vulnerability_from_line": 421,
+                    "vulnerability_to_line": 442,
+                    "vulnerability_code": "    function approveAndCallViaSignature (\n\n        address     from,\n\n        address     spender,\n\n        uint256     value,\n\n        bytes       extraData,\n\n        uint256     fee,\n\n        address     feeRecipient,\n\n        uint256     deadline,\n\n        uint256     sigId,\n\n        bytes       sig,\n\n        sigStandard sigStd\n\n    ) external returns (bool) {\n\n        requireSignature(\n\n            keccak256(address(this), from, spender, value, extraData, fee, feeRecipient, deadline, sigId),\n\n            from, deadline, sigId, sig, sigStd, sigDestination.approveAndCall\n\n        );\n\n        allowance[from][spender] = value;\n\n        emit Approval(from, spender, value);\n\n        tokenRecipient(spender).receiveApproval(from, value, this, extraData);\n\n        internalTransfer(from, feeRecipient, fee);\n\n        return true;\n",
+                    "message": "Reentrancy in DreamTeamToken.approveAndCallViaSignature (DreamTeamToken.sol#421-442):\n\tExternal calls:\n\t- tokenRecipient(spender).receiveApproval(from,value,this,extraData) (DreamTeamToken.sol#439)\n\tState variables written after the call(s):\n\t- balanceOf (DreamTeamToken.sol#440)\n"
+                },
+                {
+                    "name": "timestamp",
+                    "vulnerability_from_line": 183,
+                    "vulnerability_to_line": 233,
+                    "vulnerability_code": "    function requireSignature (\n\n        bytes32 data,\n\n        address signer,\n\n        uint256 deadline,\n\n        uint256 sigId,\n\n        bytes sig,\n\n        sigStandard sigStd,\n\n        sigDestination sigDest\n\n    ) internal {\n\n        bytes32 r;\n\n        bytes32 s;\n\n        uint8 v;\n\n        assembly { // solium-disable-line security/no-inline-assembly\n\n            r := mload(add(sig, 32))\n\n            s := mload(add(sig, 64)) \t\t   \t  \t\t\t\t  \t  \t      \t\t \t\t\t  \t\t \t  \t \t\t \t \t\t \t\t \t  \t \t\t\t \t   \t\t    \t  \t \t\t\t  \t\t\t \t   \t\t \t \t\t\n\n            v := byte(0, mload(add(sig, 96)))\n\n        }\n\n        if (v < 27)\n\n            v += 27;\n\n        require(block.timestamp <= deadline && !usedSigIds[signer][sigId]); // solium-disable-line security/no-block-members\n\n        if (sigStd == sigStandard.typed) { // Typed signature. This is the most likely scenario to be used and accepted\n\n            require(\n\n                signer == ecrecover(\n\n                    keccak256(\n\n                        sigDest == sigDestination.transfer\n\n                            ? sigDestinationTransfer\n\n                            : sigDest == sigDestination.approve\n\n                                ? sigDestinationApprove\n\n                                : sigDest == sigDestination.approveAndCall\n\n                                    ? sigDestinationApproveAndCall\n\n                                    : sigDestinationTransferFrom,\n\n                        data\n\n                    ),\n\n                    v, r, s\n\n                )\n\n            );\n\n        } else if (sigStd == sigStandard.personal) { // Ethereum signed message signature (Geth and Trezor)\n\n            require(\n\n                signer == ecrecover(keccak256(ethSignedMessagePrefix, \"32\", data), v, r, s) // Geth-adopted\n\n                ||\n\n                signer == ecrecover(keccak256(ethSignedMessagePrefix, \"\\x20\", data), v, r, s) // Trezor-adopted\n\n            );\n\n        } else { // == 2; Signed string hash signature (the most expensive but universal)\n\n            require(\n\n                signer == ecrecover(keccak256(ethSignedMessagePrefix, \"64\", hexToString(data)), v, r, s) // Geth\n\n                ||\n\n                signer == ecrecover(keccak256(ethSignedMessagePrefix, \"\\x40\", hexToString(data)), v, r, s) // Trezor\n\n            );\n\n        }\n\n        usedSigIds[signer][sigId] = true;\n",
+                    "message": "DreamTeamToken.requireSignature (DreamTeamToken.sol#183-233) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- require(bool)(block.timestamp <= deadline && ! usedSigIds[signer][sigId]) (DreamTeamToken.sol#202)\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 183,
+                    "vulnerability_to_line": 233,
+                    "vulnerability_code": "    function requireSignature (\n\n        bytes32 data,\n\n        address signer,\n\n        uint256 deadline,\n\n        uint256 sigId,\n\n        bytes sig,\n\n        sigStandard sigStd,\n\n        sigDestination sigDest\n\n    ) internal {\n\n        bytes32 r;\n\n        bytes32 s;\n\n        uint8 v;\n\n        assembly { // solium-disable-line security/no-inline-assembly\n\n            r := mload(add(sig, 32))\n\n            s := mload(add(sig, 64)) \t\t   \t  \t\t\t\t  \t  \t      \t\t \t\t\t  \t\t \t  \t \t\t \t \t\t \t\t \t  \t \t\t\t \t   \t\t    \t  \t \t\t\t  \t\t\t \t   \t\t \t \t\t\n\n            v := byte(0, mload(add(sig, 96)))\n\n        }\n\n        if (v < 27)\n\n            v += 27;\n\n        require(block.timestamp <= deadline && !usedSigIds[signer][sigId]); // solium-disable-line security/no-block-members\n\n        if (sigStd == sigStandard.typed) { // Typed signature. This is the most likely scenario to be used and accepted\n\n            require(\n\n                signer == ecrecover(\n\n                    keccak256(\n\n                        sigDest == sigDestination.transfer\n\n                            ? sigDestinationTransfer\n\n                            : sigDest == sigDestination.approve\n\n                                ? sigDestinationApprove\n\n                                : sigDest == sigDestination.approveAndCall\n\n                                    ? sigDestinationApproveAndCall\n\n                                    : sigDestinationTransferFrom,\n\n                        data\n\n                    ),\n\n                    v, r, s\n\n                )\n\n            );\n\n        } else if (sigStd == sigStandard.personal) { // Ethereum signed message signature (Geth and Trezor)\n\n            require(\n\n                signer == ecrecover(keccak256(ethSignedMessagePrefix, \"32\", data), v, r, s) // Geth-adopted\n\n                ||\n\n                signer == ecrecover(keccak256(ethSignedMessagePrefix, \"\\x20\", data), v, r, s) // Trezor-adopted\n\n            );\n\n        } else { // == 2; Signed string hash signature (the most expensive but universal)\n\n            require(\n\n                signer == ecrecover(keccak256(ethSignedMessagePrefix, \"64\", hexToString(data)), v, r, s) // Geth\n\n                ||\n\n                signer == ecrecover(keccak256(ethSignedMessagePrefix, \"\\x40\", hexToString(data)), v, r, s) // Trezor\n\n            );\n\n        }\n\n        usedSigIds[signer][sigId] = true;\n",
+                    "message": "DreamTeamToken.requireSignature uses assembly (DreamTeamToken.sol#183-233)\n\t- DreamTeamToken.sol#195-200\n"
+                },
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint8 public decimals = 6; // Makes JavaScript able to handle precise calculations (until totalSupply < 9 milliards)\n",
+                    "message": "DreamTeamToken.decimals should be constant (DreamTeamToken.sol#62)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 253,
+                    "vulnerability_to_line": 256,
+                    "vulnerability_code": "    function transfer (address to, uint256 value) public returns (bool) {\n\n        internalTransfer(msg.sender, to, value);\n\n        return true;\n",
+                    "message": "DreamTeamToken.transfer (DreamTeamToken.sol#253-256) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 351,
+                    "vulnerability_to_line": 355,
+                    "vulnerability_code": "    function transferFrom (address from, address to, uint256 value) public returns (bool) {\n\n        allowance[from][msg.sender] = allowance[from][msg.sender].sub(value);\n\n        internalTransfer(from, to, value);\n\n        return true;\n",
+                    "message": "DreamTeamToken.transferFrom (DreamTeamToken.sol#351-355) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 401,
+                    "vulnerability_to_line": 405,
+                    "vulnerability_code": "    function approveAndCall (address spender, uint256 value, bytes extraData) public returns (bool) {\n\n        approve(spender, value);\n\n        tokenRecipient(spender).receiveApproval(msg.sender, value, this, extraData);\n\n        return true;\n",
+                    "message": "DreamTeamToken.approveAndCall (DreamTeamToken.sol#401-405) should be declared external\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": 7,
+                    "vulnerability_code": "interface tokenRecipient {\n\n    function receiveApproval (address from, uint256 value, address token, bytes extraData) external;\n",
+                    "message": "Contract 'tokenRecipient' (DreamTeamToken.sol#5-7) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes constant public ethSignedMessagePrefix = \"\\x19Ethereum Signed Message:\\n\";\n",
+                    "message": "Constant 'DreamTeamToken.ethSignedMessagePrefix' (DreamTeamToken.sol#79) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": 89,
+                    "vulnerability_code": "    bytes32 constant public sigDestinationTransfer = keccak256(\n\n        \"address Token Contract Address\",\n\n        \"address Sender's Address\",\n\n        \"address Recipient's Address\",\n\n        \"uint256 Amount to Transfer (last six digits are decimals)\",\n\n        \"uint256 Fee in Tokens Paid to Executor (last six digits are decimals)\",\n\n        \"address Account which will Receive Fee\",\n\n        \"uint256 Signature Expiration Timestamp (unix timestamp)\",\n\n        \"uint256 Signature ID\"\n",
+                    "message": "Constant 'DreamTeamToken.sigDestinationTransfer' (DreamTeamToken.sol#80-89) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 90,
+                    "vulnerability_to_line": 100,
+                    "vulnerability_code": "    bytes32 constant public sigDestinationTransferFrom = keccak256(\n\n        \"address Token Contract Address\",\n\n        \"address Address Approved for Withdraw\",\n\n        \"address Account to Withdraw From\",\n\n        \"address Withdrawal Recipient Address\",\n\n        \"uint256 Amount to Transfer (last six digits are decimals)\",\n\n        \"uint256 Fee in Tokens Paid to Executor (last six digits are decimals)\",\n\n        \"address Account which will Receive Fee\",\n\n        \"uint256 Signature Expiration Timestamp (unix timestamp)\",\n\n        \"uint256 Signature ID\"\n",
+                    "message": "Constant 'DreamTeamToken.sigDestinationTransferFrom' (DreamTeamToken.sol#90-100) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 101,
+                    "vulnerability_to_line": 110,
+                    "vulnerability_code": "    bytes32 constant public sigDestinationApprove = keccak256(\n\n        \"address Token Contract Address\",\n\n        \"address Withdrawal Approval Address\",\n\n        \"address Withdrawal Recipient Address\",\n\n        \"uint256 Amount to Transfer (last six digits are decimals)\",\n\n        \"uint256 Fee in Tokens Paid to Executor (last six digits are decimals)\",\n\n        \"address Account which will Receive Fee\",\n\n        \"uint256 Signature Expiration Timestamp (unix timestamp)\",\n\n        \"uint256 Signature ID\"\n",
+                    "message": "Constant 'DreamTeamToken.sigDestinationApprove' (DreamTeamToken.sol#101-110) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 111,
+                    "vulnerability_to_line": 121,
+                    "vulnerability_code": "    bytes32 constant public sigDestinationApproveAndCall = keccak256(\n\n        \"address Token Contract Address\",\n\n        \"address Withdrawal Approval Address\",\n\n        \"address Withdrawal Recipient Address\",\n\n        \"uint256 Amount to Transfer (last six digits are decimals)\",\n\n        \"bytes Data to Transfer\",\n\n        \"uint256 Fee in Tokens Paid to Executor (last six digits are decimals)\",\n\n        \"address Account which will Receive Fee\",\n\n        \"uint256 Signature Expiration Timestamp (unix timestamp)\",\n\n        \"uint256 Signature ID\"\n",
+                    "message": "Constant 'DreamTeamToken.sigDestinationApproveAndCall' (DreamTeamToken.sol#111-121) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 76,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    enum sigStandard { typed, personal, stringHex }\n",
+                    "message": "Enum 'DreamTeamToken.sigStandard' (DreamTeamToken.sol#76) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 77,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    enum sigDestination { transfer, approve, approveAndCall, transferFrom }\n",
+                    "message": "Enum 'DreamTeamToken.sigDestination' (DreamTeamToken.sol#77) is not in CapWords\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 486,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        tokenDistributor = 0x0; // Disable multiMint and lastMint functions forever\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 304,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve (address spender, uint256 value) public returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 458,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < recipients.length; ++i) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 458,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < recipients.length; ++i) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.24;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes32 constant public sigDestinationTransfer = keccak256(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 90,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes32 constant public sigDestinationTransferFrom = keccak256(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 101,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes32 constant public sigDestinationApprove = keccak256(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 111,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bytes32 constant public sigDestinationApproveAndCall = keccak256(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 206,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                    keccak256(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 221,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                signer == ecrecover(keccak256(ethSignedMessagePrefix, \"32\", data), v, r, s) // Geth-adopted\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 223,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                signer == ecrecover(keccak256(ethSignedMessagePrefix, \"\\x20\", data), v, r, s) // Trezor-adopted\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 227,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                signer == ecrecover(keccak256(ethSignedMessagePrefix, \"64\", hexToString(data)), v, r, s) // Geth\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 229,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                signer == ecrecover(keccak256(ethSignedMessagePrefix, \"\\x40\", hexToString(data)), v, r, s) // Trezor\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 288,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(address(this), from, to, value, fee, feeRecipient, deadline, sigId),\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 336,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(address(this), from, spender, value, fee, feeRecipient, deadline, sigId),\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 385,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(address(this), from, to, value, fee, feeRecipient, deadline, sigId),\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 434,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(address(this), from, spender, value, extraData, fee, feeRecipient, deadline, sigId),\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 127,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor (string tokenName, string tokenSymbol) public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 127,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor (string tokenName, string tokenSymbol) public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 188,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes sig,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 239,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function hexToString (bytes32 sig) internal pure returns (bytes) { // /to-try/ convert to two uint256 and test gas\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 401,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approveAndCall (address spender, uint256 value, bytes extraData) public returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 195,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly { // solium-disable-line security/no-inline-assembly\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "smart-contracts-master/contracts/token/ERC20TokenInterface.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.23;\n",
+                    "message": "Detected issues with version pragma in ERC20TokenInterface.sol:\n\t- pragma solidity^0.4.23 (ERC20TokenInterface.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function totalSupply () external constant returns (uint);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOf (address tokenOwner) external constant returns (uint balance);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.23;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "smart-contracts-master/contracts/token/TokenRecurringBilling.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 167,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor (address tokenAddress) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 168,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        token = ERC20CompatibleToken(tokenAddress);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 169,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 148,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(merchantRegistry[merchantId].merchant == msg.sender, \"Sender is not a merchant\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 154,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(billingRegistry[billingId].customer == msg.sender, \"Sender is not a customer\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 160,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.sender == address(token), \"Sender is not a token\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 204,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(merchantChargingAccountAllowed[merchantId][msg.sender], \"Sender is not allowed to charge\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 205,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(merchantId != 0, \"Billing does not exist\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 206,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(lastChargeAt.add(period) <= now, \"Charged too early\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 215,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 216,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            token.transferFrom(billingRecord.customer, merchantRegistry[merchantId].beneficiary, value),\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 217,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Unable to charge customer\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 218,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 235,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(data.length == 64, \"Invalid data length\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 244,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(billingRegistry[billingId].customer == sender, \"Unable to cancel recurring billing of another customer\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 247,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            revert(\"Unknown action provided\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 280,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 281,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            value < 2 ** 144\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 282,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            && lastChargeAt < 2 ** 48\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 283,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            && merchantId < 2 ** 32\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 284,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            && period < 2 ** 32,\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 285,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Invalid input sizes to encode\"\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 286,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 321,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(merchantId <= lastMerchantId && merchantId != 0, \"Invalid merchant specified\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 322,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(period < now, \"Invalid period specified\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 323,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(token.balanceOf(customer) >= value, \"Not enough tokens for the first charge\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 324,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(token.allowance(customer, address(this)) >= value, \"Tokens are not approved for this smart contract\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 325,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(billingRegistry[billingId].customer == address(0x0), \"Recurring billing with this ID is already registered\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 280,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 281,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            value < 2 ** 144\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 282,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            && lastChargeAt < 2 ** 48\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 283,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            && merchantId < 2 ** 32\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 284,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            && period < 2 ** 32,\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 285,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            \"Invalid input sizes to encode\"\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 286,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        );\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 321,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(merchantId <= lastMerchantId && merchantId != 0, \"Invalid merchant specified\");\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 244,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            require(billingRegistry[billingId].customer == sender, \"Unable to cancel recurring billing of another customer\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 323,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(token.balanceOf(customer) >= value, \"Not enough tokens for the first charge\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 324,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(token.allowance(customer, address(this)) >= value, \"Tokens are not approved for this smart contract\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 325,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(billingRegistry[billingId].customer == address(0x0), \"Recurring billing with this ID is already registered\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_16"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 342,
+                    "vulnerability_to_line": 345,
+                    "vulnerability_code": "    function bytesToUint256(bytes memory input, uint offset) internal pure returns (uint256 output) {\n\n        assembly { output := mload(add(add(input, 32), offset)) }\n\n    }\n",
+                    "message": "TokenRecurringBilling.bytesToUint256 (TokenRecurringBilling.sol#342-345) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "incorrect-equality",
+                    "vulnerability_from_line": 313,
+                    "vulnerability_to_line": 334,
+                    "vulnerability_code": "    function allowRecurringBillingInternal (\n\n        address customer,\n\n        uint256 merchantId,\n\n        uint256 billingId,\n\n        uint256 value,\n\n        uint256 period\n\n    ) internal {\n\n\n\n        require(merchantId <= lastMerchantId && merchantId != 0, \"Invalid merchant specified\");\n\n        require(period < now, \"Invalid period specified\");\n\n        require(token.balanceOf(customer) >= value, \"Not enough tokens for the first charge\");\n\n        require(token.allowance(customer, address(this)) >= value, \"Tokens are not approved for this smart contract\");\n\n        require(billingRegistry[billingId].customer == address(0x0), \"Recurring billing with this ID is already registered\");\n\n\n\n        BillingRecord storage newRecurringBilling = billingRegistry[billingId];\n\n        newRecurringBilling.metadata = encodeBillingMetadata(value, now.sub(period), merchantId, period);\n\n        newRecurringBilling.customer = customer;\n\n\n\n        emit BillingAllowed(billingId, customer, merchantId, now, period, value);\n\n\n\n    }\n",
+                    "message": "TokenRecurringBilling.allowRecurringBillingInternal (TokenRecurringBilling.sol#313-334) uses a dangerous strict equality:\n\t- require(bool,string)(billingRegistry[billingId].customer == address(0x0),Recurring billing with this ID is already registered)\n"
+                },
+                {
+                    "name": "incorrect-equality",
+                    "vulnerability_from_line": 313,
+                    "vulnerability_to_line": 334,
+                    "vulnerability_code": "    function allowRecurringBillingInternal (\n\n        address customer,\n\n        uint256 merchantId,\n\n        uint256 billingId,\n\n        uint256 value,\n\n        uint256 period\n\n    ) internal {\n\n\n\n        require(merchantId <= lastMerchantId && merchantId != 0, \"Invalid merchant specified\");\n\n        require(period < now, \"Invalid period specified\");\n\n        require(token.balanceOf(customer) >= value, \"Not enough tokens for the first charge\");\n\n        require(token.allowance(customer, address(this)) >= value, \"Tokens are not approved for this smart contract\");\n\n        require(billingRegistry[billingId].customer == address(0x0), \"Recurring billing with this ID is already registered\");\n\n\n\n        BillingRecord storage newRecurringBilling = billingRegistry[billingId];\n\n        newRecurringBilling.metadata = encodeBillingMetadata(value, now.sub(period), merchantId, period);\n\n        newRecurringBilling.customer = customer;\n\n\n\n        emit BillingAllowed(billingId, customer, merchantId, now, period, value);\n\n\n\n    }\n",
+                    "message": "TokenRecurringBilling.allowRecurringBillingInternal (TokenRecurringBilling.sol#313-334) uses a dangerous strict equality:\n\t- require(bool,string)(billingRegistry[billingId].customer == address(0x0),Recurring billing with this ID is already registered)\nTokenRecurringBilling.isCustomer (TokenRecurringBilling.sol#153-157) uses a dangerous strict equality:\n\t- require(bool,string)(billingRegistry[billingId].customer == msg.sender,Sender is not a customer)\n\t- require(bool,string)(billingRegistry[billingId].customer == msg.sender,Sender is not a customer)\n"
+                },
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 199,
+                    "vulnerability_to_line": 225,
+                    "vulnerability_code": "    function charge (uint256 billingId) public {\n\n\n\n        BillingRecord storage billingRecord = billingRegistry[billingId];\n\n        (uint256 value, uint256 lastChargeAt, uint256 merchantId, uint256 period) = decodeBillingMetadata(billingRecord.metadata);\n\n\n\n        require(merchantChargingAccountAllowed[merchantId][msg.sender], \"Sender is not allowed to charge\");\n\n        require(merchantId != 0, \"Billing does not exist\");\n\n        require(lastChargeAt.add(period) <= now, \"Charged too early\");\n\n\n\n        // If 2 periods have already passed since the last charge (or beginning), no further charges are possible\n\n        // and recurring billing is canceled in case of a charge.\n\n        if (now > lastChargeAt.add(period.mul(2))) {\n\n            cancelRecurringBillingInternal(billingId);\n\n            return;\n\n        }\n\n\n\n        require(\n\n            token.transferFrom(billingRecord.customer, merchantRegistry[merchantId].beneficiary, value),\n\n            \"Unable to charge customer\"\n\n        );\n\n\n\n        billingRecord.metadata = encodeBillingMetadata(value, lastChargeAt.add(period), merchantId, period);\n\n\n\n        emit BillingCharged(billingId, now, lastChargeAt.add(period.mul(2)));\n\n\n\n    }\n",
+                    "message": "Reentrancy in TokenRecurringBilling.charge (TokenRecurringBilling.sol#199-225):\n\tExternal calls:\n\t- require(bool,string)(token.transferFrom(billingRecord.customer,merchantRegistry[merchantId].beneficiary,value),Unable to charge customer) (TokenRecurringBilling.sol#215-218)\n\tState variables written after the call(s):\n\t- billingRegistry (TokenRecurringBilling.sol#220)\n"
+                },
+                {
+                    "name": "reentrancy-benign",
+                    "vulnerability_from_line": 313,
+                    "vulnerability_to_line": 334,
+                    "vulnerability_code": "    function allowRecurringBillingInternal (\n\n        address customer,\n\n        uint256 merchantId,\n\n        uint256 billingId,\n\n        uint256 value,\n\n        uint256 period\n\n    ) internal {\n\n\n\n        require(merchantId <= lastMerchantId && merchantId != 0, \"Invalid merchant specified\");\n\n        require(period < now, \"Invalid period specified\");\n\n        require(token.balanceOf(customer) >= value, \"Not enough tokens for the first charge\");\n\n        require(token.allowance(customer, address(this)) >= value, \"Tokens are not approved for this smart contract\");\n\n        require(billingRegistry[billingId].customer == address(0x0), \"Recurring billing with this ID is already registered\");\n\n\n\n        BillingRecord storage newRecurringBilling = billingRegistry[billingId];\n\n        newRecurringBilling.metadata = encodeBillingMetadata(value, now.sub(period), merchantId, period);\n\n        newRecurringBilling.customer = customer;\n\n\n\n        emit BillingAllowed(billingId, customer, merchantId, now, period, value);\n\n\n\n    }\n",
+                    "message": "Reentrancy in TokenRecurringBilling.allowRecurringBillingInternal (TokenRecurringBilling.sol#313-334):\n\tExternal calls:\n\t- require(bool,string)(token.balanceOf(customer) >= value,Not enough tokens for the first charge) (TokenRecurringBilling.sol#323)\n\t- require(bool,string)(token.allowance(customer,address(this)) >= value,Tokens are not approved for this smart contract) (TokenRecurringBilling.sol#324)\n\tState variables written after the call(s):\n\t- billingRegistry (TokenRecurringBilling.sol#328)\n\t- billingRegistry (TokenRecurringBilling.sol#329)\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 342,
+                    "vulnerability_to_line": 345,
+                    "vulnerability_code": "    function bytesToUint256(bytes memory input, uint offset) internal pure returns (uint256 output) {\n\n        assembly { output := mload(add(add(input, 32), offset)) }\n\n    }\n",
+                    "message": "TokenRecurringBilling.bytesToUint256 uses assembly (TokenRecurringBilling.sol#342-345)\n\t- TokenRecurringBilling.sol#343-345\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 59,
+                    "vulnerability_to_line": 64,
+                    "vulnerability_code": "    function newRecurringBillingContract (address tokenAddress) public returns (address recurringBillingContractAddress) {\n\n        TokenRecurringBilling rb = new TokenRecurringBilling(tokenAddress);\n\n        emit NewRecurringBillingContractCreated(tokenAddress, address(rb));\n\n        return address(rb);\n\n    }\n",
+                    "message": "RecurringBillingContractFactory.newRecurringBillingContract (TokenRecurringBilling.sol#59-64) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 174,
+                    "vulnerability_to_line": 177,
+                    "vulnerability_code": "    function allowRecurringBilling (uint256 billingId, uint256 merchantId, uint256 value, uint256 period) public {\n\n        allowRecurringBillingInternal(msg.sender, merchantId, billingId, value, period);\n\n    }\n",
+                    "message": "TokenRecurringBilling.allowRecurringBilling (TokenRecurringBilling.sol#174-177) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 179,
+                    "vulnerability_to_line": 190,
+                    "vulnerability_code": "    function registerNewMerchant (address beneficiary, address chargingAccount) public returns (uint256 merchantId) {\n\n\n\n        merchantId = ++lastMerchantId;\n\n        Merchant storage record = merchantRegistry[merchantId];\n\n        record.merchant = msg.sender;\n\n        record.beneficiary = beneficiary;\n\n        emit MerchantRegistered(merchantId, msg.sender, beneficiary);\n\n\n\n        changeMerchantChargingAccount(merchantId, chargingAccount, true);\n\n\n\n    }\n",
+                    "message": "TokenRecurringBilling.registerNewMerchant (TokenRecurringBilling.sol#179-190) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 194,
+                    "vulnerability_to_line": 197,
+                    "vulnerability_code": "    function cancelRecurringBilling (uint256 billingId) public isCustomer(billingId) {\n\n        cancelRecurringBillingInternal(billingId);\n\n    }\n",
+                    "message": "TokenRecurringBilling.cancelRecurringBilling (TokenRecurringBilling.sol#194-197) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 199,
+                    "vulnerability_to_line": 225,
+                    "vulnerability_code": "    function charge (uint256 billingId) public {\n\n\n\n        BillingRecord storage billingRecord = billingRegistry[billingId];\n\n        (uint256 value, uint256 lastChargeAt, uint256 merchantId, uint256 period) = decodeBillingMetadata(billingRecord.metadata);\n\n\n\n        require(merchantChargingAccountAllowed[merchantId][msg.sender], \"Sender is not allowed to charge\");\n\n        require(merchantId != 0, \"Billing does not exist\");\n\n        require(lastChargeAt.add(period) <= now, \"Charged too early\");\n\n\n\n        // If 2 periods have already passed since the last charge (or beginning), no further charges are possible\n\n        // and recurring billing is canceled in case of a charge.\n\n        if (now > lastChargeAt.add(period.mul(2))) {\n\n            cancelRecurringBillingInternal(billingId);\n\n            return;\n\n        }\n\n\n\n        require(\n\n            token.transferFrom(billingRecord.customer, merchantRegistry[merchantId].beneficiary, value),\n\n            \"Unable to charge customer\"\n\n        );\n\n\n\n        billingRecord.metadata = encodeBillingMetadata(value, lastChargeAt.add(period), merchantId, period);\n\n\n\n        emit BillingCharged(billingId, now, lastChargeAt.add(period.mul(2)));\n\n\n\n    }\n",
+                    "message": "TokenRecurringBilling.charge (TokenRecurringBilling.sol#199-225) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 253,
+                    "vulnerability_to_line": 257,
+                    "vulnerability_code": "    function changeMerchantAccount (uint256 merchantId, address newMerchantAccount) public isMerchant(merchantId) {\n\n        merchantRegistry[merchantId].merchant = newMerchantAccount;\n\n        emit MerchantAccountChanged(merchantId, newMerchantAccount);\n\n    }\n",
+                    "message": "TokenRecurringBilling.changeMerchantAccount (TokenRecurringBilling.sol#253-257) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 259,
+                    "vulnerability_to_line": 263,
+                    "vulnerability_code": "    function changeMerchantBeneficiaryAddress (uint256 merchantId, address newBeneficiaryAddress) public isMerchant(merchantId) {\n\n        merchantRegistry[merchantId].beneficiary = newBeneficiaryAddress;\n\n        emit MerchantBeneficiaryAddressChanged(merchantId, newBeneficiaryAddress);\n\n    }\n",
+                    "message": "TokenRecurringBilling.changeMerchantBeneficiaryAddress (TokenRecurringBilling.sol#259-263) should be declared external\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 232,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function receiveApproval (address sender, uint, address, bytes calldata data) external tokenOnly {\n",
+                    "message": "Parameter '' of TokenRecurringBilling.receiveApproval (TokenRecurringBilling.sol#232) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 232,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function receiveApproval (address sender, uint, address, bytes calldata data) external tokenOnly {\n",
+                    "message": "Parameter '_scope_0' of TokenRecurringBilling.receiveApproval (TokenRecurringBilling.sol#232) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": 138,
+                    "vulnerability_code": "    enum receiveApprovalAction { // In receiveApproval, `lastChargeAt` in passed `metadata` specifies an action to execute.\n\n        allowRecurringBilling,   // == 0\n\n        cancelRecurringBilling   // == 1\n\n    }\n",
+                    "message": "Enum 'TokenRecurringBilling.receiveApprovalAction' (TokenRecurringBilling.sol#134-138) is not in CapWords\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 325,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(billingRegistry[billingId].customer == address(0x0), \"Recurring billing with this ID is already registered\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 342,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function bytesToUint256(bytes memory input, uint offset) internal pure returns (uint256 output) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 243,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        } else if (action == uint256(receiveApprovalAction.cancelRecurringBilling)) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 110,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_PURE",
+                    "vulnerability_from_line": 342,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function bytesToUint256(bytes memory input, uint offset) internal pure returns (uint256 output) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 298,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function decodeBillingMetadata (uint256 encodedData) public pure returns (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 343,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly { output := mload(add(add(input, 32), offset)) }\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "smart-contracts-master/contracts/storage/TeamsStorageController.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 237,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            memberAccounts[memberIndex] = StorageInterface(db).getAddress(\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 240,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            payoutDate[memberIndex] = StorageInterface(db).getUint(\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 243,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            agreementMinutes[memberIndex] = StorageInterface(db).getUint(\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 246,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            agreementValue[memberIndex] = StorageInterface(db).getUint(\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 249,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            singleTermAgreement[memberIndex] = StorageInterface(db).getBoolean(\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 252,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            contractIds[memberIndex] = StorageInterface(db).getUint(\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 235,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            ++memberIndex\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 129,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        StorageInterface(db).setAddress(keccak256(Storage.teams, teamId, numOfMembers), 0x0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 180,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function storageAddTeamMember (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.23;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 76,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            cid = StorageInterface(db).getUint(keccak256(Storage.teams, teamId, i));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        return StorageInterface(db).getUint(keccak256(Storage.teams, teamId, memberIndex, Member.agreementValue));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 90,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        return StorageInterface(db).getUint(keccak256(Storage.teams, teamId, memberIndex, Member.agreementMinutes));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 94,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        return StorageInterface(db).getUint(keccak256(Storage.teams, teamId, memberIndex, Member.payoutDate));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 98,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        return StorageInterface(db).getAddress(keccak256(Storage.teams, teamId, memberIndex));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 102,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        return StorageInterface(db).getUint(keccak256(Storage.teams, teamId, memberIndex));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 106,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        return StorageInterface(db).getUint(keccak256(Storage.teams, teamId));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 110,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        return StorageInterface(db).getBoolean(keccak256(Storage.teams, teamId, memberIndex));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 114,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        return StorageInterface(db).getUint(keccak256(Storage.balance, teamId));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        StorageInterface(db).setUint(keccak256(Storage.teams, teamId, memberIndex, Member.payoutDate), date);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 123,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint numOfMembers = StorageInterface(db).getUint(keccak256(Storage.teams, teamId)) - 1;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 126,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(Storage.teams, teamId, memberIndex),\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 127,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            StorageInterface(db).getAddress(keccak256(Storage.teams, teamId, numOfMembers))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 129,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        StorageInterface(db).setAddress(keccak256(Storage.teams, teamId, numOfMembers), 0x0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(Storage.teams, teamId, memberIndex, Member.agreementMinutes),\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 132,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            StorageInterface(db).getUint(keccak256(Storage.teams, teamId, numOfMembers, Member.agreementMinutes))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        StorageInterface(db).setUint(keccak256(Storage.teams, teamId, numOfMembers, Member.agreementMinutes), 0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 136,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(Storage.teams, teamId, memberIndex, Member.agreementValue),\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 137,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            StorageInterface(db).getUint(keccak256(Storage.teams, teamId, numOfMembers, Member.agreementValue))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        StorageInterface(db).setUint(keccak256(Storage.teams, teamId, numOfMembers, Member.agreementValue), 0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(Storage.teams, teamId, memberIndex, Member.payoutDate),\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 142,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            StorageInterface(db).getUint(keccak256(Storage.teams, teamId, numOfMembers, Member.payoutDate))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 144,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        StorageInterface(db).setUint(keccak256(Storage.teams, teamId, numOfMembers, Member.payoutDate), 0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 146,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(Storage.teams, teamId, memberIndex),\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 147,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            StorageInterface(db).getUint(keccak256(Storage.teams, teamId, numOfMembers))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 149,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        StorageInterface(db).setUint(keccak256(Storage.teams, teamId, numOfMembers), 0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(Storage.teams, teamId, memberIndex),\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 152,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            StorageInterface(db).getBoolean(keccak256(Storage.teams, teamId, numOfMembers))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 154,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        StorageInterface(db).setBoolean(keccak256(Storage.teams, teamId, numOfMembers), false);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 155,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        StorageInterface(db).setUint(keccak256(Storage.teams, teamId), numOfMembers);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 161,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        StorageInterface(db).setAddress(keccak256(Storage.teamOwner, teamId), teamOwnerAccount);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 167,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(Storage.balance, teamId),\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 168,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            StorageInterface(db).getUint(keccak256(Storage.balance, teamId)) + toAdd\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 173,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(StorageInterface(db).getUint(keccak256(Storage.balance, teamId)) >= toSub);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 175,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(Storage.balance, teamId),\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 176,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            StorageInterface(db).getUint(keccak256(Storage.balance, teamId)) - toSub\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 190,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint numOfMembers = StorageInterface(db).getUint(keccak256(Storage.teams, teamId));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 191,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        StorageInterface(db).setAddress(keccak256(Storage.teams, teamId, numOfMembers), memberAccount);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 193,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(Storage.teams, teamId, numOfMembers, Member.agreementMinutes), \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 197,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(Storage.teams, teamId, numOfMembers, Member.agreementValue), \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 201,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(Storage.teams, teamId, numOfMembers, Member.payoutDate), \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 205,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(Storage.teams, teamId, numOfMembers),\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 209,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            StorageInterface(db).setBoolean(keccak256(Storage.teams, teamId, numOfMembers), true);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 210,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        StorageInterface(db).setUint(keccak256(Storage.teams, teamId), numOfMembers + 1);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 223,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint numOfMembers = StorageInterface(db).getUint(keccak256(Storage.teams, teamId));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 229,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        teamBalance = StorageInterface(db).getUint(keccak256(Storage.balance, teamId));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 230,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        teamOwner = StorageInterface(db).getAddress(keccak256(Storage.teamOwner, teamId));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 238,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                keccak256(Storage.teams, teamId, memberIndex)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 241,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                keccak256(Storage.teams, teamId, memberIndex, Member.payoutDate)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 244,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                keccak256(Storage.teams, teamId, memberIndex, Member.agreementMinutes)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 247,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                keccak256(Storage.teams, teamId, memberIndex, Member.agreementValue)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 250,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                keccak256(Storage.teams, teamId, memberIndex)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 253,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                keccak256(Storage.teams, teamId, memberIndex)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 214,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address[] memberAccounts,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 215,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint[] payoutDate,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 216,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint[] agreementMinutes,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 217,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint[] agreementValue,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 218,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bool[] singleTermAgreement,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 221,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint[] contractIds\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "smart-contracts-master/contracts/storage/StorageInterface.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.23;\n",
+                    "message": "Detected issues with version pragma in StorageInterface.sol:\n\t- pragma solidity^0.4.23 (StorageInterface.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.23;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "smart-contracts-master/contracts/storage/BasicStorage.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i; i < initialOwners.length; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            owners[initialOwners[i]] = true;\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i; i < initialOwners.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i; i < initialOwners.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_7"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "uninitialized-local",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i; i < initialOwners.length; i++) {\n",
+                    "message": "i in BasicStorage.BasicStorage (BasicStorage.sol#12) is a local variable never initialiazed\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": 20,
+                    "vulnerability_code": "    function transferOwnership (address newOwner) public ownersOnly {\n\n        owners[newOwner] = true;\n\n        delete owners[msg.sender];\n",
+                    "message": "BasicStorage.transferOwnership (BasicStorage.sol#17-20) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": 24,
+                    "vulnerability_code": "    function grantAccess (address newOwner) public ownersOnly {\n\n        owners[newOwner] = true;\n",
+                    "message": "BasicStorage.grantAccess (BasicStorage.sol#22-24) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": 28,
+                    "vulnerability_code": "    function revokeAccess (address previousOwner) public ownersOnly {\n\n        delete owners[previousOwner];\n",
+                    "message": "BasicStorage.revokeAccess (BasicStorage.sol#26-28) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": 32,
+                    "vulnerability_code": "    function isOwner (address addr) public view returns(bool) {\n\n        return owners[addr] == true;\n",
+                    "message": "BasicStorage.isOwner (BasicStorage.sol#30-32) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in BasicStorage.sol:\n\t- pragma solidity^0.4.18 (BasicStorage.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": 15,
+                    "vulnerability_code": "    function BasicStorage (address[] initialOwners) public {\n\n        for (uint i; i < initialOwners.length; i++) {\n\n            owners[initialOwners[i]] = true;\n\n        }\n",
+                    "message": "Function 'BasicStorage.BasicStorage' (BasicStorage.sol#11-15) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i; i < initialOwners.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i; i < initialOwners.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function BasicStorage (address[] initialOwners) public {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "smart-contracts-master/contracts/storage/DreamTeamStorage.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i; i < initialOwners.length; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            owners[initialOwners[i]] = true;\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i; i < initialOwners.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i; i < initialOwners.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_21"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "uninitialized-local",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i; i < initialOwners.length; i++) {\n",
+                    "message": "i in BasicStorage.BasicStorage (DreamTeamStorage.sol#37) is a local variable never initialiazed\n"
+                },
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.23;\n",
+                    "message": "Different versions of Solidity is used in DreamTeamStorage.sol:\n\t- Version used: ['^0.4.18', '^0.4.23']\n\t- DreamTeamStorage.sol#3 declares pragma solidity^0.4.23\n\t- DreamTeamStorage.sol#28 declares pragma solidity^0.4.18\n\t- DreamTeamStorage.sol#63 declares pragma solidity^0.4.18\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": 45,
+                    "vulnerability_code": "    function transferOwnership (address newOwner) public ownersOnly {\n\n        owners[newOwner] = true;\n\n        delete owners[msg.sender];\n",
+                    "message": "BasicStorage.transferOwnership (DreamTeamStorage.sol#42-45) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": 49,
+                    "vulnerability_code": "    function grantAccess (address newOwner) public ownersOnly {\n\n        owners[newOwner] = true;\n",
+                    "message": "BasicStorage.grantAccess (DreamTeamStorage.sol#47-49) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 51,
+                    "vulnerability_to_line": 53,
+                    "vulnerability_code": "    function revokeAccess (address previousOwner) public ownersOnly {\n\n        delete owners[previousOwner];\n",
+                    "message": "BasicStorage.revokeAccess (DreamTeamStorage.sol#51-53) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": 57,
+                    "vulnerability_code": "    function isOwner (address addr) public view returns(bool) {\n\n        return owners[addr] == true;\n",
+                    "message": "BasicStorage.isOwner (DreamTeamStorage.sol#55-57) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 77,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getUint (bytes32 record) public view returns (uint) { return uintStorage[record]; }\n",
+                    "message": "DreamTeamStorage.getUint (DreamTeamStorage.sol#77) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 78,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getString (bytes32 record) public view returns (string) { return stringStorage[record]; }\n",
+                    "message": "DreamTeamStorage.getString (DreamTeamStorage.sol#78) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getAddress (bytes32 record) public view returns (address) { return addressStorage[record]; }\n",
+                    "message": "DreamTeamStorage.getAddress (DreamTeamStorage.sol#79) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getBytes (bytes32 record) public view returns (bytes) { return bytesStorage[record]; }\n",
+                    "message": "DreamTeamStorage.getBytes (DreamTeamStorage.sol#80) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 81,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getBoolean (bytes32 record) public view returns (bool) { return booleanStorage[record]; }\n",
+                    "message": "DreamTeamStorage.getBoolean (DreamTeamStorage.sol#81) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 82,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getInt (bytes32 record) public view returns (int) { return intStorage[record]; }\n",
+                    "message": "DreamTeamStorage.getInt (DreamTeamStorage.sol#82) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setString (bytes32 record, string value) public ownersOnly { stringStorage[record] = value; }\n",
+                    "message": "DreamTeamStorage.setString (DreamTeamStorage.sol#83) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setUint (bytes32 record, uint value) public ownersOnly { uintStorage[record] = value; }\n",
+                    "message": "DreamTeamStorage.setUint (DreamTeamStorage.sol#84) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setAddress (bytes32 record, address value) public ownersOnly { addressStorage[record] = value; }\n",
+                    "message": "DreamTeamStorage.setAddress (DreamTeamStorage.sol#85) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setBytes (bytes32 record, bytes value) public ownersOnly { bytesStorage[record] = value; }\n",
+                    "message": "DreamTeamStorage.setBytes (DreamTeamStorage.sol#86) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 87,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setBoolean (bytes32 record, bool value) public ownersOnly { booleanStorage[record] = value; }\n",
+                    "message": "DreamTeamStorage.setBoolean (DreamTeamStorage.sol#87) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 88,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setInt (bytes32 record, int value) public ownersOnly { intStorage[record] = value; }\n",
+                    "message": "DreamTeamStorage.setInt (DreamTeamStorage.sol#88) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.23;\n",
+                    "message": "Detected issues with version pragma in DreamTeamStorage.sol:\n\t- pragma solidity^0.4.23 (DreamTeamStorage.sol#3): it allows old versions\n\t- pragma solidity^0.4.18 (DreamTeamStorage.sol#28): it allows old versions\n\t- pragma solidity^0.4.18 (DreamTeamStorage.sol#63): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": 40,
+                    "vulnerability_code": "    function BasicStorage (address[] initialOwners) public {\n\n        for (uint i; i < initialOwners.length; i++) {\n\n            owners[initialOwners[i]] = true;\n\n        }\n",
+                    "message": "Function 'BasicStorage.BasicStorage' (DreamTeamStorage.sol#36-40) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 75,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function DreamTeamStorage (address[] initialOwners) BasicStorage(initialOwners) public {}\n",
+                    "message": "Function 'DreamTeamStorage.DreamTeamStorage' (DreamTeamStorage.sol#75) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i; i < initialOwners.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i; i < initialOwners.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.23;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function BasicStorage (address[] initialOwners) public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 75,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function DreamTeamStorage (address[] initialOwners) BasicStorage(initialOwners) public {}\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 78,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getString (bytes32 record) public view returns (string) { return stringStorage[record]; }\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getBytes (bytes32 record) public view returns (bytes) { return bytesStorage[record]; }\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setString (bytes32 record, string value) public ownersOnly { stringStorage[record] = value; }\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setBytes (bytes32 record, bytes value) public ownersOnly { bytesStorage[record] = value; }\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(bytes32 => uint) uintStorage;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 69,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(bytes32 => string) stringStorage;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 70,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(bytes32 => address) addressStorage;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(bytes32 => bytes) bytesStorage;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(bytes32 => bool) booleanStorage;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 73,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(bytes32 => int) intStorage;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "smart-contracts-master/contracts/teams/TeamContracts.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 392,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < teamIds.length; ++i) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 298,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor (address dt, address token, address dbAddress) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 299,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        dreamTeamAddress = dt;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 300,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        erc20TokenAddress = token;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 301,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        db = dbAddress;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 302,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 237,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            memberAccounts[memberIndex] = StorageInterface(db).getAddress(\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 240,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            payoutDate[memberIndex] = StorageInterface(db).getUint(\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 243,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            agreementMinutes[memberIndex] = StorageInterface(db).getUint(\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 246,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            agreementValue[memberIndex] = StorageInterface(db).getUint(\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 249,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            singleTermAgreement[memberIndex] = StorageInterface(db).getBoolean(\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 252,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            contractIds[memberIndex] = StorageInterface(db).getUint(\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "state-variable-read-in-a-loop",
+                    "vulnerability_from_line": 367,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            ERC20TokenInterface(erc20TokenAddress).transfer(storageGetTeamMemberAddress(teamId, index), value);\n",
+                    "message": "Replace state variable reads and writes within loops with local variable reads and writes."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 235,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            ++memberIndex\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 362,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint index = 0; index < storageGetNumberOfMembers(teamId); ++index) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 392,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < teamIds.length; ++i) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": false,
+            "errors": [
+                "EXIT_CODE_255",
+                "error parsing results: file could not be opened successfully:\n- method gz: ReadError('empty file')\n- method bz2: ReadError('not a bzip2 file')\n- method xz: ReadError('not an lzma file')\n- method tar: ReadError('empty file')"
+            ],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 129,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        StorageInterface(db).setAddress(keccak256(Storage.teams, teamId, numOfMembers), 0x0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 266,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function totalSupply () external constant returns (uint);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 267,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOf (address tokenOwner) external constant returns (uint balance);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DIV_MUL",
+                    "vulnerability_from_line": 336,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            uint amountToPayout = ((agreementMinutes * 60 - (payoutDate - now)) / 1 days) * (60 * 24 * agreementValue / agreementMinutes);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 392,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < teamIds.length; ++i) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 180,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function storageAddTeamMember (\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 392,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < teamIds.length; ++i) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.23;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 262,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.23;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 275,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.23;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 76,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            cid = StorageInterface(db).getUint(keccak256(Storage.teams, teamId, i));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        return StorageInterface(db).getUint(keccak256(Storage.teams, teamId, memberIndex, Member.agreementValue));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 90,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        return StorageInterface(db).getUint(keccak256(Storage.teams, teamId, memberIndex, Member.agreementMinutes));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 94,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        return StorageInterface(db).getUint(keccak256(Storage.teams, teamId, memberIndex, Member.payoutDate));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 98,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        return StorageInterface(db).getAddress(keccak256(Storage.teams, teamId, memberIndex));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 102,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        return StorageInterface(db).getUint(keccak256(Storage.teams, teamId, memberIndex));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 106,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        return StorageInterface(db).getUint(keccak256(Storage.teams, teamId));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 110,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        return StorageInterface(db).getBoolean(keccak256(Storage.teams, teamId, memberIndex));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 114,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        return StorageInterface(db).getUint(keccak256(Storage.balance, teamId));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        StorageInterface(db).setUint(keccak256(Storage.teams, teamId, memberIndex, Member.payoutDate), date);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 123,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint numOfMembers = StorageInterface(db).getUint(keccak256(Storage.teams, teamId)) - 1;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 126,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(Storage.teams, teamId, memberIndex),\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 127,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            StorageInterface(db).getAddress(keccak256(Storage.teams, teamId, numOfMembers))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 129,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        StorageInterface(db).setAddress(keccak256(Storage.teams, teamId, numOfMembers), 0x0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(Storage.teams, teamId, memberIndex, Member.agreementMinutes),\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 132,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            StorageInterface(db).getUint(keccak256(Storage.teams, teamId, numOfMembers, Member.agreementMinutes))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        StorageInterface(db).setUint(keccak256(Storage.teams, teamId, numOfMembers, Member.agreementMinutes), 0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 136,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(Storage.teams, teamId, memberIndex, Member.agreementValue),\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 137,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            StorageInterface(db).getUint(keccak256(Storage.teams, teamId, numOfMembers, Member.agreementValue))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        StorageInterface(db).setUint(keccak256(Storage.teams, teamId, numOfMembers, Member.agreementValue), 0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 141,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(Storage.teams, teamId, memberIndex, Member.payoutDate),\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 142,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            StorageInterface(db).getUint(keccak256(Storage.teams, teamId, numOfMembers, Member.payoutDate))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 144,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        StorageInterface(db).setUint(keccak256(Storage.teams, teamId, numOfMembers, Member.payoutDate), 0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 146,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(Storage.teams, teamId, memberIndex),\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 147,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            StorageInterface(db).getUint(keccak256(Storage.teams, teamId, numOfMembers))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 149,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        StorageInterface(db).setUint(keccak256(Storage.teams, teamId, numOfMembers), 0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 151,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(Storage.teams, teamId, memberIndex),\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 152,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            StorageInterface(db).getBoolean(keccak256(Storage.teams, teamId, numOfMembers))\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 154,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        StorageInterface(db).setBoolean(keccak256(Storage.teams, teamId, numOfMembers), false);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 155,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        StorageInterface(db).setUint(keccak256(Storage.teams, teamId), numOfMembers);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 161,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        StorageInterface(db).setAddress(keccak256(Storage.teamOwner, teamId), teamOwnerAccount);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 167,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(Storage.balance, teamId),\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 168,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            StorageInterface(db).getUint(keccak256(Storage.balance, teamId)) + toAdd\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 173,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(StorageInterface(db).getUint(keccak256(Storage.balance, teamId)) >= toSub);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 175,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(Storage.balance, teamId),\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 176,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            StorageInterface(db).getUint(keccak256(Storage.balance, teamId)) - toSub\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 190,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint numOfMembers = StorageInterface(db).getUint(keccak256(Storage.teams, teamId));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 191,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        StorageInterface(db).setAddress(keccak256(Storage.teams, teamId, numOfMembers), memberAccount);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 193,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(Storage.teams, teamId, numOfMembers, Member.agreementMinutes), \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 197,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(Storage.teams, teamId, numOfMembers, Member.agreementValue), \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 201,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(Storage.teams, teamId, numOfMembers, Member.payoutDate), \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 205,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            keccak256(Storage.teams, teamId, numOfMembers),\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 209,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            StorageInterface(db).setBoolean(keccak256(Storage.teams, teamId, numOfMembers), true);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 210,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        StorageInterface(db).setUint(keccak256(Storage.teams, teamId), numOfMembers + 1);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 223,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint numOfMembers = StorageInterface(db).getUint(keccak256(Storage.teams, teamId));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 229,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        teamBalance = StorageInterface(db).getUint(keccak256(Storage.balance, teamId));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 230,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        teamOwner = StorageInterface(db).getAddress(keccak256(Storage.teamOwner, teamId));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 238,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                keccak256(Storage.teams, teamId, memberIndex)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 241,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                keccak256(Storage.teams, teamId, memberIndex, Member.payoutDate)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 244,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                keccak256(Storage.teams, teamId, memberIndex, Member.agreementMinutes)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 247,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                keccak256(Storage.teams, teamId, memberIndex, Member.agreementValue)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 250,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                keccak256(Storage.teams, teamId, memberIndex)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 253,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                keccak256(Storage.teams, teamId, memberIndex)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 214,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address[] memberAccounts,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 215,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint[] payoutDate,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 216,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint[] agreementMinutes,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 217,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint[] agreementValue,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 218,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bool[] singleTermAgreement,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 221,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint[] contractIds\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 391,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function batchPayout (uint[] teamIds) public {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "smart-contracts-master/contracts/lib/SafeMath.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.24;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

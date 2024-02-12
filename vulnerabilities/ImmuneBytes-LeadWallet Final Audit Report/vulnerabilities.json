@@ -1,0 +1,269 @@
+{
+    "LEAD-Stake-DApp-Backend-298d3157c32147bf5432b376e39b436381d5e8e8/ERC20.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(string memory _name, string memory _symbol, uint _amount) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 50,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        name = _name;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 51,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        symbol = _symbol; \n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        _mint(msg.sender, _amount);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 56,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(spender != msg.sender, 'Cannot approve self');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(spender != address(0x0), 'Cannot approve a zero address');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(balances[msg.sender] >= value, 'Cannot approve more than available balance');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 99,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_account != address(0x0), \"ERC20: mint to the zero address\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-multiple-require",
+                    "vulnerability_from_line": 72,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(balances[from] >= value && allowance >= value);\n",
+                    "message": "Using multiple require statements is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(balances[msg.sender] >= value, 'Cannot approve more than available balance');\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_16"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "shadowing-local",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint allowance = allowed[from][msg.sender];\n",
+                    "message": "ERC20.transferFrom.allowance (local variable @ ERC20.sol#71) shadows:\n\t- ERC20.allowance (function @ ERC20.sol#86-88)\n\t- IERC20.allowance (function @ ERC20.sol#32)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address to, uint tokens) external returns (bool success);\n",
+                    "message": "IERC20.transfer (ERC20.sol#28) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": 68,
+                    "vulnerability_code": "    function transfer(address to, uint value) public override returns(bool) {\n\n        require(balances[msg.sender] >= value);\n\n        balances[msg.sender] = balances[msg.sender].sub(value);\n\n        balances[to] = balances[to].add(value);\n\n        emit Transfer(msg.sender, to, value);\n\n        return true;\n",
+                    "message": "ERC20.transfer (ERC20.sol#62-68) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address from, address to, uint tokens) external returns (bool success);\n",
+                    "message": "IERC20.transferFrom (ERC20.sol#29) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 70,
+                    "vulnerability_to_line": 78,
+                    "vulnerability_code": "    function transferFrom(address from, address to, uint value) public override returns(bool) {\n\n        uint allowance = allowed[from][msg.sender];\n\n        require(balances[from] >= value && allowance >= value);\n\n        allowed[from][msg.sender] = allowed[from][msg.sender].sub(value);\n\n        balances[from] = balances[from].sub(value);\n\n        balances[to] = balances[to].add(value);\n\n        emit Transfer(from, to, value);\n\n        return true;\n",
+                    "message": "ERC20.transferFrom (ERC20.sol#70-78) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOf(address tokenOwner) external view returns (uint balance);\n",
+                    "message": "IERC20.balanceOf (ERC20.sol#30) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 90,
+                    "vulnerability_to_line": 92,
+                    "vulnerability_code": "    function balanceOf(address owner) public override view returns(uint) {\n\n        return balances[owner];\n",
+                    "message": "ERC20.balanceOf (ERC20.sol#90-92) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": 88,
+                    "vulnerability_code": "    function allowance(address owner, address spender) public override view returns(uint) {\n\n        return allowed[owner][spender];\n",
+                    "message": "ERC20.allowance (ERC20.sol#86-88) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function allowance(address tokenOwner, address spender) external view returns (uint remaining);\n",
+                    "message": "IERC20.allowance (ERC20.sol#32) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": "Detected issues with version pragma in ERC20.sol:\n\t- pragma solidity^0.6.0 (ERC20.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(string memory _name, string memory _symbol, uint _amount) public {\n",
+                    "message": "Parameter '_name' of ERC20. (ERC20.sol#49) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(string memory _name, string memory _symbol, uint _amount) public {\n",
+                    "message": "Parameter '_symbol' of ERC20. (ERC20.sol#49) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(string memory _name, string memory _symbol, uint _amount) public {\n",
+                    "message": "Parameter '_amount' of ERC20. (ERC20.sol#49) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 98,
+                    "vulnerability_to_line": 103,
+                    "vulnerability_code": "    function _mint(address _account, uint _amount) internal {\n\n        require(_account != address(0x0), \"ERC20: mint to the zero address\");\n\n        tokenTotalSupply = tokenTotalSupply.add(_amount);\n\n        balances[_account] = balances[_account].add(_amount);\n\n        emit Transfer(address(0), _account, _amount);\n",
+                    "message": "Function 'ERC20._mint' (ERC20.sol#98-103) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 98,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _mint(address _account, uint _amount) internal {\n",
+                    "message": "Parameter '_account' of ERC20._mint (ERC20.sol#98) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 98,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _mint(address _account, uint _amount) internal {\n",
+                    "message": "Parameter '_amount' of ERC20._mint (ERC20.sol#98) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(spender != address(0x0), 'Cannot approve a zero address');\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 99,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_account != address(0x0), \"ERC20: mint to the zero address\");\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address spender, uint value) external override canApprove(spender, value) returns(bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.6.0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint private tokenTotalSupply;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(address => uint) private balances;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(address => mapping(address => uint)) private allowed;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    using SafeMath for uint;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

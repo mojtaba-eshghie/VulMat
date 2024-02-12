@@ -1,0 +1,255 @@
+{
+    "async-contracts-1bbca6bfe1a171f1bb8369ff129d5aac234a6664/contracts/TokenUpgrader.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 77,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < tokenIds.length; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(V1Token _v1TokenAddress) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 44,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        adminAddress = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        v1TokenAddress = _v1TokenAddress;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 77,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < tokenIds.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 56,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(address(v2TokenAddress) == address(0), \"V2 address has already been initialized.\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(isTokenReadyForUpgrade[tokenId], \"Token not ready for upgrade.\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 87,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require((tokenOwner == msg.sender) || v1TokenAddress.isApprovedForAll(tokenOwner, msg.sender), \"Not owner or approved.\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 77,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < tokenIds.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 56,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(address(v2TokenAddress) == address(0), \"V2 address has already been initialized.\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_9"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "erc20-interface",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": 10,
+                    "vulnerability_code": "contract V1Token {\n\n    function isApprovedForAll(address owner, address operator) public view returns (bool) {}\n\n\n\n    function transferFrom(address from, address to, uint256 tokenId) public {}\n",
+                    "message": "V1Token (TokenUpgrader.sol#6-10) has incorrect ERC20 function interface(s):\n\t-transferFrom (TokenUpgrader.sol#9)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isApprovedForAll(address owner, address operator) public view returns (bool) {}\n",
+                    "message": "V1Token.isApprovedForAll (TokenUpgrader.sol#7) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferFrom(address from, address to, uint256 tokenId) public {}\n",
+                    "message": "V1Token.transferFrom (TokenUpgrader.sol#9) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": 59,
+                    "vulnerability_code": "    function setupV2Address(V2Token _v2TokenAddress) public onlyAdmin {\n\n        require(address(v2TokenAddress) == address(0), \"V2 address has already been initialized.\");\n\n        \n\n        v2TokenAddress = _v2TokenAddress;\n",
+                    "message": "TokenUpgrader.setupV2Address (TokenUpgrader.sol#55-59) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": 74,
+                    "vulnerability_code": "    function prepareTokenForUpgrade(uint256 tokenId, bool isControlToken, uint256 platformFirstSalePercentage,\n\n        uint256 platformSecondSalePercentage, bool hasHadFirstSale, address payable[] memory uniqueTokenCreators) public onlyAdmin {\n\n        isTokenReadyForUpgrade[tokenId] = true;\n\n\n\n        isControlTokenMapping[tokenId] = isControlToken;\n\n\n\n        hasTokenHadFirstSale[tokenId] = hasHadFirstSale;\n\n\n\n        uniqueTokenCreatorMapping[tokenId] = uniqueTokenCreators;\n\n\n\n        platformFirstPercentageForToken[tokenId] = platformFirstSalePercentage;\n\n\n\n        platformSecondPercentageForToken[tokenId] = platformSecondSalePercentage;\n",
+                    "message": "TokenUpgrader.prepareTokenForUpgrade (TokenUpgrader.sol#61-74) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 76,
+                    "vulnerability_to_line": 80,
+                    "vulnerability_code": "    function upgradeTokenList(uint256[] memory tokenIds, address tokenOwner) public {\n\n        for (uint256 i = 0; i < tokenIds.length; i++) {\n\n            upgradeToken(tokenIds[i], tokenOwner);\n\n        }\n",
+                    "message": "TokenUpgrader.upgradeTokenList (TokenUpgrader.sol#76-80) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.12;\n",
+                    "message": "Detected issues with version pragma in TokenUpgrader.sol:\n\t- pragma solidity^0.5.12 (TokenUpgrader.sol#3): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(V1Token _v1TokenAddress) public {\n",
+                    "message": "Parameter '_v1TokenAddress' of TokenUpgrader. (TokenUpgrader.sol#43) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setupV2Address(V2Token _v2TokenAddress) public onlyAdmin {\n",
+                    "message": "Parameter '_v2TokenAddress' of TokenUpgrader.setupV2Address (TokenUpgrader.sol#55) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isApprovedForAll(address owner, address operator) public view returns (bool) {}\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract V2Token {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract TokenUpgrader {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.5.12;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgradeV1Token(uint256 tokenId, address v1Address, bool isControlToken, address to, \n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 61,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function prepareTokenForUpgrade(uint256 tokenId, bool isControlToken, uint256 platformFirstSalePercentage,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        isTokenReadyForUpgrade[tokenId] = true;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        isControlTokenMapping[tokenId] = isControlToken;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 67,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        hasTokenHadFirstSale[tokenId] = hasHadFirstSale;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 69,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uniqueTokenCreatorMapping[tokenId] = uniqueTokenCreators;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        platformFirstPercentageForToken[tokenId] = platformFirstSalePercentage;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 73,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        platformSecondPercentageForToken[tokenId] = platformSecondSalePercentage;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

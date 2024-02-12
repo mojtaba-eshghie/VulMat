@@ -1,0 +1,2714 @@
+{
+    "beam-11b086ca757f1612cd67c1bf6d7ab470591676b1/contracts/Migrations.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_4"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": 20,
+                    "vulnerability_code": "    function setCompleted(uint completed) public restricted {\n\n        last_completed_migration = completed;\n",
+                    "message": "Migrations.setCompleted (Migrations.sol#18-20) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": 25,
+                    "vulnerability_code": "    function upgrade(address new_address) public restricted {\n\n        Migrations upgraded = Migrations(new_address);\n\n        upgraded.setCompleted(last_completed_migration);\n",
+                    "message": "Migrations.upgrade (Migrations.sol#22-25) should be declared external\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function upgrade(address new_address) public restricted {\n",
+                    "message": "Parameter 'new_address' of Migrations.upgrade (Migrations.sol#22) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint public last_completed_migration;\n",
+                    "message": "Variable 'Migrations.last_completed_migration' (Migrations.sol#8) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "beam-11b086ca757f1612cd67c1bf6d7ab470591676b1/contracts/BeamCrowdsale.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 236,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Pausable is Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 325,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Whitelist is Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 99,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i=0; i < bresult.length; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 359,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 387,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 240,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bool public paused = false;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 209,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 210,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 211,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 407,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 408,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        oraclize_setProof(proofType_Android | proofStorage_IPFS);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 409,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        _update(0);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 410,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 579,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address _wallet, ERC20 _token) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 580,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_wallet != address(0));\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 581,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_token != address(0));\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 582,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 583,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        wallet = _wallet;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 584,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        token = _token;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 585,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        decimals = token.decimals();\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 586,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 99,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i=0; i < bresult.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 174,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < power; i++){\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 359,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 387,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 100,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            if ((bresult[i] >= 48)&&(bresult[i] <= 57)) {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 101,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                if (decimals) {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 102,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                    if (_b == 0) break;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 103,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                    else _b--;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 104,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                }\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 105,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                mint *= 10;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 106,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                mint += uint(bresult[i]) - 48;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 107,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            } else if (bresult[i] == 46) decimals = true;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-prefix-decrement-not-postfix",
+                    "vulnerability_from_line": 103,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                    else _b--;\n",
+                    "message": "Consider using the prefix decrement expression whenever the return value is not needed. The prefix decrement expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 99,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i=0; i < bresult.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 174,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < power; i++){\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 359,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 387,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_95"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "reentrancy-eth",
+                    "vulnerability_from_line": 774,
+                    "vulnerability_to_line": 803,
+                    "vulnerability_code": "    function buyTokens()\n\n        public\n\n        payable\n\n        onlyWhileOpen\n\n        onlyWhitelisted\n\n        whenNotPaused\n\n        onlyActualPrice\n\n    {\n\n        address _beneficiary = msg.sender;\n\n\n\n        uint256 _weiAmount = msg.value;\n\n        _preValidatePurchase(_beneficiary, _weiAmount);\n\n\n\n        // calculate token amount to be created\n\n        uint256 tokens = _getTokenAmount(_weiAmount);\n\n        \n\n        _weiAmount = _weiAmount.sub(_applyDiscount(_weiAmount));\n\n\n\n        funds[_beneficiary] = funds[_beneficiary].add(_weiAmount);\n\n\n\n        // update state\n\n        weiRaised = weiRaised.add(_weiAmount);\n\n\n\n        _processPurchase(_beneficiary, tokens);\n\n        emit TokenPurchase(_beneficiary, _weiAmount, tokens);\n\n\n\n        _forwardFunds(_weiAmount);\n\n\n\n        _postValidatePurchase();\n",
+                    "message": "Reentrancy in BeamCrowdsale.buyTokens (BeamCrowdsale.sol#774-803):\n\tExternal calls:\n\t- tokens = _getTokenAmount(_weiAmount) (BeamCrowdsale.sol#788)\n\t- _processPurchase(_beneficiary,tokens) (BeamCrowdsale.sol#797)\n\t- _postValidatePurchase() (BeamCrowdsale.sol#802)\n\tExternal calls sending eth:\n\t- _weiAmount = _weiAmount.sub(_applyDiscount(_weiAmount)) (BeamCrowdsale.sol#790)\n\t- _forwardFunds(_weiAmount) (BeamCrowdsale.sol#800)\n\tState variables written after the call(s):\n\t- seedFinished (BeamCrowdsale.sol#802)\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 88,
+                    "vulnerability_to_line": 92,
+                    "vulnerability_code": "    function getCodeSize(address _addr) internal view returns(uint _size) {\n\n        assembly {\n\n            _size := extcodesize(_addr)\n\n        }\n",
+                    "message": "UsingOraclize.getCodeSize (BeamCrowdsale.sol#88-92) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 424,
+                    "vulnerability_to_line": 437,
+                    "vulnerability_code": "    function __callback(bytes32 myid, string result, bytes proof) public {\n\n        require((lastPriceUpdate + minUpdatePeriod) < now);\n\n        require(msg.sender == oraclize_cbAddress());\n\n\n\n        priceETHUSD = parseInt(result, 2);\n\n        lastPriceUpdate = now;\n\n\n\n        emit PriceUpdated(priceETHUSD);\n\n\n\n        _update(3600);\n\n        return;\n\n\n\n        proof; myid; //to silence the compiler warning\n",
+                    "message": "Reentrancy in PriceChecker.__callback (BeamCrowdsale.sol#424-437):\n\tExternal calls:\n\t- require(bool)(msg.sender == oraclize_cbAddress()) (BeamCrowdsale.sol#426)\n\tState variables written after the call(s):\n\t- lastPriceUpdate (BeamCrowdsale.sol#429)\n"
+                },
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": 39,
+                    "vulnerability_code": "    modifier oraclizeAPI {\n\n        if ((address(OAR) == 0)||(getCodeSize(address(OAR)) == 0))\n\n            oraclize_setNetwork(networkID_auto);\n\n\n\n        if (address(oraclize) != OAR.getAddress())\n\n            oraclize = OraclizeI(OAR.getAddress());\n\n\n\n        _;\n",
+                    "message": "Reentrancy in UsingOraclize.oraclizeAPI (BeamCrowdsale.sol#31-39):\n\tExternal calls:\n\t- address(oraclize) != OAR.getAddress() (BeamCrowdsale.sol#35-36)\n\t- oraclize = OraclizeI(OAR.getAddress()) (BeamCrowdsale.sol#36)\n\tState variables written after the call(s):\n\t- oraclize (BeamCrowdsale.sol#36)\n"
+                },
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 624,
+                    "vulnerability_to_line": 634,
+                    "vulnerability_code": "    function finishCrowdsale() external onlyOwner onlyWhileOpen {\n\n        crowdsaleFinished = true;\n\n\n\n        uint256 _soldAmount = token.totalSupply().sub(bonuses);\n\n\n\n        token.mint(address(this), _soldAmount);\n\n\n\n        emit TokenPurchase(address(this), 0, _soldAmount);\n\n\n\n        emit CrowdsaleFinished(weiRaised, usdRaised);\n",
+                    "message": "BeamCrowdsale.finishCrowdsale (BeamCrowdsale.sol#624-634) does not use the value returned by external calls:\n\t-token.mint(address(this),_soldAmount) (BeamCrowdsale.sol#629)\n"
+                },
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 660,
+                    "vulnerability_to_line": 669,
+                    "vulnerability_code": "    function transferTokens(\n\n        address _beneficiary,\n\n        uint256 _tokenAmount\n\n    )\n\n        external\n\n        onlyOwner\n\n    {\n\n        require(token.balanceOf(address(this)) >= _tokenAmount);\n\n        token.transfer(_beneficiary, _tokenAmount);\n",
+                    "message": "BeamCrowdsale.transferTokens (BeamCrowdsale.sol#660-669) does not use the value returned by external calls:\n\t-token.transfer(_beneficiary,_tokenAmount) (BeamCrowdsale.sol#668)\n"
+                },
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 893,
+                    "vulnerability_to_line": 900,
+                    "vulnerability_code": "    function _deliverTokens(\n\n        address _beneficiary,\n\n        uint256 _tokenAmount\n\n    )\n\n        internal\n\n    {\n\n        token.mint(_beneficiary, _tokenAmount);\n",
+                    "message": "BeamCrowdsale._deliverTokens (BeamCrowdsale.sol#893-900) does not use the value returned by external calls:\n\t-token.mint(_beneficiary,_tokenAmount) (BeamCrowdsale.sol#899)\n"
+                },
+                {
+                    "name": "reentrancy-benign",
+                    "vulnerability_from_line": 424,
+                    "vulnerability_to_line": 437,
+                    "vulnerability_code": "    function __callback(bytes32 myid, string result, bytes proof) public {\n\n        require((lastPriceUpdate + minUpdatePeriod) < now);\n\n        require(msg.sender == oraclize_cbAddress());\n\n\n\n        priceETHUSD = parseInt(result, 2);\n\n        lastPriceUpdate = now;\n\n\n\n        emit PriceUpdated(priceETHUSD);\n\n\n\n        _update(3600);\n\n        return;\n\n\n\n        proof; myid; //to silence the compiler warning\n",
+                    "message": "Reentrancy in PriceChecker.__callback (BeamCrowdsale.sol#424-437):\n\tExternal calls:\n\t- require(bool)(msg.sender == oraclize_cbAddress()) (BeamCrowdsale.sol#426)\n\tState variables written after the call(s):\n\t- priceETHUSD (BeamCrowdsale.sol#428)\n"
+                },
+                {
+                    "name": "reentrancy-benign",
+                    "vulnerability_from_line": 424,
+                    "vulnerability_to_line": 437,
+                    "vulnerability_code": "    function __callback(bytes32 myid, string result, bytes proof) public {\n\n        require((lastPriceUpdate + minUpdatePeriod) < now);\n\n        require(msg.sender == oraclize_cbAddress());\n\n\n\n        priceETHUSD = parseInt(result, 2);\n\n        lastPriceUpdate = now;\n\n\n\n        emit PriceUpdated(priceETHUSD);\n\n\n\n        _update(3600);\n\n        return;\n\n\n\n        proof; myid; //to silence the compiler warning\n",
+                    "message": "Reentrancy in PriceChecker.__callback (BeamCrowdsale.sol#424-437):\n\tExternal calls:\n\t- require(bool)(msg.sender == oraclize_cbAddress()) (BeamCrowdsale.sol#426)\n\t- _update(3600) (BeamCrowdsale.sol#433)\n\tExternal calls sending eth:\n\t- _update(3600) (BeamCrowdsale.sol#433)\n\tState variables written after the call(s):\n\t- oraclize_network_name (BeamCrowdsale.sol#433)\n"
+                },
+                {
+                    "name": "reentrancy-benign",
+                    "vulnerability_from_line": 947,
+                    "vulnerability_to_line": 953,
+                    "vulnerability_code": "    function _checkSeed() internal {\n\n        if (token.totalSupply() >= tokensForSeed) {\n\n            seedFinished = true;\n\n            emit SeedRoundFinished();\n\n            emit StartPrivateRound();\n\n        }\n",
+                    "message": "Reentrancy in BeamCrowdsale._checkSeed (BeamCrowdsale.sol#947-953):\n\tExternal calls:\n\t- token.totalSupply() >= tokensForSeed (BeamCrowdsale.sol#948-952)\n\tState variables written after the call(s):\n\t- seedFinished (BeamCrowdsale.sol#949)\n"
+                },
+                {
+                    "name": "reentrancy-benign",
+                    "vulnerability_from_line": 883,
+                    "vulnerability_to_line": 886,
+                    "vulnerability_code": "    function _postValidatePurchase() internal {\n\n        if (!seedFinished) _checkSeed();\n\n        if (!softCapReached) _checkSoftCap();\n",
+                    "message": "Reentrancy in BeamCrowdsale._postValidatePurchase (BeamCrowdsale.sol#883-886):\n\tExternal calls:\n\t- _checkSeed() (BeamCrowdsale.sol#884)\n\tState variables written after the call(s):\n\t- softCapReached (BeamCrowdsale.sol#885)\n"
+                },
+                {
+                    "name": "reentrancy-benign",
+                    "vulnerability_from_line": 676,
+                    "vulnerability_to_line": 700,
+                    "vulnerability_code": "    function buyForFiat(address _beneficiary, uint256 _usdUnits)\n\n        external\n\n        onlyOwner\n\n        onlyWhileOpen\n\n        onlyActualPrice\n\n    {\n\n        uint256 _weiAmount = _usdUnits.mul(centsInDollar).div(priceETHUSD);\n\n        \n\n        _preValidatePurchase(_beneficiary, _weiAmount);\n\n\n\n        // calculate token amount to be created\n\n        uint256 tokens = _getTokenAmount(_weiAmount);\n\n\n\n        // update state\n\n        weiRaised = weiRaised.add(_weiAmount);\n\n\n\n        _processPurchase(_beneficiary, tokens);\n\n        emit TokenPurchase(\n\n            _beneficiary,\n\n            _weiAmount,\n\n            tokens\n\n        );\n\n\n\n        _postValidatePurchase();\n",
+                    "message": "Reentrancy in BeamCrowdsale.buyForFiat (BeamCrowdsale.sol#676-700):\n\tExternal calls:\n\t- tokens = _getTokenAmount(_weiAmount) (BeamCrowdsale.sol#687)\n\tState variables written after the call(s):\n\t- weiRaised (BeamCrowdsale.sol#690)\n"
+                },
+                {
+                    "name": "reentrancy-benign",
+                    "vulnerability_from_line": 774,
+                    "vulnerability_to_line": 803,
+                    "vulnerability_code": "    function buyTokens()\n\n        public\n\n        payable\n\n        onlyWhileOpen\n\n        onlyWhitelisted\n\n        whenNotPaused\n\n        onlyActualPrice\n\n    {\n\n        address _beneficiary = msg.sender;\n\n\n\n        uint256 _weiAmount = msg.value;\n\n        _preValidatePurchase(_beneficiary, _weiAmount);\n\n\n\n        // calculate token amount to be created\n\n        uint256 tokens = _getTokenAmount(_weiAmount);\n\n        \n\n        _weiAmount = _weiAmount.sub(_applyDiscount(_weiAmount));\n\n\n\n        funds[_beneficiary] = funds[_beneficiary].add(_weiAmount);\n\n\n\n        // update state\n\n        weiRaised = weiRaised.add(_weiAmount);\n\n\n\n        _processPurchase(_beneficiary, tokens);\n\n        emit TokenPurchase(_beneficiary, _weiAmount, tokens);\n\n\n\n        _forwardFunds(_weiAmount);\n\n\n\n        _postValidatePurchase();\n",
+                    "message": "Reentrancy in BeamCrowdsale.buyTokens (BeamCrowdsale.sol#774-803):\n\tExternal calls:\n\t- tokens = _getTokenAmount(_weiAmount) (BeamCrowdsale.sol#788)\n\tExternal calls sending eth:\n\t- _weiAmount = _weiAmount.sub(_applyDiscount(_weiAmount)) (BeamCrowdsale.sol#790)\n\tState variables written after the call(s):\n\t- funds (BeamCrowdsale.sol#792)\n\t- weiRaised (BeamCrowdsale.sol#795)\n"
+                },
+                {
+                    "name": "reentrancy-benign",
+                    "vulnerability_from_line": 407,
+                    "vulnerability_to_line": 410,
+                    "vulnerability_code": "    constructor() public {\n\n        oraclize_setProof(proofType_Android | proofStorage_IPFS);\n\n        _update(0);\n",
+                    "message": "Reentrancy in PriceChecker.constructor (BeamCrowdsale.sol#407-410):\n\tExternal calls:\n\t- oraclize_setProof(proofType_Android | proofStorage_IPFS) (BeamCrowdsale.sol#408)\n\t- _update(0) (BeamCrowdsale.sol#409)\n\tExternal calls sending eth:\n\t- _update(0) (BeamCrowdsale.sol#409)\n\tState variables written after the call(s):\n\t- oraclize_network_name (BeamCrowdsale.sol#409)\n"
+                },
+                {
+                    "name": "reentrancy-benign",
+                    "vulnerability_from_line": 707,
+                    "vulnerability_to_line": 719,
+                    "vulnerability_code": "    function mintBonus(address _beneficiary, uint256 _tokenUnits)\n\n        external\n\n        onlyOwner\n\n        onlyWhileOpen\n\n    {\n\n\n\n        _processPurchase(_beneficiary, _tokenUnits);\n\n        emit TokenPurchase(_beneficiary, 0, _tokenUnits);\n\n\n\n        bonuses = bonuses.add(_tokenUnits);\n\n\n\n        _postValidatePurchase();\n",
+                    "message": "Reentrancy in BeamCrowdsale.mintBonus (BeamCrowdsale.sol#707-719):\n\tExternal calls:\n\t- _processPurchase(_beneficiary,_tokenUnits) (BeamCrowdsale.sol#713)\n\tState variables written after the call(s):\n\t- bonuses (BeamCrowdsale.sol#716)\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 88,
+                    "vulnerability_to_line": 92,
+                    "vulnerability_code": "    function getCodeSize(address _addr) internal view returns(uint _size) {\n\n        assembly {\n\n            _size := extcodesize(_addr)\n\n        }\n",
+                    "message": "UsingOraclize.getCodeSize uses assembly (BeamCrowdsale.sol#88-92)\n\t- BeamCrowdsale.sol#89-92\n"
+                },
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 505,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public increasing = 10 ** 9;\n",
+                    "message": "BeamCrowdsale.increasing should be constant (BeamCrowdsale.sol#505)\nBeamCrowdsale.softCap should be constant (BeamCrowdsale.sol#511)\nBeamCrowdsale.tokensForSeed should be constant (BeamCrowdsale.sol#508)\nBeamCrowdsale.unitsToInt should be constant (BeamCrowdsale.sol#516)\nERC20.decimals should be constant (BeamCrowdsale.sol#295)\nOraclizeI.cbAddress should be constant (BeamCrowdsale.sol#7)\nPriceChecker.centsInDollar should be constant (BeamCrowdsale.sol#400)\nPriceChecker.minUpdatePeriod should be constant (BeamCrowdsale.sol#402)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getPrice(string _datasource) public returns (uint _dsprice);\n",
+                    "message": "OraclizeI.getPrice (BeamCrowdsale.sol#10) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 15,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getAddress() public returns (address _addr);\n",
+                    "message": "OraclizeAddrResolverI.getAddress (BeamCrowdsale.sol#15) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 217,
+                    "vulnerability_to_line": 219,
+                    "vulnerability_code": "    function transferOwnership(address newOwner) public onlyOwner {\n\n        pendingOwner = newOwner;\n",
+                    "message": "Ownable.transferOwnership (BeamCrowdsale.sol#217-219) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 224,
+                    "vulnerability_to_line": 228,
+                    "vulnerability_code": "    function claimOwnership() public onlyPendingOwner {\n\n        emit OwnershipTransferred(owner, pendingOwner);\n\n        owner = pendingOwner;\n\n        pendingOwner = address(0);\n",
+                    "message": "Ownable.claimOwnership (BeamCrowdsale.sol#224-228) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 261,
+                    "vulnerability_to_line": 264,
+                    "vulnerability_code": "    function pause() public onlyOwner whenNotPaused {\n\n        paused = true;\n\n        emit Pause();\n",
+                    "message": "Pausable.pause (BeamCrowdsale.sol#261-264) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 269,
+                    "vulnerability_to_line": 272,
+                    "vulnerability_code": "    function unpause() public onlyOwner whenPaused {\n\n        paused = false;\n\n        emit Unpause();\n",
+                    "message": "Pausable.unpause (BeamCrowdsale.sol#269-272) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 282,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function totalSupply() public view returns (uint256);\n",
+                    "message": "ERC20Basic.totalSupply (BeamCrowdsale.sol#282) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 283,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOf(address who) public view returns (uint256);\n",
+                    "message": "ERC20Basic.balanceOf (BeamCrowdsale.sol#283) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 284,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address to, uint256 value) public returns (bool);\n",
+                    "message": "ERC20Basic.transfer (BeamCrowdsale.sol#284) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 297,
+                    "vulnerability_to_line": 298,
+                    "vulnerability_code": "    function allowance(address owner, address spender)\n",
+                    "message": "ERC20.allowance (BeamCrowdsale.sol#297-298) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 300,
+                    "vulnerability_to_line": 301,
+                    "vulnerability_code": "    function transferFrom(address from, address to, uint256 value)\n",
+                    "message": "ERC20.transferFrom (BeamCrowdsale.sol#300-301) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 303,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address spender, uint256 value) public returns (bool);\n",
+                    "message": "ERC20.approve (BeamCrowdsale.sol#303) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 305,
+                    "vulnerability_to_line": 310,
+                    "vulnerability_code": "    function mint(\n\n        address _to,\n\n        uint256 _amountusingOraclize\n\n    )\n\n        public\n",
+                    "message": "ERC20.mint (BeamCrowdsale.sol#305-310) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 358,
+                    "vulnerability_to_line": 364,
+                    "vulnerability_code": "    function addAddressesToWhitelist(address[] addrs) public onlyOwner returns(bool success) {\n\n        for (uint256 i = 0; i < addrs.length; i++) {\n\n            if (addAddressToWhitelist(addrs[i])) {\n\n                success = true;\n\n            }\n\n        }\n",
+                    "message": "Whitelist.addAddressesToWhitelist (BeamCrowdsale.sol#358-364) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 386,
+                    "vulnerability_to_line": 392,
+                    "vulnerability_code": "    function removeAddressesFromWhitelist(address[] addrs) public onlyOwner returns(bool success) {\n\n        for (uint256 i = 0; i < addrs.length; i++) {\n\n            if (removeAddressFromWhitelist(addrs[i])) {\n\n                success = true;\n\n            }\n\n        }\n",
+                    "message": "Whitelist.removeAddressesFromWhitelist (BeamCrowdsale.sol#386-392) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 424,
+                    "vulnerability_to_line": 437,
+                    "vulnerability_code": "    function __callback(bytes32 myid, string result, bytes proof) public {\n\n        require((lastPriceUpdate + minUpdatePeriod) < now);\n\n        require(msg.sender == oraclize_cbAddress());\n\n\n\n        priceETHUSD = parseInt(result, 2);\n\n        lastPriceUpdate = now;\n\n\n\n        emit PriceUpdated(priceETHUSD);\n\n\n\n        _update(3600);\n\n        return;\n\n\n\n        proof; myid; //to silence the compiler warning\n",
+                    "message": "PriceChecker.__callback (BeamCrowdsale.sol#424-437) should be declared external\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": 44,
+                    "vulnerability_code": "    function oraclize_setNetwork(uint8 networkID) internal returns(bool){\n\n        return oraclize_setNetwork();\n\n        networkID; // silence the warning and remain backwards compatible\n",
+                    "message": "Function 'UsingOraclize.oraclize_setNetwork' (BeamCrowdsale.sol#41-44) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": 62,
+                    "vulnerability_code": "    function oraclize_setNetwork() internal returns(bool){\n\n        if (getCodeSize(0x1d3B2638a7cC9f2CB3D298A3DA7a90B67E5506ed) > 0){ //mainnet\n\n            OAR = OraclizeAddrResolverI(0x1d3B2638a7cC9f2CB3D298A3DA7a90B67E5506ed);\n\n            oraclize_setNetworkName(\"eth_mainnet\");\n\n            return true;\n\n        }\n\n        if (getCodeSize(0xB7A07BcF2Ba2f2703b24C0691b5278999C59AC7e) > 0){ //kovan testnet\n\n            OAR = OraclizeAddrResolverI(0xB7A07BcF2Ba2f2703b24C0691b5278999C59AC7e);\n\n            oraclize_setNetworkName(\"eth_kovan\");\n\n            return true;\n\n        }\n\n        if (getCodeSize(0x51efaF4c8B3C9AfBD5aB9F4bbC82784Ab6ef8fAA)>0){ //browser-solidity\n\n            OAR = OraclizeAddrResolverI(0x51efaF4c8B3C9AfBD5aB9F4bbC82784Ab6ef8fAA);\n\n            return true;\n\n        }\n\n        return false;\n",
+                    "message": "Function 'UsingOraclize.oraclize_setNetwork' (BeamCrowdsale.sol#46-62) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": 66,
+                    "vulnerability_code": "    function oraclize_getPrice(string datasource) oraclizeAPI internal returns (uint){\n\n        return oraclize.getPrice(datasource);\n",
+                    "message": "Function 'UsingOraclize.oraclize_getPrice' (BeamCrowdsale.sol#64-66) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": 72,
+                    "vulnerability_code": "    function oraclize_query(string datasource, string arg) oraclizeAPI internal returns (bytes32 id){\n\n        uint price = oraclize.getPrice(datasource);\n\n        if (price > 1 ether + tx.gasprice*200000) return 0; // unexpectedly high price\n\n        return oraclize.query.value(price)(0, datasource, arg);\n",
+                    "message": "Function 'UsingOraclize.oraclize_query' (BeamCrowdsale.sol#68-72) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": 78,
+                    "vulnerability_code": "    function oraclize_query(uint timestamp, string datasource, string arg) oraclizeAPI internal returns (bytes32 id){\n\n        uint price = oraclize.getPrice(datasource);\n\n        if (price > 1 ether + tx.gasprice*200000) return 0; // unexpectedly high price\n\n        return oraclize.query.value(price)(timestamp, datasource, arg);\n",
+                    "message": "Function 'UsingOraclize.oraclize_query' (BeamCrowdsale.sol#74-78) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 80,
+                    "vulnerability_to_line": 82,
+                    "vulnerability_code": "    function oraclize_cbAddress() internal oraclizeAPI returns (address){\n\n        return oraclize.cbAddress();\n",
+                    "message": "Function 'UsingOraclize.oraclize_cbAddress' (BeamCrowdsale.sol#80-82) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": 86,
+                    "vulnerability_code": "    function oraclize_setProof(byte proofP) internal oraclizeAPI  {\n\n        return oraclize.setProofType(proofP);\n",
+                    "message": "Function 'UsingOraclize.oraclize_setProof' (BeamCrowdsale.sol#84-86) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 95,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function parseInt(string _a, uint _b) internal pure returns (uint) {\n",
+                    "message": "Parameter '_a' of UsingOraclize.parseInt (BeamCrowdsale.sol#95) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 95,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function parseInt(string _a, uint _b) internal pure returns (uint) {\n",
+                    "message": "Parameter '_b' of UsingOraclize.parseInt (BeamCrowdsale.sol#95) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 115,
+                    "vulnerability_to_line": 117,
+                    "vulnerability_code": "    function oraclize_setNetworkName(string _network_name) internal {\n\n        oraclize_network_name = _network_name;\n",
+                    "message": "Function 'UsingOraclize.oraclize_setNetworkName' (BeamCrowdsale.sol#115-117) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 115,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function oraclize_setNetworkName(string _network_name) internal {\n",
+                    "message": "Parameter '_network_name' of UsingOraclize.oraclize_setNetworkName (BeamCrowdsale.sol#115) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    byte constant proofType_Ledger = 0x30;\n",
+                    "message": "Constant 'UsingOraclize.proofType_Ledger' (BeamCrowdsale.sol#20) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    byte constant proofType_Android = 0x40;\n",
+                    "message": "Constant 'UsingOraclize.proofType_Android' (BeamCrowdsale.sol#21) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    byte constant proofStorage_IPFS = 0x01;\n",
+                    "message": "Constant 'UsingOraclize.proofStorage_IPFS' (BeamCrowdsale.sol#22) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint8 constant networkID_auto = 0;\n",
+                    "message": "Constant 'UsingOraclize.networkID_auto' (BeamCrowdsale.sol#23) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint8 constant networkID_mainnet = 1;\n",
+                    "message": "Constant 'UsingOraclize.networkID_mainnet' (BeamCrowdsale.sol#24) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint8 constant networkID_testnet = 2;\n",
+                    "message": "Constant 'UsingOraclize.networkID_testnet' (BeamCrowdsale.sol#25) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 27,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    OraclizeAddrResolverI OAR;\n",
+                    "message": "Variable 'UsingOraclize.OAR' (BeamCrowdsale.sol#27) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 113,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    string oraclize_network_name;\n",
+                    "message": "Variable 'UsingOraclize.oraclize_network_name' (BeamCrowdsale.sol#113) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 424,
+                    "vulnerability_to_line": 437,
+                    "vulnerability_code": "    function __callback(bytes32 myid, string result, bytes proof) public {\n\n        require((lastPriceUpdate + minUpdatePeriod) < now);\n\n        require(msg.sender == oraclize_cbAddress());\n\n\n\n        priceETHUSD = parseInt(result, 2);\n\n        lastPriceUpdate = now;\n\n\n\n        emit PriceUpdated(priceETHUSD);\n\n\n\n        _update(3600);\n\n        return;\n\n\n\n        proof; myid; //to silence the compiler warning\n",
+                    "message": "Function 'PriceChecker.__callback' (BeamCrowdsale.sol#424-437) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 442,
+                    "vulnerability_to_line": 449,
+                    "vulnerability_code": "    function _update(uint256 _timeout) internal {\n\n        if (oraclize_getPrice(\"URL\") > address(this).balance) {\n\n            emit NewOraclizeQuery(\"Oraclize query was NOT sent, please add some ETH to cover for the query fee\");\n\n        } else {\n\n            emit NewOraclizeQuery(\"Oraclize query was sent, standing by for the answer..\");\n\n            oraclize_query(_timeout, \"URL\", \"json(https://api.coinmarketcap.com/v1/ticker/ethereum/).0.price_usd\");\n\n        }\n",
+                    "message": "Function 'PriceChecker._update' (BeamCrowdsale.sol#442-449) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 442,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _update(uint256 _timeout) internal {\n",
+                    "message": "Parameter '_timeout' of PriceChecker._update (BeamCrowdsale.sol#442) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 579,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address _wallet, ERC20 _token) public {\n",
+                    "message": "Parameter '_wallet' of BeamCrowdsale. (BeamCrowdsale.sol#579) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 579,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address _wallet, ERC20 _token) public {\n",
+                    "message": "Parameter '_token' of BeamCrowdsale. (BeamCrowdsale.sol#579) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 613,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function withdrawFunds(address _beneficiary, uint256 _weiAmount)\n",
+                    "message": "Parameter '_beneficiary' of BeamCrowdsale.withdrawFunds (BeamCrowdsale.sol#613) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 613,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function withdrawFunds(address _beneficiary, uint256 _weiAmount)\n",
+                    "message": "Parameter '_weiAmount' of BeamCrowdsale.withdrawFunds (BeamCrowdsale.sol#613) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 639,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function update(uint256 _timeout) external payable onlyOwner {\n",
+                    "message": "Parameter '_timeout' of BeamCrowdsale.update (BeamCrowdsale.sol#639) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 661,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _beneficiary,\n",
+                    "message": "Parameter '_beneficiary' of BeamCrowdsale.transferTokens (BeamCrowdsale.sol#661) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 662,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _tokenAmount\n",
+                    "message": "Parameter '_tokenAmount' of BeamCrowdsale.transferTokens (BeamCrowdsale.sol#662) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 676,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function buyForFiat(address _beneficiary, uint256 _usdUnits)\n",
+                    "message": "Parameter '_beneficiary' of BeamCrowdsale.buyForFiat (BeamCrowdsale.sol#676) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 676,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function buyForFiat(address _beneficiary, uint256 _usdUnits)\n",
+                    "message": "Parameter '_usdUnits' of BeamCrowdsale.buyForFiat (BeamCrowdsale.sol#676) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 707,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function mintBonus(address _beneficiary, uint256 _tokenUnits)\n",
+                    "message": "Parameter '_beneficiary' of BeamCrowdsale.mintBonus (BeamCrowdsale.sol#707) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 707,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function mintBonus(address _beneficiary, uint256 _tokenUnits)\n",
+                    "message": "Parameter '_tokenUnits' of BeamCrowdsale.mintBonus (BeamCrowdsale.sol#707) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 734,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setDiscountSeed(uint256 _discountSeed) external onlyOwner onlyWhileOpen {\n",
+                    "message": "Parameter '_discountSeed' of BeamCrowdsale.setDiscountSeed (BeamCrowdsale.sol#734) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 741,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setDiscountPrivate(uint256 _discountPrivate) external onlyOwner onlyWhileOpen {\n",
+                    "message": "Parameter '_discountPrivate' of BeamCrowdsale.setDiscountPrivate (BeamCrowdsale.sol#741) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 748,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setDiscountPublic(uint256 _discountPublic) external onlyOwner onlyWhileOpen {\n",
+                    "message": "Parameter '_discountPublic' of BeamCrowdsale.setDiscountPublic (BeamCrowdsale.sol#748) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 759,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setPublicRound(bool _enable) external onlyOwner onlyWhileOpen {\n",
+                    "message": "Parameter '_enable' of BeamCrowdsale.setPublicRound (BeamCrowdsale.sol#759) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 823,
+                    "vulnerability_to_line": 832,
+                    "vulnerability_code": "    function _preValidatePurchase(\n\n        address _beneficiary,\n\n        uint256 _weiAmount\n\n    )\n\n        internal\n\n        pure\n\n    {\n\n        require(_beneficiary != address(0));\n\n        require(_weiAmount != 0);\n",
+                    "message": "Function 'BeamCrowdsale._preValidatePurchase' (BeamCrowdsale.sol#823-832) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 824,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _beneficiary,\n",
+                    "message": "Parameter '_beneficiary' of BeamCrowdsale._preValidatePurchase (BeamCrowdsale.sol#824) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 825,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _weiAmount\n",
+                    "message": "Parameter '_weiAmount' of BeamCrowdsale._preValidatePurchase (BeamCrowdsale.sol#825) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 850,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function tokenIntAmount(uint256 _startPrice, uint256 _usdUnits)\n",
+                    "message": "Parameter '_startPrice' of BeamCrowdsale.tokenIntAmount (BeamCrowdsale.sol#850) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 850,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function tokenIntAmount(uint256 _startPrice, uint256 _usdUnits)\n",
+                    "message": "Parameter '_usdUnits' of BeamCrowdsale.tokenIntAmount (BeamCrowdsale.sol#850) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 867,
+                    "vulnerability_to_line": 878,
+                    "vulnerability_code": "    function _remainderAmount(\n\n        uint256 _startPrice,\n\n        uint256 _usdUnits,\n\n        uint256 _tokenIntAmount\n\n    )\n\n        internal\n\n        view\n\n        returns(uint256)\n\n    {\n\n        uint256 _summ = (_startPrice.mul(2).add(increasing.mul(_tokenIntAmount.sub(1))).mul(_tokenIntAmount)).div(2);\n\n        return _usdUnits.sub(_summ);\n",
+                    "message": "Function 'BeamCrowdsale._remainderAmount' (BeamCrowdsale.sol#867-878) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 868,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _startPrice,\n",
+                    "message": "Parameter '_startPrice' of BeamCrowdsale._remainderAmount (BeamCrowdsale.sol#868) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 869,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _usdUnits,\n",
+                    "message": "Parameter '_usdUnits' of BeamCrowdsale._remainderAmount (BeamCrowdsale.sol#869) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 870,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _tokenIntAmount\n",
+                    "message": "Parameter '_tokenIntAmount' of BeamCrowdsale._remainderAmount (BeamCrowdsale.sol#870) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 883,
+                    "vulnerability_to_line": 886,
+                    "vulnerability_code": "    function _postValidatePurchase() internal {\n\n        if (!seedFinished) _checkSeed();\n\n        if (!softCapReached) _checkSoftCap();\n",
+                    "message": "Function 'BeamCrowdsale._postValidatePurchase' (BeamCrowdsale.sol#883-886) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 893,
+                    "vulnerability_to_line": 900,
+                    "vulnerability_code": "    function _deliverTokens(\n\n        address _beneficiary,\n\n        uint256 _tokenAmount\n\n    )\n\n        internal\n\n    {\n\n        token.mint(_beneficiary, _tokenAmount);\n",
+                    "message": "Function 'BeamCrowdsale._deliverTokens' (BeamCrowdsale.sol#893-900) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 894,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _beneficiary,\n",
+                    "message": "Parameter '_beneficiary' of BeamCrowdsale._deliverTokens (BeamCrowdsale.sol#894) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 895,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _tokenAmount\n",
+                    "message": "Parameter '_tokenAmount' of BeamCrowdsale._deliverTokens (BeamCrowdsale.sol#895) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 907,
+                    "vulnerability_to_line": 914,
+                    "vulnerability_code": "    function _processPurchase(\n\n        address _beneficiary,\n\n        uint256 _tokenAmount\n\n    )\n\n        internal\n\n    {\n\n        _deliverTokens(_beneficiary, _tokenAmount);\n",
+                    "message": "Function 'BeamCrowdsale._processPurchase' (BeamCrowdsale.sol#907-914) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 908,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _beneficiary,\n",
+                    "message": "Parameter '_beneficiary' of BeamCrowdsale._processPurchase (BeamCrowdsale.sol#908) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 909,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _tokenAmount\n",
+                    "message": "Parameter '_tokenAmount' of BeamCrowdsale._processPurchase (BeamCrowdsale.sol#909) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 921,
+                    "vulnerability_to_line": 942,
+                    "vulnerability_code": "    function _getTokenAmount(uint256 _weiAmount)\n\n        internal returns (uint256)\n\n    {\n\n        uint256 _usdUnits = _weiAmount.mul(priceETHUSD).div(centsInDollar);\n\n\n\n        usdRaised = usdRaised.add(_usdUnits);\n\n\n\n        uint256 _tokenPrice = tokenPrice();\n\n        uint256 _tokenIntAmount = tokenIntAmount(_tokenPrice, _usdUnits);\n\n        uint256 _tokenUnitAmount = _tokenIntAmount.mul(10 ** decimals);\n\n        uint256 _newPrice = tokenPrice().add(_tokenIntAmount.mul(increasing));\n\n        \n\n        uint256 _usdRemainder;\n\n        \n\n        if (_tokenIntAmount == 0)\n\n            _usdRemainder = _usdUnits;\n\n        else\n\n            _usdRemainder = _remainderAmount(_tokenPrice, _usdUnits, _tokenIntAmount);\n\n            \n\n        _tokenUnitAmount = _tokenUnitAmount.add(_usdRemainder.mul(10 ** decimals).div(_newPrice));\n\n        return _tokenUnitAmount;\n",
+                    "message": "Function 'BeamCrowdsale._getTokenAmount' (BeamCrowdsale.sol#921-942) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 921,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _getTokenAmount(uint256 _weiAmount)\n",
+                    "message": "Parameter '_weiAmount' of BeamCrowdsale._getTokenAmount (BeamCrowdsale.sol#921) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 947,
+                    "vulnerability_to_line": 953,
+                    "vulnerability_code": "    function _checkSeed() internal {\n\n        if (token.totalSupply() >= tokensForSeed) {\n\n            seedFinished = true;\n\n            emit SeedRoundFinished();\n\n            emit StartPrivateRound();\n\n        }\n",
+                    "message": "Function 'BeamCrowdsale._checkSeed' (BeamCrowdsale.sol#947-953) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 958,
+                    "vulnerability_to_line": 963,
+                    "vulnerability_code": "    function _checkSoftCap() internal {\n\n        if (usdRaised >= softCap) {\n\n            softCapReached = true;\n\n            emit SoftCapReached();\n\n        }\n",
+                    "message": "Function 'BeamCrowdsale._checkSoftCap' (BeamCrowdsale.sol#958-963) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 969,
+                    "vulnerability_to_line": 982,
+                    "vulnerability_code": "    function _applyDiscount(uint256 _weiAmount) internal returns (uint256) {\n\n        address _payer = msg.sender;\n\n        uint256 _refundAmount;\n\n        \n\n        if (!seedFinished) {\n\n            _refundAmount = _weiAmount.mul(discountSeed).div(100);\n\n        } else if (!publicRound) {\n\n            _refundAmount = _weiAmount.mul(discountPrivate).div(100);\n\n        } else {\n\n            _refundAmount = _weiAmount.mul(discountPublic).div(100);\n\n        }\n\n        _payer.transfer(_refundAmount);\n\n        return _refundAmount;\n",
+                    "message": "Function 'BeamCrowdsale._applyDiscount' (BeamCrowdsale.sol#969-982) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 969,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _applyDiscount(uint256 _weiAmount) internal returns (uint256) {\n",
+                    "message": "Parameter '_weiAmount' of BeamCrowdsale._applyDiscount (BeamCrowdsale.sol#969) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 987,
+                    "vulnerability_to_line": 989,
+                    "vulnerability_code": "    function _forwardFunds(uint256 _weiAmount) internal {\n\n        wallet.transfer(_weiAmount);\n",
+                    "message": "Function 'BeamCrowdsale._forwardFunds' (BeamCrowdsale.sol#987-989) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 987,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _forwardFunds(uint256 _weiAmount) internal {\n",
+                    "message": "Parameter '_weiAmount' of BeamCrowdsale._forwardFunds (BeamCrowdsale.sol#987) is not in mixedCase\n"
+                },
+                {
+                    "name": "unused-state",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    byte constant proofType_Ledger = 0x30;\n",
+                    "message": "UsingOraclize.proofType_Ledger (BeamCrowdsale.sol#20) is never used in BeamCrowdsale\nUsingOraclize.networkID_mainnet (BeamCrowdsale.sol#24) is never used in BeamCrowdsale\nUsingOraclize.networkID_testnet (BeamCrowdsale.sol#25) is never used in BeamCrowdsale\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (getCodeSize(0x1d3B2638a7cC9f2CB3D298A3DA7a90B67E5506ed) > 0){ //mainnet\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 48,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            OAR = OraclizeAddrResolverI(0x1d3B2638a7cC9f2CB3D298A3DA7a90B67E5506ed);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (getCodeSize(0xB7A07BcF2Ba2f2703b24C0691b5278999C59AC7e) > 0){ //kovan testnet\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            OAR = OraclizeAddrResolverI(0xB7A07BcF2Ba2f2703b24C0691b5278999C59AC7e);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (getCodeSize(0x51efaF4c8B3C9AfBD5aB9F4bbC82784Ab6ef8fAA)>0){ //browser-solidity\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            OAR = OraclizeAddrResolverI(0x51efaF4c8B3C9AfBD5aB9F4bbC82784Ab6ef8fAA);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    byte constant proofType_Ledger = 0x30;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    byte constant proofType_Android = 0x40;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    byte constant proofStorage_IPFS = 0x01;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 227,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        pendingOwner = address(0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 99,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i=0; i < bresult.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 359,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 387,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 88,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getCodeSize(address _addr) internal view returns(uint _size) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 99,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i=0; i < bresult.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 359,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 387,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 840,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        while (z < y) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_LOCKED_MONEY",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract OraclizeI {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 734,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setDiscountSeed(uint256 _discountSeed) external onlyOwner onlyWhileOpen {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 741,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setDiscountPrivate(uint256 _discountPrivate) external onlyOwner onlyWhileOpen {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 748,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setDiscountPublic(uint256 _discountPublic) external onlyOwner onlyWhileOpen {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 759,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setPublicRound(bool _enable) external onlyOwner onlyWhileOpen {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 463,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 88,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getCodeSize(address _addr) internal view returns(uint _size) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getPrice(string _datasource) public returns (uint _dsprice);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function oraclize_getPrice(string datasource) oraclizeAPI internal returns (uint){\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function oraclize_query(string datasource, string arg) oraclizeAPI internal returns (bytes32 id){\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 68,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function oraclize_query(string datasource, string arg) oraclizeAPI internal returns (bytes32 id){\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function oraclize_query(uint timestamp, string datasource, string arg) oraclizeAPI internal returns (bytes32 id){\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function oraclize_query(uint timestamp, string datasource, string arg) oraclizeAPI internal returns (bytes32 id){\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 95,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function parseInt(string _a, uint _b) internal pure returns (uint) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 115,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function oraclize_setNetworkName(string _network_name) internal {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 358,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addAddressesToWhitelist(address[] addrs) public onlyOwner returns(bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 386,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function removeAddressesFromWhitelist(address[] addrs) public onlyOwner returns(bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 424,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function __callback(bytes32 myid, string result, bytes proof) public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 424,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function __callback(bytes32 myid, string result, bytes proof) public {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    byte constant proofType_Ledger = 0x30;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    byte constant proofType_Android = 0x40;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    byte constant proofStorage_IPFS = 0x01;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint8 constant networkID_auto = 0;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint8 constant networkID_mainnet = 1;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint8 constant networkID_testnet = 2;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 27,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    OraclizeAddrResolverI OAR;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    OraclizeI oraclize;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 113,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    string oraclize_network_name;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "beam-11b086ca757f1612cd67c1bf6d7ab470591676b1/contracts/BeamToken.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Whitelist is Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 146,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 163,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bool public paused = false;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 521,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bool public mintingFinished = false;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 578,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 579,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        totalSupply_ = INITIAL_SUPPLY;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 580,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 146,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 146,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_57"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": 55,
+                    "vulnerability_code": "    function transferOwnership(address newOwner) public onlyOwner {\n\n        pendingOwner = newOwner;\n",
+                    "message": "Ownable.transferOwnership (BeamToken.sol#53-55) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 60,
+                    "vulnerability_to_line": 64,
+                    "vulnerability_code": "    function claimOwnership() public onlyPendingOwner {\n\n        emit OwnershipTransferred(owner, pendingOwner);\n\n        owner = pendingOwner;\n\n        pendingOwner = address(0);\n",
+                    "message": "Ownable.claimOwnership (BeamToken.sol#60-64) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 70,
+                    "vulnerability_to_line": 75,
+                    "vulnerability_code": "    function setManager(address _manager) public onlyOwner {\n\n        require(_manager != address(0));\n\n        manager = _manager;\n\n        // SWC-Typographical Error: L72\n\n        emit ManagerUpdated(manager);\n",
+                    "message": "Ownable.setManager (BeamToken.sol#70-75) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 117,
+                    "vulnerability_to_line": 123,
+                    "vulnerability_code": "    function addAddressesToWhitelist(address[] addrs) public onlyOwner returns(bool success) {\n\n        for (uint256 i = 0; i < addrs.length; i++) {\n\n            if (addAddressToWhitelist(addrs[i])) {\n\n                success = true;\n\n            }\n\n        }\n",
+                    "message": "Whitelist.addAddressesToWhitelist (BeamToken.sol#117-123) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": 151,
+                    "vulnerability_code": "    function removeAddressesFromWhitelist(address[] addrs) public onlyOwner returns(bool success) {\n\n        for (uint256 i = 0; i < addrs.length; i++) {\n\n            if (removeAddressFromWhitelist(addrs[i])) {\n\n                success = true;\n\n            }\n\n        }\n",
+                    "message": "Whitelist.removeAddressesFromWhitelist (BeamToken.sol#145-151) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 184,
+                    "vulnerability_to_line": 187,
+                    "vulnerability_code": "    function pause() public onlyOwner whenNotPaused {\n\n        paused = true;\n\n        emit Pause();\n",
+                    "message": "Pausable.pause (BeamToken.sol#184-187) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 192,
+                    "vulnerability_to_line": 195,
+                    "vulnerability_code": "    function unpause() public onlyOwner whenPaused {\n\n        paused = false;\n\n        emit Unpause();\n",
+                    "message": "Pausable.unpause (BeamToken.sol#192-195) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 298,
+                    "vulnerability_to_line": 300,
+                    "vulnerability_code": "    function totalSupply() public view returns (uint256) {\n\n        return totalSupply_;\n",
+                    "message": "BasicToken.totalSupply (BeamToken.sol#298-300) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 205,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function totalSupply() public view returns (uint256);\n",
+                    "message": "ERC20Basic.totalSupply (BeamToken.sol#205) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 206,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOf(address who) public view returns (uint256);\n",
+                    "message": "ERC20Basic.balanceOf (BeamToken.sol#206) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 322,
+                    "vulnerability_to_line": 324,
+                    "vulnerability_code": "    function balanceOf(address _owner) public view returns (uint256) {\n\n        return balances[_owner];\n",
+                    "message": "BasicToken.balanceOf (BeamToken.sol#322-324) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 386,
+                    "vulnerability_to_line": 395,
+                    "vulnerability_code": "    function allowance(\n\n        address _owner,\n\n        address _spender\n\n    )\n\n        public\n\n        view\n\n        returns (uint256)\n\n    {\n\n        return allowed[_owner][_spender];\n",
+                    "message": "StandardToken.allowance (BeamToken.sol#386-395) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 217,
+                    "vulnerability_to_line": 218,
+                    "vulnerability_code": "    function allowance(address owner, address spender)\n",
+                    "message": "ERC20.allowance (BeamToken.sol#217-218) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 534,
+                    "vulnerability_to_line": 548,
+                    "vulnerability_code": "    function mint(\n\n        address _to,\n\n        uint256 _amount\n\n    )\n\n        public\n\n        onlyManager\n\n        canMint\n\n        returns (bool)\n\n    {\n\n        totalSupply_ = totalSupply_.add(_amount);\n\n        balances[_to] = balances[_to].add(_amount);\n\n        emit Mint(_to, _amount);\n\n        emit Transfer(address(0), _to, _amount);\n\n        return true;\n",
+                    "message": "MintableToken.mint (BeamToken.sol#534-548) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 554,
+                    "vulnerability_to_line": 558,
+                    "vulnerability_code": "    function finishMinting() public onlyOwner canMint  returns (bool) {\n\n        mintingFinished = true;\n\n        emit MintFinished();\n\n        return true;\n",
+                    "message": "MintableToken.finishMinting (BeamToken.sol#554-558) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 582,
+                    "vulnerability_to_line": 585,
+                    "vulnerability_code": "    function setLock(address _who, bool _lock) public onlyOwner {\n\n        require(isLocked[_who] != _lock);\n\n        isLocked[_who] = _lock;\n",
+                    "message": "BeamToken.setLock (BeamToken.sol#582-585) should be declared external\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 70,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setManager(address _manager) public onlyOwner {\n",
+                    "message": "Parameter '_manager' of Ownable.setManager (BeamToken.sol#70) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 322,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOf(address _owner) public view returns (uint256) {\n",
+                    "message": "Parameter '_owner' of BasicToken.balanceOf (BeamToken.sol#322) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 307,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_to' of BasicToken.transfer (BeamToken.sol#307) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 307,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of BasicToken.transfer (BeamToken.sol#307) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 387,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _owner,\n",
+                    "message": "Parameter '_owner' of StandardToken.allowance (BeamToken.sol#387) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 388,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _spender\n",
+                    "message": "Parameter '_spender' of StandardToken.allowance (BeamToken.sol#388) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 347,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _from,\n",
+                    "message": "Parameter '_from' of StandardToken.transferFrom (BeamToken.sol#347) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 348,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _to,\n",
+                    "message": "Parameter '_to' of StandardToken.transferFrom (BeamToken.sol#348) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 349,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _value\n",
+                    "message": "Parameter '_value' of StandardToken.transferFrom (BeamToken.sol#349) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 374,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of StandardToken.approve (BeamToken.sol#374) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 374,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of StandardToken.approve (BeamToken.sol#374) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 407,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _spender,\n",
+                    "message": "Parameter '_spender' of StandardToken.increaseApproval (BeamToken.sol#407) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 408,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _addedValue\n",
+                    "message": "Parameter '_addedValue' of StandardToken.increaseApproval (BeamToken.sol#408) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 429,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _spender,\n",
+                    "message": "Parameter '_spender' of StandardToken.decreaseApproval (BeamToken.sol#429) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 430,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _subtractedValue\n",
+                    "message": "Parameter '_subtractedValue' of StandardToken.decreaseApproval (BeamToken.sol#430) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 455,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _to,\n",
+                    "message": "Parameter '_to' of PausableToken.transfer (BeamToken.sol#455) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 456,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _value\n",
+                    "message": "Parameter '_value' of PausableToken.transfer (BeamToken.sol#456) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 466,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _from,\n",
+                    "message": "Parameter '_from' of PausableToken.transferFrom (BeamToken.sol#466) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 467,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _to,\n",
+                    "message": "Parameter '_to' of PausableToken.transferFrom (BeamToken.sol#467) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 468,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _value\n",
+                    "message": "Parameter '_value' of PausableToken.transferFrom (BeamToken.sol#468) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 478,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _spender,\n",
+                    "message": "Parameter '_spender' of PausableToken.approve (BeamToken.sol#478) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 479,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _value\n",
+                    "message": "Parameter '_value' of PausableToken.approve (BeamToken.sol#479) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 489,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _spender,\n",
+                    "message": "Parameter '_spender' of PausableToken.increaseApproval (BeamToken.sol#489) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 490,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _addedValue\n",
+                    "message": "Parameter '_addedValue' of PausableToken.increaseApproval (BeamToken.sol#490) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 500,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _spender,\n",
+                    "message": "Parameter '_spender' of PausableToken.decreaseApproval (BeamToken.sol#500) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 501,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _subtractedValue\n",
+                    "message": "Parameter '_subtractedValue' of PausableToken.decreaseApproval (BeamToken.sol#501) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 535,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _to,\n",
+                    "message": "Parameter '_to' of MintableToken.mint (BeamToken.sol#535) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 536,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _amount\n",
+                    "message": "Parameter '_amount' of MintableToken.mint (BeamToken.sol#536) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 596,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _to,\n",
+                    "message": "Parameter '_to' of BeamToken.transfer (BeamToken.sol#596) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 597,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _value\n",
+                    "message": "Parameter '_value' of BeamToken.transfer (BeamToken.sol#597) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 607,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _from,\n",
+                    "message": "Parameter '_from' of BeamToken.transferFrom (BeamToken.sol#607) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 608,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _to,\n",
+                    "message": "Parameter '_to' of BeamToken.transferFrom (BeamToken.sol#608) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 609,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _value\n",
+                    "message": "Parameter '_value' of BeamToken.transferFrom (BeamToken.sol#609) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 619,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _spender,\n",
+                    "message": "Parameter '_spender' of BeamToken.approve (BeamToken.sol#619) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 620,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _value\n",
+                    "message": "Parameter '_value' of BeamToken.approve (BeamToken.sol#620) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 630,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _spender,\n",
+                    "message": "Parameter '_spender' of BeamToken.increaseApproval (BeamToken.sol#630) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 631,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _addedValue\n",
+                    "message": "Parameter '_addedValue' of BeamToken.increaseApproval (BeamToken.sol#631) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 641,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _spender,\n",
+                    "message": "Parameter '_spender' of BeamToken.decreaseApproval (BeamToken.sol#641) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 642,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _subtractedValue\n",
+                    "message": "Parameter '_subtractedValue' of BeamToken.decreaseApproval (BeamToken.sol#642) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 582,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setLock(address _who, bool _lock) public onlyOwner {\n",
+                    "message": "Parameter '_who' of BeamToken.setLock (BeamToken.sol#582) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 582,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setLock(address _who, bool _lock) public onlyOwner {\n",
+                    "message": "Parameter '_lock' of BeamToken.setLock (BeamToken.sol#582) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 63,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        pendingOwner = address(0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 374,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 477,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 618,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 146,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 118,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 146,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 70,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setManager(address _manager) public onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 582,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setLock(address _who, bool _lock) public onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 289,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 117,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addAddressesToWhitelist(address[] addrs) public onlyOwner returns(bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 145,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function removeAddressesFromWhitelist(address[] addrs) public onlyOwner returns(bool success) {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "beam-11b086ca757f1612cd67c1bf6d7ab470591676b1/contracts/BeamCrowdsale_TEST_ONLY.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 119,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Pausable is Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "use-ownable2step",
+                    "vulnerability_from_line": 208,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "contract Whitelist is Ownable {\n",
+                    "message": "By demanding that the receiver of the owner permissions actively accept via a contract call of its own,  `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred  to an address that cannot handle it."
+                },
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 242,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 270,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "init-variables-with-default-value",
+                    "vulnerability_from_line": 123,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    bool public paused = false;\n",
+                    "message": "Uninitialized variables are assigned with the types default value. Explicitly initializing a variable with its default value costs unnecessary gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 93,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 94,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 290,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 291,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 292,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 439,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address _wallet, ERC20 _token) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 440,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_wallet != address(0));\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 441,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(_token != address(0));\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 442,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 443,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        wallet = _wallet;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 444,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        token = _token;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 445,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        decimals = token.decimals();\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 446,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < power; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 242,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 270,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < power; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 242,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                },
+                {
+                    "name": "use-prefix-increment-not-postfix",
+                    "vulnerability_from_line": 270,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": "Consider using the prefix increment expression whenever the return value is not needed. The prefix increment expression is cheaper in terms of gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_65"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "reentrancy-eth",
+                    "vulnerability_from_line": 627,
+                    "vulnerability_to_line": 656,
+                    "vulnerability_code": "    function buyTokens()\n\n        public\n\n        payable\n\n        onlyWhileOpen\n\n        onlyWhitelisted\n\n        whenNotPaused\n\n        onlyActualPrice\n\n    {\n\n        address _beneficiary = msg.sender;\n\n\n\n        uint256 _weiAmount = msg.value;\n\n        _preValidatePurchase(_beneficiary, _weiAmount);\n\n\n\n        // calculate token amount to be created\n\n        uint256 tokens = _getTokenAmount(_weiAmount);\n\n        \n\n        _weiAmount = _weiAmount.sub(_applyDiscount(_weiAmount));\n\n\n\n        funds[_beneficiary] = funds[_beneficiary].add(_weiAmount);\n\n\n\n        // update state\n\n        weiRaised = weiRaised.add(_weiAmount);\n\n\n\n        _processPurchase(_beneficiary, tokens);\n\n        emit TokenPurchase(_beneficiary, _weiAmount, tokens);\n\n\n\n        _forwardFunds(_weiAmount);\n\n\n\n        _postValidatePurchase();\n",
+                    "message": "Reentrancy in BeamCrowdsale_TEST_ONLY.buyTokens (BeamCrowdsale_TEST_ONLY.sol#627-656):\n\tExternal calls:\n\t- tokens = _getTokenAmount(_weiAmount) (BeamCrowdsale_TEST_ONLY.sol#641)\n\t- _processPurchase(_beneficiary,tokens) (BeamCrowdsale_TEST_ONLY.sol#650)\n\t- _postValidatePurchase() (BeamCrowdsale_TEST_ONLY.sol#655)\n\tExternal calls sending eth:\n\t- _weiAmount = _weiAmount.sub(_applyDiscount(_weiAmount)) (BeamCrowdsale_TEST_ONLY.sol#643)\n\t- _forwardFunds(_weiAmount) (BeamCrowdsale_TEST_ONLY.sol#653)\n\tState variables written after the call(s):\n\t- seedFinished (BeamCrowdsale_TEST_ONLY.sol#655)\n"
+                },
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 484,
+                    "vulnerability_to_line": 494,
+                    "vulnerability_code": "    function finishCrowdsale() external onlyOwner onlyWhileOpen {\n\n        crowdsaleFinished = true;\n\n\n\n        uint256 _soldAmount = token.totalSupply().sub(bonuses);\n\n\n\n        token.mint(address(this), _soldAmount);\n\n\n\n        emit TokenPurchase(address(this), 0, _soldAmount);\n\n\n\n        emit CrowdsaleFinished(weiRaised, usdRaised);\n",
+                    "message": "BeamCrowdsale_TEST_ONLY.finishCrowdsale (BeamCrowdsale_TEST_ONLY.sol#484-494) does not use the value returned by external calls:\n\t-token.mint(address(this),_soldAmount) (BeamCrowdsale_TEST_ONLY.sol#489)\n"
+                },
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 513,
+                    "vulnerability_to_line": 522,
+                    "vulnerability_code": "    function transferTokens(\n\n        address _beneficiary,\n\n        uint256 _tokenAmount\n\n    )\n\n        external\n\n        onlyOwner\n\n    {\n\n        require(token.balanceOf(address(this)) >= _tokenAmount);\n\n        token.transfer(_beneficiary, _tokenAmount);\n",
+                    "message": "BeamCrowdsale_TEST_ONLY.transferTokens (BeamCrowdsale_TEST_ONLY.sol#513-522) does not use the value returned by external calls:\n\t-token.transfer(_beneficiary,_tokenAmount) (BeamCrowdsale_TEST_ONLY.sol#521)\n"
+                },
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 747,
+                    "vulnerability_to_line": 754,
+                    "vulnerability_code": "    function _deliverTokens(\n\n        address _beneficiary,\n\n        uint256 _tokenAmount\n\n    )\n\n        internal\n\n    {\n\n        token.mint(_beneficiary, _tokenAmount);\n",
+                    "message": "BeamCrowdsale_TEST_ONLY._deliverTokens (BeamCrowdsale_TEST_ONLY.sol#747-754) does not use the value returned by external calls:\n\t-token.mint(_beneficiary,_tokenAmount) (BeamCrowdsale_TEST_ONLY.sol#753)\n"
+                },
+                {
+                    "name": "reentrancy-benign",
+                    "vulnerability_from_line": 802,
+                    "vulnerability_to_line": 808,
+                    "vulnerability_code": "    function _checkSeed() internal {\n\n        if (token.totalSupply() >= tokensForSeed) {\n\n            seedFinished = true;\n\n            emit SeedRoundFinished();\n\n            emit StartPrivateRound();\n\n        }\n",
+                    "message": "Reentrancy in BeamCrowdsale_TEST_ONLY._checkSeed (BeamCrowdsale_TEST_ONLY.sol#802-808):\n\tExternal calls:\n\t- token.totalSupply() >= tokensForSeed (BeamCrowdsale_TEST_ONLY.sol#803-807)\n\tState variables written after the call(s):\n\t- seedFinished (BeamCrowdsale_TEST_ONLY.sol#804)\n"
+                },
+                {
+                    "name": "reentrancy-benign",
+                    "vulnerability_from_line": 737,
+                    "vulnerability_to_line": 740,
+                    "vulnerability_code": "    function _postValidatePurchase() internal {\n\n        if (!seedFinished) _checkSeed();\n\n        if (!softCapReached) _checkSoftCap();\n",
+                    "message": "Reentrancy in BeamCrowdsale_TEST_ONLY._postValidatePurchase (BeamCrowdsale_TEST_ONLY.sol#737-740):\n\tExternal calls:\n\t- _checkSeed() (BeamCrowdsale_TEST_ONLY.sol#738)\n\tState variables written after the call(s):\n\t- softCapReached (BeamCrowdsale_TEST_ONLY.sol#739)\n"
+                },
+                {
+                    "name": "reentrancy-benign",
+                    "vulnerability_from_line": 529,
+                    "vulnerability_to_line": 553,
+                    "vulnerability_code": "    function buyForFiat(address _beneficiary, uint256 _usdUnits)\n\n        external\n\n        onlyOwner\n\n        onlyWhileOpen\n\n        onlyActualPrice\n\n    {\n\n        uint256 _weiAmount = _usdUnits.mul(centsInDollar).div(priceETHUSD);\n\n        \n\n        _preValidatePurchase(_beneficiary, _weiAmount);\n\n\n\n        // calculate token amount to be created\n\n        uint256 tokens = _getTokenAmount(_weiAmount);\n\n\n\n        // update state\n\n        weiRaised = weiRaised.add(_weiAmount);\n\n\n\n        _processPurchase(_beneficiary, tokens);\n\n        emit TokenPurchase(\n\n            _beneficiary,\n\n            _weiAmount,\n\n            tokens\n\n        );\n\n\n\n        _postValidatePurchase();\n",
+                    "message": "Reentrancy in BeamCrowdsale_TEST_ONLY.buyForFiat (BeamCrowdsale_TEST_ONLY.sol#529-553):\n\tExternal calls:\n\t- tokens = _getTokenAmount(_weiAmount) (BeamCrowdsale_TEST_ONLY.sol#540)\n\tState variables written after the call(s):\n\t- weiRaised (BeamCrowdsale_TEST_ONLY.sol#543)\n"
+                },
+                {
+                    "name": "reentrancy-benign",
+                    "vulnerability_from_line": 627,
+                    "vulnerability_to_line": 656,
+                    "vulnerability_code": "    function buyTokens()\n\n        public\n\n        payable\n\n        onlyWhileOpen\n\n        onlyWhitelisted\n\n        whenNotPaused\n\n        onlyActualPrice\n\n    {\n\n        address _beneficiary = msg.sender;\n\n\n\n        uint256 _weiAmount = msg.value;\n\n        _preValidatePurchase(_beneficiary, _weiAmount);\n\n\n\n        // calculate token amount to be created\n\n        uint256 tokens = _getTokenAmount(_weiAmount);\n\n        \n\n        _weiAmount = _weiAmount.sub(_applyDiscount(_weiAmount));\n\n\n\n        funds[_beneficiary] = funds[_beneficiary].add(_weiAmount);\n\n\n\n        // update state\n\n        weiRaised = weiRaised.add(_weiAmount);\n\n\n\n        _processPurchase(_beneficiary, tokens);\n\n        emit TokenPurchase(_beneficiary, _weiAmount, tokens);\n\n\n\n        _forwardFunds(_weiAmount);\n\n\n\n        _postValidatePurchase();\n",
+                    "message": "Reentrancy in BeamCrowdsale_TEST_ONLY.buyTokens (BeamCrowdsale_TEST_ONLY.sol#627-656):\n\tExternal calls:\n\t- tokens = _getTokenAmount(_weiAmount) (BeamCrowdsale_TEST_ONLY.sol#641)\n\tExternal calls sending eth:\n\t- _weiAmount = _weiAmount.sub(_applyDiscount(_weiAmount)) (BeamCrowdsale_TEST_ONLY.sol#643)\n\tState variables written after the call(s):\n\t- funds (BeamCrowdsale_TEST_ONLY.sol#645)\n\t- weiRaised (BeamCrowdsale_TEST_ONLY.sol#648)\n"
+                },
+                {
+                    "name": "reentrancy-benign",
+                    "vulnerability_from_line": 560,
+                    "vulnerability_to_line": 572,
+                    "vulnerability_code": "    function mintBonus(address _beneficiary, uint256 _tokenUnits)\n\n        external\n\n        onlyOwner\n\n        onlyWhileOpen\n\n    {\n\n\n\n        _processPurchase(_beneficiary, _tokenUnits);\n\n        emit TokenPurchase(_beneficiary, 0, _tokenUnits);\n\n\n\n        bonuses = bonuses.add(_tokenUnits);\n\n\n\n        _postValidatePurchase();\n",
+                    "message": "Reentrancy in BeamCrowdsale_TEST_ONLY.mintBonus (BeamCrowdsale_TEST_ONLY.sol#560-572):\n\tExternal calls:\n\t- _processPurchase(_beneficiary,_tokenUnits) (BeamCrowdsale_TEST_ONLY.sol#566)\n\tState variables written after the call(s):\n\t- bonuses (BeamCrowdsale_TEST_ONLY.sol#569)\n"
+                },
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 365,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public increasing = 10 ** 9;\n",
+                    "message": "BeamCrowdsale_TEST_ONLY.increasing should be constant (BeamCrowdsale_TEST_ONLY.sol#365)\nBeamCrowdsale_TEST_ONLY.softCap should be constant (BeamCrowdsale_TEST_ONLY.sol#371)\nBeamCrowdsale_TEST_ONLY.tokensForSeed should be constant (BeamCrowdsale_TEST_ONLY.sol#368)\nBeamCrowdsale_TEST_ONLY.unitsToInt should be constant (BeamCrowdsale_TEST_ONLY.sol#376)\nERC20.decimals should be constant (BeamCrowdsale_TEST_ONLY.sol#178)\nPriceChecker.centsInDollar should be constant (BeamCrowdsale_TEST_ONLY.sol#283)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 100,
+                    "vulnerability_to_line": 102,
+                    "vulnerability_code": "    function transferOwnership(address newOwner) public onlyOwner {\n\n        pendingOwner = newOwner;\n",
+                    "message": "Ownable.transferOwnership (BeamCrowdsale_TEST_ONLY.sol#100-102) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 107,
+                    "vulnerability_to_line": 111,
+                    "vulnerability_code": "    function claimOwnership() public onlyPendingOwner {\n\n        emit OwnershipTransferred(owner, pendingOwner);\n\n        owner = pendingOwner;\n\n        pendingOwner = address(0);\n",
+                    "message": "Ownable.claimOwnership (BeamCrowdsale_TEST_ONLY.sol#107-111) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 144,
+                    "vulnerability_to_line": 147,
+                    "vulnerability_code": "    function pause() public onlyOwner whenNotPaused {\n\n        paused = true;\n\n        emit Pause();\n",
+                    "message": "Pausable.pause (BeamCrowdsale_TEST_ONLY.sol#144-147) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 152,
+                    "vulnerability_to_line": 155,
+                    "vulnerability_code": "    function unpause() public onlyOwner whenPaused {\n\n        paused = false;\n\n        emit Unpause();\n",
+                    "message": "Pausable.unpause (BeamCrowdsale_TEST_ONLY.sol#152-155) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 165,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function totalSupply() public view returns (uint256);\n",
+                    "message": "ERC20Basic.totalSupply (BeamCrowdsale_TEST_ONLY.sol#165) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 166,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOf(address who) public view returns (uint256);\n",
+                    "message": "ERC20Basic.balanceOf (BeamCrowdsale_TEST_ONLY.sol#166) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 167,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address to, uint256 value) public returns (bool);\n",
+                    "message": "ERC20Basic.transfer (BeamCrowdsale_TEST_ONLY.sol#167) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 180,
+                    "vulnerability_to_line": 181,
+                    "vulnerability_code": "    function allowance(address owner, address spender)\n",
+                    "message": "ERC20.allowance (BeamCrowdsale_TEST_ONLY.sol#180-181) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 183,
+                    "vulnerability_to_line": 184,
+                    "vulnerability_code": "    function transferFrom(address from, address to, uint256 value)\n",
+                    "message": "ERC20.transferFrom (BeamCrowdsale_TEST_ONLY.sol#183-184) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 186,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address spender, uint256 value) public returns (bool);\n",
+                    "message": "ERC20.approve (BeamCrowdsale_TEST_ONLY.sol#186) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 188,
+                    "vulnerability_to_line": 193,
+                    "vulnerability_code": "    function mint(\n\n        address _to,\n\n        uint256 _amountusingOraclize\n\n    )\n\n        public\n",
+                    "message": "ERC20.mint (BeamCrowdsale_TEST_ONLY.sol#188-193) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 241,
+                    "vulnerability_to_line": 247,
+                    "vulnerability_code": "    function addAddressesToWhitelist(address[] addrs) public onlyOwner returns(bool success) {\n\n        for (uint256 i = 0; i < addrs.length; i++) {\n\n            if (addAddressToWhitelist(addrs[i])) {\n\n                success = true;\n\n            }\n\n        }\n",
+                    "message": "Whitelist.addAddressesToWhitelist (BeamCrowdsale_TEST_ONLY.sol#241-247) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 269,
+                    "vulnerability_to_line": 275,
+                    "vulnerability_code": "    function removeAddressesFromWhitelist(address[] addrs) public onlyOwner returns(bool success) {\n\n        for (uint256 i = 0; i < addrs.length; i++) {\n\n            if (removeAddressFromWhitelist(addrs[i])) {\n\n                success = true;\n\n            }\n\n        }\n",
+                    "message": "Whitelist.removeAddressesFromWhitelist (BeamCrowdsale_TEST_ONLY.sol#269-275) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 849,
+                    "vulnerability_to_line": 851,
+                    "vulnerability_code": "    function setMinUpdatePeriod(uint256 _minUpdatePeriod) public onlyOwner {\n\n        minUpdatePeriod = _minUpdatePeriod;\n",
+                    "message": "BeamCrowdsale_TEST_ONLY.setMinUpdatePeriod (BeamCrowdsale_TEST_ONLY.sol#849-851) should be declared external\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 303,
+                    "vulnerability_to_line": 309,
+                    "vulnerability_code": "    function __callback(uint256 result) external {\n\n        require((lastPriceUpdate + minUpdatePeriod) < now);\n\n        priceETHUSD = result;\n\n        lastPriceUpdate = now;\n\n        emit PriceUpdated(priceETHUSD);\n\n        return;\n",
+                    "message": "Function 'PriceChecker.__callback' (BeamCrowdsale_TEST_ONLY.sol#303-309) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 322,
+                    "vulnerability_to_line": 852,
+                    "vulnerability_code": "contract BeamCrowdsale_TEST_ONLY is Whitelist, PriceChecker, Pausable {\n\n    using SafeMath for uint256;\n\n\n\n    // Investors to invested amount\n\n    mapping(address => uint256) public funds;\n\n\n\n    // The token being sold\n\n    ERC20 public token;\n\n\n\n    // Address where funds are collected\n\n    address public wallet;\n\n\n\n    // Amount of wei raised\n\n    uint256 public weiRaised;\n\n\n\n    // the percent of discount for seed round\n\n    uint256 public discountSeed = 20;\n\n\n\n    // the percent of discount for private round\n\n    uint256 public discountPrivate = 15;\n\n\n\n    // the percent of discount for public round\n\n    uint256 public discountPublic = 10;\n\n\n\n    // Decimals of the using token\n\n    uint256 public decimals;\n\n\n\n    // Amount of bonuses\n\n    uint256 public bonuses;\n\n\n\n    // Whether the public round is active\n\n    bool public publicRound;\n\n\n\n    // Whether the seed round has finished\n\n    bool public seedFinished;\n\n\n\n    // Whether the crowdsale has finished\n\n    bool public crowdsaleFinished;\n\n\n\n    // Whether the soft cap has reached\n\n    bool public softCapReached;\n\n\n\n    // Increasing of the token price in units with each token emission\n\n    uint256 public increasing = 10 ** 9;\n\n\n\n    // Amount of tokens for seed round\n\n    uint256 public tokensForSeed = 100 * 10 ** 6 * 10 ** 18;\n\n\n\n    // Soft cap in USD units\n\n    uint256 public softCap = 2 * 10 ** 6 * 10 ** 18;\n\n\n\n    // Amount of USD raised in units\n\n    uint256 public usdRaised;\n\n\n\n    uint256 public unitsToInt = 10 ** 18;\n\n\n\n    /**\n\n     * Event for token purchase logging\n\n     * @param purchaser who paid and got for the tokens\n\n     * @param value weis paid for purchase\n\n     * @param amount amount of tokens purchased\n\n     */\n\n    event TokenPurchase(\n\n        address indexed purchaser,\n\n        uint256 value,\n\n        uint256 amount\n\n    );\n\n\n\n    /**\n\n     * Event for logging of the seed round finish\n\n     */\n\n    event SeedRoundFinished();\n\n\n\n    /**\n\n     * Event for logging of the private round finish\n\n     */\n\n    event PrivateRoundFinished();\n\n\n\n    /**\n\n     * Event for logging of the private round start\n\n     */\n\n    event StartPrivateRound();\n\n\n\n    /**\n\n     * Event for logging of the public round start\n\n     */\n\n    event StartPublicRound();\n\n\n\n    /**\n\n     * Event for logging of the public round finish\n\n     */\n\n    event PublicRoundFinished();\n\n\n\n    /**\n\n     * Event for logging of the crowdsale finish\n\n     * @param weiRaised Amount of wei raised during the crowdsale\n\n     * @param usdRaised Amount of usd raised during the crowdsale (in units)\n\n     */\n\n    event CrowdsaleFinished(uint256 weiRaised, uint256 usdRaised);\n\n\n\n    /**\n\n     * Event for logging of reaching the soft cap\n\n     */\n\n    event SoftCapReached();\n\n\n\n    /**\n\n    * @dev Reverts if crowdsale has finished.\n\n    */\n\n    modifier onlyWhileOpen {\n\n        require(!crowdsaleFinished);\n\n        _;\n\n    }\n\n\n\n    /**\n\n     * @param _wallet Address where collected funds will be forwarded to\n\n     * @param _token Address of the token being sold\n\n     */\n\n    constructor(address _wallet, ERC20 _token) public {\n\n        require(_wallet != address(0));\n\n        require(_token != address(0));\n\n\n\n        wallet = _wallet;\n\n        token = _token;\n\n        decimals = token.decimals();\n\n    }\n\n\n\n    // -----------------------------------------\n\n    // Crowdsale external interface\n\n    // -----------------------------------------\n\n\n\n    /**\n\n     * @dev fallback function\n\n     */\n\n    function () external\n\n        payable\n\n        onlyActualPrice\n\n        onlyWhileOpen\n\n        onlyWhitelisted\n\n        whenNotPaused\n\n    {\n\n        buyTokens();\n\n    }\n\n\n\n    /**\n\n     * @dev Allows owner to send ETH to the contarct for paying fees or refund.\n\n     */\n\n    function payToContract() external payable onlyOwner {}\n\n\n\n    /**\n\n     * @dev Allows owner to withdraw ETH from the contract balance.\n\n     */\n\n    function withdrawFunds(address _beneficiary, uint256 _weiAmount)\n\n        external\n\n        onlyOwner\n\n    {\n\n        require(address(this).balance > _weiAmount);\n\n        _beneficiary.transfer(_weiAmount);\n\n    }\n\n\n\n    /**\n\n     * @dev Alows owner to finish the crowdsale\n\n     */\n\n    function finishCrowdsale() external onlyOwner onlyWhileOpen {\n\n        crowdsaleFinished = true;\n\n\n\n        uint256 _soldAmount = token.totalSupply().sub(bonuses);\n\n\n\n        token.mint(address(this), _soldAmount);\n\n\n\n        emit TokenPurchase(address(this), 0, _soldAmount);\n\n\n\n        emit CrowdsaleFinished(weiRaised, usdRaised);\n\n    }\n\n\n\n    /**\n\n     * @dev Transfers fund to contributor if the crowdsale fails\n\n     */\n\n    function claimFunds() external {\n\n        require(crowdsaleFinished);\n\n        require(!softCapReached);\n\n        require(funds[msg.sender] > 0);\n\n        require(address(this).balance >= funds[msg.sender]);\n\n        uint256 toSend = funds[msg.sender];\n\n        delete funds[msg.sender];\n\n        msg.sender.transfer(toSend);\n\n    }\n\n\n\n    /**\n\n     * @dev Allows owner to transfer BEAM tokens\n\n     * @dev from the crowdsale smart contract balance\n\n     */\n\n    function transferTokens(\n\n        address _beneficiary,\n\n        uint256 _tokenAmount\n\n    )\n\n        external\n\n        onlyOwner\n\n    {\n\n        require(token.balanceOf(address(this)) >= _tokenAmount);\n\n        token.transfer(_beneficiary, _tokenAmount);\n\n    }\n\n\n\n    /**\n\n     * @dev Allows owner to add raising fund manually\n\n     * @param _beneficiary Address performing the token purchase\n\n     * @param _usdUnits Value in USD units involved in the purchase\n\n     */\n\n    function buyForFiat(address _beneficiary, uint256 _usdUnits)\n\n        external\n\n        onlyOwner\n\n        onlyWhileOpen\n\n        onlyActualPrice\n\n    {\n\n        uint256 _weiAmount = _usdUnits.mul(centsInDollar).div(priceETHUSD);\n\n        \n\n        _preValidatePurchase(_beneficiary, _weiAmount);\n\n\n\n        // calculate token amount to be created\n\n        uint256 tokens = _getTokenAmount(_weiAmount);\n\n\n\n        // update state\n\n        weiRaised = weiRaised.add(_weiAmount);\n\n\n\n        _processPurchase(_beneficiary, tokens);\n\n        emit TokenPurchase(\n\n            _beneficiary,\n\n            _weiAmount,\n\n            tokens\n\n        );\n\n\n\n        _postValidatePurchase();\n\n    }\n\n\n\n    /**\n\n     * @dev Mints bonuses by admin\n\n     * @param _beneficiary Address performing the token purchase\n\n     * @param _tokenUnits Amount of the tokens to mint\n\n     */\n\n    function mintBonus(address _beneficiary, uint256 _tokenUnits)\n\n        external\n\n        onlyOwner\n\n        onlyWhileOpen\n\n    {\n\n\n\n        _processPurchase(_beneficiary, _tokenUnits);\n\n        emit TokenPurchase(_beneficiary, 0, _tokenUnits);\n\n\n\n        bonuses = bonuses.add(_tokenUnits);\n\n\n\n        _postValidatePurchase();\n\n    }\n\n\n\n    /**\n\n     * @dev Allows owner to finish the seed round\n\n     */\n\n    function finishSeedRound() external onlyOwner onlyWhileOpen {\n\n        require(!seedFinished);\n\n        seedFinished = true;\n\n        emit SeedRoundFinished();\n\n        emit StartPrivateRound();\n\n    }\n\n\n\n    /**\n\n     * @dev Allows owner to change the discount for seed round\n\n     */\n\n    function setDiscountSeed(uint256 _discountSeed) external onlyOwner onlyWhileOpen {\n\n        discountSeed = _discountSeed;\n\n    }\n\n\n\n    /**\n\n     * @dev Allows owner to change the discount for private round\n\n     */\n\n    function setDiscountPrivate(uint256 _discountPrivate) external onlyOwner onlyWhileOpen {\n\n        discountPrivate = _discountPrivate;\n\n    }\n\n\n\n    /**\n\n     * @dev Allows owner to change the discount for public round\n\n     */\n\n    function setDiscountPublic(uint256 _discountPublic) external onlyOwner onlyWhileOpen {\n\n        discountPublic = _discountPublic;\n\n    }\n\n\n\n    /**\n\n     * @dev Allows owner to start or renew public round\n\n     * @dev Function accesable only after the end of the seed round\n\n     * @dev If _enable is true, private round ends and public round starts\n\n     * @dev If _enable is false, public round ends and private round starts\n\n     * @param _enable Whether the public round is open\n\n     */\n\n    function setPublicRound(bool _enable) external onlyOwner onlyWhileOpen {\n\n        require(seedFinished);\n\n        publicRound = _enable;\n\n        if (_enable) {\n\n            emit PrivateRoundFinished();\n\n            emit StartPublicRound();\n\n        } else {\n\n            emit PublicRoundFinished();\n\n            emit StartPrivateRound();\n\n        }\n\n    }\n\n\n\n    /**\n\n     * @dev low level token purchase\n\n     */\n\n    function buyTokens()\n\n        public\n\n        payable\n\n        onlyWhileOpen\n\n        onlyWhitelisted\n\n        whenNotPaused\n\n        onlyActualPrice\n\n    {\n\n        address _beneficiary = msg.sender;\n\n\n\n        uint256 _weiAmount = msg.value;\n\n        _preValidatePurchase(_beneficiary, _weiAmount);\n\n\n\n        // calculate token amount to be created\n\n        uint256 tokens = _getTokenAmount(_weiAmount);\n\n        \n\n        _weiAmount = _weiAmount.sub(_applyDiscount(_weiAmount));\n\n\n\n        funds[_beneficiary] = funds[_beneficiary].add(_weiAmount);\n\n\n\n        // update state\n\n        weiRaised = weiRaised.add(_weiAmount);\n\n\n\n        _processPurchase(_beneficiary, tokens);\n\n        emit TokenPurchase(_beneficiary, _weiAmount, tokens);\n\n\n\n        _forwardFunds(_weiAmount);\n\n\n\n        _postValidatePurchase();\n\n    }\n\n\n\n    /**\n\n     * @return Actual token price in USD units\n\n     */\n\n    function tokenPrice() public view returns(uint256) {\n\n        uint256 _supplyInt = token.totalSupply().div(10 ** decimals);\n\n        return uint256(10 ** 18).add(_supplyInt.mul(increasing));\n\n    }\n\n\n\n    // -----------------------------------------\n\n    // Internal interface (extensible)\n\n    // -----------------------------------------\n\n\n\n    /**\n\n     * @dev Validation of an incoming purchase. Use require statements\n\n     * @dev to revert state when conditions are not met.\n\n     * @param _beneficiary Address performing the token purchase\n\n     * @param _weiAmount Value in wei involved in the purchase\n\n     */\n\n    function _preValidatePurchase(\n\n        address _beneficiary,\n\n        uint256 _weiAmount\n\n    )\n\n        internal\n\n        pure\n\n    {\n\n        require(_beneficiary != address(0));\n\n        require(_weiAmount != 0);\n\n    }\n\n\n\n    /**\n\n     * @return The square root of 'x'\n\n     */\n\n    function sqrt(uint256 x) internal pure returns (uint256) {\n\n        uint256 z = (x.add(1)).div(2);\n\n        uint256 y = x;\n\n        while (z < y) {\n\n            y = z;\n\n            z = ((x.div(z)).add(z)).div(2);\n\n        }\n\n        return y;\n\n    }\n\n\n\n    /**\n\n     * @return The amount of tokens (without decimals) for specified _usdUnits accounting the price increasing\n\n     */\n\n    function tokenIntAmount(uint256 _startPrice, uint256 _usdUnits)\n\n        internal\n\n        view\n\n        returns(uint256)\n\n    {\n\n        uint256 sqrtVal = sqrt(((_startPrice.mul(2).sub(increasing)).pow(2)).add(_usdUnits.mul(8).mul(increasing)));\n\n\n\n        return (increasing.add(sqrtVal).sub(_startPrice.mul(2))).div(increasing.mul(2));\n\n    }\n\n\n\n    /**\n\n     * @dev Calculates the remainder USD amount.\n\n     * @param _startPrice Address performing the token purchase\n\n     * @param _usdUnits Value involved in the purchase\n\n     * @param _tokenIntAmount Value of tokens without decimals\n\n     * @return Number of USD units to process purchase\n\n     */\n\n    function _remainderAmount(\n\n        uint256 _startPrice,\n\n        uint256 _usdUnits,\n\n        uint256 _tokenIntAmount\n\n    )\n\n        internal\n\n        view\n\n        returns(uint256)\n\n    {\n\n        uint256 _summ = (_startPrice.mul(2).add(increasing.mul(_tokenIntAmount.sub(1))).mul(_tokenIntAmount)).div(2);\n\n        return _usdUnits.sub(_summ);\n\n    }\n\n\n\n    /**\n\n     * @dev Validation of an executed purchase. Observe state and use revert\u0001\n\n     * statements to undo rollback when valid conditions are not met.\n\n     */\n\n    function _postValidatePurchase() internal {\n\n        if (!seedFinished) _checkSeed();\n\n        if (!softCapReached) _checkSoftCap();\n\n    }\n\n\n\n    /**\n\n     * @dev Source of tokens. The way in which the crowdsale ultimately gets and sends its tokens.\n\n     * @param _beneficiary Address performing the token purchase\n\n     * @param _tokenAmount Number of tokens to be emitted\n\n     */\n\n    function _deliverTokens(\n\n        address _beneficiary,\n\n        uint256 _tokenAmount\n\n    )\n\n        internal\n\n    {\n\n        token.mint(_beneficiary, _tokenAmount);\n\n    }\n\n\n\n    /**\n\n     * @dev Executed when a purchase has been validated and is ready to be executed.\n\n     * @param _beneficiary Address receiving the tokens\n\n     * @param _tokenAmount Number of tokens to be purchased\n\n     */\n\n    function _processPurchase(\n\n        address _beneficiary,\n\n        uint256 _tokenAmount\n\n    )\n\n        internal\n\n    {\n\n        _deliverTokens(_beneficiary, _tokenAmount);\n\n    }\n\n\n\n    /**\n\n     * @dev The way in which ether is converted to tokens.\n\n     * @param _weiAmount Value in wei to be converted into tokens\n\n     * @return Number of tokens that can be purchased with the specified _weiAmount\n\n     */\n\n    function _getTokenAmount(uint256 _weiAmount)\n\n        internal returns (uint256)\n\n    {\n\n        uint256 _usdUnits = _weiAmount.mul(priceETHUSD).div(centsInDollar);\n\n\n\n        usdRaised = usdRaised.add(_usdUnits);\n\n\n\n\n\n        uint256 _tokenPrice = tokenPrice();\n\n        uint256 _tokenIntAmount = tokenIntAmount(_tokenPrice, _usdUnits);\n\n        uint256 _tokenUnitAmount = _tokenIntAmount.mul(10 ** decimals);\n\n        uint256 _newPrice = tokenPrice().add(_tokenIntAmount.mul(increasing));\n\n        \n\n        uint256 _usdRemainder;\n\n        \n\n        if (_tokenIntAmount == 0)\n\n            _usdRemainder = _usdUnits;\n\n        else\n\n            _usdRemainder = _remainderAmount(_tokenPrice, _usdUnits, _tokenIntAmount);\n\n            \n\n        _tokenUnitAmount = _tokenUnitAmount.add(_usdRemainder.mul(10 ** decimals).div(_newPrice));\n\n        return _tokenUnitAmount;\n\n    }\n\n\n\n    /**\n\n     * @dev Checks the amount of sold tokens to finish seed round.\n\n     */\n\n    function _checkSeed() internal {\n\n        if (token.totalSupply() >= tokensForSeed) {\n\n            seedFinished = true;\n\n            emit SeedRoundFinished();\n\n            emit StartPrivateRound();\n\n        }\n\n    }\n\n\n\n    /**\n\n     * @dev Checks the USD raised to hit the sodt cap.\n\n     */\n\n    function _checkSoftCap() internal {\n\n        if (usdRaised >= softCap) {\n\n            softCapReached = true;\n\n            emit SoftCapReached();\n\n        }\n\n    }\n\n\n\n    /**\n\n     * @dev Applys the reward according to bonus system.\n\n     * @param _weiAmount Value in wei to applying bonus system\n\n     */\n\n    function _applyDiscount(uint256 _weiAmount) internal returns (uint256) {\n\n        address _payer = msg.sender;\n\n        uint256 _refundAmount;\n\n        \n\n        if (!seedFinished) {\n\n            _refundAmount = _weiAmount.mul(discountSeed).div(100);\n\n        } else if (!publicRound) {\n\n            _refundAmount = _weiAmount.mul(discountPrivate).div(100);\n\n        } else {\n\n            _refundAmount = _weiAmount.mul(discountPublic).div(100);\n\n        }\n\n        _payer.transfer(_refundAmount);\n\n        return _refundAmount;\n\n    }\n\n\n\n    /**\n\n     * @dev Determines how ETH is stored/forwarded on purchases.\n\n     */\n\n    function _forwardFunds(uint256 _weiAmount) internal {\n\n        wallet.transfer(_weiAmount);\n\n    }\n\n\n\n    /**\n\n     * @dev set minUpdatePeriod\n\n     */\n\n    function setMinUpdatePeriod(uint256 _minUpdatePeriod) public onlyOwner {\n\n        minUpdatePeriod = _minUpdatePeriod;\n\n    }\n",
+                    "message": "Contract 'BeamCrowdsale_TEST_ONLY' (BeamCrowdsale_TEST_ONLY.sol#322-852) is not in CapWords\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 439,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address _wallet, ERC20 _token) public {\n",
+                    "message": "Parameter '_wallet' of BeamCrowdsale_TEST_ONLY. (BeamCrowdsale_TEST_ONLY.sol#439) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 439,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor(address _wallet, ERC20 _token) public {\n",
+                    "message": "Parameter '_token' of BeamCrowdsale_TEST_ONLY. (BeamCrowdsale_TEST_ONLY.sol#439) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 473,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function withdrawFunds(address _beneficiary, uint256 _weiAmount)\n",
+                    "message": "Parameter '_beneficiary' of BeamCrowdsale_TEST_ONLY.withdrawFunds (BeamCrowdsale_TEST_ONLY.sol#473) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 473,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function withdrawFunds(address _beneficiary, uint256 _weiAmount)\n",
+                    "message": "Parameter '_weiAmount' of BeamCrowdsale_TEST_ONLY.withdrawFunds (BeamCrowdsale_TEST_ONLY.sol#473) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 514,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _beneficiary,\n",
+                    "message": "Parameter '_beneficiary' of BeamCrowdsale_TEST_ONLY.transferTokens (BeamCrowdsale_TEST_ONLY.sol#514) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 515,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _tokenAmount\n",
+                    "message": "Parameter '_tokenAmount' of BeamCrowdsale_TEST_ONLY.transferTokens (BeamCrowdsale_TEST_ONLY.sol#515) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 529,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function buyForFiat(address _beneficiary, uint256 _usdUnits)\n",
+                    "message": "Parameter '_beneficiary' of BeamCrowdsale_TEST_ONLY.buyForFiat (BeamCrowdsale_TEST_ONLY.sol#529) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 529,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function buyForFiat(address _beneficiary, uint256 _usdUnits)\n",
+                    "message": "Parameter '_usdUnits' of BeamCrowdsale_TEST_ONLY.buyForFiat (BeamCrowdsale_TEST_ONLY.sol#529) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 560,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function mintBonus(address _beneficiary, uint256 _tokenUnits)\n",
+                    "message": "Parameter '_beneficiary' of BeamCrowdsale_TEST_ONLY.mintBonus (BeamCrowdsale_TEST_ONLY.sol#560) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 560,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function mintBonus(address _beneficiary, uint256 _tokenUnits)\n",
+                    "message": "Parameter '_tokenUnits' of BeamCrowdsale_TEST_ONLY.mintBonus (BeamCrowdsale_TEST_ONLY.sol#560) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 587,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setDiscountSeed(uint256 _discountSeed) external onlyOwner onlyWhileOpen {\n",
+                    "message": "Parameter '_discountSeed' of BeamCrowdsale_TEST_ONLY.setDiscountSeed (BeamCrowdsale_TEST_ONLY.sol#587) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 594,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setDiscountPrivate(uint256 _discountPrivate) external onlyOwner onlyWhileOpen {\n",
+                    "message": "Parameter '_discountPrivate' of BeamCrowdsale_TEST_ONLY.setDiscountPrivate (BeamCrowdsale_TEST_ONLY.sol#594) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 601,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setDiscountPublic(uint256 _discountPublic) external onlyOwner onlyWhileOpen {\n",
+                    "message": "Parameter '_discountPublic' of BeamCrowdsale_TEST_ONLY.setDiscountPublic (BeamCrowdsale_TEST_ONLY.sol#601) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 612,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setPublicRound(bool _enable) external onlyOwner onlyWhileOpen {\n",
+                    "message": "Parameter '_enable' of BeamCrowdsale_TEST_ONLY.setPublicRound (BeamCrowdsale_TEST_ONLY.sol#612) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 676,
+                    "vulnerability_to_line": 685,
+                    "vulnerability_code": "    function _preValidatePurchase(\n\n        address _beneficiary,\n\n        uint256 _weiAmount\n\n    )\n\n        internal\n\n        pure\n\n    {\n\n        require(_beneficiary != address(0));\n\n        require(_weiAmount != 0);\n",
+                    "message": "Function 'BeamCrowdsale_TEST_ONLY._preValidatePurchase' (BeamCrowdsale_TEST_ONLY.sol#676-685) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 677,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _beneficiary,\n",
+                    "message": "Parameter '_beneficiary' of BeamCrowdsale_TEST_ONLY._preValidatePurchase (BeamCrowdsale_TEST_ONLY.sol#677) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 678,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _weiAmount\n",
+                    "message": "Parameter '_weiAmount' of BeamCrowdsale_TEST_ONLY._preValidatePurchase (BeamCrowdsale_TEST_ONLY.sol#678) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 703,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function tokenIntAmount(uint256 _startPrice, uint256 _usdUnits)\n",
+                    "message": "Parameter '_startPrice' of BeamCrowdsale_TEST_ONLY.tokenIntAmount (BeamCrowdsale_TEST_ONLY.sol#703) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 703,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function tokenIntAmount(uint256 _startPrice, uint256 _usdUnits)\n",
+                    "message": "Parameter '_usdUnits' of BeamCrowdsale_TEST_ONLY.tokenIntAmount (BeamCrowdsale_TEST_ONLY.sol#703) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 720,
+                    "vulnerability_to_line": 731,
+                    "vulnerability_code": "    function _remainderAmount(\n\n        uint256 _startPrice,\n\n        uint256 _usdUnits,\n\n        uint256 _tokenIntAmount\n\n    )\n\n        internal\n\n        view\n\n        returns(uint256)\n\n    {\n\n        uint256 _summ = (_startPrice.mul(2).add(increasing.mul(_tokenIntAmount.sub(1))).mul(_tokenIntAmount)).div(2);\n\n        return _usdUnits.sub(_summ);\n",
+                    "message": "Function 'BeamCrowdsale_TEST_ONLY._remainderAmount' (BeamCrowdsale_TEST_ONLY.sol#720-731) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 721,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _startPrice,\n",
+                    "message": "Parameter '_startPrice' of BeamCrowdsale_TEST_ONLY._remainderAmount (BeamCrowdsale_TEST_ONLY.sol#721) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 722,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _usdUnits,\n",
+                    "message": "Parameter '_usdUnits' of BeamCrowdsale_TEST_ONLY._remainderAmount (BeamCrowdsale_TEST_ONLY.sol#722) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 723,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _tokenIntAmount\n",
+                    "message": "Parameter '_tokenIntAmount' of BeamCrowdsale_TEST_ONLY._remainderAmount (BeamCrowdsale_TEST_ONLY.sol#723) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 737,
+                    "vulnerability_to_line": 740,
+                    "vulnerability_code": "    function _postValidatePurchase() internal {\n\n        if (!seedFinished) _checkSeed();\n\n        if (!softCapReached) _checkSoftCap();\n",
+                    "message": "Function 'BeamCrowdsale_TEST_ONLY._postValidatePurchase' (BeamCrowdsale_TEST_ONLY.sol#737-740) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 747,
+                    "vulnerability_to_line": 754,
+                    "vulnerability_code": "    function _deliverTokens(\n\n        address _beneficiary,\n\n        uint256 _tokenAmount\n\n    )\n\n        internal\n\n    {\n\n        token.mint(_beneficiary, _tokenAmount);\n",
+                    "message": "Function 'BeamCrowdsale_TEST_ONLY._deliverTokens' (BeamCrowdsale_TEST_ONLY.sol#747-754) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 748,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _beneficiary,\n",
+                    "message": "Parameter '_beneficiary' of BeamCrowdsale_TEST_ONLY._deliverTokens (BeamCrowdsale_TEST_ONLY.sol#748) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 749,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _tokenAmount\n",
+                    "message": "Parameter '_tokenAmount' of BeamCrowdsale_TEST_ONLY._deliverTokens (BeamCrowdsale_TEST_ONLY.sol#749) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 761,
+                    "vulnerability_to_line": 768,
+                    "vulnerability_code": "    function _processPurchase(\n\n        address _beneficiary,\n\n        uint256 _tokenAmount\n\n    )\n\n        internal\n\n    {\n\n        _deliverTokens(_beneficiary, _tokenAmount);\n",
+                    "message": "Function 'BeamCrowdsale_TEST_ONLY._processPurchase' (BeamCrowdsale_TEST_ONLY.sol#761-768) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 762,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        address _beneficiary,\n",
+                    "message": "Parameter '_beneficiary' of BeamCrowdsale_TEST_ONLY._processPurchase (BeamCrowdsale_TEST_ONLY.sol#762) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 763,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        uint256 _tokenAmount\n",
+                    "message": "Parameter '_tokenAmount' of BeamCrowdsale_TEST_ONLY._processPurchase (BeamCrowdsale_TEST_ONLY.sol#763) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 775,
+                    "vulnerability_to_line": 797,
+                    "vulnerability_code": "    function _getTokenAmount(uint256 _weiAmount)\n\n        internal returns (uint256)\n\n    {\n\n        uint256 _usdUnits = _weiAmount.mul(priceETHUSD).div(centsInDollar);\n\n\n\n        usdRaised = usdRaised.add(_usdUnits);\n\n\n\n\n\n        uint256 _tokenPrice = tokenPrice();\n\n        uint256 _tokenIntAmount = tokenIntAmount(_tokenPrice, _usdUnits);\n\n        uint256 _tokenUnitAmount = _tokenIntAmount.mul(10 ** decimals);\n\n        uint256 _newPrice = tokenPrice().add(_tokenIntAmount.mul(increasing));\n\n        \n\n        uint256 _usdRemainder;\n\n        \n\n        if (_tokenIntAmount == 0)\n\n            _usdRemainder = _usdUnits;\n\n        else\n\n            _usdRemainder = _remainderAmount(_tokenPrice, _usdUnits, _tokenIntAmount);\n\n            \n\n        _tokenUnitAmount = _tokenUnitAmount.add(_usdRemainder.mul(10 ** decimals).div(_newPrice));\n\n        return _tokenUnitAmount;\n",
+                    "message": "Function 'BeamCrowdsale_TEST_ONLY._getTokenAmount' (BeamCrowdsale_TEST_ONLY.sol#775-797) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 775,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _getTokenAmount(uint256 _weiAmount)\n",
+                    "message": "Parameter '_weiAmount' of BeamCrowdsale_TEST_ONLY._getTokenAmount (BeamCrowdsale_TEST_ONLY.sol#775) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 802,
+                    "vulnerability_to_line": 808,
+                    "vulnerability_code": "    function _checkSeed() internal {\n\n        if (token.totalSupply() >= tokensForSeed) {\n\n            seedFinished = true;\n\n            emit SeedRoundFinished();\n\n            emit StartPrivateRound();\n\n        }\n",
+                    "message": "Function 'BeamCrowdsale_TEST_ONLY._checkSeed' (BeamCrowdsale_TEST_ONLY.sol#802-808) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 813,
+                    "vulnerability_to_line": 818,
+                    "vulnerability_code": "    function _checkSoftCap() internal {\n\n        if (usdRaised >= softCap) {\n\n            softCapReached = true;\n\n            emit SoftCapReached();\n\n        }\n",
+                    "message": "Function 'BeamCrowdsale_TEST_ONLY._checkSoftCap' (BeamCrowdsale_TEST_ONLY.sol#813-818) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 824,
+                    "vulnerability_to_line": 837,
+                    "vulnerability_code": "    function _applyDiscount(uint256 _weiAmount) internal returns (uint256) {\n\n        address _payer = msg.sender;\n\n        uint256 _refundAmount;\n\n        \n\n        if (!seedFinished) {\n\n            _refundAmount = _weiAmount.mul(discountSeed).div(100);\n\n        } else if (!publicRound) {\n\n            _refundAmount = _weiAmount.mul(discountPrivate).div(100);\n\n        } else {\n\n            _refundAmount = _weiAmount.mul(discountPublic).div(100);\n\n        }\n\n        _payer.transfer(_refundAmount);\n\n        return _refundAmount;\n",
+                    "message": "Function 'BeamCrowdsale_TEST_ONLY._applyDiscount' (BeamCrowdsale_TEST_ONLY.sol#824-837) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 824,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _applyDiscount(uint256 _weiAmount) internal returns (uint256) {\n",
+                    "message": "Parameter '_weiAmount' of BeamCrowdsale_TEST_ONLY._applyDiscount (BeamCrowdsale_TEST_ONLY.sol#824) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 842,
+                    "vulnerability_to_line": 844,
+                    "vulnerability_code": "    function _forwardFunds(uint256 _weiAmount) internal {\n\n        wallet.transfer(_weiAmount);\n",
+                    "message": "Function 'BeamCrowdsale_TEST_ONLY._forwardFunds' (BeamCrowdsale_TEST_ONLY.sol#842-844) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 842,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _forwardFunds(uint256 _weiAmount) internal {\n",
+                    "message": "Parameter '_weiAmount' of BeamCrowdsale_TEST_ONLY._forwardFunds (BeamCrowdsale_TEST_ONLY.sol#842) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 849,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setMinUpdatePeriod(uint256 _minUpdatePeriod) public onlyOwner {\n",
+                    "message": "Parameter '_minUpdatePeriod' of BeamCrowdsale_TEST_ONLY.setMinUpdatePeriod (BeamCrowdsale_TEST_ONLY.sol#849) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 110,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        pendingOwner = address(0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 242,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 270,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 242,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 270,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint256 i = 0; i < addrs.length; i++) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 693,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        while (z < y) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 587,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setDiscountSeed(uint256 _discountSeed) external onlyOwner onlyWhileOpen {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 594,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setDiscountPrivate(uint256 _discountPrivate) external onlyOwner onlyWhileOpen {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 601,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setDiscountPublic(uint256 _discountPublic) external onlyOwner onlyWhileOpen {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 612,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setPublicRound(bool _enable) external onlyOwner onlyWhileOpen {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_OVERPOWERED_ROLE",
+                    "vulnerability_from_line": 849,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setMinUpdatePeriod(uint256 _minUpdatePeriod) public onlyOwner {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 323,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 241,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function addAddressesToWhitelist(address[] addrs) public onlyOwner returns(bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 269,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function removeAddressesFromWhitelist(address[] addrs) public onlyOwner returns(bool success) {\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

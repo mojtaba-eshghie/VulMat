@@ -1,0 +1,1170 @@
+{
+    "IMA-c06cf391c72e09242f0dec49c24be8996a8ed024/proxy/contracts/Migrations.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in Migrations.sol:\n\t- pragma solidity0.6.12 (Migrations.sol#24): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "IMA-c06cf391c72e09242f0dec49c24be8996a8ed024/proxy/contracts/predeployed/SkaleFeatures.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_24"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": 60,
+                    "vulnerability_code": "    function logTextMessage( uint256 messageType, string memory strTextMessage ) public view returns ( uint256 rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 fnc = FN_NUM_LOG_TEXT_MESSAGE;\n\n        address who = msg.sender;\n\n        uint256 blocks = (bytes(strTextMessage).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let p := mload(fmp)\n\n            let ptr := p\n\n            // who\n\n            mstore(ptr, who)\n\n            ptr := add(ptr, 32)\n\n            // type\n\n            mstore(ptr, messageType )\n\n            ptr := add(ptr, 32)\n\n            // message\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add( strTextMessage, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            rv := staticcall(not(0), fnc, p, add( 64, mul(blocks, 32) ), p, 32)\n\n        }\n",
+                    "message": "SkaleFeatures.logTextMessage (SkaleFeatures.sol#37-60) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": 99,
+                    "vulnerability_code": "    function getConfigVariableUint256( string memory strConfigVariableName ) public view returns ( uint256 rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocks = (bytes(strConfigVariableName).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let ptr := mload(fmp)\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add(strConfigVariableName, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            rv := mload(ptr)\n\n        }\n",
+                    "message": "SkaleFeatures.getConfigVariableUint256 (SkaleFeatures.sol#86-99) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 101,
+                    "vulnerability_to_line": 114,
+                    "vulnerability_code": "    function getConfigVariableAddress( string memory strConfigVariableName ) public view returns ( address rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocks = (bytes(strConfigVariableName).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let ptr := mload(fmp)\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add(strConfigVariableName, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            rv := mload(ptr)\n\n        }\n",
+                    "message": "SkaleFeatures.getConfigVariableAddress (SkaleFeatures.sol#101-114) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": 128,
+                    "vulnerability_code": "    function getConfigVariableString( string memory strConfigVariableName ) public view returns ( string memory rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocks = (bytes(strConfigVariableName).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let ptr := mload(fmp)\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add(strConfigVariableName, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n        }\n",
+                    "message": "SkaleFeatures.getConfigVariableString (SkaleFeatures.sol#116-128) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 130,
+                    "vulnerability_to_line": 150,
+                    "vulnerability_code": "    function concatenateStrings( string memory strA, string memory strB ) public view returns ( string memory rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocksA = (bytes(strA).length + 31) / 32 + 1;\n\n        uint256 blocksB = (bytes(strB).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let p := mload(fmp)\n\n            let ptr := p\n\n            for { let i := 0 } lt( i, blocksA ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add( strA, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            ptr := add(ptr, mul( blocksA, 32) )\n\n            for { let i := 0 } lt( i, blocksB ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add( strB, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n        }\n",
+                    "message": "SkaleFeatures.concatenateStrings (SkaleFeatures.sol#130-150) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 152,
+                    "vulnerability_to_line": 167,
+                    "vulnerability_code": "    function getConfigPermissionFlag(address a, string memory strConfigVariableName) public view returns (uint256 rv) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocks = (bytes(strConfigVariableName).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let p := mload(fmp)\n\n            mstore(p, a)\n\n            let ptr := add(p, 32)\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add(strConfigVariableName, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            rv := mload(ptr)\n\n        }\n",
+                    "message": "SkaleFeatures.getConfigPermissionFlag (SkaleFeatures.sol#152-167) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": 60,
+                    "vulnerability_code": "    function logTextMessage( uint256 messageType, string memory strTextMessage ) public view returns ( uint256 rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 fnc = FN_NUM_LOG_TEXT_MESSAGE;\n\n        address who = msg.sender;\n\n        uint256 blocks = (bytes(strTextMessage).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let p := mload(fmp)\n\n            let ptr := p\n\n            // who\n\n            mstore(ptr, who)\n\n            ptr := add(ptr, 32)\n\n            // type\n\n            mstore(ptr, messageType )\n\n            ptr := add(ptr, 32)\n\n            // message\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add( strTextMessage, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            rv := staticcall(not(0), fnc, p, add( 64, mul(blocks, 32) ), p, 32)\n\n        }\n",
+                    "message": "SkaleFeatures.logTextMessage uses assembly (SkaleFeatures.sol#37-60)\n\t- SkaleFeatures.sol#43-59\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": 99,
+                    "vulnerability_code": "    function getConfigVariableUint256( string memory strConfigVariableName ) public view returns ( uint256 rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocks = (bytes(strConfigVariableName).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let ptr := mload(fmp)\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add(strConfigVariableName, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            rv := mload(ptr)\n\n        }\n",
+                    "message": "SkaleFeatures.getConfigVariableUint256 uses assembly (SkaleFeatures.sol#86-99)\n\t- SkaleFeatures.sol#90-98\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 101,
+                    "vulnerability_to_line": 114,
+                    "vulnerability_code": "    function getConfigVariableAddress( string memory strConfigVariableName ) public view returns ( address rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocks = (bytes(strConfigVariableName).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let ptr := mload(fmp)\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add(strConfigVariableName, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            rv := mload(ptr)\n\n        }\n",
+                    "message": "SkaleFeatures.getConfigVariableAddress uses assembly (SkaleFeatures.sol#101-114)\n\t- SkaleFeatures.sol#105-113\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": 128,
+                    "vulnerability_code": "    function getConfigVariableString( string memory strConfigVariableName ) public view returns ( string memory rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocks = (bytes(strConfigVariableName).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let ptr := mload(fmp)\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add(strConfigVariableName, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n        }\n",
+                    "message": "SkaleFeatures.getConfigVariableString uses assembly (SkaleFeatures.sol#116-128)\n\t- SkaleFeatures.sol#120-127\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 130,
+                    "vulnerability_to_line": 150,
+                    "vulnerability_code": "    function concatenateStrings( string memory strA, string memory strB ) public view returns ( string memory rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocksA = (bytes(strA).length + 31) / 32 + 1;\n\n        uint256 blocksB = (bytes(strB).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let p := mload(fmp)\n\n            let ptr := p\n\n            for { let i := 0 } lt( i, blocksA ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add( strA, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            ptr := add(ptr, mul( blocksA, 32) )\n\n            for { let i := 0 } lt( i, blocksB ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add( strB, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n        }\n",
+                    "message": "SkaleFeatures.concatenateStrings uses assembly (SkaleFeatures.sol#130-150)\n\t- SkaleFeatures.sol#135-149\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 152,
+                    "vulnerability_to_line": 167,
+                    "vulnerability_code": "    function getConfigPermissionFlag(address a, string memory strConfigVariableName) public view returns (uint256 rv) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocks = (bytes(strConfigVariableName).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let p := mload(fmp)\n\n            mstore(p, a)\n\n            let ptr := add(p, 32)\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add(strConfigVariableName, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            rv := mload(ptr)\n\n        }\n",
+                    "message": "SkaleFeatures.getConfigPermissionFlag uses assembly (SkaleFeatures.sol#152-167)\n\t- SkaleFeatures.sol#156-166\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": 64,
+                    "vulnerability_code": "    function logMessage( string memory strMessage ) public view returns  (uint256 rv) {\n\n        rv = logTextMessage(0, strMessage);\n",
+                    "message": "SkaleFeatures.logMessage (SkaleFeatures.sol#62-64) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 66,
+                    "vulnerability_to_line": 68,
+                    "vulnerability_code": "    function logDebug  ( string memory strMessage ) public view returns  (uint256 rv) {\n\n        rv = logTextMessage(1, strMessage);\n",
+                    "message": "SkaleFeatures.logDebug (SkaleFeatures.sol#66-68) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 70,
+                    "vulnerability_to_line": 72,
+                    "vulnerability_code": "    function logTrace  ( string memory strMessage ) public view returns  (uint256 rv) {\n\n        rv = logTextMessage(2, strMessage);\n",
+                    "message": "SkaleFeatures.logTrace (SkaleFeatures.sol#70-72) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": 76,
+                    "vulnerability_code": "    function logWarning( string memory strMessage ) public view returns  (uint256 rv) {\n\n        rv = logTextMessage(3, strMessage);\n",
+                    "message": "SkaleFeatures.logWarning (SkaleFeatures.sol#74-76) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 78,
+                    "vulnerability_to_line": 80,
+                    "vulnerability_code": "    function logError  ( string memory strMessage ) public view returns  (uint256 rv) {\n\n        rv = logTextMessage(4, strMessage);\n",
+                    "message": "SkaleFeatures.logError (SkaleFeatures.sol#78-80) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 82,
+                    "vulnerability_to_line": 84,
+                    "vulnerability_code": "    function logFatal  ( string memory strMessage ) public view returns  (uint256 rv) {\n\n        rv = logTextMessage(5, strMessage);\n",
+                    "message": "SkaleFeatures.logFatal (SkaleFeatures.sol#82-84) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": 99,
+                    "vulnerability_code": "    function getConfigVariableUint256( string memory strConfigVariableName ) public view returns ( uint256 rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocks = (bytes(strConfigVariableName).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let ptr := mload(fmp)\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add(strConfigVariableName, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            rv := mload(ptr)\n\n        }\n",
+                    "message": "SkaleFeatures.getConfigVariableUint256 (SkaleFeatures.sol#86-99) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 101,
+                    "vulnerability_to_line": 114,
+                    "vulnerability_code": "    function getConfigVariableAddress( string memory strConfigVariableName ) public view returns ( address rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocks = (bytes(strConfigVariableName).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let ptr := mload(fmp)\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add(strConfigVariableName, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            rv := mload(ptr)\n\n        }\n",
+                    "message": "SkaleFeatures.getConfigVariableAddress (SkaleFeatures.sol#101-114) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": 128,
+                    "vulnerability_code": "    function getConfigVariableString( string memory strConfigVariableName ) public view returns ( string memory rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocks = (bytes(strConfigVariableName).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let ptr := mload(fmp)\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add(strConfigVariableName, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n        }\n",
+                    "message": "SkaleFeatures.getConfigVariableString (SkaleFeatures.sol#116-128) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 130,
+                    "vulnerability_to_line": 150,
+                    "vulnerability_code": "    function concatenateStrings( string memory strA, string memory strB ) public view returns ( string memory rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocksA = (bytes(strA).length + 31) / 32 + 1;\n\n        uint256 blocksB = (bytes(strB).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let p := mload(fmp)\n\n            let ptr := p\n\n            for { let i := 0 } lt( i, blocksA ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add( strA, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            ptr := add(ptr, mul( blocksA, 32) )\n\n            for { let i := 0 } lt( i, blocksB ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add( strB, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n        }\n",
+                    "message": "SkaleFeatures.concatenateStrings (SkaleFeatures.sol#130-150) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 152,
+                    "vulnerability_to_line": 167,
+                    "vulnerability_code": "    function getConfigPermissionFlag(address a, string memory strConfigVariableName) public view returns (uint256 rv) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocks = (bytes(strConfigVariableName).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let p := mload(fmp)\n\n            mstore(p, a)\n\n            let ptr := add(p, 32)\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add(strConfigVariableName, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            rv := mload(ptr)\n\n        }\n",
+                    "message": "SkaleFeatures.getConfigPermissionFlag (SkaleFeatures.sol#152-167) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in SkaleFeatures.sol:\n\t- pragma solidity0.6.12 (SkaleFeatures.sol#24): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public constant FREE_MEM_PTR = 0x40;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public constant FN_NUM_LOG_TEXT_MESSAGE = 0x12;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public constant FN_NUM_GET_CONFIG_VARIABLE_UINT256 = 0x13;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public constant FN_NUM_GET_CONFIG_VARIABLE_ADDRESS = 0x14;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public constant FN_NUM_GET_CONFIG_VARIABLE_STRING = 0x15;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public constant FN_NUM_CONCATENATE_STRINGS = 0x16;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public constant FN_NUM_GET_CONFIG_PERMISSION_FLAG = 0x17;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function logTextMessage( uint256 messageType, string memory strTextMessage ) public view returns ( uint256 rv ) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getConfigVariableUint256( string memory strConfigVariableName ) public view returns ( uint256 rv ) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 101,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getConfigVariableAddress( string memory strConfigVariableName ) public view returns ( address rv ) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getConfigVariableString( string memory strConfigVariableName ) public view returns ( string memory rv ) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 130,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function concatenateStrings( string memory strA, string memory strB ) public view returns ( string memory rv ) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 152,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getConfigPermissionFlag(address a, string memory strConfigVariableName) public view returns (uint256 rv) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function logTextMessage( uint256 messageType, string memory strTextMessage ) public view returns ( uint256 rv ) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getConfigVariableUint256( string memory strConfigVariableName ) public view returns ( uint256 rv ) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 101,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getConfigVariableAddress( string memory strConfigVariableName ) public view returns ( address rv ) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getConfigVariableString( string memory strConfigVariableName ) public view returns ( string memory rv ) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 130,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function concatenateStrings( string memory strA, string memory strB ) public view returns ( string memory rv ) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 152,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getConfigPermissionFlag(address a, string memory strConfigVariableName) public view returns (uint256 rv) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 90,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 105,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 120,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 135,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 156,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "IMA-c06cf391c72e09242f0dec49c24be8996a8ed024/proxy/contracts/test/TestContractManager.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(newContractsAddress != address(0), \"New address is equal zero\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(contracts[contractId] != newContractsAddress, \"Contract is already added\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(length > 0, \"Given contracts address is not contain code\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(length > 0, \"Given contracts address is not contain code\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": 56,
+                    "vulnerability_code": "    function setContractsAddress(string calldata contractsName, address newContractsAddress) external {\n\n        // check newContractsAddress is not equal zero\n\n        require(newContractsAddress != address(0), \"New address is equal zero\");\n\n        // create hash of contractsName\n\n        bytes32 contractId = keccak256(abi.encodePacked(contractsName));\n\n        // check newContractsAddress is not equal the previous contract's address\n\n        require(contracts[contractId] != newContractsAddress, \"Contract is already added\");\n\n        uint256 length;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            length := extcodesize(newContractsAddress)\n\n        }\n\n        // check newContractsAddress contains code\n\n        require(length > 0, \"Given contracts address is not contain code\");\n\n        // add newContractsAddress to mapping of actual contract addresses\n\n        contracts[contractId] = newContractsAddress;\n\n        emit ContractUpgraded(contractsName, newContractsAddress);\n",
+                    "message": "ContractManager.setContractsAddress uses assembly (TestContractManager.sol#39-56)\n\t- TestContractManager.sol#48-50\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in TestContractManager.sol:\n\t- pragma solidity0.6.12 (TestContractManager.sol#24): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "IMA-c06cf391c72e09242f0dec49c24be8996a8ed024/proxy/contracts/test/TestSkaleVerifier.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in TestSkaleVerifier.sol:\n\t- pragma solidity0.6.12 (TestSkaleVerifier.sol#25): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "IMA-c06cf391c72e09242f0dec49c24be8996a8ed024/proxy/contracts/interfaces/IERC20Module.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in IERC20Module.sol:\n\t- pragma solidity0.6.12 (IERC20Module.sol#24): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "IMA-c06cf391c72e09242f0dec49c24be8996a8ed024/proxy/contracts/interfaces/IMessageProxy.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in IMessageProxy.sol:\n\t- pragma solidity0.6.12 (IMessageProxy.sol#24): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "IMA-c06cf391c72e09242f0dec49c24be8996a8ed024/proxy/contracts/interfaces/IERC721Module.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in IERC721Module.sol:\n\t- pragma solidity0.6.12 (IERC721Module.sol#24): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "IMA-8ba748426e10bdcd3bcf1e5adf3b97a22f55422f/proxy/contracts/Migrations.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor() public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in Migrations.sol:\n\t- pragma solidity0.6.12 (Migrations.sol#24): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "IMA-8ba748426e10bdcd3bcf1e5adf3b97a22f55422f/proxy/contracts/predeployed/SkaleFeatures.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_24"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": 60,
+                    "vulnerability_code": "    function logTextMessage( uint256 messageType, string memory strTextMessage ) public view returns ( uint256 rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 fnc = FN_NUM_LOG_TEXT_MESSAGE;\n\n        address who = msg.sender;\n\n        uint256 blocks = (bytes(strTextMessage).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let p := mload(fmp)\n\n            let ptr := p\n\n            // who\n\n            mstore(ptr, who)\n\n            ptr := add(ptr, 32)\n\n            // type\n\n            mstore(ptr, messageType )\n\n            ptr := add(ptr, 32)\n\n            // message\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add( strTextMessage, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            rv := staticcall(not(0), fnc, p, add( 64, mul(blocks, 32) ), p, 32)\n\n        }\n",
+                    "message": "SkaleFeatures.logTextMessage (SkaleFeatures.sol#37-60) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": 99,
+                    "vulnerability_code": "    function getConfigVariableUint256( string memory strConfigVariableName ) public view returns ( uint256 rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocks = (bytes(strConfigVariableName).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let ptr := mload(fmp)\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add(strConfigVariableName, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            rv := mload(ptr)\n\n        }\n",
+                    "message": "SkaleFeatures.getConfigVariableUint256 (SkaleFeatures.sol#86-99) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 101,
+                    "vulnerability_to_line": 114,
+                    "vulnerability_code": "    function getConfigVariableAddress( string memory strConfigVariableName ) public view returns ( address rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocks = (bytes(strConfigVariableName).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let ptr := mload(fmp)\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add(strConfigVariableName, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            rv := mload(ptr)\n\n        }\n",
+                    "message": "SkaleFeatures.getConfigVariableAddress (SkaleFeatures.sol#101-114) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": 128,
+                    "vulnerability_code": "    function getConfigVariableString( string memory strConfigVariableName ) public view returns ( string memory rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocks = (bytes(strConfigVariableName).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let ptr := mload(fmp)\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add(strConfigVariableName, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n        }\n",
+                    "message": "SkaleFeatures.getConfigVariableString (SkaleFeatures.sol#116-128) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 130,
+                    "vulnerability_to_line": 150,
+                    "vulnerability_code": "    function concatenateStrings( string memory strA, string memory strB ) public view returns ( string memory rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocksA = (bytes(strA).length + 31) / 32 + 1;\n\n        uint256 blocksB = (bytes(strB).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let p := mload(fmp)\n\n            let ptr := p\n\n            for { let i := 0 } lt( i, blocksA ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add( strA, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            ptr := add(ptr, mul( blocksA, 32) )\n\n            for { let i := 0 } lt( i, blocksB ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add( strB, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n        }\n",
+                    "message": "SkaleFeatures.concatenateStrings (SkaleFeatures.sol#130-150) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 152,
+                    "vulnerability_to_line": 167,
+                    "vulnerability_code": "    function getConfigPermissionFlag(address a, string memory strConfigVariableName) public view returns (uint256 rv) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocks = (bytes(strConfigVariableName).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let p := mload(fmp)\n\n            mstore(p, a)\n\n            let ptr := add(p, 32)\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add(strConfigVariableName, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            rv := mload(ptr)\n\n        }\n",
+                    "message": "SkaleFeatures.getConfigPermissionFlag (SkaleFeatures.sol#152-167) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": 60,
+                    "vulnerability_code": "    function logTextMessage( uint256 messageType, string memory strTextMessage ) public view returns ( uint256 rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 fnc = FN_NUM_LOG_TEXT_MESSAGE;\n\n        address who = msg.sender;\n\n        uint256 blocks = (bytes(strTextMessage).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let p := mload(fmp)\n\n            let ptr := p\n\n            // who\n\n            mstore(ptr, who)\n\n            ptr := add(ptr, 32)\n\n            // type\n\n            mstore(ptr, messageType )\n\n            ptr := add(ptr, 32)\n\n            // message\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add( strTextMessage, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            rv := staticcall(not(0), fnc, p, add( 64, mul(blocks, 32) ), p, 32)\n\n        }\n",
+                    "message": "SkaleFeatures.logTextMessage uses assembly (SkaleFeatures.sol#37-60)\n\t- SkaleFeatures.sol#43-59\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": 99,
+                    "vulnerability_code": "    function getConfigVariableUint256( string memory strConfigVariableName ) public view returns ( uint256 rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocks = (bytes(strConfigVariableName).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let ptr := mload(fmp)\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add(strConfigVariableName, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            rv := mload(ptr)\n\n        }\n",
+                    "message": "SkaleFeatures.getConfigVariableUint256 uses assembly (SkaleFeatures.sol#86-99)\n\t- SkaleFeatures.sol#90-98\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 101,
+                    "vulnerability_to_line": 114,
+                    "vulnerability_code": "    function getConfigVariableAddress( string memory strConfigVariableName ) public view returns ( address rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocks = (bytes(strConfigVariableName).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let ptr := mload(fmp)\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add(strConfigVariableName, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            rv := mload(ptr)\n\n        }\n",
+                    "message": "SkaleFeatures.getConfigVariableAddress uses assembly (SkaleFeatures.sol#101-114)\n\t- SkaleFeatures.sol#105-113\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": 128,
+                    "vulnerability_code": "    function getConfigVariableString( string memory strConfigVariableName ) public view returns ( string memory rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocks = (bytes(strConfigVariableName).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let ptr := mload(fmp)\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add(strConfigVariableName, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n        }\n",
+                    "message": "SkaleFeatures.getConfigVariableString uses assembly (SkaleFeatures.sol#116-128)\n\t- SkaleFeatures.sol#120-127\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 130,
+                    "vulnerability_to_line": 150,
+                    "vulnerability_code": "    function concatenateStrings( string memory strA, string memory strB ) public view returns ( string memory rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocksA = (bytes(strA).length + 31) / 32 + 1;\n\n        uint256 blocksB = (bytes(strB).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let p := mload(fmp)\n\n            let ptr := p\n\n            for { let i := 0 } lt( i, blocksA ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add( strA, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            ptr := add(ptr, mul( blocksA, 32) )\n\n            for { let i := 0 } lt( i, blocksB ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add( strB, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n        }\n",
+                    "message": "SkaleFeatures.concatenateStrings uses assembly (SkaleFeatures.sol#130-150)\n\t- SkaleFeatures.sol#135-149\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 152,
+                    "vulnerability_to_line": 167,
+                    "vulnerability_code": "    function getConfigPermissionFlag(address a, string memory strConfigVariableName) public view returns (uint256 rv) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocks = (bytes(strConfigVariableName).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let p := mload(fmp)\n\n            mstore(p, a)\n\n            let ptr := add(p, 32)\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add(strConfigVariableName, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            rv := mload(ptr)\n\n        }\n",
+                    "message": "SkaleFeatures.getConfigPermissionFlag uses assembly (SkaleFeatures.sol#152-167)\n\t- SkaleFeatures.sol#156-166\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 62,
+                    "vulnerability_to_line": 64,
+                    "vulnerability_code": "    function logMessage( string memory strMessage ) public view returns  (uint256 rv) {\n\n        rv = logTextMessage(0, strMessage);\n",
+                    "message": "SkaleFeatures.logMessage (SkaleFeatures.sol#62-64) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 66,
+                    "vulnerability_to_line": 68,
+                    "vulnerability_code": "    function logDebug  ( string memory strMessage ) public view returns  (uint256 rv) {\n\n        rv = logTextMessage(1, strMessage);\n",
+                    "message": "SkaleFeatures.logDebug (SkaleFeatures.sol#66-68) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 70,
+                    "vulnerability_to_line": 72,
+                    "vulnerability_code": "    function logTrace  ( string memory strMessage ) public view returns  (uint256 rv) {\n\n        rv = logTextMessage(2, strMessage);\n",
+                    "message": "SkaleFeatures.logTrace (SkaleFeatures.sol#70-72) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 74,
+                    "vulnerability_to_line": 76,
+                    "vulnerability_code": "    function logWarning( string memory strMessage ) public view returns  (uint256 rv) {\n\n        rv = logTextMessage(3, strMessage);\n",
+                    "message": "SkaleFeatures.logWarning (SkaleFeatures.sol#74-76) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 78,
+                    "vulnerability_to_line": 80,
+                    "vulnerability_code": "    function logError  ( string memory strMessage ) public view returns  (uint256 rv) {\n\n        rv = logTextMessage(4, strMessage);\n",
+                    "message": "SkaleFeatures.logError (SkaleFeatures.sol#78-80) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 82,
+                    "vulnerability_to_line": 84,
+                    "vulnerability_code": "    function logFatal  ( string memory strMessage ) public view returns  (uint256 rv) {\n\n        rv = logTextMessage(5, strMessage);\n",
+                    "message": "SkaleFeatures.logFatal (SkaleFeatures.sol#82-84) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": 99,
+                    "vulnerability_code": "    function getConfigVariableUint256( string memory strConfigVariableName ) public view returns ( uint256 rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocks = (bytes(strConfigVariableName).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let ptr := mload(fmp)\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add(strConfigVariableName, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            rv := mload(ptr)\n\n        }\n",
+                    "message": "SkaleFeatures.getConfigVariableUint256 (SkaleFeatures.sol#86-99) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 101,
+                    "vulnerability_to_line": 114,
+                    "vulnerability_code": "    function getConfigVariableAddress( string memory strConfigVariableName ) public view returns ( address rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocks = (bytes(strConfigVariableName).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let ptr := mload(fmp)\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add(strConfigVariableName, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            rv := mload(ptr)\n\n        }\n",
+                    "message": "SkaleFeatures.getConfigVariableAddress (SkaleFeatures.sol#101-114) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": 128,
+                    "vulnerability_code": "    function getConfigVariableString( string memory strConfigVariableName ) public view returns ( string memory rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocks = (bytes(strConfigVariableName).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let ptr := mload(fmp)\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add(strConfigVariableName, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n        }\n",
+                    "message": "SkaleFeatures.getConfigVariableString (SkaleFeatures.sol#116-128) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 130,
+                    "vulnerability_to_line": 150,
+                    "vulnerability_code": "    function concatenateStrings( string memory strA, string memory strB ) public view returns ( string memory rv ) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocksA = (bytes(strA).length + 31) / 32 + 1;\n\n        uint256 blocksB = (bytes(strB).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let p := mload(fmp)\n\n            let ptr := p\n\n            for { let i := 0 } lt( i, blocksA ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add( strA, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            ptr := add(ptr, mul( blocksA, 32) )\n\n            for { let i := 0 } lt( i, blocksB ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add( strB, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n        }\n",
+                    "message": "SkaleFeatures.concatenateStrings (SkaleFeatures.sol#130-150) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 152,
+                    "vulnerability_to_line": 167,
+                    "vulnerability_code": "    function getConfigPermissionFlag(address a, string memory strConfigVariableName) public view returns (uint256 rv) {\n\n        uint256 fmp = FREE_MEM_PTR;\n\n        uint256 blocks = (bytes(strConfigVariableName).length + 31) / 32 + 1;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            let p := mload(fmp)\n\n            mstore(p, a)\n\n            let ptr := add(p, 32)\n\n            for { let i := 0 } lt( i, blocks ) { i := add(1, i) } {\n\n                let where := add(ptr, mul(32, i))\n\n                let what := mload(add(strConfigVariableName, mul(32, i)))\n\n                mstore(where, what)\n\n            }\n\n            rv := mload(ptr)\n\n        }\n",
+                    "message": "SkaleFeatures.getConfigPermissionFlag (SkaleFeatures.sol#152-167) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in SkaleFeatures.sol:\n\t- pragma solidity0.6.12 (SkaleFeatures.sol#24): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public constant FREE_MEM_PTR = 0x40;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public constant FN_NUM_LOG_TEXT_MESSAGE = 0x12;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public constant FN_NUM_GET_CONFIG_VARIABLE_UINT256 = 0x13;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public constant FN_NUM_GET_CONFIG_VARIABLE_ADDRESS = 0x14;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public constant FN_NUM_GET_CONFIG_VARIABLE_STRING = 0x15;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 34,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public constant FN_NUM_CONCATENATE_STRINGS = 0x16;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public constant FN_NUM_GET_CONFIG_PERMISSION_FLAG = 0x17;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function logTextMessage( uint256 messageType, string memory strTextMessage ) public view returns ( uint256 rv ) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getConfigVariableUint256( string memory strConfigVariableName ) public view returns ( uint256 rv ) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 101,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getConfigVariableAddress( string memory strConfigVariableName ) public view returns ( address rv ) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getConfigVariableString( string memory strConfigVariableName ) public view returns ( string memory rv ) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 130,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function concatenateStrings( string memory strA, string memory strB ) public view returns ( string memory rv ) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_FUNCTIONS_RETURNS_TYPE_AND_NO_RETURN",
+                    "vulnerability_from_line": 152,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getConfigPermissionFlag(address a, string memory strConfigVariableName) public view returns (uint256 rv) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function logTextMessage( uint256 messageType, string memory strTextMessage ) public view returns ( uint256 rv ) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getConfigVariableUint256( string memory strConfigVariableName ) public view returns ( uint256 rv ) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 101,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getConfigVariableAddress( string memory strConfigVariableName ) public view returns ( address rv ) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 116,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getConfigVariableString( string memory strConfigVariableName ) public view returns ( string memory rv ) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 130,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function concatenateStrings( string memory strA, string memory strB ) public view returns ( string memory rv ) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 152,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getConfigPermissionFlag(address a, string memory strConfigVariableName) public view returns (uint256 rv) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 90,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 105,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 120,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 135,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 156,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "IMA-8ba748426e10bdcd3bcf1e5adf3b97a22f55422f/proxy/contracts/test/TestContractManager.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(newContractsAddress != address(0), \"New address is equal zero\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(contracts[contractId] != newContractsAddress, \"Contract is already added\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(length > 0, \"Given contracts address is not contain code\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-short-revert-string",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(length > 0, \"Given contracts address is not contain code\");\n",
+                    "message": "Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and  gas costs when the revert condition has been met."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": 56,
+                    "vulnerability_code": "    function setContractsAddress(string calldata contractsName, address newContractsAddress) external {\n\n        // check newContractsAddress is not equal zero\n\n        require(newContractsAddress != address(0), \"New address is equal zero\");\n\n        // create hash of contractsName\n\n        bytes32 contractId = keccak256(abi.encodePacked(contractsName));\n\n        // check newContractsAddress is not equal the previous contract's address\n\n        require(contracts[contractId] != newContractsAddress, \"Contract is already added\");\n\n        uint256 length;\n\n        // solhint-disable-next-line no-inline-assembly\n\n        assembly {\n\n            length := extcodesize(newContractsAddress)\n\n        }\n\n        // check newContractsAddress contains code\n\n        require(length > 0, \"Given contracts address is not contain code\");\n\n        // add newContractsAddress to mapping of actual contract addresses\n\n        contracts[contractId] = newContractsAddress;\n\n        emit ContractUpgraded(contractsName, newContractsAddress);\n",
+                    "message": "ContractManager.setContractsAddress uses assembly (TestContractManager.sol#39-56)\n\t- TestContractManager.sol#48-50\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in TestContractManager.sol:\n\t- pragma solidity0.6.12 (TestContractManager.sol#24): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "IMA-8ba748426e10bdcd3bcf1e5adf3b97a22f55422f/proxy/contracts/test/TestSkaleVerifier.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in TestSkaleVerifier.sol:\n\t- pragma solidity0.6.12 (TestSkaleVerifier.sol#25): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "IMA-8ba748426e10bdcd3bcf1e5adf3b97a22f55422f/proxy/contracts/interfaces/IERC20Module.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in IERC20Module.sol:\n\t- pragma solidity0.6.12 (IERC20Module.sol#24): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "IMA-8ba748426e10bdcd3bcf1e5adf3b97a22f55422f/proxy/contracts/interfaces/IMessageProxy.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in IMessageProxy.sol:\n\t- pragma solidity0.6.12 (IMessageProxy.sol#24): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "IMA-8ba748426e10bdcd3bcf1e5adf3b97a22f55422f/proxy/contracts/interfaces/IERC721Module.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in IERC721Module.sol:\n\t- pragma solidity0.6.12 (IERC721Module.sol#24): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    }
+}

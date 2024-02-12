@@ -1,0 +1,1145 @@
+{
+    "bentobox-c2e150b16b8764ebfe2e1e6e267ae14e10738065/contracts/ERC20.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(balanceOf[msg.sender] >= amount, \"ERC20: balance too low\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(balanceOf[to] + amount >= balanceOf[to], \"ERC20: overflow detected\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(balanceOf[from] >= amount, \"ERC20: balance too low\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(allowance[from][msg.sender] >= amount, \"ERC20: allowance too low\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(balanceOf[to] + amount >= balanceOf[to], \"ERC20: overflow detected\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(owner_ != address(0), \"ERC20: Owner cannot be 0\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(block.timestamp < deadline, \"ERC20: Expired\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 64,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(recoveredAddress == owner_, \"ERC20: Invalid Signature\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_8"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": 51,
+                    "vulnerability_code": "    function DOMAIN_SEPARATOR() public view returns (bytes32){\n\n      uint256 chainId;\n\n      assembly {chainId := chainid()}\n\n      return keccak256(abi.encode(keccak256(\"EIP712Domain(uint256 chainId,address verifyingContract)\"), chainId, address(this)));\n",
+                    "message": "ERC20.DOMAIN_SEPARATOR (ERC20.sol#47-51) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "timestamp",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": 67,
+                    "vulnerability_code": "    function permit(address owner_, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) external {\n\n        require(owner_ != address(0), \"ERC20: Owner cannot be 0\");\n\n        require(block.timestamp < deadline, \"ERC20: Expired\");\n\n        bytes32 digest = keccak256(abi.encodePacked(\n\n            \"\\x19\\x01\", DOMAIN_SEPARATOR(),\n\n            keccak256(abi.encode(\n\n                0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9,\n\n                owner_, spender, value, nonces[owner_]++, deadline\n\n            ))\n\n        ));\n\n        address recoveredAddress = ecrecover(digest, v, r, s);\n\n        require(recoveredAddress == owner_, \"ERC20: Invalid Signature\");\n\n        allowance[owner_][spender] = value;\n\n        emit Approval(owner_, spender, value);\n",
+                    "message": "ERC20.permit (ERC20.sol#53-67) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- require(bool,string)(block.timestamp < deadline,ERC20: Expired) (ERC20.sol#55)\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": 51,
+                    "vulnerability_code": "    function DOMAIN_SEPARATOR() public view returns (bytes32){\n\n      uint256 chainId;\n\n      assembly {chainId := chainid()}\n\n      return keccak256(abi.encode(keccak256(\"EIP712Domain(uint256 chainId,address verifyingContract)\"), chainId, address(this)));\n",
+                    "message": "ERC20.DOMAIN_SEPARATOR uses assembly (ERC20.sol#47-51)\n\t- ERC20.sol#49\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": 27,
+                    "vulnerability_code": "    function transfer(address to, uint256 amount) public returns (bool success) {\n\n        require(balanceOf[msg.sender] >= amount, \"ERC20: balance too low\");\n\n        require(balanceOf[to] + amount >= balanceOf[to], \"ERC20: overflow detected\");\n\n        balanceOf[msg.sender] -= amount;\n\n        balanceOf[to] += amount;\n\n        emit Transfer(msg.sender, to, amount);\n\n        return true;\n",
+                    "message": "ERC20.transfer (ERC20.sol#20-27) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": 38,
+                    "vulnerability_code": "    function transferFrom(address from, address to, uint256 amount) public returns (bool success) {\n\n        require(balanceOf[from] >= amount, \"ERC20: balance too low\");\n\n        require(allowance[from][msg.sender] >= amount, \"ERC20: allowance too low\");\n\n        require(balanceOf[to] + amount >= balanceOf[to], \"ERC20: overflow detected\");\n\n        balanceOf[from] -= amount;\n\n        allowance[from][msg.sender] -= amount;\n\n        balanceOf[to] += amount;\n\n        emit Transfer(from, to, amount);\n\n        return true;\n",
+                    "message": "ERC20.transferFrom (ERC20.sol#29-38) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": 44,
+                    "vulnerability_code": "    function approve(address spender, uint256 amount) public returns (bool success) {\n\n        allowance[msg.sender][spender] = amount;\n\n        emit Approval(msg.sender, spender, amount);\n\n        return true;\n",
+                    "message": "ERC20.approve (ERC20.sol#40-44) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in ERC20.sol:\n\t- pragma solidity0.6.12 (ERC20.sol#7): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": 51,
+                    "vulnerability_code": "    function DOMAIN_SEPARATOR() public view returns (bytes32){\n\n      uint256 chainId;\n\n      assembly {chainId := chainid()}\n\n      return keccak256(abi.encode(keccak256(\"EIP712Domain(uint256 chainId,address verifyingContract)\"), chainId, address(this)));\n",
+                    "message": "Function 'ERC20.DOMAIN_SEPARATOR' (ERC20.sol#47-51) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function approve(address spender, uint256 amount) public returns (bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function DOMAIN_SEPARATOR() public view returns (bytes32){\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "      assembly {chainId := chainid()}\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "bentobox-c2e150b16b8764ebfe2e1e6e267ae14e10738065/contracts/Ownable.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    constructor () internal {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owner = msg.sender;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        emit OwnershipTransferred(address(0), msg.sender);\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    }\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(newOwner != address(0), \"Ownable: zero address\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.sender == pendingOwner, \"Ownable: caller != pending owner\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(msg.sender == owner, \"Ownable: caller is not the owner\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_5"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": 25,
+                    "vulnerability_code": "    function renounceOwnership() public onlyOwner {\n\n        emit OwnershipTransferred(owner, address(0));\n\n        owner = address(0);\n",
+                    "message": "Ownable.renounceOwnership (Ownable.sol#22-25) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 27,
+                    "vulnerability_to_line": 29,
+                    "vulnerability_code": "    function transferOwnership(address newOwner) public onlyOwner {\n\n        pendingOwner = newOwner;\n",
+                    "message": "Ownable.transferOwnership (Ownable.sol#27-29) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": 35,
+                    "vulnerability_code": "    function transferOwnershipDirect(address newOwner) public onlyOwner {\n\n        require(newOwner != address(0), \"Ownable: zero address\");\n\n        emit OwnershipTransferred(owner, newOwner);\n\n        owner = newOwner;\n",
+                    "message": "Ownable.transferOwnershipDirect (Ownable.sol#31-35) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": 42,
+                    "vulnerability_code": "    function claimOwnership() public {\n\n        require(msg.sender == pendingOwner, \"Ownable: caller != pending owner\");\n\n        emit OwnershipTransferred(owner, pendingOwner);\n\n        owner = pendingOwner;\n\n        pendingOwner = address(0);\n",
+                    "message": "Ownable.claimOwnership (Ownable.sol#37-42) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in Ownable.sol:\n\t- pragma solidity0.6.12 (Ownable.sol#4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        owner = address(0);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ADDRESS_HARDCODED",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        pendingOwner = address(0);\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "bentobox-c2e150b16b8764ebfe2e1e6e267ae14e10738065/contracts/mocks/WETH9Mock.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(balanceOf[msg.sender] >= wad, \"WETH9: Error\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(balanceOf[src] >= wad, \"WETH9: Error\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\trequire(allowance[src][msg.sender] >= wad, \"WETH9: Error\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 56,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tif (src != msg.sender && allowance[src][msg.sender] != uint256(-1)) {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\trequire(allowance[src][msg.sender] >= wad, \"WETH9: Error\");\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\tallowance[src][msg.sender] -= wad;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 59,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t}\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_7"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tuint8 public decimals = 18;\n",
+                    "message": "WETH9Mock.decimals should be constant (WETH9Mock.sol#10)\nWETH9Mock.name should be constant (WETH9Mock.sol#8)\nWETH9Mock.symbol should be constant (WETH9Mock.sol#9)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": 26,
+                    "vulnerability_code": "\tfunction deposit() public payable {\n\n\t\tbalanceOf[msg.sender] += msg.value;\n\n\t\temit Deposit(msg.sender, msg.value);\n",
+                    "message": "WETH9Mock.deposit (WETH9Mock.sol#23-26) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": 33,
+                    "vulnerability_code": "\tfunction withdraw(uint256 wad) public {\n\n\t\trequire(balanceOf[msg.sender] >= wad, \"WETH9: Error\");\n\n\t\tbalanceOf[msg.sender] -= wad;\n\n\t\tmsg.sender.transfer(wad);\n\n\t\temit Withdrawal(msg.sender, wad);\n",
+                    "message": "WETH9Mock.withdraw (WETH9Mock.sol#28-33) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": 37,
+                    "vulnerability_code": "\tfunction totalSupply() public view returns (uint256) {\n\n\t\treturn address(this).balance;\n",
+                    "message": "WETH9Mock.totalSupply (WETH9Mock.sol#35-37) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": 43,
+                    "vulnerability_code": "\tfunction approve(address guy, uint256 wad) public returns (bool) {\n\n\t\tallowance[msg.sender][guy] = wad;\n\n\t\temit Approval(msg.sender, guy, wad);\n\n\t\treturn true;\n",
+                    "message": "WETH9Mock.approve (WETH9Mock.sol#39-43) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": 47,
+                    "vulnerability_code": "\tfunction transfer(address dst, uint256 wad) public returns (bool) {\n\n\t\treturn transferFrom(msg.sender, dst, wad);\n",
+                    "message": "WETH9Mock.transfer (WETH9Mock.sol#45-47) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in WETH9Mock.sol:\n\t- pragma solidity0.6.12 (WETH9Mock.sol#5): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "bentobox-c2e150b16b8764ebfe2e1e6e267ae14e10738065/contracts/mocks/RevertingERC20Mock.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 19,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tconstructor(\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tstring memory name_,\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 21,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tstring memory symbol_,\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 22,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tuint256 supply\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tname = name_;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tsymbol = symbol_;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\ttotalSupply = supply;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 27,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tbalanceOf[msg.sender] = supply;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t}\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(balanceOf[msg.sender] >= amount, \"TokenB: balance too low\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(amount >= 0, \"TokenB: amount should be > 0\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(balanceOf[to] + amount >= balanceOf[to], \"TokenB: overflow detected\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 45,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(balanceOf[from] >= amount, \"TokenB: balance too low\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(allowance[from][msg.sender] >= amount, \"TokenB: allowance too low\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(amount >= 0, \"TokenB: amount should be >= 0\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 48,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(balanceOf[to] + amount >= balanceOf[to], \"TokenB: overflow detected\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_4"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": 38,
+                    "vulnerability_code": "\tfunction transfer(address to, uint256 amount) public returns (bool success) {\n\n\t\trequire(balanceOf[msg.sender] >= amount, \"TokenB: balance too low\");\n\n\t\trequire(amount >= 0, \"TokenB: amount should be > 0\");\n\n\t\trequire(balanceOf[to] + amount >= balanceOf[to], \"TokenB: overflow detected\");\n\n\t\tbalanceOf[msg.sender] -= amount;\n\n\t\tbalanceOf[to] += amount;\n\n\t\temit Transfer(msg.sender, to, amount);\n\n\t\treturn true;\n",
+                    "message": "RevertingERC20Mock.transfer (RevertingERC20Mock.sol#30-38) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": 54,
+                    "vulnerability_code": "\tfunction transferFrom(\n\n\t\taddress from,\n\n\t\taddress to,\n\n\t\tuint256 amount\n\n\t) public returns (bool success) {\n\n\t\trequire(balanceOf[from] >= amount, \"TokenB: balance too low\");\n\n\t\trequire(allowance[from][msg.sender] >= amount, \"TokenB: allowance too low\");\n\n\t\trequire(amount >= 0, \"TokenB: amount should be >= 0\");\n\n\t\trequire(balanceOf[to] + amount >= balanceOf[to], \"TokenB: overflow detected\");\n\n\t\tbalanceOf[from] -= amount;\n\n\t\tallowance[from][msg.sender] -= amount;\n\n\t\tbalanceOf[to] += amount;\n\n\t\temit Transfer(from, to, amount);\n\n\t\treturn true;\n",
+                    "message": "RevertingERC20Mock.transferFrom (RevertingERC20Mock.sol#40-54) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 56,
+                    "vulnerability_to_line": 60,
+                    "vulnerability_code": "\tfunction approve(address spender, uint256 amount) public returns (bool success) {\n\n\t\tallowance[msg.sender][spender] = amount;\n\n\t\temit Approval(msg.sender, spender, amount);\n\n\t\treturn true;\n",
+                    "message": "RevertingERC20Mock.approve (RevertingERC20Mock.sol#56-60) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 6,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in RevertingERC20Mock.sol:\n\t- pragma solidity0.6.12 (RevertingERC20Mock.sol#6): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 56,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction approve(address spender, uint256 amount) public returns (bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tmapping(address => mapping(address => uint256)) allowance;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "bentobox-c2e150b16b8764ebfe2e1e6e267ae14e10738065/contracts/mocks/ReturnFalseERC20Mock.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tconstructor(\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tstring memory name_,\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 26,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tstring memory symbol_,\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 27,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tuint256 supply\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t) public {\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 29,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tname = name_;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tsymbol = symbol_;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\ttotalSupply = supply;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 32,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tbalanceOf[msg.sender] = supply;\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "non-payable-constructor",
+                    "vulnerability_from_line": 33,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t}\n",
+                    "message": "Consider making costructor payable to save gas."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(block.timestamp < deadline, \"ReturnFalseERC20: Expired\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 104,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\trequire(recoveredAddress == owner, \"ReturnFalseERC20: Invalid Sig\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 36,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tif (balanceOf[msg.sender] >= amount && balanceOf[to] + amount >= balanceOf[to]) {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 37,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\tbalanceOf[msg.sender] -= amount;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\tbalanceOf[to] += amount;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 39,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\temit Transfer(msg.sender, to, amount);\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 40,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\treturn true;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 41,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t} else {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 42,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\treturn false;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t}\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tif (balanceOf[from] >= amount && allowance[from][msg.sender] >= amount && balanceOf[to] + amount >= balanceOf[to]) {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 48,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\tbalanceOf[from] -= amount;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 49,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\tallowance[from][msg.sender] -= amount;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 50,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\tbalanceOf[to] += amount;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 51,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\temit Transfer(from, to, amount);\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\treturn true;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t} else {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t\treturn false;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\t}\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_8"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "constant-function",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": 74,
+                    "vulnerability_code": "\tfunction DOMAIN_SEPARATOR() public view returns (bytes32) {\n\n\t\tuint256 chainId;\n\n\t\tassembly {\n\n\t\t\tchainId := chainid()\n\n\t\t}\n\n\t\treturn\n\n\t\t\tkeccak256(\n\n\t\t\t\tabi.encode(keccak256(\"EIP712Domain(uint256 chainId,address verifyingContract)\"), chainId, address(this))\n\n\t\t\t);\n",
+                    "message": "ReturnFalseERC20Mock.DOMAIN_SEPARATOR (ReturnFalseERC20Mock.sol#65-74) is declared view but contains assembly code\n"
+                },
+                {
+                    "name": "timestamp",
+                    "vulnerability_from_line": 76,
+                    "vulnerability_to_line": 107,
+                    "vulnerability_code": "\tfunction permit(\n\n\t\taddress owner,\n\n\t\taddress spender,\n\n\t\tuint256 value,\n\n\t\tuint256 deadline,\n\n\t\tuint8 v,\n\n\t\tbytes32 r,\n\n\t\tbytes32 s\n\n\t) external {\n\n\t\trequire(block.timestamp < deadline, \"ReturnFalseERC20: Expired\");\n\n\t\tbytes32 digest =\n\n\t\t\tkeccak256(\n\n\t\t\t\tabi.encodePacked(\n\n\t\t\t\t\t\"\\x19\\x01\",\n\n\t\t\t\t\tDOMAIN_SEPARATOR(),\n\n\t\t\t\t\tkeccak256(\n\n\t\t\t\t\t\tabi.encode(\n\n\t\t\t\t\t\t\t0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9,\n\n\t\t\t\t\t\t\towner,\n\n\t\t\t\t\t\t\tspender,\n\n\t\t\t\t\t\t\tvalue,\n\n\t\t\t\t\t\t\tnonces[owner]++,\n\n\t\t\t\t\t\t\tdeadline\n\n\t\t\t\t\t\t)\n\n\t\t\t\t\t)\n\n\t\t\t\t)\n\n\t\t\t);\n\n\t\taddress recoveredAddress = ecrecover(digest, v, r, s);\n\n\t\trequire(recoveredAddress == owner, \"ReturnFalseERC20: Invalid Sig\");\n\n\t\tallowance[owner][spender] = value;\n\n\t\temit Approval(owner, spender, value);\n",
+                    "message": "ReturnFalseERC20Mock.permit (ReturnFalseERC20Mock.sol#76-107) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- require(bool,string)(block.timestamp < deadline,ReturnFalseERC20: Expired) (ReturnFalseERC20Mock.sol#85)\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": 74,
+                    "vulnerability_code": "\tfunction DOMAIN_SEPARATOR() public view returns (bytes32) {\n\n\t\tuint256 chainId;\n\n\t\tassembly {\n\n\t\t\tchainId := chainid()\n\n\t\t}\n\n\t\treturn\n\n\t\t\tkeccak256(\n\n\t\t\t\tabi.encode(keccak256(\"EIP712Domain(uint256 chainId,address verifyingContract)\"), chainId, address(this))\n\n\t\t\t);\n",
+                    "message": "ReturnFalseERC20Mock.DOMAIN_SEPARATOR uses assembly (ReturnFalseERC20Mock.sol#65-74)\n\t- ReturnFalseERC20Mock.sol#67-69\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": 44,
+                    "vulnerability_code": "\tfunction transfer(address to, uint256 amount) public returns (bool success) {\n\n\t\tif (balanceOf[msg.sender] >= amount && balanceOf[to] + amount >= balanceOf[to]) {\n\n\t\t\tbalanceOf[msg.sender] -= amount;\n\n\t\t\tbalanceOf[to] += amount;\n\n\t\t\temit Transfer(msg.sender, to, amount);\n\n\t\t\treturn true;\n\n\t\t} else {\n\n\t\t\treturn false;\n\n\t\t}\n",
+                    "message": "ReturnFalseERC20Mock.transfer (ReturnFalseERC20Mock.sol#35-44) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": 56,
+                    "vulnerability_code": "\tfunction transferFrom(address from, address to, uint256 amount) public returns (bool success) {\n\n\t\tif (balanceOf[from] >= amount && allowance[from][msg.sender] >= amount && balanceOf[to] + amount >= balanceOf[to]) {\n\n\t\t\tbalanceOf[from] -= amount;\n\n\t\t\tallowance[from][msg.sender] -= amount;\n\n\t\t\tbalanceOf[to] += amount;\n\n\t\t\temit Transfer(from, to, amount);\n\n\t\t\treturn true;\n\n\t\t} else {\n\n\t\t\treturn false;\n\n\t\t}\n",
+                    "message": "ReturnFalseERC20Mock.transferFrom (ReturnFalseERC20Mock.sol#46-56) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": 62,
+                    "vulnerability_code": "\tfunction approve(address spender, uint256 amount) public returns (bool success) {\n\n\t\tallowance[msg.sender][spender] = amount;\n\n\t\temit Approval(msg.sender, spender, amount);\n\n\t\treturn true;\n",
+                    "message": "ReturnFalseERC20Mock.approve (ReturnFalseERC20Mock.sol#58-62) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in ReturnFalseERC20Mock.sol:\n\t- pragma solidity0.6.12 (ReturnFalseERC20Mock.sol#9): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": 74,
+                    "vulnerability_code": "\tfunction DOMAIN_SEPARATOR() public view returns (bytes32) {\n\n\t\tuint256 chainId;\n\n\t\tassembly {\n\n\t\t\tchainId := chainid()\n\n\t\t}\n\n\t\treturn\n\n\t\t\tkeccak256(\n\n\t\t\t\tabi.encode(keccak256(\"EIP712Domain(uint256 chainId,address verifyingContract)\"), chainId, address(this))\n\n\t\t\t);\n",
+                    "message": "Function 'ReturnFalseERC20Mock.DOMAIN_SEPARATOR' (ReturnFalseERC20Mock.sol#65-74) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction approve(address spender, uint256 amount) public returns (bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_TRANSFER_SHOULD_THROW",
+                    "vulnerability_from_line": 35,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transfer(address to, uint256 amount) public returns (bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_TRANSFER_SHOULD_THROW",
+                    "vulnerability_from_line": 46,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction transferFrom(address from, address to, uint256 amount) public returns (bool success) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_NOT_BE_VIEW",
+                    "vulnerability_from_line": 65,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\tfunction DOMAIN_SEPARATOR() public view returns (bytes32) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 67,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "\t\tassembly {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "bentobox-c2e150b16b8764ebfe2e1e6e267ae14e10738065/contracts/libraries/BoringMath.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function add(uint256 a, uint256 b) internal pure returns (uint256 c) {require((c = a + b) >= b, \"BoringMath: Add Overflow\");}\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function sub(uint256 a, uint256 b) internal pure returns (uint256 c) {require((c = a - b) <= a, \"BoringMath: Underflow\");}\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function mul(uint256 a, uint256 b) internal pure returns (uint256 c) {require(b == 0 || (c = a * b)/b == a, \"BoringMath: Mul Overflow\");}\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(a <= uint128(-1), \"BoringMath: uint128 Overflow\");\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 17,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function add(uint128 a, uint128 b) internal pure returns (uint128 c) {require((c = a + b) >= b, \"BoringMath: Add Overflow\");}\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                },
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 18,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function sub(uint128 a, uint128 b) internal pure returns (uint128 c) {require((c = a - b) <= a, \"BoringMath: Underflow\");}\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in BoringMath.sol:\n\t- pragma solidity0.6.12 (BoringMath.sol#4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "bentobox-c2e150b16b8764ebfe2e1e6e267ae14e10738065/contracts/libraries/FullMath.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "use-custom-error-not-require",
+                    "vulnerability_from_line": 47,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        require(h < d, 'FullMath::mulDiv: overflow');\n",
+                    "message": "Consider using custom errors as they are more gas efficient while allowing developers  to describe the error in detail using NatSpec."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 5,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in FullMath.sol:\n\t- pragma solidity0.6.12 (FullMath.sol#5): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DIV_MUL",
+                    "vulnerability_from_line": 25,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        l += h * ((-pow2) / pow2 + 1);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 10,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function fullMul(uint256 x, uint256 y) private pure returns (uint256 l, uint256 h) {\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "bentobox-c2e150b16b8764ebfe2e1e6e267ae14e10738065/contracts/interfaces/IERC20.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in IERC20.sol:\n\t- pragma solidity0.6.12 (IERC20.sol#4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "bentobox-c2e150b16b8764ebfe2e1e6e267ae14e10738065/contracts/interfaces/IMasterContract.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in IMasterContract.sol:\n\t- pragma solidity0.6.12 (IMasterContract.sol#4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "bentobox-c2e150b16b8764ebfe2e1e6e267ae14e10738065/contracts/interfaces/IWETH.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in IWETH.sol:\n\t- pragma solidity0.6.12 (IWETH.sol#4): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function withdraw(uint256) external;\n",
+                    "message": "Parameter '' of IWETH.withdraw (IWETH.sol#8) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        }
+    },
+    "bentobox-c2e150b16b8764ebfe2e1e6e267ae14e10738065/contracts/interfaces/IOracle.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity 0.6.12;\n",
+                    "message": "Detected issues with version pragma in IOracle.sol:\n\t- pragma solidity0.6.12 (IOracle.sol#4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 8,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function get(bytes calldata data) external returns (bool, uint256);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SHOULD_RETURN_STRUCT",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function peek(bytes calldata data) external view returns (bool, uint256);\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}

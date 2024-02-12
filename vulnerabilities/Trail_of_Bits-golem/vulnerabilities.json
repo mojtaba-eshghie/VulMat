@@ -1,0 +1,3142 @@
+{
+    "golem-contracts-62a1e0dab3baf8e9bff79b653dffa7df5f2d10a0/contracts/GolemNetworkTokenBatching.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 407,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < payments.length; ++i) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 407,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < payments.length; ++i) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_47"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 360,
+                    "vulnerability_to_line": 371,
+                    "vulnerability_code": "    function withdrawTo(uint256 _value, address _destination) public {\n\n        address user = msg.sender;\n\n        uint256 balance = balances[user];\n\n        require(_value <= balance);\n\n\n\n        balances[user] = (balance - _value);\n\n        totalSupply_ -= _value;\n\n\n\n        TOKEN.transfer(_destination, _value);\n\n\n\n        Burned(user, _value);\n",
+                    "message": "TokenProxy.withdrawTo (GolemNetworkTokenBatching.sol#360-371) does not use the value returned by external calls:\n\t-TOKEN.transfer(_destination,_value) (GolemNetworkTokenBatching.sol#368)\n"
+                },
+                {
+                    "name": "reentrancy-benign",
+                    "vulnerability_from_line": 336,
+                    "vulnerability_to_line": 354,
+                    "vulnerability_code": "    function transferFromGate() external {\n\n        address user = msg.sender;\n\n\n\n        address gate = gates[user];\n\n\n\n        // Make sure the User's Gate exists.\n\n        require(gate != 0);\n\n\n\n        uint256 value = TOKEN.balanceOf(gate);\n\n\n\n        Gate(gate).transferToProxy(value);\n\n\n\n        // Handle the information about the amount of migrated tokens.\n\n        // This is a trusted information becase it comes from the Gate.\n\n        totalSupply_ += value;\n\n        balances[user] += value;\n\n\n\n        Minted(user, value);\n",
+                    "message": "Reentrancy in TokenProxy.transferFromGate (GolemNetworkTokenBatching.sol#336-354):\n\tExternal calls:\n\t- value = TOKEN.balanceOf(gate) (GolemNetworkTokenBatching.sol#344)\n\t- Gate(gate).transferToProxy(value) (GolemNetworkTokenBatching.sol#346)\n\tState variables written after the call(s):\n\t- balances (GolemNetworkTokenBatching.sol#351)\n\t- totalSupply_ (GolemNetworkTokenBatching.sol#350)\n"
+                },
+                {
+                    "name": "timestamp",
+                    "vulnerability_from_line": 402,
+                    "vulnerability_to_line": 421,
+                    "vulnerability_code": "    function batchTransfer(bytes32[] payments, uint64 closureTime) external {\n\n        require(block.timestamp >= closureTime);\n\n\n\n        uint balance = balances[msg.sender];\n\n\n\n        for (uint i = 0; i < payments.length; ++i) {\n\n            // A payment contains compressed data:\n\n            // first 96 bits (12 bytes) is a value,\n\n            // following 160 bits (20 bytes) is an address.\n\n            bytes32 payment = payments[i];\n\n            address addr = address(payment);\n\n            uint v = uint(payment) / 2**160;\n\n            require(v <= balance);\n\n            balances[addr] += v;\n\n            balance -= v;\n\n            BatchTransfer(msg.sender, addr, v, closureTime);\n\n        }\n\n\n\n        balances[msg.sender] = balance;\n",
+                    "message": "GolemNetworkTokenBatching.batchTransfer (GolemNetworkTokenBatching.sol#402-421) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- require(bool)(block.timestamp >= closureTime) (GolemNetworkTokenBatching.sol#403)\n"
+                },
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.19;\n",
+                    "message": "Different versions of Solidity is used in GolemNetworkTokenBatching.sol:\n\t- Version used: ['^0.4.18', '^0.4.19']\n\t- GolemNetworkTokenBatching.sol#4 declares pragma solidity^0.4.19\n\t- GolemNetworkTokenBatching.sol#14 declares pragma solidity^0.4.18\n\t- GolemNetworkTokenBatching.sol#31 declares pragma solidity^0.4.18\n\t- GolemNetworkTokenBatching.sol#82 declares pragma solidity^0.4.18\n\t- GolemNetworkTokenBatching.sol#132 declares pragma solidity^0.4.18\n\t- GolemNetworkTokenBatching.sol#148 declares pragma solidity^0.4.18\n\t- GolemNetworkTokenBatching.sol#252 declares pragma solidity^0.4.19\n\t- GolemNetworkTokenBatching.sol#380 declares pragma solidity^0.4.19\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function onTokenReceived(address _from, uint _value, bytes _data) public;\n",
+                    "message": "ReceivingContract.onTokenReceived (GolemNetworkTokenBatching.sol#9) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function totalSupply() public view returns (uint256);\n",
+                    "message": "ERC20Basic.totalSupply (GolemNetworkTokenBatching.sol#23) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 99,
+                    "vulnerability_to_line": 101,
+                    "vulnerability_code": "  function totalSupply() public view returns (uint256) {\n\n    return totalSupply_;\n",
+                    "message": "BasicToken.totalSupply (GolemNetworkTokenBatching.sol#99-101) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address who) public view returns (uint256);\n",
+                    "message": "ERC20Basic.balanceOf (GolemNetworkTokenBatching.sol#24) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 124,
+                    "vulnerability_to_line": 126,
+                    "vulnerability_code": "  function balanceOf(address _owner) public view returns (uint256 balance) {\n\n    return balances[_owner];\n",
+                    "message": "BasicToken.balanceOf (GolemNetworkTokenBatching.sol#124-126) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address owner, address spender) public view returns (uint256);\n",
+                    "message": "ERC20.allowance (GolemNetworkTokenBatching.sol#139) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 203,
+                    "vulnerability_to_line": 205,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public view returns (uint256) {\n\n    return allowed[_owner][_spender];\n",
+                    "message": "StandardToken.allowance (GolemNetworkTokenBatching.sol#203-205) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 140,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address from, address to, uint256 value) public returns (bool);\n",
+                    "message": "ERC20.transferFrom (GolemNetworkTokenBatching.sol#140) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 169,
+                    "vulnerability_to_line": 179,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n\n    require(_to != address(0));\n\n    require(_value <= balances[_from]);\n\n    require(_value <= allowed[_from][msg.sender]);\n\n\n\n    balances[_from] = balances[_from].sub(_value);\n\n    balances[_to] = balances[_to].add(_value);\n\n    allowed[_from][msg.sender] = allowed[_from][msg.sender].sub(_value);\n\n    Transfer(_from, _to, _value);\n\n    return true;\n",
+                    "message": "StandardToken.transferFrom (GolemNetworkTokenBatching.sol#169-179) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 142,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address spender, uint256 value) public returns (bool);\n",
+                    "message": "ERC20.approve (GolemNetworkTokenBatching.sol#142) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 191,
+                    "vulnerability_to_line": 195,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n\n    allowed[msg.sender][_spender] = _value;\n\n    Approval(msg.sender, _spender, _value);\n\n    return true;\n",
+                    "message": "StandardToken.approve (GolemNetworkTokenBatching.sol#191-195) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 217,
+                    "vulnerability_to_line": 221,
+                    "vulnerability_code": "  function increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n\n    allowed[msg.sender][_spender] = allowed[msg.sender][_spender].add(_addedValue);\n\n    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n\n    return true;\n",
+                    "message": "StandardToken.increaseApproval (GolemNetworkTokenBatching.sol#217-221) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 233,
+                    "vulnerability_to_line": 242,
+                    "vulnerability_code": "  function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n\n    uint oldValue = allowed[msg.sender][_spender];\n\n    if (_subtractedValue > oldValue) {\n\n      allowed[msg.sender][_spender] = 0;\n\n    } else {\n\n      allowed[msg.sender][_spender] = oldValue.sub(_subtractedValue);\n\n    }\n\n    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n\n    return true;\n",
+                    "message": "StandardToken.decreaseApproval (GolemNetworkTokenBatching.sol#233-242) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 272,
+                    "vulnerability_to_line": 276,
+                    "vulnerability_code": "    function transferToProxy(uint256 _value) public {\n\n        require(msg.sender == PROXY);\n\n\n\n        require(TOKEN.transfer(PROXY, _value));\n",
+                    "message": "Gate.transferToProxy (GolemNetworkTokenBatching.sol#272-276) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.19;\n",
+                    "message": "Detected issues with version pragma in GolemNetworkTokenBatching.sol:\n\t- pragma solidity^0.4.19 (GolemNetworkTokenBatching.sol#4): it allows old versions\n\t- pragma solidity^0.4.18 (GolemNetworkTokenBatching.sol#14): it allows old versions\n\t- pragma solidity^0.4.18 (GolemNetworkTokenBatching.sol#31): it allows old versions\n\t- pragma solidity^0.4.18 (GolemNetworkTokenBatching.sol#82): it allows old versions\n\t- pragma solidity^0.4.18 (GolemNetworkTokenBatching.sol#132): it allows old versions\n\t- pragma solidity^0.4.18 (GolemNetworkTokenBatching.sol#148): it allows old versions\n\t- pragma solidity^0.4.19 (GolemNetworkTokenBatching.sol#252): it allows old versions\n\t- pragma solidity^0.4.19 (GolemNetworkTokenBatching.sol#380): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 124,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address _owner) public view returns (uint256 balance) {\n",
+                    "message": "Parameter '_owner' of BasicToken.balanceOf (GolemNetworkTokenBatching.sol#124) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 108,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_to' of BasicToken.transfer (GolemNetworkTokenBatching.sol#108) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 108,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of BasicToken.transfer (GolemNetworkTokenBatching.sol#108) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 203,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public view returns (uint256) {\n",
+                    "message": "Parameter '_owner' of StandardToken.allowance (GolemNetworkTokenBatching.sol#203) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 203,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public view returns (uint256) {\n",
+                    "message": "Parameter '_spender' of StandardToken.allowance (GolemNetworkTokenBatching.sol#203) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 169,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_from' of StandardToken.transferFrom (GolemNetworkTokenBatching.sol#169) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 169,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_to' of StandardToken.transferFrom (GolemNetworkTokenBatching.sol#169) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 169,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of StandardToken.transferFrom (GolemNetworkTokenBatching.sol#169) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 191,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of StandardToken.approve (GolemNetworkTokenBatching.sol#191) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 191,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of StandardToken.approve (GolemNetworkTokenBatching.sol#191) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 217,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of StandardToken.increaseApproval (GolemNetworkTokenBatching.sol#217) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 217,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n",
+                    "message": "Parameter '_addedValue' of StandardToken.increaseApproval (GolemNetworkTokenBatching.sol#217) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 233,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of StandardToken.decreaseApproval (GolemNetworkTokenBatching.sol#233) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 233,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n",
+                    "message": "Parameter '_subtractedValue' of StandardToken.decreaseApproval (GolemNetworkTokenBatching.sol#233) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 264,
+                    "vulnerability_to_line": 267,
+                    "vulnerability_code": "    function Gate(ERC20Basic _token, address _proxy) public {\n\n        TOKEN = _token;\n\n        PROXY = _proxy;\n",
+                    "message": "Function 'Gate.Gate' (GolemNetworkTokenBatching.sol#264-267) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 264,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function Gate(ERC20Basic _token, address _proxy) public {\n",
+                    "message": "Parameter '_token' of Gate.Gate (GolemNetworkTokenBatching.sol#264) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 264,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function Gate(ERC20Basic _token, address _proxy) public {\n",
+                    "message": "Parameter '_proxy' of Gate.Gate (GolemNetworkTokenBatching.sol#264) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 272,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferToProxy(uint256 _value) public {\n",
+                    "message": "Parameter '_value' of Gate.transferToProxy (GolemNetworkTokenBatching.sol#272) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 260,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ERC20Basic private TOKEN;\n",
+                    "message": "Variable 'Gate.TOKEN' (GolemNetworkTokenBatching.sol#260) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 261,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address private PROXY;\n",
+                    "message": "Variable 'Gate.PROXY' (GolemNetworkTokenBatching.sol#261) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 312,
+                    "vulnerability_to_line": 314,
+                    "vulnerability_code": "    function TokenProxy(ERC20Basic _token) public {\n\n        TOKEN = _token;\n",
+                    "message": "Function 'TokenProxy.TokenProxy' (GolemNetworkTokenBatching.sol#312-314) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 312,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function TokenProxy(ERC20Basic _token) public {\n",
+                    "message": "Parameter '_token' of TokenProxy.TokenProxy (GolemNetworkTokenBatching.sol#312) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 316,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getGateAddress(address _user) external view returns (address) {\n",
+                    "message": "Parameter '_user' of TokenProxy.getGateAddress (GolemNetworkTokenBatching.sol#316) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 356,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function withdraw(uint256 _value) external {\n",
+                    "message": "Parameter '_value' of TokenProxy.withdraw (GolemNetworkTokenBatching.sol#356) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 360,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function withdrawTo(uint256 _value, address _destination) public {\n",
+                    "message": "Parameter '_value' of TokenProxy.withdrawTo (GolemNetworkTokenBatching.sol#360) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 360,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function withdrawTo(uint256 _value, address _destination) public {\n",
+                    "message": "Parameter '_destination' of TokenProxy.withdrawTo (GolemNetworkTokenBatching.sol#360) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 301,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ERC20Basic public TOKEN;\n",
+                    "message": "Variable 'TokenProxy.TOKEN' (GolemNetworkTokenBatching.sol#301) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 399,
+                    "vulnerability_to_line": 400,
+                    "vulnerability_code": "    function GolemNetworkTokenBatching(ERC20Basic _gntToken) TokenProxy(_gntToken) public {\n",
+                    "message": "Function 'GolemNetworkTokenBatching.GolemNetworkTokenBatching' (GolemNetworkTokenBatching.sol#399-400) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 191,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 407,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < payments.length; ++i) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 407,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < payments.length; ++i) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.19;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 82,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 132,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 148,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 252,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.19;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 380,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.19;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 260,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ERC20Basic private TOKEN;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 261,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address private PROXY;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 303,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(address => address) private gates;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 90,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function onTokenReceived(address _from, uint _value, bytes _data) public;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping(address => uint256) balances;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 94,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 totalSupply_;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "golem-contracts-62a1e0dab3baf8e9bff79b653dffa7df5f2d10a0/contracts/ReceivingContract.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_2"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function onTokenReceived(address _from, uint _value, bytes _data) public;\n",
+                    "message": "ReceivingContract.onTokenReceived (ReceivingContract.sol#9) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.19;\n",
+                    "message": "Detected issues with version pragma in ReceivingContract.sol:\n\t- pragma solidity^0.4.19 (ReceivingContract.sol#4): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.19;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function onTokenReceived(address _from, uint _value, bytes _data) public;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "golem-contracts-62a1e0dab3baf8e9bff79b653dffa7df5f2d10a0/contracts/GolemNetworkToken.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "inefficient-state-variable-increment",
+                    "vulnerability_from_line": 115,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        totalMigrated += _value;\n",
+                    "message": "<x> += <y> costs more gas than <x> = <x> + <y> for state variables."
+                },
+                {
+                    "name": "inefficient-state-variable-increment",
+                    "vulnerability_from_line": 158,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        totalTokens += numTokens;\n",
+                    "message": "<x> += <y> costs more gas than <x> = <x> + <y> for state variables."
+                },
+                {
+                    "name": "inefficient-state-variable-increment",
+                    "vulnerability_from_line": 190,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        totalTokens += additionalTokens;\n",
+                    "message": "<x> += <y> costs more gas than <x> = <x> + <y> for state variables."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 81,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (senderBalance >= _value && _value > 0) {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 82,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            senderBalance -= _value;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            balances[msg.sender] = senderBalance;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            balances[_to] += _value;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            Transfer(msg.sender, _to, _value);\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            return true;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 87,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        }\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 176,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if ((block.number <= fundingEndBlock ||\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 177,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "             totalTokens < tokenCreationMin) &&\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 178,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            totalTokens < tokenCreationCap) revert();\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_19"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "arbitrary-send",
+                    "vulnerability_from_line": 173,
+                    "vulnerability_to_line": 196,
+                    "vulnerability_code": "    function finalize() external {\n\n        // Abort if not in Funding Success state.\n\n        if (!funding) revert();\n\n        if ((block.number <= fundingEndBlock ||\n\n             totalTokens < tokenCreationMin) &&\n\n            totalTokens < tokenCreationCap) revert();\n\n\n\n        // Switch to Operational state. This is the only place this can happen.\n\n        funding = false;\n\n\n\n        // Create additional GNT for the Golem Factory and developers as\n\n        // the 18% of total number of tokens.\n\n        // All additional tokens are transfered to the account controller by\n\n        // GNTAllocation contract which will not allow using them for 6 months.\n\n        uint256 percentOfTotal = 18;\n\n        uint256 additionalTokens =\n\n            totalTokens * percentOfTotal / (100 - percentOfTotal);\n\n        totalTokens += additionalTokens;\n\n        balances[lockedAllocation] += additionalTokens;\n\n        Transfer(0, lockedAllocation, additionalTokens);\n\n\n\n        // Transfer ETH to the Golem Factory address.\n\n        if (!golemFactory.send(this.balance)) revert();\n",
+                    "message": "GolemNetworkToken.finalize (GolemNetworkToken.sol#173-196) sends eth to arbitrary user\n\tDangerous calls:\n\t- ! golemFactory.send(this.balance) (GolemNetworkToken.sol#195)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function migrateFrom(address _from, uint256 _value);\n",
+                    "message": "MigrationAgent.migrateFrom (GolemNetworkToken.sol#7) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 76,
+                    "vulnerability_to_line": 89,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) returns (bool) {\n\n        // Abort if not in Operational state.\n\n        if (funding) revert();\n\n\n\n        var senderBalance = balances[msg.sender];\n\n        if (senderBalance >= _value && _value > 0) {\n\n            senderBalance -= _value;\n\n            balances[msg.sender] = senderBalance;\n\n            balances[_to] += _value;\n\n            Transfer(msg.sender, _to, _value);\n\n            return true;\n\n        }\n\n        return false;\n",
+                    "message": "GolemNetworkToken.transfer (GolemNetworkToken.sol#76-89) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.16;\n",
+                    "message": "Detected issues with version pragma in GolemNetworkToken.sol:\n\t- pragma solidity^0.4.16 (GolemNetworkToken.sol#4): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function GNTAllocation(address _golemFactory) {}\n",
+                    "message": "Function 'GNTAllocation.GNTAllocation' (GolemNetworkToken.sol#11) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": 67,
+                    "vulnerability_code": "    function GolemNetworkToken(address _golemFactory,\n\n                               address _migrationMaster,\n\n                               uint256 _fundingStartBlock,\n\n                               uint256 _fundingEndBlock) {\n\n\n\n        if (_golemFactory == 0) revert();\n\n        if (_migrationMaster == 0) revert();\n\n        if (_fundingStartBlock <= block.number) revert();\n\n        if (_fundingEndBlock   <= _fundingStartBlock) revert();\n\n\n\n        lockedAllocation = new GNTAllocation(_golemFactory);\n\n        migrationMaster = _migrationMaster;\n\n        golemFactory = _golemFactory;\n\n        fundingStartBlock = _fundingStartBlock;\n\n        fundingEndBlock = _fundingEndBlock;\n",
+                    "message": "Function 'GolemNetworkToken.GolemNetworkToken' (GolemNetworkToken.sol#52-67) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function GolemNetworkToken(address _golemFactory,\n",
+                    "message": "Parameter '_golemFactory' of GolemNetworkToken.GolemNetworkToken (GolemNetworkToken.sol#52) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                               address _migrationMaster,\n",
+                    "message": "Parameter '_migrationMaster' of GolemNetworkToken.GolemNetworkToken (GolemNetworkToken.sol#53) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                               uint256 _fundingStartBlock,\n",
+                    "message": "Parameter '_fundingStartBlock' of GolemNetworkToken.GolemNetworkToken (GolemNetworkToken.sol#54) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                               uint256 _fundingEndBlock) {\n",
+                    "message": "Parameter '_fundingEndBlock' of GolemNetworkToken.GolemNetworkToken (GolemNetworkToken.sol#55) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 76,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) returns (bool) {\n",
+                    "message": "Parameter '_to' of GolemNetworkToken.transfer (GolemNetworkToken.sol#76) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 76,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) returns (bool) {\n",
+                    "message": "Parameter '_value' of GolemNetworkToken.transfer (GolemNetworkToken.sol#76) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 95,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOf(address _owner) external view returns (uint256) {\n",
+                    "message": "Parameter '_owner' of GolemNetworkToken.balanceOf (GolemNetworkToken.sol#95) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 104,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function migrate(uint256 _value) external {\n",
+                    "message": "Parameter '_value' of GolemNetworkToken.migrate (GolemNetworkToken.sol#104) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 125,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setMigrationAgent(address _agent) external {\n",
+                    "message": "Parameter '_agent' of GolemNetworkToken.setMigrationAgent (GolemNetworkToken.sol#125) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setMigrationMaster(address _master) external {\n",
+                    "message": "Parameter '_master' of GolemNetworkToken.setMigrationMaster (GolemNetworkToken.sol#133) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public constant tokenCreationRate = 10000000000;\n",
+                    "message": "Constant 'GolemNetworkToken.tokenCreationRate' (GolemNetworkToken.sol#20) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public constant tokenCreationCap = 82 finney * tokenCreationRate;\n",
+                    "message": "Constant 'GolemNetworkToken.tokenCreationCap' (GolemNetworkToken.sol#23) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public constant tokenCreationMin = 15 finney * tokenCreationRate;\n",
+                    "message": "Constant 'GolemNetworkToken.tokenCreationMin' (GolemNetworkToken.sol#24) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_MSGVALUE_EQUALS_ZERO",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (msg.value == 0) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.16;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (_golemFactory == 0) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (_migrationMaster == 0) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 59,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (_fundingStartBlock <= block.number) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 60,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (_fundingEndBlock   <= _fundingStartBlock) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 78,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (funding) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 106,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (funding) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 107,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (migrationAgent == 0) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 110,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (_value == 0) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 111,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (_value > balances[msg.sender]) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 127,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (funding) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 128,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (migrationAgent != 0) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 129,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (msg.sender != migrationMaster) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (msg.sender != migrationMaster) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 135,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (_master == 0) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 148,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (!funding) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 149,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (block.number < fundingStartBlock) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 150,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (block.number > fundingEndBlock) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (msg.value == 0) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 154,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (msg.value > (tokenCreationCap - totalTokens) / tokenCreationRate)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 175,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (!funding) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 176,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if ((block.number <= fundingEndBlock ||\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 195,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (!golemFactory.send(this.balance)) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 203,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (!funding) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 204,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (block.number <= fundingEndBlock) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 205,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (totalTokens >= tokenCreationMin) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 208,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (gntValue == 0) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 214,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (!msg.sender.send(ethValue)) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function migrateFrom(address _from, uint256 _value);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function GNTAllocation(address _golemFactory) {}\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function GolemNetworkToken(address _golemFactory,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 76,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    GNTAllocation lockedAllocation;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping (address => uint256) balances;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "golem-contracts-62a1e0dab3baf8e9bff79b653dffa7df5f2d10a0/contracts/GNTPaymentChannels.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "array-length-outside-loop",
+                    "vulnerability_from_line": 407,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < payments.length; ++i) {\n",
+                    "message": "Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop."
+                },
+                {
+                    "name": "unnecessary-checked-arithmetic-in-loop",
+                    "vulnerability_from_line": 407,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < payments.length; ++i) {\n",
+                    "message": "A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_97"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "incorrect-equality",
+                    "vulnerability_from_line": 616,
+                    "vulnerability_to_line": 621,
+                    "vulnerability_code": "    function forceClose(bytes32 _channel)\n\n        external\n\n        returns (bool) {\n\n        require(msg.sender == channels[_channel].receiver);\n\n        return _do_close(_channel, true);\n",
+                    "message": "GNTPaymentChannels.forceClose (GNTPaymentChannels.sol#616-621) uses a dangerous strict equality:\n\t- require(bool)(msg.sender == channels[_channel].receiver)\n"
+                },
+                {
+                    "name": "incorrect-equality",
+                    "vulnerability_from_line": 616,
+                    "vulnerability_to_line": 621,
+                    "vulnerability_code": "    function forceClose(bytes32 _channel)\n\n        external\n\n        returns (bool) {\n\n        require(msg.sender == channels[_channel].receiver);\n\n        return _do_close(_channel, true);\n",
+                    "message": "GNTPaymentChannels.forceClose (GNTPaymentChannels.sol#616-621) uses a dangerous strict equality:\n\t- require(bool)(msg.sender == channels[_channel].receiver)\nGNTPaymentChannels.isLocked (GNTPaymentChannels.sol#523-525) uses a dangerous strict equality:\n\t- channels[_channel].locked_until == 0\n"
+                },
+                {
+                    "name": "incorrect-equality",
+                    "vulnerability_from_line": 616,
+                    "vulnerability_to_line": 621,
+                    "vulnerability_code": "    function forceClose(bytes32 _channel)\n\n        external\n\n        returns (bool) {\n\n        require(msg.sender == channels[_channel].receiver);\n\n        return _do_close(_channel, true);\n",
+                    "message": "GNTPaymentChannels.forceClose (GNTPaymentChannels.sol#616-621) uses a dangerous strict equality:\n\t- require(bool)(msg.sender == channels[_channel].receiver)\nGNTPaymentChannels.isLocked (GNTPaymentChannels.sol#523-525) uses a dangerous strict equality:\n\t- channels[_channel].locked_until == 0\nGNTPaymentChannels.isValidSig (GNTPaymentChannels.sol#536-539) uses a dangerous strict equality:\n\t- (channels[_ch].owner) == (ecrecover(bytes32,uint8,bytes32,bytes32)(sha3()(_ch,_value),_v,_r,_s))\n"
+                },
+                {
+                    "name": "incorrect-equality",
+                    "vulnerability_from_line": 616,
+                    "vulnerability_to_line": 621,
+                    "vulnerability_code": "    function forceClose(bytes32 _channel)\n\n        external\n\n        returns (bool) {\n\n        require(msg.sender == channels[_channel].receiver);\n\n        return _do_close(_channel, true);\n",
+                    "message": "GNTPaymentChannels.forceClose (GNTPaymentChannels.sol#616-621) uses a dangerous strict equality:\n\t- require(bool)(msg.sender == channels[_channel].receiver)\nGNTPaymentChannels.isLocked (GNTPaymentChannels.sol#523-525) uses a dangerous strict equality:\n\t- channels[_channel].locked_until == 0\nGNTPaymentChannels.isValidSig (GNTPaymentChannels.sol#536-539) uses a dangerous strict equality:\n\t- (channels[_ch].owner) == (ecrecover(bytes32,uint8,bytes32,bytes32)(sha3()(_ch,_value),_v,_r,_s))\nGNTPaymentChannels.onlyOwner (GNTPaymentChannels.sol#482-485) uses a dangerous strict equality:\n\t- require(bool)(msg.sender == channels[_channel].owner)\n\t- require(bool)(msg.sender == channels[_channel].owner)\n"
+                },
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 638,
+                    "vulnerability_to_line": 653,
+                    "vulnerability_code": "    function _do_close(bytes32 _channel, bool force)\n\n        private\n\n        returns (bool) {\n\n\n\n        PaymentChannel ch = channels[_channel];\n\n        var amount = ch.deposited - ch.withdrawn;\n\n        if (token.transfer(ch.owner, amount)) {\n\n            if (force)\n\n                { ForceClose(ch.owner, ch.receiver, _channel); }\n\n            else\n\n                { Close(ch.owner, ch.receiver, _channel); }\n\n            delete channels[_channel];\n\n            return true;\n\n        }\n\n        return false;\n",
+                    "message": "Reentrancy in GNTPaymentChannels._do_close (GNTPaymentChannels.sol#638-653):\n\tExternal calls:\n\t- token.transfer(ch.owner,amount) (GNTPaymentChannels.sol#644-651)\n\tState variables written after the call(s):\n\t- channels (GNTPaymentChannels.sol#649)\n"
+                },
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 625,
+                    "vulnerability_to_line": 636,
+                    "vulnerability_code": "    function _do_withdraw(bytes32 _channel, uint256 _amount)\n\n        private\n\n        returns (bool) {\n\n\n\n        PaymentChannel ch = channels[_channel];\n\n        if (token.transfer(ch.receiver, _amount)) {\n\n            ch.withdrawn += _amount;\n\n            Withdraw(ch.owner, ch.receiver);\n\n            return true;\n\n        }\n\n        return false;\n",
+                    "message": "Reentrancy in GNTPaymentChannels._do_withdraw (GNTPaymentChannels.sol#625-636):\n\tExternal calls:\n\t- token.transfer(ch.receiver,_amount) (GNTPaymentChannels.sol#630-634)\n\tState variables written after the call(s):\n\t- channels (GNTPaymentChannels.sol#631)\n"
+                },
+                {
+                    "name": "reentrancy-no-eth",
+                    "vulnerability_from_line": 565,
+                    "vulnerability_to_line": 578,
+                    "vulnerability_code": "    function fund(bytes32 _channel, uint256 _amount)\n\n        returns (bool) {\n\n        PaymentChannel ch = channels[_channel];\n\n        // check if channel exists\n\n        // this prevents fund loss\n\n        require(ch.receiver != address(0));\n\n        if (token.transferFrom(msg.sender, address(this), _amount)) {\n\n            ch.deposited += _amount;\n\n            ch.locked_until = 0;\n\n            Fund(ch.receiver, _channel, _amount); // event\n\n            return true;\n\n        }\n\n        return false;\n",
+                    "message": "Reentrancy in GNTPaymentChannels.fund (GNTPaymentChannels.sol#565-578):\n\tExternal calls:\n\t- token.transferFrom(msg.sender,address(this),_amount) (GNTPaymentChannels.sol#571-576)\n\tState variables written after the call(s):\n\t- channels (GNTPaymentChannels.sol#572)\n\t- channels (GNTPaymentChannels.sol#573)\n"
+                },
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 360,
+                    "vulnerability_to_line": 371,
+                    "vulnerability_code": "    function withdrawTo(uint256 _value, address _destination) public {\n\n        address user = msg.sender;\n\n        uint256 balance = balances[user];\n\n        require(_value <= balance);\n\n\n\n        balances[user] = (balance - _value);\n\n        totalSupply_ -= _value;\n\n\n\n        TOKEN.transfer(_destination, _value);\n\n\n\n        Burned(user, _value);\n",
+                    "message": "TokenProxy.withdrawTo (GNTPaymentChannels.sol#360-371) does not use the value returned by external calls:\n\t-TOKEN.transfer(_destination,_value) (GNTPaymentChannels.sol#368)\n"
+                },
+                {
+                    "name": "reentrancy-benign",
+                    "vulnerability_from_line": 336,
+                    "vulnerability_to_line": 354,
+                    "vulnerability_code": "    function transferFromGate() external {\n\n        address user = msg.sender;\n\n\n\n        address gate = gates[user];\n\n\n\n        // Make sure the User's Gate exists.\n\n        require(gate != 0);\n\n\n\n        uint256 value = TOKEN.balanceOf(gate);\n\n\n\n        Gate(gate).transferToProxy(value);\n\n\n\n        // Handle the information about the amount of migrated tokens.\n\n        // This is a trusted information becase it comes from the Gate.\n\n        totalSupply_ += value;\n\n        balances[user] += value;\n\n\n\n        Minted(user, value);\n",
+                    "message": "Reentrancy in TokenProxy.transferFromGate (GNTPaymentChannels.sol#336-354):\n\tExternal calls:\n\t- value = TOKEN.balanceOf(gate) (GNTPaymentChannels.sol#344)\n\t- Gate(gate).transferToProxy(value) (GNTPaymentChannels.sol#346)\n\tState variables written after the call(s):\n\t- balances (GNTPaymentChannels.sol#351)\n\t- totalSupply_ (GNTPaymentChannels.sol#350)\n"
+                },
+                {
+                    "name": "timestamp",
+                    "vulnerability_from_line": 402,
+                    "vulnerability_to_line": 421,
+                    "vulnerability_code": "    function batchTransfer(bytes32[] payments, uint64 closureTime) external {\n\n        require(block.timestamp >= closureTime);\n\n\n\n        uint balance = balances[msg.sender];\n\n\n\n        for (uint i = 0; i < payments.length; ++i) {\n\n            // A payment contains compressed data:\n\n            // first 96 bits (12 bytes) is a value,\n\n            // following 160 bits (20 bytes) is an address.\n\n            bytes32 payment = payments[i];\n\n            address addr = address(payment);\n\n            uint v = uint(payment) / 2**160;\n\n            require(v <= balance);\n\n            balances[addr] += v;\n\n            balance -= v;\n\n            BatchTransfer(msg.sender, addr, v, closureTime);\n\n        }\n\n\n\n        balances[msg.sender] = balance;\n",
+                    "message": "GolemNetworkTokenBatching.batchTransfer (GNTPaymentChannels.sol#402-421) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- require(bool)(block.timestamp >= closureTime) (GNTPaymentChannels.sol#403)\n"
+                },
+                {
+                    "name": "timestamp",
+                    "vulnerability_from_line": 523,
+                    "vulnerability_to_line": 525,
+                    "vulnerability_code": "    function isLocked(bytes32 _channel) public returns (bool) {\n\n        return channels[_channel].locked_until == 0;\n",
+                    "message": "GNTPaymentChannels.isLocked (GNTPaymentChannels.sol#523-525) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- channels[_channel].locked_until == 0 (GNTPaymentChannels.sol#524)\n"
+                },
+                {
+                    "name": "timestamp",
+                    "vulnerability_from_line": 527,
+                    "vulnerability_to_line": 529,
+                    "vulnerability_code": "    function isTimeLocked(bytes32 _channel) public view returns (bool) {\n\n        return channels[_channel].locked_until >= block.timestamp;\n",
+                    "message": "GNTPaymentChannels.isTimeLocked (GNTPaymentChannels.sol#527-529) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- channels[_channel].locked_until >= block.timestamp (GNTPaymentChannels.sol#528)\n"
+                },
+                {
+                    "name": "timestamp",
+                    "vulnerability_from_line": 531,
+                    "vulnerability_to_line": 534,
+                    "vulnerability_code": "    function isUnlocked(bytes32 _channel) public view returns (bool) {\n\n        return ((channels[_channel].locked_until != 0) &&\n\n                (channels[_channel].locked_until < block.timestamp));\n",
+                    "message": "GNTPaymentChannels.isUnlocked (GNTPaymentChannels.sol#531-534) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- ((channels[_channel].locked_until != 0) && (channels[_channel].locked_until < block.timestamp)) (GNTPaymentChannels.sol#532-533)\n"
+                },
+                {
+                    "name": "timestamp",
+                    "vulnerability_from_line": 536,
+                    "vulnerability_to_line": 539,
+                    "vulnerability_code": "    function isValidSig(bytes32 _ch, uint _value,\n\n                        uint8 _v, bytes32 _r, bytes32 _s) view returns (bool) {\n\n        return (channels[_ch].owner) == (ecrecover(sha3(_ch, _value), _v, _r, _s));\n",
+                    "message": "GNTPaymentChannels.isValidSig (GNTPaymentChannels.sol#536-539) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- (channels[_ch].owner) == (ecrecover(bytes32,uint8,bytes32,bytes32)(sha3()(_ch,_value),_v,_r,_s)) (GNTPaymentChannels.sol#538)\n"
+                },
+                {
+                    "name": "timestamp",
+                    "vulnerability_from_line": 616,
+                    "vulnerability_to_line": 621,
+                    "vulnerability_code": "    function forceClose(bytes32 _channel)\n\n        external\n\n        returns (bool) {\n\n        require(msg.sender == channels[_channel].receiver);\n\n        return _do_close(_channel, true);\n",
+                    "message": "GNTPaymentChannels.forceClose (GNTPaymentChannels.sol#616-621) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- require(bool)(msg.sender == channels[_channel].receiver) (GNTPaymentChannels.sol#619)\n"
+                },
+                {
+                    "name": "assembly",
+                    "vulnerability_from_line": 552,
+                    "vulnerability_to_line": 561,
+                    "vulnerability_code": "    function onTokenReceived(address _from, uint _value, bytes _data) {\n\n        bytes32 channel;\n\n        assembly {\n\n          channel := mload(add(_data, 32))\n\n        }\n\n        PaymentChannel ch = channels[channel];\n\n        require(_from == ch.owner);\n\n        ch.deposited += _value;\n\n        Fund(ch.receiver, channel, _value);\n",
+                    "message": "GNTPaymentChannels.onTokenReceived uses assembly (GNTPaymentChannels.sol#552-561)\n\t- GNTPaymentChannels.sol#554-557\n"
+                },
+                {
+                    "name": "pragma",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.19;\n",
+                    "message": "Different versions of Solidity is used in GNTPaymentChannels.sol:\n\t- Version used: ['^0.4.16', '^0.4.18', '^0.4.19']\n\t- GNTPaymentChannels.sol#4 declares pragma solidity^0.4.19\n\t- GNTPaymentChannels.sol#14 declares pragma solidity^0.4.18\n\t- GNTPaymentChannels.sol#31 declares pragma solidity^0.4.18\n\t- GNTPaymentChannels.sol#82 declares pragma solidity^0.4.18\n\t- GNTPaymentChannels.sol#132 declares pragma solidity^0.4.18\n\t- GNTPaymentChannels.sol#148 declares pragma solidity^0.4.18\n\t- GNTPaymentChannels.sol#252 declares pragma solidity^0.4.19\n\t- GNTPaymentChannels.sol#380 declares pragma solidity^0.4.19\n\t- GNTPaymentChannels.sol#436 declares pragma solidity^0.4.16\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 538,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        return (channels[_ch].owner) == (ecrecover(sha3(_ch, _value), _v, _r, _s));\n",
+                    "message": "Deprecated standard detected @ GNTPaymentChannels.sol#538:\n\t- Usage of \"sha3()\" should be replaced with \"keccak256()\"\n"
+                },
+                {
+                    "name": "deprecated-standards",
+                    "vulnerability_from_line": 546,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes32 channel = sha3(id++);\n",
+                    "message": "Deprecated standard detected @ GNTPaymentChannels.sol#546:\n\t- Usage of \"sha3()\" should be replaced with \"keccak256()\"\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 552,
+                    "vulnerability_to_line": 561,
+                    "vulnerability_code": "    function onTokenReceived(address _from, uint _value, bytes _data) {\n\n        bytes32 channel;\n\n        assembly {\n\n          channel := mload(add(_data, 32))\n\n        }\n\n        PaymentChannel ch = channels[channel];\n\n        require(_from == ch.owner);\n\n        ch.deposited += _value;\n\n        Fund(ch.receiver, channel, _value);\n",
+                    "message": "GNTPaymentChannels.onTokenReceived (GNTPaymentChannels.sol#552-561) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function onTokenReceived(address _from, uint _value, bytes _data) public;\n",
+                    "message": "ReceivingContract.onTokenReceived (GNTPaymentChannels.sol#9) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function totalSupply() public view returns (uint256);\n",
+                    "message": "ERC20Basic.totalSupply (GNTPaymentChannels.sol#23) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 99,
+                    "vulnerability_to_line": 101,
+                    "vulnerability_code": "  function totalSupply() public view returns (uint256) {\n\n    return totalSupply_;\n",
+                    "message": "BasicToken.totalSupply (GNTPaymentChannels.sol#99-101) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address who) public view returns (uint256);\n",
+                    "message": "ERC20Basic.balanceOf (GNTPaymentChannels.sol#24) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 124,
+                    "vulnerability_to_line": 126,
+                    "vulnerability_code": "  function balanceOf(address _owner) public view returns (uint256 balance) {\n\n    return balances[_owner];\n",
+                    "message": "BasicToken.balanceOf (GNTPaymentChannels.sol#124-126) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 203,
+                    "vulnerability_to_line": 205,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public view returns (uint256) {\n\n    return allowed[_owner][_spender];\n",
+                    "message": "StandardToken.allowance (GNTPaymentChannels.sol#203-205) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 139,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address owner, address spender) public view returns (uint256);\n",
+                    "message": "ERC20.allowance (GNTPaymentChannels.sol#139) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 140,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address from, address to, uint256 value) public returns (bool);\n",
+                    "message": "ERC20.transferFrom (GNTPaymentChannels.sol#140) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 169,
+                    "vulnerability_to_line": 179,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n\n    require(_to != address(0));\n\n    require(_value <= balances[_from]);\n\n    require(_value <= allowed[_from][msg.sender]);\n\n\n\n    balances[_from] = balances[_from].sub(_value);\n\n    balances[_to] = balances[_to].add(_value);\n\n    allowed[_from][msg.sender] = allowed[_from][msg.sender].sub(_value);\n\n    Transfer(_from, _to, _value);\n\n    return true;\n",
+                    "message": "StandardToken.transferFrom (GNTPaymentChannels.sol#169-179) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 191,
+                    "vulnerability_to_line": 195,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n\n    allowed[msg.sender][_spender] = _value;\n\n    Approval(msg.sender, _spender, _value);\n\n    return true;\n",
+                    "message": "StandardToken.approve (GNTPaymentChannels.sol#191-195) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 142,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address spender, uint256 value) public returns (bool);\n",
+                    "message": "ERC20.approve (GNTPaymentChannels.sol#142) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 217,
+                    "vulnerability_to_line": 221,
+                    "vulnerability_code": "  function increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n\n    allowed[msg.sender][_spender] = allowed[msg.sender][_spender].add(_addedValue);\n\n    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n\n    return true;\n",
+                    "message": "StandardToken.increaseApproval (GNTPaymentChannels.sol#217-221) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 233,
+                    "vulnerability_to_line": 242,
+                    "vulnerability_code": "  function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n\n    uint oldValue = allowed[msg.sender][_spender];\n\n    if (_subtractedValue > oldValue) {\n\n      allowed[msg.sender][_spender] = 0;\n\n    } else {\n\n      allowed[msg.sender][_spender] = oldValue.sub(_subtractedValue);\n\n    }\n\n    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n\n    return true;\n",
+                    "message": "StandardToken.decreaseApproval (GNTPaymentChannels.sol#233-242) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 272,
+                    "vulnerability_to_line": 276,
+                    "vulnerability_code": "    function transferToProxy(uint256 _value) public {\n\n        require(msg.sender == PROXY);\n\n\n\n        require(TOKEN.transfer(PROXY, _value));\n",
+                    "message": "Gate.transferToProxy (GNTPaymentChannels.sol#272-276) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 523,
+                    "vulnerability_to_line": 525,
+                    "vulnerability_code": "    function isLocked(bytes32 _channel) public returns (bool) {\n\n        return channels[_channel].locked_until == 0;\n",
+                    "message": "GNTPaymentChannels.isLocked (GNTPaymentChannels.sol#523-525) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 527,
+                    "vulnerability_to_line": 529,
+                    "vulnerability_code": "    function isTimeLocked(bytes32 _channel) public view returns (bool) {\n\n        return channels[_channel].locked_until >= block.timestamp;\n",
+                    "message": "GNTPaymentChannels.isTimeLocked (GNTPaymentChannels.sol#527-529) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 565,
+                    "vulnerability_to_line": 578,
+                    "vulnerability_code": "    function fund(bytes32 _channel, uint256 _amount)\n\n        returns (bool) {\n\n        PaymentChannel ch = channels[_channel];\n\n        // check if channel exists\n\n        // this prevents fund loss\n\n        require(ch.receiver != address(0));\n\n        if (token.transferFrom(msg.sender, address(this), _amount)) {\n\n            ch.deposited += _amount;\n\n            ch.locked_until = 0;\n\n            Fund(ch.receiver, _channel, _amount); // event\n\n            return true;\n\n        }\n\n        return false;\n",
+                    "message": "GNTPaymentChannels.fund (GNTPaymentChannels.sol#565-578) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.19;\n",
+                    "message": "Detected issues with version pragma in GNTPaymentChannels.sol:\n\t- pragma solidity^0.4.19 (GNTPaymentChannels.sol#4): it allows old versions\n\t- pragma solidity^0.4.18 (GNTPaymentChannels.sol#14): it allows old versions\n\t- pragma solidity^0.4.18 (GNTPaymentChannels.sol#31): it allows old versions\n\t- pragma solidity^0.4.18 (GNTPaymentChannels.sol#82): it allows old versions\n\t- pragma solidity^0.4.18 (GNTPaymentChannels.sol#132): it allows old versions\n\t- pragma solidity^0.4.18 (GNTPaymentChannels.sol#148): it allows old versions\n\t- pragma solidity^0.4.19 (GNTPaymentChannels.sol#252): it allows old versions\n\t- pragma solidity^0.4.19 (GNTPaymentChannels.sol#380): it allows old versions\n\t- pragma solidity^0.4.16 (GNTPaymentChannels.sol#436): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 124,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address _owner) public view returns (uint256 balance) {\n",
+                    "message": "Parameter '_owner' of BasicToken.balanceOf (GNTPaymentChannels.sol#124) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 108,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_to' of BasicToken.transfer (GNTPaymentChannels.sol#108) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 108,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of BasicToken.transfer (GNTPaymentChannels.sol#108) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 203,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public view returns (uint256) {\n",
+                    "message": "Parameter '_owner' of StandardToken.allowance (GNTPaymentChannels.sol#203) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 203,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public view returns (uint256) {\n",
+                    "message": "Parameter '_spender' of StandardToken.allowance (GNTPaymentChannels.sol#203) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 169,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_from' of StandardToken.transferFrom (GNTPaymentChannels.sol#169) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 169,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_to' of StandardToken.transferFrom (GNTPaymentChannels.sol#169) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 169,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of StandardToken.transferFrom (GNTPaymentChannels.sol#169) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 191,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of StandardToken.approve (GNTPaymentChannels.sol#191) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 191,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of StandardToken.approve (GNTPaymentChannels.sol#191) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 217,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of StandardToken.increaseApproval (GNTPaymentChannels.sol#217) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 217,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n",
+                    "message": "Parameter '_addedValue' of StandardToken.increaseApproval (GNTPaymentChannels.sol#217) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 233,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of StandardToken.decreaseApproval (GNTPaymentChannels.sol#233) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 233,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n",
+                    "message": "Parameter '_subtractedValue' of StandardToken.decreaseApproval (GNTPaymentChannels.sol#233) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 264,
+                    "vulnerability_to_line": 267,
+                    "vulnerability_code": "    function Gate(ERC20Basic _token, address _proxy) public {\n\n        TOKEN = _token;\n\n        PROXY = _proxy;\n",
+                    "message": "Function 'Gate.Gate' (GNTPaymentChannels.sol#264-267) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 264,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function Gate(ERC20Basic _token, address _proxy) public {\n",
+                    "message": "Parameter '_token' of Gate.Gate (GNTPaymentChannels.sol#264) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 264,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function Gate(ERC20Basic _token, address _proxy) public {\n",
+                    "message": "Parameter '_proxy' of Gate.Gate (GNTPaymentChannels.sol#264) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 272,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transferToProxy(uint256 _value) public {\n",
+                    "message": "Parameter '_value' of Gate.transferToProxy (GNTPaymentChannels.sol#272) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 260,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ERC20Basic private TOKEN;\n",
+                    "message": "Variable 'Gate.TOKEN' (GNTPaymentChannels.sol#260) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 261,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address private PROXY;\n",
+                    "message": "Variable 'Gate.PROXY' (GNTPaymentChannels.sol#261) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 312,
+                    "vulnerability_to_line": 314,
+                    "vulnerability_code": "    function TokenProxy(ERC20Basic _token) public {\n\n        TOKEN = _token;\n",
+                    "message": "Function 'TokenProxy.TokenProxy' (GNTPaymentChannels.sol#312-314) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 312,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function TokenProxy(ERC20Basic _token) public {\n",
+                    "message": "Parameter '_token' of TokenProxy.TokenProxy (GNTPaymentChannels.sol#312) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 316,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getGateAddress(address _user) external view returns (address) {\n",
+                    "message": "Parameter '_user' of TokenProxy.getGateAddress (GNTPaymentChannels.sol#316) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 356,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function withdraw(uint256 _value) external {\n",
+                    "message": "Parameter '_value' of TokenProxy.withdraw (GNTPaymentChannels.sol#356) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 360,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function withdrawTo(uint256 _value, address _destination) public {\n",
+                    "message": "Parameter '_value' of TokenProxy.withdrawTo (GNTPaymentChannels.sol#360) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 360,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function withdrawTo(uint256 _value, address _destination) public {\n",
+                    "message": "Parameter '_destination' of TokenProxy.withdrawTo (GNTPaymentChannels.sol#360) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 301,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ERC20Basic public TOKEN;\n",
+                    "message": "Variable 'TokenProxy.TOKEN' (GNTPaymentChannels.sol#301) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 399,
+                    "vulnerability_to_line": 400,
+                    "vulnerability_code": "    function GolemNetworkTokenBatching(ERC20Basic _gntToken) TokenProxy(_gntToken) public {\n",
+                    "message": "Function 'GolemNetworkTokenBatching.GolemNetworkTokenBatching' (GNTPaymentChannels.sol#399-400) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 552,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function onTokenReceived(address _from, uint _value, bytes _data) {\n",
+                    "message": "Parameter '_from' of GNTPaymentChannels.onTokenReceived (GNTPaymentChannels.sol#552) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 552,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function onTokenReceived(address _from, uint _value, bytes _data) {\n",
+                    "message": "Parameter '_value' of GNTPaymentChannels.onTokenReceived (GNTPaymentChannels.sol#552) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 464,
+                    "vulnerability_to_line": 469,
+                    "vulnerability_code": "    function GNTPaymentChannels(address _token, uint256 _close_delay)\n\n        public {\n\n        token = GolemNetworkTokenBatching(_token);\n\n        id = 0;\n\n        close_delay = _close_delay;\n",
+                    "message": "Function 'GNTPaymentChannels.GNTPaymentChannels' (GNTPaymentChannels.sol#464-469) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 464,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function GNTPaymentChannels(address _token, uint256 _close_delay)\n",
+                    "message": "Parameter '_token' of GNTPaymentChannels.GNTPaymentChannels (GNTPaymentChannels.sol#464) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 464,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function GNTPaymentChannels(address _token, uint256 _close_delay)\n",
+                    "message": "Parameter '_close_delay' of GNTPaymentChannels.GNTPaymentChannels (GNTPaymentChannels.sol#464) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 494,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getDeposited(bytes32 _channel)\n",
+                    "message": "Parameter '_channel' of GNTPaymentChannels.getDeposited (GNTPaymentChannels.sol#494) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 502,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getWithdrawn(bytes32 _channel)\n",
+                    "message": "Parameter '_channel' of GNTPaymentChannels.getWithdrawn (GNTPaymentChannels.sol#502) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 509,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getOwner(bytes32 _channel)\n",
+                    "message": "Parameter '_channel' of GNTPaymentChannels.getOwner (GNTPaymentChannels.sol#509) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 516,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function getReceiver(bytes32 _channel)\n",
+                    "message": "Parameter '_channel' of GNTPaymentChannels.getReceiver (GNTPaymentChannels.sol#516) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 523,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isLocked(bytes32 _channel) public returns (bool) {\n",
+                    "message": "Parameter '_channel' of GNTPaymentChannels.isLocked (GNTPaymentChannels.sol#523) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 527,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isTimeLocked(bytes32 _channel) public view returns (bool) {\n",
+                    "message": "Parameter '_channel' of GNTPaymentChannels.isTimeLocked (GNTPaymentChannels.sol#527) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 531,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isUnlocked(bytes32 _channel) public view returns (bool) {\n",
+                    "message": "Parameter '_channel' of GNTPaymentChannels.isUnlocked (GNTPaymentChannels.sol#531) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 536,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isValidSig(bytes32 _ch, uint _value,\n",
+                    "message": "Parameter '_ch' of GNTPaymentChannels.isValidSig (GNTPaymentChannels.sol#536) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 536,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isValidSig(bytes32 _ch, uint _value,\n",
+                    "message": "Parameter '_value' of GNTPaymentChannels.isValidSig (GNTPaymentChannels.sol#536) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 537,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                        uint8 _v, bytes32 _r, bytes32 _s) view returns (bool) {\n",
+                    "message": "Parameter '_v' of GNTPaymentChannels.isValidSig (GNTPaymentChannels.sol#537) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 537,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                        uint8 _v, bytes32 _r, bytes32 _s) view returns (bool) {\n",
+                    "message": "Parameter '_r' of GNTPaymentChannels.isValidSig (GNTPaymentChannels.sol#537) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 537,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                        uint8 _v, bytes32 _r, bytes32 _s) view returns (bool) {\n",
+                    "message": "Parameter '_s' of GNTPaymentChannels.isValidSig (GNTPaymentChannels.sol#537) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 544,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function createChannel(address _receiver)\n",
+                    "message": "Parameter '_receiver' of GNTPaymentChannels.createChannel (GNTPaymentChannels.sol#544) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 565,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function fund(bytes32 _channel, uint256 _amount)\n",
+                    "message": "Parameter '_channel' of GNTPaymentChannels.fund (GNTPaymentChannels.sol#565) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 565,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function fund(bytes32 _channel, uint256 _amount)\n",
+                    "message": "Parameter '_amount' of GNTPaymentChannels.fund (GNTPaymentChannels.sol#565) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 581,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function withdraw(bytes32 _channel, uint256 _value,\n",
+                    "message": "Parameter '_channel' of GNTPaymentChannels.withdraw (GNTPaymentChannels.sol#581) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 581,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function withdraw(bytes32 _channel, uint256 _value,\n",
+                    "message": "Parameter '_value' of GNTPaymentChannels.withdraw (GNTPaymentChannels.sol#581) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 597,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function unlock(bytes32 _channel)\n",
+                    "message": "Parameter '_channel' of GNTPaymentChannels.unlock (GNTPaymentChannels.sol#597) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 606,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function close(bytes32 _channel)\n",
+                    "message": "Parameter '_channel' of GNTPaymentChannels.close (GNTPaymentChannels.sol#606) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 616,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function forceClose(bytes32 _channel)\n",
+                    "message": "Parameter '_channel' of GNTPaymentChannels.forceClose (GNTPaymentChannels.sol#616) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 625,
+                    "vulnerability_to_line": 636,
+                    "vulnerability_code": "    function _do_withdraw(bytes32 _channel, uint256 _amount)\n\n        private\n\n        returns (bool) {\n\n\n\n        PaymentChannel ch = channels[_channel];\n\n        if (token.transfer(ch.receiver, _amount)) {\n\n            ch.withdrawn += _amount;\n\n            Withdraw(ch.owner, ch.receiver);\n\n            return true;\n\n        }\n\n        return false;\n",
+                    "message": "Function 'GNTPaymentChannels._do_withdraw' (GNTPaymentChannels.sol#625-636) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 625,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _do_withdraw(bytes32 _channel, uint256 _amount)\n",
+                    "message": "Parameter '_channel' of GNTPaymentChannels._do_withdraw (GNTPaymentChannels.sol#625) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 625,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _do_withdraw(bytes32 _channel, uint256 _amount)\n",
+                    "message": "Parameter '_amount' of GNTPaymentChannels._do_withdraw (GNTPaymentChannels.sol#625) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 638,
+                    "vulnerability_to_line": 653,
+                    "vulnerability_code": "    function _do_close(bytes32 _channel, bool force)\n\n        private\n\n        returns (bool) {\n\n\n\n        PaymentChannel ch = channels[_channel];\n\n        var amount = ch.deposited - ch.withdrawn;\n\n        if (token.transfer(ch.owner, amount)) {\n\n            if (force)\n\n                { ForceClose(ch.owner, ch.receiver, _channel); }\n\n            else\n\n                { Close(ch.owner, ch.receiver, _channel); }\n\n            delete channels[_channel];\n\n            return true;\n\n        }\n\n        return false;\n",
+                    "message": "Function 'GNTPaymentChannels._do_close' (GNTPaymentChannels.sol#638-653) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 638,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function _do_close(bytes32 _channel, bool force)\n",
+                    "message": "Parameter '_channel' of GNTPaymentChannels._do_close (GNTPaymentChannels.sol#638) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 455,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 close_delay;\n",
+                    "message": "Variable 'GNTPaymentChannels.close_delay' (GNTPaymentChannels.sol#455) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 538,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        return (channels[_ch].owner) == (ecrecover(sha3(_ch, _value), _v, _r, _s));\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_DEPRECATED_CONSTRUCTIONS",
+                    "vulnerability_from_line": 546,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        bytes32 channel = sha3(id++);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 191,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_EXTRA_GAS_IN_LOOPS",
+                    "vulnerability_from_line": 407,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < payments.length; ++i) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_GAS_LIMIT_IN_LOOPS",
+                    "vulnerability_from_line": 407,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        for (uint i = 0; i < payments.length; ++i) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.19;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 31,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 82,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 132,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 148,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 252,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.19;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 380,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.19;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 436,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.16;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 260,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    ERC20Basic private TOKEN;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 261,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    address private PROXY;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRIVATE_MODIFIER_DONT_HIDE_DATA",
+                    "vulnerability_from_line": 303,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping(address => address) private gates;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 90,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 9,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function onTokenReceived(address _from, uint _value, bytes _data) public;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 498,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        PaymentChannel ch = channels[_channel];\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 557,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        PaymentChannel ch = channels[channel];\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 567,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        PaymentChannel ch = channels[_channel];\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 586,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        PaymentChannel ch = channels[_channel];\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 600,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        PaymentChannel ch = channels[_channel];\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 629,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        PaymentChannel ch = channels[_channel];\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_UPGRADE_TO_050",
+                    "vulnerability_from_line": 642,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        PaymentChannel ch = channels[_channel];\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_USING_INLINE_ASSEMBLY",
+                    "vulnerability_from_line": 554,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        assembly {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 536,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function isValidSig(bytes32 _ch, uint _value,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 552,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function onTokenReceived(address _from, uint _value, bytes _data) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 565,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function fund(bytes32 _channel, uint256 _amount)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 92,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping(address => uint256) balances;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 94,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 totalSupply_;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 453,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 id;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 455,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 close_delay;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "golem-contracts-62a1e0dab3baf8e9bff79b653dffa7df5f2d10a0/contracts/Faucet.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "inefficient-state-variable-increment",
+                    "vulnerability_from_line": 115,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        totalMigrated += _value;\n",
+                    "message": "<x> += <y> costs more gas than <x> = <x> + <y> for state variables."
+                },
+                {
+                    "name": "inefficient-state-variable-increment",
+                    "vulnerability_from_line": 158,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        totalTokens += numTokens;\n",
+                    "message": "<x> += <y> costs more gas than <x> = <x> + <y> for state variables."
+                },
+                {
+                    "name": "inefficient-state-variable-increment",
+                    "vulnerability_from_line": 190,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        totalTokens += additionalTokens;\n",
+                    "message": "<x> += <y> costs more gas than <x> = <x> + <y> for state variables."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 81,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (senderBalance >= _value && _value > 0) {\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 82,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            senderBalance -= _value;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            balances[msg.sender] = senderBalance;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 84,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            balances[_to] += _value;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 85,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            Transfer(msg.sender, _to, _value);\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 86,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            return true;\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 87,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        }\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 176,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if ((block.number <= fundingEndBlock ||\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 177,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "             totalTokens < tokenCreationMin) &&\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                },
+                {
+                    "name": "use-nested-if",
+                    "vulnerability_from_line": 178,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "            totalTokens < tokenCreationCap) revert();\n",
+                    "message": "Using nested is cheaper than using && multiple check combinations. There are more advantages, such as easier to read code and better coverage reports."
+                }
+            ]
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_22"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "arbitrary-send",
+                    "vulnerability_from_line": 173,
+                    "vulnerability_to_line": 196,
+                    "vulnerability_code": "    function finalize() external {\n\n        // Abort if not in Funding Success state.\n\n        if (!funding) revert();\n\n        if ((block.number <= fundingEndBlock ||\n\n             totalTokens < tokenCreationMin) &&\n\n            totalTokens < tokenCreationCap) revert();\n\n\n\n        // Switch to Operational state. This is the only place this can happen.\n\n        funding = false;\n\n\n\n        // Create additional GNT for the Golem Factory and developers as\n\n        // the 18% of total number of tokens.\n\n        // All additional tokens are transfered to the account controller by\n\n        // GNTAllocation contract which will not allow using them for 6 months.\n\n        uint256 percentOfTotal = 18;\n\n        uint256 additionalTokens =\n\n            totalTokens * percentOfTotal / (100 - percentOfTotal);\n\n        totalTokens += additionalTokens;\n\n        balances[lockedAllocation] += additionalTokens;\n\n        Transfer(0, lockedAllocation, additionalTokens);\n\n\n\n        // Transfer ETH to the Golem Factory address.\n\n        if (!golemFactory.send(this.balance)) revert();\n",
+                    "message": "GolemNetworkToken.finalize (Faucet.sol#173-196) sends eth to arbitrary user\n\tDangerous calls:\n\t- ! golemFactory.send(this.balance) (Faucet.sol#195)\n"
+                },
+                {
+                    "name": "unused-return",
+                    "vulnerability_from_line": 234,
+                    "vulnerability_to_line": 238,
+                    "vulnerability_code": "    function create() external {\n\n        uint256 tokens = 1000 * 10 ** uint256(token.decimals());\n\n        if (token.balanceOf(msg.sender) >= tokens) revert();\n\n        token.transfer(msg.sender, tokens);\n",
+                    "message": "Faucet.create (Faucet.sol#234-238) does not use the value returned by external calls:\n\t-token.transfer(msg.sender,tokens) (Faucet.sol#237)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function migrateFrom(address _from, uint256 _value);\n",
+                    "message": "MigrationAgent.migrateFrom (Faucet.sol#7) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 76,
+                    "vulnerability_to_line": 89,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) returns (bool) {\n\n        // Abort if not in Operational state.\n\n        if (funding) revert();\n\n\n\n        var senderBalance = balances[msg.sender];\n\n        if (senderBalance >= _value && _value > 0) {\n\n            senderBalance -= _value;\n\n            balances[msg.sender] = senderBalance;\n\n            balances[_to] += _value;\n\n            Transfer(msg.sender, _to, _value);\n\n            return true;\n\n        }\n\n        return false;\n",
+                    "message": "GolemNetworkToken.transfer (Faucet.sol#76-89) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.16;\n",
+                    "message": "Detected issues with version pragma in Faucet.sol:\n\t- pragma solidity^0.4.16 (Faucet.sol#4): it allows old versions\n\t- pragma solidity^0.4.16 (Faucet.sol#221): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function GNTAllocation(address _golemFactory) {}\n",
+                    "message": "Function 'GNTAllocation.GNTAllocation' (Faucet.sol#11) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": 67,
+                    "vulnerability_code": "    function GolemNetworkToken(address _golemFactory,\n\n                               address _migrationMaster,\n\n                               uint256 _fundingStartBlock,\n\n                               uint256 _fundingEndBlock) {\n\n\n\n        if (_golemFactory == 0) revert();\n\n        if (_migrationMaster == 0) revert();\n\n        if (_fundingStartBlock <= block.number) revert();\n\n        if (_fundingEndBlock   <= _fundingStartBlock) revert();\n\n\n\n        lockedAllocation = new GNTAllocation(_golemFactory);\n\n        migrationMaster = _migrationMaster;\n\n        golemFactory = _golemFactory;\n\n        fundingStartBlock = _fundingStartBlock;\n\n        fundingEndBlock = _fundingEndBlock;\n",
+                    "message": "Function 'GolemNetworkToken.GolemNetworkToken' (Faucet.sol#52-67) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function GolemNetworkToken(address _golemFactory,\n",
+                    "message": "Parameter '_golemFactory' of GolemNetworkToken.GolemNetworkToken (Faucet.sol#52) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 53,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                               address _migrationMaster,\n",
+                    "message": "Parameter '_migrationMaster' of GolemNetworkToken.GolemNetworkToken (Faucet.sol#53) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 54,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                               uint256 _fundingStartBlock,\n",
+                    "message": "Parameter '_fundingStartBlock' of GolemNetworkToken.GolemNetworkToken (Faucet.sol#54) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 55,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "                               uint256 _fundingEndBlock) {\n",
+                    "message": "Parameter '_fundingEndBlock' of GolemNetworkToken.GolemNetworkToken (Faucet.sol#55) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 76,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) returns (bool) {\n",
+                    "message": "Parameter '_to' of GolemNetworkToken.transfer (Faucet.sol#76) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 76,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) returns (bool) {\n",
+                    "message": "Parameter '_value' of GolemNetworkToken.transfer (Faucet.sol#76) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 95,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function balanceOf(address _owner) external view returns (uint256) {\n",
+                    "message": "Parameter '_owner' of GolemNetworkToken.balanceOf (Faucet.sol#95) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 104,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function migrate(uint256 _value) external {\n",
+                    "message": "Parameter '_value' of GolemNetworkToken.migrate (Faucet.sol#104) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 125,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setMigrationAgent(address _agent) external {\n",
+                    "message": "Parameter '_agent' of GolemNetworkToken.setMigrationAgent (Faucet.sol#125) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 133,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function setMigrationMaster(address _master) external {\n",
+                    "message": "Parameter '_master' of GolemNetworkToken.setMigrationMaster (Faucet.sol#133) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public constant tokenCreationRate = 10000000000;\n",
+                    "message": "Constant 'GolemNetworkToken.tokenCreationRate' (Faucet.sol#20) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 23,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public constant tokenCreationCap = 82 finney * tokenCreationRate;\n",
+                    "message": "Constant 'GolemNetworkToken.tokenCreationCap' (Faucet.sol#23) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 24,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    uint256 public constant tokenCreationMin = 15 finney * tokenCreationRate;\n",
+                    "message": "Constant 'GolemNetworkToken.tokenCreationMin' (Faucet.sol#24) is not in UPPER_CASE_WITH_UNDERSCORES\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 228,
+                    "vulnerability_to_line": 230,
+                    "vulnerability_code": "    function Faucet(address _token) {\n\n        token = GolemNetworkToken(_token);\n",
+                    "message": "Function 'Faucet.Faucet' (Faucet.sol#228-230) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 228,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function Faucet(address _token) {\n",
+                    "message": "Parameter '_token' of Faucet.Faucet (Faucet.sol#228) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_MSGVALUE_EQUALS_ZERO",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (msg.value == 0) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 4,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.16;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 221,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.16;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 57,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (_golemFactory == 0) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 58,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (_migrationMaster == 0) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 59,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (_fundingStartBlock <= block.number) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 60,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (_fundingEndBlock   <= _fundingStartBlock) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 78,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (funding) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 106,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (funding) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 107,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (migrationAgent == 0) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 110,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (_value == 0) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 111,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (_value > balances[msg.sender]) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 127,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (funding) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 128,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (migrationAgent != 0) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 129,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (msg.sender != migrationMaster) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 134,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (msg.sender != migrationMaster) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 135,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (_master == 0) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 148,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (!funding) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 149,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (block.number < fundingStartBlock) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 150,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (block.number > fundingEndBlock) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 153,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (msg.value == 0) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 154,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (msg.value > (tokenCreationCap - totalTokens) / tokenCreationRate)\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 175,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (!funding) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 176,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if ((block.number <= fundingEndBlock ||\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 195,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (!golemFactory.send(this.balance)) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 203,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (!funding) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 204,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (block.number <= fundingEndBlock) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 205,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (totalTokens >= tokenCreationMin) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 208,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (gntValue == 0) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 214,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (!msg.sender.send(ethValue)) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_REVERT_REQUIRE",
+                    "vulnerability_from_line": 236,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "        if (token.balanceOf(msg.sender) >= tokens) revert();\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 7,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function migrateFrom(address _from, uint256 _value);\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 11,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function GNTAllocation(address _golemFactory) {}\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 52,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function GolemNetworkToken(address _golemFactory,\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 76,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function transfer(address _to, uint256 _value) returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 228,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    function Faucet(address _token) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 38,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    GNTAllocation lockedAllocation;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 43,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "    mapping (address => uint256) balances;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "golem-contracts-62a1e0dab3baf8e9bff79b653dffa7df5f2d10a0/contracts/open_zeppelin/StandardToken.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_31"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "uninitialized-state",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 totalSupply_;\n",
+                    "message": "BasicToken.totalSupply_ (StandardToken.sol#83) is never initialized. It is used in:\n\t- totalSupply (StandardToken.sol#88-90)\n"
+                },
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 totalSupply_;\n",
+                    "message": "BasicToken.totalSupply_ should be constant (StandardToken.sol#83)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function totalSupply() public view returns (uint256);\n",
+                    "message": "ERC20Basic.totalSupply (StandardToken.sol#12) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 88,
+                    "vulnerability_to_line": 90,
+                    "vulnerability_code": "  function totalSupply() public view returns (uint256) {\n\n    return totalSupply_;\n",
+                    "message": "BasicToken.totalSupply (StandardToken.sol#88-90) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 113,
+                    "vulnerability_to_line": 115,
+                    "vulnerability_code": "  function balanceOf(address _owner) public view returns (uint256 balance) {\n\n    return balances[_owner];\n",
+                    "message": "BasicToken.balanceOf (StandardToken.sol#113-115) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address who) public view returns (uint256);\n",
+                    "message": "ERC20Basic.balanceOf (StandardToken.sol#13) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 97,
+                    "vulnerability_to_line": 106,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n\n    require(_to != address(0));\n\n    require(_value <= balances[msg.sender]);\n\n\n\n    // SafeMath.sub will throw if there is not enough balance.\n\n    balances[msg.sender] = balances[msg.sender].sub(_value);\n\n    balances[_to] = balances[_to].add(_value);\n\n    Transfer(msg.sender, _to, _value);\n\n    return true;\n",
+                    "message": "BasicToken.transfer (StandardToken.sol#97-106) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address to, uint256 value) public returns (bool);\n",
+                    "message": "ERC20Basic.transfer (StandardToken.sol#14) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 128,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address owner, address spender) public view returns (uint256);\n",
+                    "message": "ERC20.allowance (StandardToken.sol#128) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 192,
+                    "vulnerability_to_line": 194,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public view returns (uint256) {\n\n    return allowed[_owner][_spender];\n",
+                    "message": "StandardToken.allowance (StandardToken.sol#192-194) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 129,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address from, address to, uint256 value) public returns (bool);\n",
+                    "message": "ERC20.transferFrom (StandardToken.sol#129) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 158,
+                    "vulnerability_to_line": 168,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n\n    require(_to != address(0));\n\n    require(_value <= balances[_from]);\n\n    require(_value <= allowed[_from][msg.sender]);\n\n\n\n    balances[_from] = balances[_from].sub(_value);\n\n    balances[_to] = balances[_to].add(_value);\n\n    allowed[_from][msg.sender] = allowed[_from][msg.sender].sub(_value);\n\n    Transfer(_from, _to, _value);\n\n    return true;\n",
+                    "message": "StandardToken.transferFrom (StandardToken.sol#158-168) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 180,
+                    "vulnerability_to_line": 184,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n\n    allowed[msg.sender][_spender] = _value;\n\n    Approval(msg.sender, _spender, _value);\n\n    return true;\n",
+                    "message": "StandardToken.approve (StandardToken.sol#180-184) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 131,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address spender, uint256 value) public returns (bool);\n",
+                    "message": "ERC20.approve (StandardToken.sol#131) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 206,
+                    "vulnerability_to_line": 210,
+                    "vulnerability_code": "  function increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n\n    allowed[msg.sender][_spender] = allowed[msg.sender][_spender].add(_addedValue);\n\n    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n\n    return true;\n",
+                    "message": "StandardToken.increaseApproval (StandardToken.sol#206-210) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 222,
+                    "vulnerability_to_line": 231,
+                    "vulnerability_code": "  function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n\n    uint oldValue = allowed[msg.sender][_spender];\n\n    if (_subtractedValue > oldValue) {\n\n      allowed[msg.sender][_spender] = 0;\n\n    } else {\n\n      allowed[msg.sender][_spender] = oldValue.sub(_subtractedValue);\n\n    }\n\n    Approval(msg.sender, _spender, allowed[msg.sender][_spender]);\n\n    return true;\n",
+                    "message": "StandardToken.decreaseApproval (StandardToken.sol#222-231) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in StandardToken.sol:\n\t- pragma solidity^0.4.18 (StandardToken.sol#3): it allows old versions\n\t- pragma solidity^0.4.18 (StandardToken.sol#20): it allows old versions\n\t- pragma solidity^0.4.18 (StandardToken.sol#71): it allows old versions\n\t- pragma solidity^0.4.18 (StandardToken.sol#121): it allows old versions\n\t- pragma solidity^0.4.18 (StandardToken.sol#137): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 113,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address _owner) public view returns (uint256 balance) {\n",
+                    "message": "Parameter '_owner' of BasicToken.balanceOf (StandardToken.sol#113) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 97,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_to' of BasicToken.transfer (StandardToken.sol#97) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 97,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of BasicToken.transfer (StandardToken.sol#97) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 192,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public view returns (uint256) {\n",
+                    "message": "Parameter '_owner' of StandardToken.allowance (StandardToken.sol#192) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 192,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address _owner, address _spender) public view returns (uint256) {\n",
+                    "message": "Parameter '_spender' of StandardToken.allowance (StandardToken.sol#192) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 158,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_from' of StandardToken.transferFrom (StandardToken.sol#158) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 158,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_to' of StandardToken.transferFrom (StandardToken.sol#158) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 158,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of StandardToken.transferFrom (StandardToken.sol#158) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 180,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of StandardToken.approve (StandardToken.sol#180) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 180,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of StandardToken.approve (StandardToken.sol#180) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 206,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of StandardToken.increaseApproval (StandardToken.sol#206) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 206,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function increaseApproval(address _spender, uint _addedValue) public returns (bool) {\n",
+                    "message": "Parameter '_addedValue' of StandardToken.increaseApproval (StandardToken.sol#206) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 222,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n",
+                    "message": "Parameter '_spender' of StandardToken.decreaseApproval (StandardToken.sol#222) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 222,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {\n",
+                    "message": "Parameter '_subtractedValue' of StandardToken.decreaseApproval (StandardToken.sol#222) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_ERC20_APPROVE",
+                    "vulnerability_from_line": 180,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address _spender, uint256 _value) public returns (bool) {\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 121,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 137,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 81,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping(address => uint256) balances;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 totalSupply_;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "golem-contracts-62a1e0dab3baf8e9bff79b653dffa7df5f2d10a0/contracts/open_zeppelin/ERC20.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_7"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function totalSupply() public view returns (uint256);\n",
+                    "message": "ERC20Basic.totalSupply (ERC20.sol#12) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address who) public view returns (uint256);\n",
+                    "message": "ERC20Basic.balanceOf (ERC20.sol#13) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address to, uint256 value) public returns (bool);\n",
+                    "message": "ERC20Basic.transfer (ERC20.sol#14) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 27,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function allowance(address owner, address spender) public view returns (uint256);\n",
+                    "message": "ERC20.allowance (ERC20.sol#27) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 28,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transferFrom(address from, address to, uint256 value) public returns (bool);\n",
+                    "message": "ERC20.transferFrom (ERC20.sol#28) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 30,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function approve(address spender, uint256 value) public returns (bool);\n",
+                    "message": "ERC20.approve (ERC20.sol#30) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in ERC20.sol:\n\t- pragma solidity^0.4.18 (ERC20.sol#3): it allows old versions\n\t- pragma solidity^0.4.18 (ERC20.sol#20): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "golem-contracts-62a1e0dab3baf8e9bff79b653dffa7df5f2d10a0/contracts/open_zeppelin/SafeMath.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_1"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in SafeMath.sol:\n\t- pragma solidity^0.4.18 (SafeMath.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "golem-contracts-62a1e0dab3baf8e9bff79b653dffa7df5f2d10a0/contracts/open_zeppelin/ERC20Basic.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_4"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function totalSupply() public view returns (uint256);\n",
+                    "message": "ERC20Basic.totalSupply (ERC20Basic.sol#12) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address who) public view returns (uint256);\n",
+                    "message": "ERC20Basic.balanceOf (ERC20Basic.sol#13) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address to, uint256 value) public returns (bool);\n",
+                    "message": "ERC20Basic.transfer (ERC20Basic.sol#14) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in ERC20Basic.sol:\n\t- pragma solidity^0.4.18 (ERC20Basic.sol#3): it allows old versions\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                }
+            ]
+        }
+    },
+    "golem-contracts-62a1e0dab3baf8e9bff79b653dffa7df5f2d10a0/contracts/open_zeppelin/BasicToken.sol": {
+        "semgrep": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": []
+        },
+        "slither": {
+            "successfull_analysis": true,
+            "errors": [
+                "EXIT_CODE_12"
+            ],
+            "vulnerability_findings": [
+                {
+                    "name": "uninitialized-state",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 totalSupply_;\n",
+                    "message": "BasicToken.totalSupply_ (BasicToken.sol#83) is never initialized. It is used in:\n\t- totalSupply (BasicToken.sol#88-90)\n"
+                },
+                {
+                    "name": "constable-states",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 totalSupply_;\n",
+                    "message": "BasicToken.totalSupply_ should be constant (BasicToken.sol#83)\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 88,
+                    "vulnerability_to_line": 90,
+                    "vulnerability_code": "  function totalSupply() public view returns (uint256) {\n\n    return totalSupply_;\n",
+                    "message": "BasicToken.totalSupply (BasicToken.sol#88-90) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 12,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function totalSupply() public view returns (uint256);\n",
+                    "message": "ERC20Basic.totalSupply (BasicToken.sol#12) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 13,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address who) public view returns (uint256);\n",
+                    "message": "ERC20Basic.balanceOf (BasicToken.sol#13) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 113,
+                    "vulnerability_to_line": 115,
+                    "vulnerability_code": "  function balanceOf(address _owner) public view returns (uint256 balance) {\n\n    return balances[_owner];\n",
+                    "message": "BasicToken.balanceOf (BasicToken.sol#113-115) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 14,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address to, uint256 value) public returns (bool);\n",
+                    "message": "ERC20Basic.transfer (BasicToken.sol#14) should be declared external\n"
+                },
+                {
+                    "name": "external-function",
+                    "vulnerability_from_line": 97,
+                    "vulnerability_to_line": 106,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n\n    require(_to != address(0));\n\n    require(_value <= balances[msg.sender]);\n\n\n\n    // SafeMath.sub will throw if there is not enough balance.\n\n    balances[msg.sender] = balances[msg.sender].sub(_value);\n\n    balances[_to] = balances[_to].add(_value);\n\n    Transfer(msg.sender, _to, _value);\n\n    return true;\n",
+                    "message": "BasicToken.transfer (BasicToken.sol#97-106) should be declared external\n"
+                },
+                {
+                    "name": "solc-version",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": "Detected issues with version pragma in BasicToken.sol:\n\t- pragma solidity^0.4.18 (BasicToken.sol#3): it allows old versions\n\t- pragma solidity^0.4.18 (BasicToken.sol#20): it allows old versions\n\t- pragma solidity^0.4.18 (BasicToken.sol#71): it allows old versions\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 113,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function balanceOf(address _owner) public view returns (uint256 balance) {\n",
+                    "message": "Parameter '_owner' of BasicToken.balanceOf (BasicToken.sol#113) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 97,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_to' of BasicToken.transfer (BasicToken.sol#97) is not in mixedCase\n"
+                },
+                {
+                    "name": "naming-convention",
+                    "vulnerability_from_line": 97,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  function transfer(address _to, uint256 _value) public returns (bool) {\n",
+                    "message": "Parameter '_value' of BasicToken.transfer (BasicToken.sol#97) is not in mixedCase\n"
+                }
+            ]
+        },
+        "smartcheck": {
+            "successfull_analysis": true,
+            "errors": [],
+            "vulnerability_findings": [
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 3,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 20,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_PRAGMAS_VERSION",
+                    "vulnerability_from_line": 71,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "pragma solidity ^0.4.18;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_SAFEMATH",
+                    "vulnerability_from_line": 79,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  using SafeMath for uint256;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 81,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  mapping(address => uint256) balances;\n",
+                    "message": null
+                },
+                {
+                    "name": "SOLIDITY_VISIBILITY",
+                    "vulnerability_from_line": 83,
+                    "vulnerability_to_line": null,
+                    "vulnerability_code": "  uint256 totalSupply_;\n",
+                    "message": null
+                }
+            ]
+        }
+    }
+}
